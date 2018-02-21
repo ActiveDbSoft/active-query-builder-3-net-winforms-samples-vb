@@ -1,0 +1,87 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETFramework,Version=v4.0": {
+      "MySql.Data/6.9.11": {
+        "type": "package",
+        "compile": {
+          "lib/net40/MySql.Data.dll": {}
+        },
+        "runtime": {
+          "lib/net40/MySql.Data.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.0/win": {
+      "MySql.Data/6.9.11": {
+        "type": "package",
+        "compile": {
+          "lib/net40/MySql.Data.dll": {}
+        },
+        "runtime": {
+          "lib/net40/MySql.Data.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MySql.Data/6.9.11": {
+      "sha512": "GS3hqyiSqw0bZmkRkDS1BhFfHV+Fr3LiuNIPc52n3H7aBrd5vhbiWqIUeEPkQVtPO8UYs0apZ218ecs5nF39XA==",
+      "type": "package",
+      "path": "mysql.data/6.9.11",
+      "files": [
+        "CHANGES",
+        "Readme.txt",
+        "content/app.config.transform",
+        "content/web.config.transform",
+        "lib/net40/MySql.Data.dll",
+        "lib/net45/MySql.Data.dll",
+        "mysql.data.6.9.11.nupkg.sha512",
+        "mysql.data.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "": [
+      "MySql.Data >= 6.9.11"
+    ],
+    ".NETFramework,Version=v4.0": []
+  },
+  "packageFolders": {
+    "C:\\Users\\user\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "restore": {
+      "projectUniqueName": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\MySQLdemo\\MySQLdemo.vbproj",
+      "projectName": "MySQLdemo",
+      "projectPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\MySQLdemo\\MySQLdemo.vbproj",
+      "projectJsonPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\MySQLdemo\\project.json",
+      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+      "outputPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\MySQLdemo\\obj\\",
+      "projectStyle": "ProjectJson",
+      "validateRuntimeAssets": true,
+      "configFilePaths": [
+        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net40": {
+          "projectReferences": {}
+        }
+      }
+    },
+    "dependencies": {
+      "MySql.Data": "[6.9.11, )"
+    },
+    "frameworks": {
+      "net40": {}
+    },
+    "runtimes": {
+      "win": {
+        "#import": []
+      }
+    }
+  }
+}

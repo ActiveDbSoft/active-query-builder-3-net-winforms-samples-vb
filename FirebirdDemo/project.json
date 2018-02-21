@@ -1,0 +1,11 @@
+﻿{
+  "dependencies": {
+    "FirebirdSql.Data.FirebirdClient": "5.12.1"
+  },
+  "frameworks": {
+    "net451": {}
+  },
+  "runtimes": {
+    "win": {}
+  }
+}

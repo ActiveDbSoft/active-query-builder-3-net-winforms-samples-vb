@@ -1,0 +1,11 @@
+﻿{
+  "dependencies": {
+    "MySql.Data": "6.9.11"
+  },
+  "frameworks": {
+    "net40": {}
+  },
+  "runtimes": {
+    "win": {}
+  }
+}

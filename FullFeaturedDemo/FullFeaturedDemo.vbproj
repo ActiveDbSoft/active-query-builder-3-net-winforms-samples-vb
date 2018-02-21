@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8E69EDB0-FE26-413B-8FAF-4CD93F83AA6A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FullFeaturedDemo</RootNamespace>
+    <AssemblyName>FullFeaturedDemo</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>demo.snk</AssemblyOriginatorKeyFile>
+    <StartupObject>FullFeaturedDemo.Program</StartupObject>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+    <FileUpgradeFlags />
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG,TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG,TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ActiveQueryBuilder.Core">
+		<HintPath>..\packages\ActiveQueryBuilder.Core.3.4.5.1082\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
+	</Reference>
+    <Reference Include="ActiveQueryBuilder.MSSQLMetadataProvider">
+		<HintPath>..\packages\ActiveQueryBuilder.MSSQLMetadataProvider.3.4.5.1082\lib\net\ActiveQueryBuilder.MSSQLMetadataProvider.dll</HintPath>
+	</Reference>
+    <Reference Include="ActiveQueryBuilder.MySQLMetadataProvider">
+		<HintPath>..\packages\ActiveQueryBuilder.MySQLMetadataProvider.3.4.5.1082\lib\net\ActiveQueryBuilder.MySQLMetadataProvider.dll</HintPath>
+	</Reference>
+    <Reference Include="ActiveQueryBuilder.ODBCMetadataProvider">
+		<HintPath>..\packages\ActiveQueryBuilder.ODBCMetadataProvider.3.4.5.1082\lib\net\ActiveQueryBuilder.ODBCMetadataProvider.dll</HintPath>
+	</Reference>
+    <Reference Include="ActiveQueryBuilder.OLEDBMetadataProvider">
+		<HintPath>..\packages\ActiveQueryBuilder.OLEDBMetadataProvider.3.4.5.1082\lib\net\ActiveQueryBuilder.OLEDBMetadataProvider.dll</HintPath>
+	</Reference>
+    <Reference Include="ActiveQueryBuilder.OracleNativeMetadataProvider">
+		<HintPath>..\packages\ActiveQueryBuilder.OracleNativeMetadataProvider.3.4.5.1082\lib\net\ActiveQueryBuilder.OracleNativeMetadataProvider.dll</HintPath>
+	</Reference>
+    <Reference Include="ActiveQueryBuilder.PostgreSQLMetadataProvider">
+		<HintPath>..\packages\ActiveQueryBuilder.PostgreSQLMetadataProvider.3.4.5.1082\lib\net\ActiveQueryBuilder.PostgreSQLMetadataProvider.dll</HintPath>
+	</Reference>
+    <Reference Include="ActiveQueryBuilder.UniversalMetadataProvider">
+		<HintPath>..\packages\ActiveQueryBuilder.UniversalMetadataProvider.3.4.5.1082\lib\net\ActiveQueryBuilder.UniversalMetadataProvider.dll</HintPath>
+	</Reference>
+    <Reference Include="ActiveQueryBuilder.View">
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.4.5.1082\lib\net\ActiveQueryBuilder.View.dll</HintPath>
+	</Reference>
+    <Reference Include="ActiveQueryBuilder.View.WinForms">
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.4.5.1082\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
+	</Reference>
+    <Reference Include="adodb, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutForm.Designer.vb">
+      <DependentUpon>AboutForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AboutForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\Helpers.vb" />
+    <Compile Include="Common\InfoPanel.Designer.vb">
+      <DependentUpon>InfoPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Common\InfoPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Common\ResultGrid.Designer.vb">
+      <DependentUpon>ResultGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Common\ResultGrid.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectionEditForm.Designer.vb">
+      <DependentUpon>ConnectionEditForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionEditForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConnectionForm.Designer.vb">
+      <DependentUpon>ConnectionForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConnectionFrameBase.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectionFrames\MSAccessConnectionFrame.Designer.vb">
+      <DependentUpon>MSAccessConnectionFrame.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionFrames\MSAccessConnectionFrame.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectionFrames\MSSQLConnectionFrame.Designer.vb">
+      <DependentUpon>MSSQLConnectionFrame.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionFrames\MSSQLConnectionFrame.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectionFrames\MySQLConnectionFrame.Designer.vb">
+      <DependentUpon>MySQLConnectionFrame.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionFrames\MySQLConnectionFrame.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectionFrames\ODBCConnectionFrame.Designer.vb">
+      <DependentUpon>ODBCConnectionFrame.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionFrames\ODBCConnectionFrame.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectionFrames\OLEDBConnectionFrame.Designer.vb">
+      <DependentUpon>OLEDBConnectionFrame.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionFrames\OLEDBConnectionFrame.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectionFrames\OracleConnectionFrame.Designer.vb">
+      <DependentUpon>OracleConnectionFrame.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionFrames\OracleConnectionFrame.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectionFrames\PostgreSQLConnectionFrame.Designer.vb">
+      <DependentUpon>PostgreSQLConnectionFrame.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionFrames\PostgreSQLConnectionFrame.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectionFrames\XmlFileFrame.Designer.vb">
+      <DependentUpon>XmlFileFrame.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionFrames\XmlFileFrame.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectionStringEditForm.Designer.vb">
+      <DependentUpon>ConnectionStringEditForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionStringEditForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dailogs\SaveDialogForm.Designer.vb">
+      <DependentUpon>SaveDialogForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Dailogs\SaveDialogForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.vb">
+      <DependentUpon>MainForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc.vb" />
+    <Compile Include="NoConnectionLabel.Designer.vb">
+      <DependentUpon>NoConnectionLabel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="NoConnectionLabel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PaginationPanel.Designer.vb">
+      <DependentUpon>PaginationPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PaginationPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Program.vb" />
+    <Compile Include="PropertiesForm\GeneralPage.designer.vb">
+      <DependentUpon>GeneralPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PropertiesForm\GeneralPage.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PropertiesForm\GroupLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PropertiesForm\OfflineModePage.designer.vb">
+      <DependentUpon>OfflineModePage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PropertiesForm\OfflineModePage.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PropertiesForm\QueryPropertiesForm.designer.vb">
+      <DependentUpon>QueryPropertiesForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PropertiesForm\QueryPropertiesForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PropertiesForm\SqlFormattingPage.designer.vb">
+      <DependentUpon>SqlFormattingPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PropertiesForm\SqlFormattingPage.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PropertiesForm\SqlSyntaxPage.designer.vb">
+      <DependentUpon>SqlSyntaxPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PropertiesForm\SqlSyntaxPage.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.vb" />
+    <Compile Include="Properties\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="QueryParametersForm.designer.vb">
+      <DependentUpon>QueryParametersForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="QueryParametersForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryStatisticsForm.designer.vb">
+      <DependentUpon>QueryStatisticsForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="QueryStatisticsForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AboutForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AboutForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\InfoPanel.resx">
+      <DependentUpon>InfoPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\ResultGrid.resx">
+      <DependentUpon>ResultGrid.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionEditForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ConnectionEditForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ConnectionForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionFrames\MSAccessConnectionFrame.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MSAccessConnectionFrame.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionFrames\MSSQLConnectionFrame.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MSSQLConnectionFrame.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionFrames\MySQLConnectionFrame.resx">
+      <DependentUpon>MySQLConnectionFrame.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionFrames\ODBCConnectionFrame.resx">
+      <DependentUpon>ODBCConnectionFrame.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionFrames\OLEDBConnectionFrame.resx">
+      <DependentUpon>OLEDBConnectionFrame.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionFrames\OracleConnectionFrame.resx">
+      <DependentUpon>OracleConnectionFrame.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionFrames\PostgreSQLConnectionFrame.resx">
+      <DependentUpon>PostgreSQLConnectionFrame.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionFrames\XmlFileFrame.resx">
+      <DependentUpon>XmlFileFrame.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionStringEditForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ConnectionStringEditForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dailogs\SaveDialogForm.resx">
+      <DependentUpon>SaveDialogForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NoConnectionLabel.resx">
+      <DependentUpon>NoConnectionLabel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaginationPanel.resx">
+      <DependentUpon>PaginationPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\GeneralPage.resx">
+      <DependentUpon>GeneralPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\OfflineModePage.resx">
+      <DependentUpon>OfflineModePage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\QueryPropertiesForm.resx">
+      <DependentUpon>QueryPropertiesForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\SqlFormattingPage.resx">
+      <DependentUpon>SqlFormattingPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\SqlSyntaxPage.resx">
+      <DependentUpon>SqlSyntaxPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryParametersForm.resx">
+      <DependentUpon>QueryParametersForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryStatisticsForm.resx">
+      <DependentUpon>QueryStatisticsForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="demo.snk" />
+    <None Include="Northwind.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.ico" />
+    <None Include="Resources\cancel.png" />
+    <EmbeddedResource Include="Resources\database.ico" />
+    <EmbeddedResource Include="Resources\cut.ico" />
+    <EmbeddedResource Include="Resources\copy_union_subquery.png" />
+    <EmbeddedResource Include="Resources\connect.png" />
+    <EmbeddedResource Include="Resources\connect.ico" />
+    <EmbeddedResource Include="Resources\cog.ico" />
+    <EmbeddedResource Include="Resources\chart_organisation.ico" />
+    <EmbeddedResource Include="Resources\bullet_green.ico" />
+    <EmbeddedResource Include="Resources\bricks.ico" />
+    <EmbeddedResource Include="Resources\arrow_right.png" />
+    <EmbeddedResource Include="Resources\arrow_left.png" />
+    <EmbeddedResource Include="Resources\application_tile_vertical.png" />
+    <EmbeddedResource Include="Resources\application_tile_horizontal.png" />
+    <EmbeddedResource Include="Resources\application_side_tree.ico" />
+    <EmbeddedResource Include="Resources\application_cascade.png" />
+    <EmbeddedResource Include="Resources\add_union_subquery.png" />
+    <EmbeddedResource Include="Resources\add_derived_table.png" />
+    <EmbeddedResource Include="Resources\table_sort.ico" />
+    <EmbeddedResource Include="Resources\table_multiple.ico" />
+    <EmbeddedResource Include="Resources\table_lightning.ico" />
+    <EmbeddedResource Include="Resources\table_gear.ico" />
+    <EmbeddedResource Include="Resources\table.ico" />
+    <EmbeddedResource Include="Resources\query_properties.png" />
+    <EmbeddedResource Include="Resources\page_white.ico" />
+    <EmbeddedResource Include="Resources\page_paste.png" />
+    <EmbeddedResource Include="Resources\page_copy.png" />
+    <EmbeddedResource Include="Resources\new_object.png" />
+    <EmbeddedResource Include="Resources\help.ico" />
+    <EmbeddedResource Include="Resources\folder_table.ico" />
+    <EmbeddedResource Include="Resources\folder_page.ico" />
+    <EmbeddedResource Include="Resources\folder_bullet_green.ico" />
+    <EmbeddedResource Include="Resources\folder.ico" />
+    <EmbeddedResource Include="Resources\drive_disk.png" />
+    <EmbeddedResource Include="Resources\disk.ico" />
+    <EmbeddedResource Include="Resources\disconnect.png" />
+    <EmbeddedResource Include="Resources\disconnect.ico" />
+    <EmbeddedResource Include="Resources\database_table.ico" />
+    <EmbeddedResource Include="Resources\database_save.png" />
+    <EmbeddedResource Include="Resources\database_go.ico" />
+    <EmbeddedResource Include="Resources\database_edit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="MSDASC">
+      <Guid>{2206CEB0-19C1-11D1-89E0-00C04FD7A829}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>

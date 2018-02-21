@@ -28,7 +28,7 @@ The demo projects in this repository illustrate various aspects of the component
 ## How to get these demo projects up and running?
 
 1. Clone this repository to your PC.
-2. Open the "**WinFormsDemo_VisualBasic.sln**" solution to review the demos for standard WinForms controls or the "**DevExpressDemo_CSharp.sln**" to review the demos for [DevExpress WinForms controls](https://www.devexpress.com/Products/NET/Controls/WinForms/) (you will have to install those controls themselves first).
+2. Open the "**WinFormsDemo_VisualBasic.sln**" solution.
 3. Run the project.
 
 The necessary packages will be installed automatically. In case of any problems with the packages, open the "Tools" - "NuGet Package Manager" - "Package Manager Console" menu item and install them by running the following command: 
