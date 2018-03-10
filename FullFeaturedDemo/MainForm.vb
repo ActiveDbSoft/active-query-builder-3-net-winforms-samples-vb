@@ -258,6 +258,10 @@ Partial Public Class MainForm
                 End Select
             End If
 
+            If _selectedConnection.IsXmlFile AndAlso _selectedConnection.SyntaxProvider Is Nothing Then
+                _selectedConnection.CreateSyntaxByType()
+            End If
+
             ' setup the query builder with metadata and syntax providers
             queryBuilder1.SQLContext.MetadataContainer.Clear()
             queryBuilder1.MetadataProvider = metadataProvaider

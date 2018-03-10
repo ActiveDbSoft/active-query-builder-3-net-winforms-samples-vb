@@ -10,7 +10,7 @@
 
 Imports System.Data.OleDb
 Imports System.Windows.Forms
-
+Imports ActiveQueryBuilder.Core
 
 Namespace ConnectionFrames
 	Public NotInheritable Partial Class OLEDBConnectionFrame
@@ -95,6 +95,24 @@ Namespace ConnectionFrames
 			Catch exception As Exception
 				MessageBox.Show("Failed to show OLEDB Data Link Properties dialog box." & vbLf & "Perhaps you have no required components installed or they are outdated." & vbLf & "Try to rebuild this demo from the source code." & vbLf & vbLf & exception.Message)
 			End Try
+		End Sub
+
+		Private Sub btnTest_Click(sender As Object, e As EventArgs)
+			Dim metadataProvider as New OLEDBMetadataProvider()
+		    metadataProvider.Connection = New OleDbConnection(ConnectionString)
+			Dim syntaxProviderType As Type = Nothing
+
+			Try
+				syntaxProviderType = Helpers.AutodetectSyntaxProvider(metadataProvider)
+			Catch exception As Exception
+				MessageBox.Show(exception.Message, Program.Name)
+			End Try
+
+			DoSyntaxDetected(syntaxProviderType)
+		End Sub
+
+		Private Sub tbConnectionString_TextChanged(sender As Object, e As EventArgs)
+			btnTest.Enabled = tbConnectionString.Text <> String.Empty
 		End Sub
 	End Class
 End Namespace

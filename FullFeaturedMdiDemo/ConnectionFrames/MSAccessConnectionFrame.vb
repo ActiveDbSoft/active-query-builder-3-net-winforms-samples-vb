@@ -8,7 +8,9 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
+Imports System.Collections.Generic
 Imports System.Data.OleDb
+Imports System.IO
 Imports System.Windows.Forms
 
 
@@ -16,6 +18,14 @@ Namespace ConnectionFrames
 	Public NotInheritable Partial Class MSAccessConnectionFrame
 		Inherits ConnectionFrameBase
 		Private _connectionString As String
+		Private _serverType As String
+
+		Private _knownAceProviders As New List(Of String)() From { _
+			"Microsoft.ACE.OLEDB.16.0", _
+			"Microsoft.ACE.OLEDB.15.0", _
+			"Microsoft.ACE.OLEDB.14.0", _
+			"Microsoft.ACE.OLEDB.12.0" _
+		}
 
 		Public Overrides Property ConnectionString() As String
 			Get
@@ -36,15 +46,67 @@ Namespace ConnectionFrames
 			End If
 		End Sub
 
+		Public Overrides Sub SetServerType(serverType As String)
+			_serverType = serverType
+		End Sub
+
+		Private Shared Function GetProvidersList() As List(Of String)
+			Dim reader = OleDbEnumerator.GetRootEnumerator()
+			Dim result = New List(Of String)()
+			While reader.Read()
+				For i As Integer = 0 To reader.FieldCount - 1
+					If reader.GetName(i) = "SOURCES_NAME" Then
+						result.Add(reader.GetValue(i).ToString())
+					End If
+				Next
+			End While
+			reader.Close()
+
+			Return result
+		End Function
+
+		Private Function DetectProvider() As String
+		    Dim providersList = GetProvidersList()
+		    Dim provider = String.Empty
+
+		    Dim ext = Path.GetExtension(tbDataSource.Text)
+		    If ext = ".accdb" Then
+		        For i As Integer = 0 To _knownAceProviders.Count - 1
+		            If providersList.Contains(_knownAceProviders(i)) Then
+		                provider = _knownAceProviders(i)
+		                Exit For
+		            End If
+		        Next
+
+		        If provider = String.Empty Then
+		            provider = "Microsoft.ACE.OLEDB.12.0"
+		        End If
+		    ElseIf _serverType = "Access 97" Then
+		        provider = "Microsoft.Jet.OLEDB.3.0"
+		    ElseIf _serverType = "Access 2000 and newer" Then
+		        For i As Integer = 0 To _knownAceProviders.Count - 1
+		            If providersList.Contains(_knownAceProviders(i)) Then
+		                provider = _knownAceProviders(i)
+		                Exit For
+		            End If
+		        Next
+
+		        If provider = String.Empty Then
+		            provider = "Microsoft.Jet.OLEDB.4.0"
+		        End If
+		    End If
+
+		    Return provider
+		End Function
+
 		Public Function GetConnectionString() As String
 			Try
-				Dim builder As New OleDbConnectionStringBuilder()
-				builder.ConnectionString = _connectionString
-
-				builder.Provider = "Microsoft.ACE.OLEDB.12.0"
-				builder.DataSource = tbDataSource.Text
-				builder("User ID") = tbUserID.Text
-				builder("Password") = tbPassword.Text
+			    Dim builder As New OleDbConnectionStringBuilder()
+			    builder.ConnectionString = _connectionString
+			    builder.Provider = DetectProvider()
+			    builder.DataSource = tbDataSource.Text
+			    builder("User ID") = tbUserID.Text
+			    builder("Password") = tbPassword.Text				
 
 				_connectionString = builder.ConnectionString
 			Catch

@@ -8,8 +8,8 @@
     <ProjectGuid>{0D345205-C8B8-4A2D-8C96-EE9FFB53B395}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GeneralDemo</RootNamespace>
-    <AssemblyName>GeneralDemo</AssemblyName>
+    <RootNamespace>BasicDemo</RootNamespace>
+    <AssemblyName>BasicDemo</AssemblyName>
     <ApplicationIcon>App.ico</ApplicationIcon>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags />
@@ -30,7 +30,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <StartupObject>GeneralDemo.Program</StartupObject>
+    <StartupObject>BasicDemo.Program</StartupObject>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -58,25 +58,25 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ActiveQueryBuilder.Core">
-		<HintPath>..\packages\ActiveQueryBuilder.Core.3.4.6.1083\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.Core.3.4.7.1084\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.MSSQLMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.MSSQLMetadataProvider.3.4.6.1083\lib\net\ActiveQueryBuilder.MSSQLMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.MSSQLMetadataProvider.3.4.7.1084\lib\net\ActiveQueryBuilder.MSSQLMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.ODBCMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.ODBCMetadataProvider.3.4.6.1083\lib\net\ActiveQueryBuilder.ODBCMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.ODBCMetadataProvider.3.4.7.1084\lib\net\ActiveQueryBuilder.ODBCMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.OLEDBMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.OLEDBMetadataProvider.3.4.6.1083\lib\net\ActiveQueryBuilder.OLEDBMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.OLEDBMetadataProvider.3.4.7.1084\lib\net\ActiveQueryBuilder.OLEDBMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.OracleNativeMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.OracleNativeMetadataProvider.3.4.6.1083\lib\net\ActiveQueryBuilder.OracleNativeMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.OracleNativeMetadataProvider.3.4.7.1084\lib\net\ActiveQueryBuilder.OracleNativeMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.4.6.1083\lib\net\ActiveQueryBuilder.View.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.4.7.1084\lib\net\ActiveQueryBuilder.View.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View.WinForms">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.4.6.1083\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.4.7.1084\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
 	</Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

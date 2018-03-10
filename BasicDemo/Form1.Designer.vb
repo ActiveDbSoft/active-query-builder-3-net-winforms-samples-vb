@@ -430,7 +430,7 @@ Partial Class Form1
         Me.Menu = Me.mainMenu1
         Me.Name = "Form1"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Active Query Builder for .NET WinForms Edition - General Demo (C#)"
+        Me.Text = "Active Query Builder for .NET WinForms Edition - Basic Demo (C#)"
         Me.tabControl1.ResumeLayout(false)
         Me.tabPageSQL.ResumeLayout(false)
         Me.splitContainer1.Panel1.ResumeLayout(false)
