@@ -11,29 +11,16 @@
 Imports System.Windows.Forms
 
 Public Class ConnectionFrameBase
-    Inherits UserControl
-    Public Delegate Sub SyntaxProviderDetected(syntaxType As Type)
+	Inherits UserControl
+	Public Overridable Property ConnectionString() As String
+		Get
+			Return Nothing
+		End Get
+		Set
+		End Set
+	End Property
 
-    Public Event OnSyntaxProviderDetected As SyntaxProviderDetected
-
-    Public Overridable Sub SetServerType(serverType As String)
-
-    End Sub
-
-    Public Sub DoSyntaxDetected(syntaxType As Type)
-        RaiseEvent OnSyntaxProviderDetected(syntaxType)
-    End Sub
-
-    Public Overridable Property ConnectionString() As String
-        Get
-            Return Nothing
-        End Get
-        Set
-        End Set
-    End Property
-
-    Public Overridable Function TestConnection() As Boolean
-        Return False
-    End Function
+	Public Overridable Function TestConnection() As Boolean
+		Return False
+	End Function
 End Class
-

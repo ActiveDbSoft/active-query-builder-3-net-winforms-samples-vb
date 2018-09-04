@@ -9,6 +9,7 @@
 '*******************************************************************'
 
 Imports System.Windows.Forms
+Imports ActiveQueryBuilder.Core
 
 
 Public Partial Class ConnectionForm
@@ -36,8 +37,8 @@ Public Partial Class ConnectionForm
 
 		' fill connection list
 		For i As Integer = 0 To Program.Connections.Count - 1
-			Dim lvi As ListViewItem = lvConnections.Items.Add(Program.Connections(i).ConnectionName)
-			lvi.SubItems.Add(Program.Connections(i).ConnectionType.ToString())
+			Dim lvi As ListViewItem = lvConnections.Items.Add(Program.Connections(i).Name)
+			lvi.SubItems.Add(Program.Connections(i).ConnectionDescriptor.GetDescription())
 			lvi.Tag = Program.Connections(i)
 		Next
 
@@ -48,7 +49,9 @@ Public Partial Class ConnectionForm
 		' add preset
 
 		Dim found As Boolean = False
-		Dim northwind As New ConnectionInfo(ConnectionTypes.MSSQL, "Northwind.xml", "Northwind.xml", True, Nothing, "")
+		Dim northwind As New ConnectionInfo("Northwind.xml", "Northwind.xml", ConnectionTypes.ODBC) With { _
+			.IsXmlFile = True _
+		}
 
 		For i As Integer = 0 To Program.XmlFiles.Count - 1
 			If Program.XmlFiles(i).Equals(northwind) Then
@@ -62,8 +65,8 @@ Public Partial Class ConnectionForm
 
 		' fill XML files list
 		For i As Integer = 0 To Program.XmlFiles.Count - 1
-			Dim lvi As ListViewItem = lvXmlFiles.Items.Add(Program.XmlFiles(i).ConnectionName)
-			lvi.SubItems.Add(Program.XmlFiles(i).ConnectionType.ToString())
+			Dim lvi As ListViewItem = lvXmlFiles.Items.Add(Program.XmlFiles(i).Name)
+			lvi.SubItems.Add(Program.XmlFiles(i).ConnectionDescriptor.SyntaxProvider.Description)
 			lvi.Tag = Program.XmlFiles(i)
 		Next
 
@@ -96,7 +99,7 @@ Public Partial Class ConnectionForm
 			name = [String].Format("Connection {0}", x)
 
 			For i As Integer = 0 To Program.Connections.Count - 1
-				If Program.Connections(i).ConnectionName = name Then
+				If Program.Connections(i).Name = name Then
 					found = True
 					Exit For
 				End If
@@ -117,7 +120,7 @@ Public Partial Class ConnectionForm
 			name = [String].Format("XML File {0}", x)
 
 			For i As Integer = 0 To Program.XmlFiles.Count - 1
-				If Program.XmlFiles(i).ConnectionName = name Then
+				If Program.XmlFiles(i).Name = name Then
 					found = True
 					Exit For
 				End If
@@ -128,12 +131,12 @@ Public Partial Class ConnectionForm
 	End Function
 
 	Private Sub btnAdd_Click(sender As Object, e As EventArgs)
-		Dim ci As New ConnectionInfo(ConnectionTypes.MSSQL, GetNewConnectionEntryName(), Nothing, False, Nothing, "")
+		Dim ci As New ConnectionInfo(New MSSQLConnectionDescriptor(), GetNewConnectionEntryName(), ConnectionTypes.MSSQL, "")
 
-		Using cef As New ConnectionEditForm(ci)
+		Using cef As New EditConnectionForm(ci)
 			If cef.ShowDialog() = DialogResult.OK Then
-				Dim lvi As ListViewItem = lvConnections.Items.Add(ci.ConnectionName)
-				lvi.SubItems.Add(ci.ConnectionType.ToString())
+				Dim lvi As ListViewItem = lvConnections.Items.Add(ci.Name)
+				lvi.SubItems.Add(ci.ConnectionDescriptor.GetDescription())
 				lvi.Tag = ci
 				lvi.Selected = True
 
@@ -157,10 +160,10 @@ Public Partial Class ConnectionForm
 		If lvConnections.SelectedItems.Count > 0 Then
 			Dim ci As ConnectionInfo = DirectCast(lvConnections.SelectedItems(0).Tag, ConnectionInfo)
 
-			Using cef As New ConnectionEditForm(ci)
+			Using cef As New EditConnectionForm(ci)
 				If cef.ShowDialog() = DialogResult.OK Then
-					lvConnections.SelectedItems(0).SubItems(0).Text = ci.ConnectionName
-					lvConnections.SelectedItems(0).SubItems(1).Text = ci.ConnectionType.ToString()
+					lvConnections.SelectedItems(0).SubItems(0).Text = ci.Name
+					lvConnections.SelectedItems(0).SubItems(1).Text = ci.ConnectionDescriptor.GetDescription()
 				End If
 			End Using
 		End If
@@ -200,12 +203,15 @@ Public Partial Class ConnectionForm
 	End Sub
 
 	Private Sub btnAddXml_Click(sender As Object, e As EventArgs)
-		Dim ci As New ConnectionInfo(ConnectionTypes.MSSQL, GetNewXmlFileEntryName(), Nothing, True, Nothing, "")
+		Dim name = GetNewXmlFileEntryName()
+		Dim ci As New ConnectionInfo(String.Empty, name, ConnectionTypes.ODBC) With { _
+			.IsXmlFile = True _
+		}
 
-		Using cef As New ConnectionEditForm(ci)
+		Using cef As New EditXMLConnectionForm(ci)
 			If cef.ShowDialog() = DialogResult.OK Then
-				Dim lvi As ListViewItem = lvXmlFiles.Items.Add(ci.ConnectionName)
-				lvi.SubItems.Add(ci.ConnectionType.ToString())
+				Dim lvi As ListViewItem = lvXmlFiles.Items.Add(ci.Name)
+				lvi.SubItems.Add(ci.ConnectionDescriptor.SyntaxProvider.Description)
 				lvi.Tag = ci
 				lvi.Selected = True
 
@@ -229,10 +235,10 @@ Public Partial Class ConnectionForm
 		If lvXmlFiles.SelectedItems.Count > 0 Then
 			Dim ci As ConnectionInfo = DirectCast(lvXmlFiles.SelectedItems(0).Tag, ConnectionInfo)
 
-			Using cef As New ConnectionEditForm(ci)
+			Using cef As New EditXMLConnectionForm(ci)
 				If cef.ShowDialog() = DialogResult.OK Then
-					lvXmlFiles.SelectedItems(0).SubItems(0).Text = ci.ConnectionName
-					lvXmlFiles.SelectedItems(0).SubItems(1).Text = ci.ConnectionType.ToString()
+					lvConnections.SelectedItems(0).SubItems(0).Text = ci.Name
+					lvConnections.SelectedItems(0).SubItems(1).Text = ci.ConnectionDescriptor.GetDescription()
 				End If
 			End Using
 		End If

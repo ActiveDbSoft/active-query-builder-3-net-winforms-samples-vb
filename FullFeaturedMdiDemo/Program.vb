@@ -10,6 +10,7 @@
 
 Imports System.Threading
 Imports System.Windows.Forms
+Imports ActiveQueryBuilder.View.WinForms
 
 Friend NotInheritable Class Program
 	Private Sub New()
@@ -25,30 +26,36 @@ Friend NotInheritable Class Program
 	''' </summary>
 	<STAThread> _
 	Friend Shared Sub Main()
-		AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf CurrentDomain_UnhandledException
-		AddHandler Application.ThreadException, AddressOf Thread_UnhandledException
+	    AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf CurrentDomain_UnhandledException
+	    AddHandler Application.ThreadException, AddressOf Thread_UnhandledException
 
-		'if new version, import upgrade from previous version
-		If Settings.CallUpgrade Then
-			Settings.Upgrade()
-			Settings.CallUpgrade = False
-		End If
+	    Dim i = ControlFactory.Instance
+	    ' force call static constructor of control factory
+	    'if new version, import upgrade from previous version
+	    If Settings.CallUpgrade Then
+	        Settings.Upgrade()
+	        Settings.CallUpgrade = False
+	    End If
 
-		If Program.Settings.Connections IsNot Nothing Then
-			Connections = Program.Settings.Connections
-		End If
+	    If Program.Settings.Connections IsNot Nothing Then
+	        Connections = Program.Settings.Connections
+	        Connections.RemoveObsoleteConnectionInfos()
+	        Connections.RestoreData()
+	    End If
 
-		If Program.Settings.XmlFiles IsNot Nothing Then
-			XmlFiles = Program.Settings.XmlFiles
-		End If
+	    If Program.Settings.XmlFiles IsNot Nothing Then
+	        XmlFiles = Program.Settings.XmlFiles
+	        XmlFiles.RemoveObsoleteConnectionInfos()
+	    End If
 
-		Application.EnableVisualStyles()
-		Application.SetCompatibleTextRenderingDefault(False)
-		Application.Run(New MainForm())
+	    Application.EnableVisualStyles()
+	    Application.SetCompatibleTextRenderingDefault(False)
+	    Application.Run(New MainForm())
 
-		Program.Settings.Connections = Connections
-		Program.Settings.XmlFiles = XmlFiles
-		Program.Settings.Save()
+	    Connections.SaveData()
+	    Program.Settings.Connections = Connections
+	    Program.Settings.XmlFiles = XmlFiles
+	    Program.Settings.Save()
 	End Sub
 
 	Private Shared Sub CurrentDomain_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs)

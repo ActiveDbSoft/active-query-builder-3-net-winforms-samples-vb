@@ -19,7 +19,7 @@ Imports ActiveQueryBuilder.View.WinForms
 Friend Partial Class OfflineModePage
 	Inherits UserControl
 	Private _queryBuilder As QueryBuilder = Nothing
-	Private _metadataContainerCopy As MetadataContainer = Nothing
+	Private _sqlContext As SQLContext
 	Private _syntaxProvider As BaseSyntaxProvider = Nothing
 	Private _modified As Boolean = False
 
@@ -38,8 +38,8 @@ Friend Partial Class OfflineModePage
 		_queryBuilder = queryBuilder
 		_syntaxProvider = syntaxProvider
 
-		_metadataContainerCopy = New MetadataContainer(queryBuilder.SQLContext)
-		_metadataContainerCopy.Assign(_queryBuilder.MetadataContainer)
+		_sqlContext = New SQLContext()
+		_sqlContext.Assign(queryBuilder.SQLContext)
 
 		InitializeComponent()
 
@@ -55,7 +55,7 @@ Friend Partial Class OfflineModePage
 	End Sub
 
 	Protected Overrides Sub Dispose(disposing As Boolean)
-		_metadataContainerCopy.Dispose()
+		_sqlContext.Dispose()
 
 		RemoveHandler cbOfflineMode.CheckedChanged, AddressOf checkOfflineMode_CheckedChanged
 		RemoveHandler bEditMetadata.Click, AddressOf buttonEditMetadata_Click
@@ -79,7 +79,7 @@ Friend Partial Class OfflineModePage
 					_queryBuilder.MetadataProvider.Disconnect()
 				End If
 
-				_queryBuilder.MetadataContainer.Assign(_metadataContainerCopy)
+				_queryBuilder.SQLContext.Assign(_sqlContext)
 			Else
 				_queryBuilder.MetadataContainer.Items.Clear()
 			End If
@@ -92,17 +92,16 @@ Friend Partial Class OfflineModePage
 	End Sub
 
 	Private Sub buttonLoadMetadata_Click(sender As Object, e As EventArgs)
-		_metadataContainerCopy.BeginUpdate()
-
+		_sqlContext.MetadataContainer.BeginUpdate()
 		Try
-			Using f As New MetadataContainerLoadForm(_metadataContainerCopy, False)
+			Using f As New MetadataContainerLoadForm(_sqlContext.MetadataContainer)
 				If f.ShowDialog() = DialogResult.OK Then
 					Modified = True
 					cbOfflineMode.Checked = True
 				End If
 			End Using
 		Finally
-			_metadataContainerCopy.EndUpdate()
+			_sqlContext.MetadataContainer.EndUpdate()
 		End Try
 	End Sub
 
@@ -116,7 +115,7 @@ Friend Partial Class OfflineModePage
 	End Sub
 
 	Private Sub UpdateMetadataStats()
-		Dim metadataObjects As List(Of MetadataObject) = _metadataContainerCopy.Items.GetItemsRecursive(Of MetadataObject)(MetadataType.Objects)
+		Dim metadataObjects As List(Of MetadataObject) = _sqlContext.MetadataContainer.Items.GetItemsRecursive(Of MetadataObject)(MetadataType.Objects)
 		Dim t As Integer = 0, v As Integer = 0, p As Integer = 0, s As Integer = 0
 
 		For i As Integer = 0 To metadataObjects.Count - 1
@@ -139,7 +138,7 @@ Friend Partial Class OfflineModePage
 
 	Private Sub buttonLoadFromXML_Click(sender As Object, e As EventArgs)
 		If OpenDialog.ShowDialog() = DialogResult.OK Then
-			_metadataContainerCopy.ImportFromXML(OpenDialog.FileName)
+			_sqlContext.MetadataContainer.ImportFromXML(OpenDialog.FileName)
 			Modified = True
 			UpdateMetadataStats()
 		End If
@@ -147,12 +146,12 @@ Friend Partial Class OfflineModePage
 
 	Private Sub buttonSaveToXML_Click(sender As Object, e As EventArgs)
 		If SaveDialog.ShowDialog() = DialogResult.OK Then
-			_metadataContainerCopy.ExportToXML(SaveDialog.FileName)
+			_sqlContext.MetadataContainer.ExportToXML(SaveDialog.FileName)
 		End If
 	End Sub
 
 	Private Sub buttonEditMetadata_Click(sender As Object, e As EventArgs)
-		If QueryBuilder.EditMetadataContainer(_metadataContainerCopy, _queryBuilder.MetadataStructure, _queryBuilder.MetadataLoadingOptions) Then
+		If QueryBuilder.EditMetadataContainer(_sqlContext, _sqlContext.LoadingOptions) Then
 			Modified = True
 		End If
 	End Sub

@@ -41,7 +41,7 @@ Public Partial Class Form1
         }
 
         trialNoticePanel.Controls.Add(label)
-        Controls.Add(trialNoticePanel)
+	    Controls.Add(trialNoticePanel)
     End Sub
 
     Private Sub connectMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -73,7 +73,7 @@ Public Partial Class Form1
     Private Sub editMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs)
         ' Open the metadata container editor
 
-        QueryBuilder.EditMetadataContainer(queryBuilder.MetadataContainer, queryBuilder.MetadataStructure, queryBuilder.MetadataLoadingOptions)
+        QueryBuilder.EditMetadataContainer(queryBuilder.SQLContext, queryBuilder.MetadataLoadingOptions)
     End Sub
 
     Private Sub clearMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -198,33 +198,40 @@ Public Partial Class Form1
         MessageBox.Show(stats)
     End Sub
 
-    Public Sub ShowErrorBanner(control As Control, text As [String])
-        ' Destory banner if already showing
-        If True Then
-            Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
+    Public Sub ShowErrorBanner(ByVal control As Control, ByVal text As String)
+    If True Then
+        Dim existBanner As Boolean = False
+        Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
 
-            If banners.Length > 0 Then
-                For Each banner As Control In banners
-                    banner.Dispose()
-                Next
-            End If
+        If banners.Length > 0 Then
+
+            For Each banner As Control In banners
+
+                If Equals(text, banner.Text) Then
+                    existBanner = True
+                    Continue For
+                End If
+
+                banner.Dispose()
+            Next
         End If
 
-        ' Show new banner if text is not empty
-        If Not [String].IsNullOrEmpty(text) Then
-            Dim label As New Label() With {
-                .Name = "ErrorBanner",
-                .Text = text,
-                .BorderStyle = BorderStyle.FixedSingle,
-                .BackColor = Color.LightPink,
-                .AutoSize = True,
-                .Visible = True
-            }
+        If existBanner Then Return
+    End If
 
-            control.Controls.Add(label)
-            label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-            label.BringToFront()
-            control.Focus()
-        End If
-    End Sub
+    If Not String.IsNullOrEmpty(text) Then
+        Dim label As Label = New Label With {
+            .Name = "ErrorBanner",
+            .Text = text,
+            .BorderStyle = BorderStyle.FixedSingle,
+            .BackColor = Color.LightPink,
+            .AutoSize = True,
+            .Visible = True
+        }
+        control.Controls.Add(label)
+        label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
+        label.BringToFront()
+        control.Focus()
+    End If
+End Sub
 End Class

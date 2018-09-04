@@ -11,35 +11,22 @@
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Drawing
+Imports System.Linq
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.View.WinForms
+Imports ActiveQueryBuilder.View.WinForms.DatabaseSchemaView
 
 Namespace PropertiesForm
 	<ToolboxItem(False)> _
 	Friend Partial Class OfflineModePage
 		Inherits UserControl
-		Private ReadOnly _metadataContainerCopy As MetadataContainer
 		Private ReadOnly _sqlContext As SQLContext
+		Private ReadOnly _dbView As DatabaseSchemaView
 
-		Public Property Modified() As Boolean
-			Get
-				Return m_Modified
-			End Get
-			Set
-				m_Modified = Value
-			End Set
-		End Property
-		Private m_Modified As Boolean
-
-
-		Public Sub New(sqlContext As SQLContext)
+		Public Sub New(sqlContext As SQLContext, dbView As DatabaseSchemaView)
 			_sqlContext = sqlContext
-			Modified = False
-
-
-			_metadataContainerCopy = New MetadataContainer(_sqlContext)
-			_metadataContainerCopy.Assign(_sqlContext.MetadataContainer)
+		    _dbView = dbView
 
 			InitializeComponent()
 
@@ -55,8 +42,6 @@ Namespace PropertiesForm
 		End Sub
 
 		Protected Overrides Sub Dispose(disposing As Boolean)
-			_metadataContainerCopy.Dispose()
-
 			RemoveHandler cbOfflineMode.CheckedChanged, AddressOf checkOfflineMode_CheckedChanged
 			RemoveHandler bEditMetadata.Click, AddressOf buttonEditMetadata_Click
 			RemoveHandler bSaveToXML.Click, AddressOf buttonSaveToXML_Click
@@ -70,39 +55,23 @@ Namespace PropertiesForm
 			MyBase.Dispose(disposing)
 		End Sub
 
-		Public Sub ApplyChanges()
-			If Modified Then
-				_sqlContext.LoadingOptions.OfflineMode = cbOfflineMode.Checked
-
-				If _sqlContext.LoadingOptions.OfflineMode Then
-					If _sqlContext.MetadataProvider IsNot Nothing Then
-						_sqlContext.MetadataProvider.Disconnect()
-					End If
-
-					_sqlContext.MetadataContainer.Assign(_metadataContainerCopy)
-				Else
-					_sqlContext.MetadataContainer.Items.Clear()
-				End If
-			End If
-		End Sub
-
 		Private Sub checkOfflineMode_CheckedChanged(sender As Object, e As EventArgs)
-			Modified = True
+			_sqlContext.LoadingOptions.OfflineMode = cbOfflineMode.Checked
 			UpdateMode()
 		End Sub
 
 		Private Sub buttonLoadMetadata_Click(sender As Object, e As EventArgs)
-			_metadataContainerCopy.BeginUpdate()
+			_sqlContext.MetadataContainer.BeginUpdate()
 
 			Try
-				Using f As New MetadataContainerLoadForm(_metadataContainerCopy, False)
+				Using f As New MetadataContainerLoadForm(_sqlContext.MetadataContainer)
 					If f.ShowDialog() = DialogResult.OK Then
-						Modified = True
 						cbOfflineMode.Checked = True
+						_dbView.InitializeDatabaseSchemaTree()
 					End If
 				End Using
 			Finally
-				_metadataContainerCopy.EndUpdate()
+				_sqlContext.MetadataContainer.EndUpdate()
 			End Try
 		End Sub
 
@@ -116,45 +85,37 @@ Namespace PropertiesForm
 		End Sub
 
 		Private Sub UpdateMetadataStats()
-			Dim metadataObjects As List(Of MetadataObject) = _metadataContainerCopy.Items.GetItemsRecursive(Of MetadataObject)(MetadataType.Objects)
-			Dim t As Integer = 0, v As Integer = 0, p As Integer = 0, s As Integer = 0
+			Dim metadataObjects As IEnumerable(Of MetadataObject) = _sqlContext.MetadataContainer.Items.GetItemsRecursive(Of MetadataObject)(MetadataType.Objects)
 
-			For i As Integer = 0 To metadataObjects.Count - 1
-				Dim mo As MetadataObject = metadataObjects(i)
+			Dim t = metadataObjects.Count(Function(i) i.Type = MetadataType.Table)
+			Dim v = metadataObjects.Count(Function(i) i.Type = MetadataType.View)
+			Dim p = metadataObjects.Count(Function(i) i.Type = MetadataType.Procedure)
+			Dim s = metadataObjects.Count(Function(i) i.Type = MetadataType.Synonym)
 
-				If mo.Type = MetadataType.Table Then
-					t += 1
-				ElseIf mo.Type = MetadataType.View Then
-					v += 1
-				ElseIf mo.Type = MetadataType.Procedure Then
-					p += 1
-				ElseIf mo.Type = MetadataType.Synonym Then
-					s += 1
-				End If
-			Next
-
-			Dim tmp As String = "Loaded Metadata: {0} tables, {1} views, {2} procedures, {3} synonyms."
-			lMetadataObjectCount.Text = [String].Format(tmp, t, v, p, s)
+			Const  tmp As String = "Loaded Metadata: {0} tables, {1} views, {2} procedures, {3} synonyms."
+			lMetadataObjectCount.Text = String.Format(tmp, t, v, p, s)
 		End Sub
 
 		Private Sub buttonLoadFromXML_Click(sender As Object, e As EventArgs)
-			If OpenDialog.ShowDialog() = DialogResult.OK Then
-				_metadataContainerCopy.ImportFromXML(OpenDialog.FileName)
-				Modified = True
-				UpdateMetadataStats()
+			If OpenDialog.ShowDialog() <> DialogResult.OK Then
+				Return
 			End If
+
+			_sqlContext.MetadataContainer.ImportFromXML(OpenDialog.FileName)
+			_dbView.InitializeDatabaseSchemaTree()
+			UpdateMetadataStats()
 		End Sub
 
 		Private Sub buttonSaveToXML_Click(sender As Object, e As EventArgs)
-			If SaveDialog.ShowDialog() = DialogResult.OK Then
-				_metadataContainerCopy.ExportToXML(SaveDialog.FileName)
+			If SaveDialog.ShowDialog() <> DialogResult.OK Then
+				Return
 			End If
+
+			_sqlContext.MetadataContainer.ExportToXML(SaveDialog.FileName)
 		End Sub
 
 		Private Sub buttonEditMetadata_Click(sender As Object, e As EventArgs)
-			If QueryBuilder.EditMetadataContainer(_metadataContainerCopy, _sqlContext.MetadataStructure, _sqlContext.LoadingOptions) Then
-				Modified = True
-			End If
+			QueryBuilder.EditMetadataContainer(_sqlContext, _sqlContext.LoadingOptions)
 		End Sub
 	End Class
 End Namespace

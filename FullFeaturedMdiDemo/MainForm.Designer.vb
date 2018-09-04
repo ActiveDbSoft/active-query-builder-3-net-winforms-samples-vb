@@ -716,12 +716,10 @@
         Me.userQueriesView1.BackColor = System.Drawing.SystemColors.InactiveCaption
         Me.userQueriesView1.DisplaySaveButtons = false
         Me.userQueriesView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.userQueriesView1.FocusedItem = Nothing
         Me.userQueriesView1.Location = New System.Drawing.Point(3, 306)
         Me.userQueriesView1.Name = "userQueriesView1"
-        Me.userQueriesView1.QueryView = Nothing
         Me.userQueriesView1.Size = New System.Drawing.Size(194, 231)
-        Me.userQueriesView1.SQLContext = Nothing
-        Me.userQueriesView1.SQLQuery = Nothing
         Me.userQueriesView1.TabIndex = 7
         Me.userQueriesView1.Title = "Reusable Queries"
         '
@@ -740,18 +738,18 @@
         '
         'DBView
         '
-        Me.DBView.AllowRenameNodes = false
-        Me.DBView.BackColor = System.Drawing.Color.White
+        Me.DBView.BackColor = System.Drawing.SystemColors.Window
         Me.DBView.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DBView.FilterImageIndex = 14
         Me.DBView.Location = New System.Drawing.Point(3, 29)
-        Me.DBView.MaxToolTipWidth = 300
         Me.DBView.Name = "DBView"
+        Me.DBView.Options.DrawTreeLines = false
+        Me.DBView.Options.ImageIndices.FilterImageIndex = 14
+        Me.DBView.Options.ImageList = Nothing
         Me.DBView.QueryView = Nothing
+        Me.DBView.SelectedItems = New ActiveQueryBuilder.Core.MetadataStructureItem(-1) {}
         Me.DBView.Size = New System.Drawing.Size(194, 271)
         Me.DBView.SQLContext = Nothing
         Me.DBView.TabIndex = 1
-        Me.DBView.ViewMode = ActiveQueryBuilder.View.DatabaseSchemaView.ViewMode.Tree
         '
         'MainForm
         '

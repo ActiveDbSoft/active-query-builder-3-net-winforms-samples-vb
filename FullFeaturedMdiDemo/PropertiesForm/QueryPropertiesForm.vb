@@ -8,129 +8,171 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.ComponentModel
+Imports System.Collections.Generic
 Imports System.Drawing
+Imports System.IO
+Imports System.Text
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
+Imports ActiveQueryBuilder.Core.PropertiesEditors
+Imports ActiveQueryBuilder.Core.Serialization
+Imports ActiveQueryBuilder.View
+Imports ActiveQueryBuilder.View.PropertiesEditors
+Imports ActiveQueryBuilder.View.WinForms
+Imports ActiveQueryBuilder.View.WinForms.DatabaseSchemaView
+Imports ActiveQueryBuilder.View.WinForms.PropertiesEditors
+Imports ActiveQueryBuilder.View.WinForms.QueryView
+Imports ActiveQueryBuilder.View.WinForms.Serialization
+Imports Helpers = FullFeaturedMdiDemo.Common.Helpers
 
 Namespace PropertiesForm
 	Friend Partial Class QueryPropertiesForm
 		Inherits Form
-		Private ReadOnly _sqlSyntaxPage As SqlSyntaxPage
-		Private ReadOnly _offlineModePage As OfflineModePage
-		Private ReadOnly _generalPage As GeneralPage
-		Private ReadOnly _mainQueryPage As SqlFormattingPage
-		Private ReadOnly _derievedQueriesPage As SqlFormattingPage
-		Private ReadOnly _expressionSubqueriesPage As SqlFormattingPage
+		Private ReadOnly _childForm As ChildForm
+        Private ReadOnly _dbView As DatabaseSchemaView
 
-		Private _currentSelectedLink As LinkLabel
+		Private ReadOnly _linkToPage1 As IDictionary(Of Control, UserControl) = New Dictionary(Of Control, UserControl)()
+		Private ReadOnly _linkToPage2 As IDictionary(Of Control, UserControl) = New Dictionary(Of Control, UserControl)()
 
+		Private _currentSelectedLink1 As LinkLabel
+		Private _currentSelectedLink2 As LinkLabel
 
-		<DefaultValue(False)> _
-		<Browsable(False)> _
-		Public Property Modified() As Boolean
-			Get
-				Return _sqlSyntaxPage.Modified OrElse _offlineModePage.Modified OrElse _generalPage.Modified OrElse _mainQueryPage.Modified OrElse _derievedQueriesPage.Modified OrElse _expressionSubqueriesPage.Modified
-			End Get
-			Set
-				_sqlSyntaxPage.Modified = value
-				_offlineModePage.Modified = value
+		Private Sub RegisterPropertyPage(link As Control, propertiesObject As ObjectProperties)
+			Dim propertiesContainer As IPropertiesContainer = PropertiesFactory.GetPropertiesContainer(propertiesObject)
 
-				_generalPage.Modified = value
-				_mainQueryPage.Modified = value
-				_derievedQueriesPage.Modified = value
-				_expressionSubqueriesPage.Modified = value
-			End Set
-		End Property
+			' create property page control
+			Dim propertyPage As PropertiesBar = New PropertiesBar()
 
+			' set properties to property page
+			Dim propertiesControl As IPropertiesControl = DirectCast(propertyPage, IPropertiesControl)
+			propertiesControl.SetProperties(propertiesContainer)
 
-		Public Sub New(sqlContext As SQLContext, sqlFormattingOptions As SQLFormattingOptions)
-			InitializeComponent()
-
-			Dim syntaxProvider As BaseSyntaxProvider = If(sqlContext.SyntaxProvider IsNot Nothing, sqlContext.SyntaxProvider.Clone(), New GenericSyntaxProvider())
-
-			_sqlSyntaxPage = New SqlSyntaxPage(sqlContext, syntaxProvider)
-			_offlineModePage = New OfflineModePage(sqlContext)
-
-
-			_generalPage = New GeneralPage(sqlFormattingOptions)
-			_mainQueryPage = New SqlFormattingPage(SqlBuilderOptionsPages.MainQuery, sqlFormattingOptions)
-			_derievedQueriesPage = New SqlFormattingPage(SqlBuilderOptionsPages.DerievedQueries, sqlFormattingOptions)
-			_expressionSubqueriesPage = New SqlFormattingPage(SqlBuilderOptionsPages.ExpressionSubqueries, sqlFormattingOptions)
-
-			' Activate the first page
-			SideMenu_LinkClicked(linkSqlSyntax, New LinkLabelLinkClickedEventArgs(linkSqlSyntax.Links(0), MouseButtons.Left))
-
-			AddHandler Application.Idle, AddressOf Application_Idle
+			' register link -> propertyPage mapping
+			_linkToPage1.Add(link, propertyPage)
 		End Sub
 
-		Private Sub Application_Idle(sender As Object, e As EventArgs)
-			buttonApply.Enabled = Modified
+		Public Sub New(sqlContext As SQLContext, childForm As ChildForm, dbView As DatabaseSchemaView)
+			InitializeComponent()
+			_childForm = childForm
+            _dbView = dbView
+
+			' non-visual options =======================
+			' syntax page
+			_linkToPage1.Add(linkSqlSyntax, New SqlSyntaxPage(sqlContext))
+			' offline mode page
+			_linkToPage1.Add(linkOfflineMode, New OfflineModePage(sqlContext, _dbView))
+
+			' create and register property pages ==================================
+			' BehaviorOptions page
+			RegisterPropertyPage(linkBehaviorOptions, New ObjectProperties(_childForm.BehaviorOptions))
+			' DatabaseSchemaViewOptions page
+			RegisterPropertyPage(linkDatabaseSchemaView, New ObjectProperties(dbView.Options))
+			' DesignPaneOptions page
+			RegisterPropertyPage(linkDesignPane, New ObjectProperties(_childForm.DesignPaneOptions))
+			' VisualOptions page
+			RegisterPropertyPage(linkVisualOptions, New ObjectProperties(_childForm.VisualOptions))
+			' AddObjectDialogOptions page
+			RegisterPropertyPage(linkAddObjectDialog, New ObjectProperties(_childForm.AddObjectDialogOptions))
+			' DatasourceOptions page
+			RegisterPropertyPage(linkDatasourceOptions, New ObjectProperties(_childForm.DataSourceOptions))
+			' MetadataLoadingOptions page
+			RegisterPropertyPage(linkMetadataLoadingOptions, New ObjectProperties(_childForm.MetadataLoadingOptions))
+			' MetadataStructureOptions page
+			RegisterPropertyPage(linkMetadataStructureOptions, New ObjectProperties(_childForm.MetadataStructureOptions))
+			' QueryColumnListOptions page
+			RegisterPropertyPage(linkQueryColumnList, New ObjectProperties(_childForm.QueryColumnListOptions))
+            ' QueryNavigationBarOptions page
+            RegisterPropertyPage(LinkQueryNavBar, New ObjectProperties(_childForm.QueryNavBarOptions))
+            ' UserInterfaceOptions page
+            RegisterPropertyPage(LinkUserInterface, New ObjectProperties(_childForm.UserInterfaceOptions))
+			' SQL Formatting options ============================
+			' main query
+			_linkToPage2.Add(linkMain, New MainQueryTab(_childForm.SQLFormattingOptions))
+			_linkToPage2.Add(linkMainCommon, New CommonTab(_childForm.SQLFormattingOptions, _childForm.SQLFormattingOptions.MainQueryFormat))
+			_linkToPage2.Add(linkMainExpressions, New ExpressionsTab(_childForm.SQLFormattingOptions, _childForm.SQLFormattingOptions.MainQueryFormat))
+			' CTE query
+			_linkToPage2.Add(linkCte, New SubQueryTab(_childForm.SQLFormattingOptions, SubQueryType.Cte))
+			_linkToPage2.Add(linkCteCommon, New CommonTab(_childForm.SQLFormattingOptions, _childForm.SQLFormattingOptions.CTESubQueryFormat))
+			_linkToPage2.Add(linkCteExpressions, New ExpressionsTab(_childForm.SQLFormattingOptions, _childForm.SQLFormattingOptions.CTESubQueryFormat))
+			' Derived table
+			_linkToPage2.Add(linkDerived, New SubQueryTab(_childForm.SQLFormattingOptions, SubQueryType.Derived))
+			_linkToPage2.Add(linkDerivedCommon, New CommonTab(_childForm.SQLFormattingOptions, _childForm.SQLFormattingOptions.DerivedQueryFormat))
+			_linkToPage2.Add(linkDerivedExpressions, New ExpressionsTab(_childForm.SQLFormattingOptions, _childForm.SQLFormattingOptions.DerivedQueryFormat))
+			' expression
+			_linkToPage2.Add(linkExpression, New SubQueryTab(_childForm.SQLFormattingOptions, SubQueryType.Expression))
+			_linkToPage2.Add(linkExpressionCommon, New CommonTab(_childForm.SQLFormattingOptions, _childForm.SQLFormattingOptions.ExpressionSubQueryFormat))
+			_linkToPage2.Add(linkExpressionExpressions, New ExpressionsTab(_childForm.SQLFormattingOptions, _childForm.SQLFormattingOptions.ExpressionSubQueryFormat))
+
+			' Activate the first page on tab1
+			SideMenu1_LinkClicked(linkSqlSyntax, New LinkLabelLinkClickedEventArgs(linkSqlSyntax.Links(0), MouseButtons.Left))
+			' Activate the first page on tab2
+			SideMenu2_LinkClicked(linkMain, New LinkLabelLinkClickedEventArgs(linkMain.Links(0), MouseButtons.Left))
 		End Sub
 
 		Private Sub QueryBuilderPropertiesForm_Paint(sender As Object, e As PaintEventArgs)
-			Dim r As Rectangle = Rectangle.Inflate(panel1.Bounds, 1, 1)
+			Dim r As Rectangle = Rectangle.Inflate(panelQueryBuilder.Bounds, 1, 1)
 
 			e.Graphics.DrawRectangle(SystemPens.ControlDark, r)
 		End Sub
 
-		Private Sub SideMenu_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
-			If _currentSelectedLink IsNot Nothing Then
-				_currentSelectedLink.LinkColor = Color.Black
+		Private Sub SideMenu1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles linkVisualOptions.LinkClicked, LinkUserInterface.LinkClicked, linkSqlSyntax.LinkClicked, LinkQueryNavBar.LinkClicked, linkQueryColumnList.LinkClicked, linkOfflineMode.LinkClicked, linkMetadataStructureOptions.LinkClicked, linkMetadataLoadingOptions.LinkClicked, linkDesignPane.LinkClicked, linkDatasourceOptions.LinkClicked, linkDatabaseSchemaView.LinkClicked, linkBehaviorOptions.LinkClicked, linkAddObjectDialog.LinkClicked  
+			If _currentSelectedLink1 IsNot Nothing Then
+				_currentSelectedLink1.LinkColor = Color.Black
 			End If
 
-			If sender Is linkSqlSyntax Then
-				SwitchPage(_sqlSyntaxPage)
-			ElseIf sender Is linkOfflineMode Then
-				SwitchPage(_offlineModePage)
-			ElseIf sender Is linkGeneral Then
-				SwitchPage(_generalPage)
-			ElseIf sender Is linkMainQuery Then
-				SwitchPage(_mainQueryPage)
-			ElseIf sender Is linkDerievedQueries Then
-				SwitchPage(_derievedQueriesPage)
-			ElseIf sender Is linkExpressionSubqueries Then
-				SwitchPage(_expressionSubqueriesPage)
-			End If
+			_currentSelectedLink1 = DirectCast(sender, LinkLabel)
+			_currentSelectedLink1.LinkColor = Color.Blue
 
-			_currentSelectedLink = DirectCast(sender, LinkLabel)
-			_currentSelectedLink.LinkColor = Color.Blue
+			SwitchPage1(_linkToPage1(_currentSelectedLink1))
 		End Sub
 
-		Private Sub buttonApply_Click(sender As Object, e As EventArgs)
-			ApplyChanges()
-		End Sub
+		Private Sub SideMenu2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) 
 
-		Private Sub buttonOk_Click(sender As Object, e As EventArgs)
-			ApplyChanges()
-		End Sub
+        End Sub
 
-		Private Sub flowLayoutPanel1_Paint(sender As Object, e As PaintEventArgs)
-			Dim p As New Pen(SystemColors.ControlDark, 1)
-			Dim first As New Point(flowLayoutPanel1.ClientRectangle.Right - 1, flowLayoutPanel1.ClientRectangle.Top + 10)
-			Dim second As New Point(flowLayoutPanel1.ClientRectangle.Right - 1, flowLayoutPanel1.ClientRectangle.Bottom - 10)
+		Private Sub flowLayoutPanel_Paint(sender As Object, e As PaintEventArgs) 
 
-			e.Graphics.DrawLine(p, first, second)
-		End Sub
+        End Sub
 
-		Private Sub SwitchPage(page As UserControl)
-			panelPages.SuspendLayout()
-			panelPages.AutoScrollPosition = New Point(0, 0)
-			panelPages.Controls.Clear()
+		Private Sub SwitchPage1(page As UserControl)
+			panelPages1.SuspendLayout()
+			panelPages1.AutoScrollPosition = New Point(0, 0)
+			panelPages1.Controls.Clear()
 			page.Location = New Point(10, 10)
-			panelPages.Controls.Add(page)
-			panelPages.ResumeLayout()
+			page.Dock = DockStyle.Fill
+			panelPages1.Controls.Add(page)
+			panelPages1.ResumeLayout()
 		End Sub
 
-		Public Sub ApplyChanges()
-			_sqlSyntaxPage.ApplyChanges()
-			_offlineModePage.ApplyChanges()
-			_generalPage.ApplyChanges()
-			_mainQueryPage.ApplyChanges()
-			_derievedQueriesPage.ApplyChanges()
-			_expressionSubqueriesPage.ApplyChanges()
-
-			Modified = False
+		Private Sub SwitchPage2(page As UserControl)
+			panelPages2.SuspendLayout()
+			panelPages2.AutoScrollPosition = New Point(0, 0)
+			panelPages2.Controls.Clear()
+			page.Location = New Point(10, 10)
+			page.Dock = DockStyle.Fill
+			panelPages2.Controls.Add(page)
+			panelPages2.ResumeLayout()
 		End Sub
-	End Class
+
+		Private Sub buttonLoad_Click(sender As Object, e As System.EventArgs) Handles buttonLoad.Click 
+			Using dialog As OpenFileDialog = New OpenFileDialog()
+				If dialog.ShowDialog() <> DialogResult.OK Then
+					Return
+				End If
+
+				Dim queryBuilderOptionsXml As String = File.ReadAllText(dialog.FileName)
+                Helpers.DeserializeOptions(queryBuilderOptionsXml,_dbView, _childForm)
+			End Using
+		End Sub
+
+		Private Sub buttonSave_Click(sender As Object, e As System.EventArgs) Handles buttonSave.Click 
+			Using dialog As SaveFileDialog = New SaveFileDialog()
+				If dialog.ShowDialog() <> DialogResult.OK Then
+					Return
+				End If
+
+			    Helpers.SerializeOptions(dialog.FileName, _dbView, _childForm)
+			End Using
+		End Sub
+    End Class
 End Namespace

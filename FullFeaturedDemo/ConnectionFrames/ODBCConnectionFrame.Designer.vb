@@ -25,47 +25,32 @@
 		Private Sub InitializeComponent()
 			Me.tbConnectionString = New System.Windows.Forms.TextBox()
 			Me.label1 = New System.Windows.Forms.Label()
-			Me.btnTest = New System.Windows.Forms.Button()
 			Me.SuspendLayout()
 			' 
 			' tbConnectionString
 			' 
 			Me.tbConnectionString.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) Or System.Windows.Forms.AnchorStyles.Left) Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-			Me.tbConnectionString.Location = New System.Drawing.Point(3, 32)
+			Me.tbConnectionString.Location = New System.Drawing.Point(3, 22)
 			Me.tbConnectionString.Multiline = True
 			Me.tbConnectionString.Name = "tbConnectionString"
 			Me.tbConnectionString.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-			Me.tbConnectionString.Size = New System.Drawing.Size(281, 136)
+			Me.tbConnectionString.Size = New System.Drawing.Size(281, 174)
 			Me.tbConnectionString.TabIndex = 0
-			AddHandler Me.tbConnectionString.TextChanged, New System.EventHandler(AddressOf Me.tbConnectionString_TextChanged)
 			' 
 			' label1
 			' 
 			Me.label1.AutoSize = True
-			Me.label1.Location = New System.Drawing.Point(3, 8)
+			Me.label1.Location = New System.Drawing.Point(3, 3)
 			Me.label1.Margin = New System.Windows.Forms.Padding(3)
 			Me.label1.Name = "label1"
-			Me.label1.Size = New System.Drawing.Size(122, 13)
+			Me.label1.Size = New System.Drawing.Size(119, 13)
 			Me.label1.TabIndex = 3
-			Me.label1.Text = "Enter Connection String:"
-			' 
-			' btnTest
-			' 
-			Me.btnTest.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-			Me.btnTest.Enabled = False
-			Me.btnTest.Location = New System.Drawing.Point(86, 173)
-			Me.btnTest.Name = "btnTest"
-			Me.btnTest.Size = New System.Drawing.Size(198, 23)
-			Me.btnTest.TabIndex = 7
-			Me.btnTest.Text = "Test connection and detect syntax"
-			Me.btnTest.UseVisualStyleBackColor = True
-			AddHandler Me.btnTest.Click, New System.EventHandler(AddressOf Me.btnTest_Click)
+			Me.label1.Text = "Enter connection string:"
 			' 
 			' ODBCConnectionFrame
 			' 
 			Me.AutoScaleDimensions = New System.Drawing.SizeF(6F, 13F)
 			Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-			Me.Controls.Add(Me.btnTest)
 			Me.Controls.Add(Me.label1)
 			Me.Controls.Add(Me.tbConnectionString)
 			Me.Name = "ODBCConnectionFrame"
@@ -79,6 +64,6 @@
 
 		Private tbConnectionString As System.Windows.Forms.TextBox
 		Private label1 As System.Windows.Forms.Label
-		Private btnTest As System.Windows.Forms.Button
+
 	End Class
 End Namespace

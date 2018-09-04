@@ -86,34 +86,42 @@ Public Partial Class Form1
         End Using
     End Sub
 
-	Public Sub ShowErrorBanner(control As Control, text As [String])
-		' Destory banner if already showing
-		If True Then
-			Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
+	Public Sub ShowErrorBanner(ByVal control As Control, ByVal text As String)
+    If True Then
+        Dim existBanner As Boolean = False
+        Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
 
-			If banners.Length > 0 Then
-				For Each banner As Control In banners
-					banner.Dispose()
-				Next
-			End If
-		End If
+        If banners.Length > 0 Then
 
-		' Show new banner if text is not empty
-		If Not [String].IsNullOrEmpty(text) Then
-            Dim label As New Label() With {
-                .Name = "ErrorBanner",
-                .Text = text,
-                .BorderStyle = BorderStyle.FixedSingle,
-                .BackColor = Color.LightPink,
-                .AutoSize = True,
-                .Visible = True
-            }
+            For Each banner As Control In banners
 
-			control.Controls.Add(label)
-			label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-			control.Focus()
-		End If
-	End Sub
+                If Equals(text, banner.Text) Then
+                    existBanner = True
+                    Continue For
+                End If
+
+                banner.Dispose()
+            Next
+        End If
+
+        If existBanner Then Return
+    End If
+
+    If Not String.IsNullOrEmpty(text) Then
+        Dim label As Label = New Label With {
+            .Name = "ErrorBanner",
+            .Text = text,
+            .BorderStyle = BorderStyle.FixedSingle,
+            .BackColor = Color.LightPink,
+            .AutoSize = True,
+            .Visible = True
+        }
+        control.Controls.Add(label)
+        label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
+        label.BringToFront()
+        control.Focus()
+    End If
+End Sub
 
     Private Sub aboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles aboutToolStripMenuItem.Click
         queryBuilder.ShowAboutDialog()

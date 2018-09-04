@@ -18,7 +18,7 @@ Partial Class ChildForm
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ChildForm))
-        Dim PropertiesEditorsOptions6 As ActiveQueryBuilder.View.PropertiesEditors.PropertiesEditorsOptions = New ActiveQueryBuilder.View.PropertiesEditors.PropertiesEditorsOptions()
+        Dim PropertiesEditorsOptions6 As ActiveQueryBuilder.Core.PropertiesEditors.PropertiesEditorsOptions = New ActiveQueryBuilder.Core.PropertiesEditors.PropertiesEditorsOptions()
         Me.toolStripPanel1 = New System.Windows.Forms.ToolStripPanel()
         Me.contextMenuStripForRichTextBox = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.tsmiUndo = New System.Windows.Forms.ToolStripMenuItem()
@@ -385,7 +385,7 @@ Partial Class ChildForm
         PropertiesEditorsOptions6.DescriptionMaxHeight = 200
         PropertiesEditorsOptions6.DescriptionMaxWidth = 200
         PropertiesEditorsOptions6.DescriptionMinWidth = 150
-        PropertiesEditorsOptions6.MultiLineEditorsCaptionPosition = ActiveQueryBuilder.View.PropertiesEditors.MultiLineEditorCaptionPosition.Above
+        PropertiesEditorsOptions6.MultiLineEditorsCaptionPosition = ActiveQueryBuilder.Core.PropertiesEditors.MultiLineEditorCaptionPosition.Above
         PropertiesEditorsOptions6.MultiLineEditorsMaxWidth = 500
         PropertiesEditorsOptions6.MultiLineEditorsMinWidth = 120
         PropertiesEditorsOptions6.NarrowEditControlsMaxWidth = 80

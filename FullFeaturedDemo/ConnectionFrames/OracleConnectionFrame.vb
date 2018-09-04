@@ -8,8 +8,9 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
 Imports Oracle.ManagedDataAccess.Client
+Imports System.Windows.Forms
+
 
 Namespace ConnectionFrames
 	Public NotInheritable Partial Class OracleConnectionFrame
@@ -29,13 +30,14 @@ Namespace ConnectionFrames
 			InitializeComponent()
 
 			If [String].IsNullOrEmpty(connectionString__1) Then
-				tbUserID.Enabled = True
-				tbPassword.Enabled = True
+				cmbIntegratedSecurity.SelectedIndex = 0
+				tbUserID.Enabled = False
+				tbPassword.Enabled = False
 			Else
 				ConnectionString = connectionString__1
 			End If
 
-			AddHandler btnEditConnectionString.Click, AddressOf btnEditConnectionString_Click
+			AddHandler cmbIntegratedSecurity.SelectedIndexChanged, AddressOf cmbIntegratedSecurity_SelectedIndexChanged
 		End Sub
 
 		Public Function GetConnectionString() As String
@@ -44,7 +46,7 @@ Namespace ConnectionFrames
 				builder.ConnectionString = _connectionString
 
 				builder.DataSource = tbDataSource.Text
-				builder.UserID = tbUserID.Text
+				builder.UserID = If((cmbIntegratedSecurity.SelectedIndex = 0), "/", tbUserID.Text)
 				builder.Password = tbPassword.Text
 
 				_connectionString = builder.ConnectionString
@@ -59,17 +61,23 @@ Namespace ConnectionFrames
 
 			If Not [String].IsNullOrEmpty(_connectionString) Then
 				Try
-					Dim builder As New OracleConnectionStringBuilder()
-					builder.ConnectionString = _connectionString
-
-					tbDataSource.Text = builder.DataSource
-					tbUserID.Text = builder.UserID
-					tbPassword.Text = builder.Password
-
-					_connectionString = builder.ConnectionString
+				    Dim builder As OracleConnectionStringBuilder = New OracleConnectionStringBuilder()
+				    builder.ConnectionString = _connectionString
+				    tbDataSource.Text = builder.DataSource
+				    cmbIntegratedSecurity.SelectedIndex = If((builder.UserID Is "/"), 0, 1)
+				    tbUserID.Text = builder.UserID
+				    tbUserID.Enabled = (builder.UserID IsNot "/")
+				    tbPassword.Text = builder.Password
+				    tbPassword.Enabled = (builder.UserID IsNot "/")
+				    _connectionString = builder.ConnectionString				    					
 				Catch
 				End Try
 			End If
+		End Sub
+
+		Private Sub cmbIntegratedSecurity_SelectedIndexChanged(sender As Object, e As EventArgs)
+			tbUserID.Enabled = (cmbIntegratedSecurity.SelectedIndex = 1)
+			tbPassword.Enabled = (cmbIntegratedSecurity.SelectedIndex = 1)
 		End Sub
 
 		Private Sub btnEditConnectionString_Click(sender As Object, e As EventArgs)

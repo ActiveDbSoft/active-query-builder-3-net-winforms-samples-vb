@@ -16,25 +16,10 @@ Namespace PropertiesForm
 	<ToolboxItem(False)> _
 	Friend Partial Class SqlSyntaxPage
 		Inherits UserControl
-		Private _syntaxProvider As BaseSyntaxProvider = Nothing
 		Private ReadOnly _sqlContext As SQLContext
 
-
-		Public Property Modified() As Boolean
-			Get
-				Return m_Modified
-			End Get
-			Set
-				m_Modified = Value
-			End Set
-		End Property
-		Private m_Modified As Boolean
-
-
-		Public Sub New(sqlQuery As SQLContext, syntaxProvider As BaseSyntaxProvider)
-			Modified = False
-			_sqlContext = sqlQuery
-			_syntaxProvider = syntaxProvider
+		Public Sub New(sqlContext As SQLContext)
+			_sqlContext = sqlContext
 
 			InitializeComponent()
 
@@ -91,7 +76,7 @@ Namespace PropertiesForm
 			ElseIf TypeOf _sqlContext.SyntaxProvider Is SQL2003SyntaxProvider Then
 				comboSqlDialect.SelectedItem = "ANSI SQL-2003"
 			ElseIf TypeOf _sqlContext.SyntaxProvider Is FirebirdSyntaxProvider Then
-				Select Case TryCast(_sqlContext.SyntaxProvider, FirebirdSyntaxProvider).ServerVersion
+				Select Case DirectCast(_sqlContext.SyntaxProvider, FirebirdSyntaxProvider).ServerVersion
 					Case FirebirdVersion.Firebird10
 						comboSqlDialect.SelectedItem = "Firebird 1.0"
 						Exit Select
@@ -108,7 +93,7 @@ Namespace PropertiesForm
 			ElseIf TypeOf _sqlContext.SyntaxProvider Is DB2SyntaxProvider Then
 				comboSqlDialect.SelectedItem = "IBM DB2"
 			ElseIf TypeOf _sqlContext.SyntaxProvider Is InformixSyntaxProvider Then
-				Select Case TryCast(_sqlContext.SyntaxProvider, InformixSyntaxProvider).ServerVersion
+				Select Case DirectCast(_sqlContext.SyntaxProvider, InformixSyntaxProvider).ServerVersion
 					Case InformixVersion.DS8
 						comboSqlDialect.SelectedItem = "IBM Informix 8"
 						Exit Select
@@ -120,7 +105,7 @@ Namespace PropertiesForm
 						Exit Select
 				End Select
 			ElseIf TypeOf _sqlContext.SyntaxProvider Is MSAccessSyntaxProvider Then
-				Select Case TryCast(_sqlContext.SyntaxProvider, MSAccessSyntaxProvider).ServerVersion
+				Select Case DirectCast(_sqlContext.SyntaxProvider, MSAccessSyntaxProvider).ServerVersion
 					Case MSAccessServerVersion.MSJET3
 						comboSqlDialect.SelectedItem = "MS Access 97 (MS Jet 3.0)"
 						Exit Select
@@ -134,7 +119,7 @@ Namespace PropertiesForm
 			ElseIf TypeOf _sqlContext.SyntaxProvider Is MSSQLCESyntaxProvider Then
 				comboSqlDialect.SelectedItem = "MS SQL Server Compact Edition"
 			ElseIf TypeOf _sqlContext.SyntaxProvider Is MSSQLSyntaxProvider Then
-				Select Case TryCast(_sqlContext.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion
+				Select Case DirectCast(_sqlContext.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion
 					Case MSSQLServerVersion.MSSQL7
 						comboSqlDialect.SelectedItem = "MS SQL Server 7"
 						Exit Select
@@ -158,17 +143,17 @@ Namespace PropertiesForm
 						Exit Select
 				End Select
 			ElseIf TypeOf _sqlContext.SyntaxProvider Is MySQLSyntaxProvider Then
-				If TryCast(_sqlContext.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt < 40000 Then
+				If DirectCast(_sqlContext.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt < 40000 Then
 					comboSqlDialect.SelectedItem = "MySQL 3.xx"
-				ElseIf TryCast(_sqlContext.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt <= 40099 Then
+				ElseIf DirectCast(_sqlContext.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt <= 40099 Then
 					comboSqlDialect.SelectedItem = "MySQL 4.0"
-				ElseIf TryCast(_sqlContext.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt < 50000 Then
+				ElseIf DirectCast(_sqlContext.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt < 50000 Then
 					comboSqlDialect.SelectedItem = "MySQL 4.1"
 				Else
 					comboSqlDialect.SelectedItem = "MySQL 5.0"
 				End If
 			ElseIf TypeOf _sqlContext.SyntaxProvider Is OracleSyntaxProvider Then
-				Select Case TryCast(_sqlContext.SyntaxProvider, OracleSyntaxProvider).ServerVersion
+				Select Case DirectCast(_sqlContext.SyntaxProvider, OracleSyntaxProvider).ServerVersion
 					Case OracleServerVersion.Oracle7
 						comboSqlDialect.SelectedItem = "Oracle 7"
 						Exit Select
@@ -193,7 +178,7 @@ Namespace PropertiesForm
 			ElseIf TypeOf _sqlContext.SyntaxProvider Is SQLiteSyntaxProvider Then
 				comboSqlDialect.SelectedItem = "SQLite"
 			ElseIf TypeOf _sqlContext.SyntaxProvider Is SybaseSyntaxProvider Then
-				Select Case TryCast(_sqlContext.SyntaxProvider, SybaseSyntaxProvider).ServerVersion
+				Select Case DirectCast(_sqlContext.SyntaxProvider, SybaseSyntaxProvider).ServerVersion
 					Case SybaseServerVersion.SybaseASE
 						comboSqlDialect.SelectedItem = "Sybase ASE"
 						Exit Select
@@ -240,179 +225,199 @@ Namespace PropertiesForm
 		End Sub
 
 		Private Sub comboSqlDialect_SelectedIndexChanged(sender As Object, e As EventArgs)
+			Dim syntaxProvider As BaseSyntaxProvider
+
 			Select Case TryCast(comboSqlDialect.SelectedItem, String)
 				Case "ANSI SQL-92"
-					_syntaxProvider = New SQL92SyntaxProvider()
+					syntaxProvider = New SQL92SyntaxProvider()
 					Exit Select
 				Case "Auto"
-					_syntaxProvider = New AutoSyntaxProvider()
+					syntaxProvider = New AutoSyntaxProvider()
 					Exit Select
 				Case "ANSI SQL-89"
-					_syntaxProvider = New SQL89SyntaxProvider()
+					syntaxProvider = New SQL89SyntaxProvider()
 					Exit Select
 				Case "ANSI SQL-2003"
-					_syntaxProvider = New SQL2003SyntaxProvider()
+					syntaxProvider = New SQL2003SyntaxProvider()
 					Exit Select
 				Case "Firebird 1.0"
-					_syntaxProvider = New FirebirdSyntaxProvider()
-					TryCast(_syntaxProvider, FirebirdSyntaxProvider).ServerVersion = FirebirdVersion.Firebird10
+					syntaxProvider = New FirebirdSyntaxProvider() With { _
+						.ServerVersion = FirebirdVersion.Firebird10 _
+					}
 					Exit Select
 				Case "Firebird 1.5"
-					_syntaxProvider = New FirebirdSyntaxProvider()
-					TryCast(_syntaxProvider, FirebirdSyntaxProvider).ServerVersion = FirebirdVersion.Firebird15
+					syntaxProvider = New FirebirdSyntaxProvider() With { _
+						.ServerVersion = FirebirdVersion.Firebird15 _
+					}
 					Exit Select
 				Case "Firebird 2.0"
-					_syntaxProvider = New FirebirdSyntaxProvider()
-					TryCast(_syntaxProvider, FirebirdSyntaxProvider).ServerVersion = FirebirdVersion.Firebird20
+					syntaxProvider = New FirebirdSyntaxProvider() With { _
+						.ServerVersion = FirebirdVersion.Firebird20 _
+					}
 					Exit Select
 				Case "Firebird 2.5"
-					_syntaxProvider = New FirebirdSyntaxProvider()
-					TryCast(_syntaxProvider, FirebirdSyntaxProvider).ServerVersion = FirebirdVersion.Firebird25
+					syntaxProvider = New FirebirdSyntaxProvider() With { _
+						.ServerVersion = FirebirdVersion.Firebird25 _
+					}
 					Exit Select
 				Case "IBM DB2"
-					_syntaxProvider = New DB2SyntaxProvider()
+					syntaxProvider = New DB2SyntaxProvider()
 					Exit Select
 				Case "IBM Informix 8"
-					_syntaxProvider = New InformixSyntaxProvider()
-					TryCast(_syntaxProvider, InformixSyntaxProvider).ServerVersion = InformixVersion.DS8
+					syntaxProvider = New InformixSyntaxProvider() With { _
+						.ServerVersion = InformixVersion.DS8 _
+					}
 					Exit Select
 				Case "IBM Informix 9"
-					_syntaxProvider = New InformixSyntaxProvider()
-					TryCast(_syntaxProvider, InformixSyntaxProvider).ServerVersion = InformixVersion.DS9
+					syntaxProvider = New InformixSyntaxProvider() With { _
+						.ServerVersion = InformixVersion.DS9 _
+					}
 					Exit Select
 				Case "IBM Informix 10"
-					_syntaxProvider = New InformixSyntaxProvider()
-					TryCast(_syntaxProvider, InformixSyntaxProvider).ServerVersion = InformixVersion.DS10
+					syntaxProvider = New InformixSyntaxProvider() With { _
+						.ServerVersion = InformixVersion.DS10 _
+					}
 					Exit Select
 				Case "MS Access 97 (MS Jet 3.0)"
-					_syntaxProvider = New MSAccessSyntaxProvider()
-					TryCast(_syntaxProvider, MSAccessSyntaxProvider).ServerVersion = MSAccessServerVersion.MSJET3
+					syntaxProvider = New MSAccessSyntaxProvider() With { _
+						.ServerVersion = MSAccessServerVersion.MSJET3 _
+					}
 					Exit Select
 				Case "MS Access 2000 (MS Jet 4.0)", "MS Access XP (MS Jet 4.0)", "MS Access 2003 (MS Jet 4.0)"
-					_syntaxProvider = New MSAccessSyntaxProvider()
-					TryCast(_syntaxProvider, MSAccessSyntaxProvider).ServerVersion = MSAccessServerVersion.MSJET4
+					syntaxProvider = New MSAccessSyntaxProvider() With { _
+						.ServerVersion = MSAccessServerVersion.MSJET4 _
+					}
 					Exit Select
 				Case "MS SQL Server 7"
-					_syntaxProvider = New MSSQLSyntaxProvider()
-					TryCast(_syntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL7
+					syntaxProvider = New MSSQLSyntaxProvider() With { _
+						.ServerVersion = MSSQLServerVersion.MSSQL7 _
+					}
 					Exit Select
 				Case "MS SQL Server 2000"
-					_syntaxProvider = New MSSQLSyntaxProvider()
-					TryCast(_syntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2000
+					syntaxProvider = New MSSQLSyntaxProvider() With { _
+						.ServerVersion = MSSQLServerVersion.MSSQL2000 _
+					}
 					Exit Select
 				Case "MS SQL Server 2005"
-					_syntaxProvider = New MSSQLSyntaxProvider()
-					TryCast(_syntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2005
+					syntaxProvider = New MSSQLSyntaxProvider() With { _
+						.ServerVersion = MSSQLServerVersion.MSSQL2005 _
+					}
 					Exit Select
 				Case "MS SQL Server 2008"
-					_syntaxProvider = New MSSQLSyntaxProvider()
-					TryCast(_syntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2008
+					syntaxProvider = New MSSQLSyntaxProvider() With { _
+						.ServerVersion = MSSQLServerVersion.MSSQL2008 _
+					}
 					Exit Select
 				Case "MS SQL Server 2012"
-					_syntaxProvider = New MSSQLSyntaxProvider()
-					TryCast(_syntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2012
+					syntaxProvider = New MSSQLSyntaxProvider() With { _
+						.ServerVersion = MSSQLServerVersion.MSSQL2012 _
+					}
 					Exit Select
 				Case "MS SQL Server 2014"
-					_syntaxProvider = New MSSQLSyntaxProvider()
-					TryCast(_syntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2014
+					syntaxProvider = New MSSQLSyntaxProvider() With { _
+						.ServerVersion = MSSQLServerVersion.MSSQL2014 _
+					}
 					Exit Select
 				Case "MS SQL Server Compact Edition"
-					_syntaxProvider = New MSSQLCESyntaxProvider()
+					syntaxProvider = New MSSQLCESyntaxProvider()
 					Exit Select
 				Case "MySQL 3.xx"
-					_syntaxProvider = New MySQLSyntaxProvider()
-					TryCast(_syntaxProvider, MySQLSyntaxProvider).ServerVersionInt = 39999
+					syntaxProvider = New MySQLSyntaxProvider() With { _
+						.ServerVersionInt = 39999 _
+					}
 					Exit Select
 				Case "MySQL 4.0"
-					_syntaxProvider = New MySQLSyntaxProvider()
-					TryCast(_syntaxProvider, MySQLSyntaxProvider).ServerVersionInt = 40099
+					syntaxProvider = New MySQLSyntaxProvider() With { _
+						.ServerVersionInt = 40099 _
+					}
 					Exit Select
 				Case "MySQL 4.1"
-					_syntaxProvider = New MySQLSyntaxProvider()
-					TryCast(_syntaxProvider, MySQLSyntaxProvider).ServerVersionInt = 49999
+					syntaxProvider = New MySQLSyntaxProvider() With { _
+						.ServerVersionInt = 49999 _
+					}
 					Exit Select
 				Case "MySQL 5.0"
-					_syntaxProvider = New MySQLSyntaxProvider()
-					TryCast(_syntaxProvider, MySQLSyntaxProvider).ServerVersionInt = 50000
+					syntaxProvider = New MySQLSyntaxProvider() With { _
+						.ServerVersionInt = 50000 _
+					}
 					Exit Select
 				Case "Oracle 7"
-					_syntaxProvider = New OracleSyntaxProvider()
-					TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle7
+					syntaxProvider = New OracleSyntaxProvider() With { _
+						.ServerVersion = OracleServerVersion.Oracle7 _
+					}
 					Exit Select
 				Case "Oracle 8"
-					_syntaxProvider = New OracleSyntaxProvider()
-					TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle8
+					syntaxProvider = New OracleSyntaxProvider() With { _
+						.ServerVersion = OracleServerVersion.Oracle8 _
+					}
 					Exit Select
 				Case "Oracle 9"
-					_syntaxProvider = New OracleSyntaxProvider()
-					TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle9
+					syntaxProvider = New OracleSyntaxProvider() With { _
+						.ServerVersion = OracleServerVersion.Oracle9 _
+					}
 					Exit Select
 				Case "Oracle 10"
-					_syntaxProvider = New OracleSyntaxProvider()
-					TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle10
+					syntaxProvider = New OracleSyntaxProvider() With { _
+						.ServerVersion = OracleServerVersion.Oracle10 _
+					}
 					Exit Select
 				Case "Oracle 11"
-					_syntaxProvider = New OracleSyntaxProvider()
-					TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle11
+					syntaxProvider = New OracleSyntaxProvider() With { _
+						.ServerVersion = OracleServerVersion.Oracle11 _
+					}
 					Exit Select
 				Case "PostgreSQL"
-					_syntaxProvider = New PostgreSQLSyntaxProvider()
+					syntaxProvider = New PostgreSQLSyntaxProvider()
 					Exit Select
 				Case "SQLite"
-					_syntaxProvider = New SQLiteSyntaxProvider()
+					syntaxProvider = New SQLiteSyntaxProvider()
 					Exit Select
 				Case "Sybase ASE"
-					_syntaxProvider = New SybaseSyntaxProvider()
-					TryCast(_syntaxProvider, SybaseSyntaxProvider).ServerVersion = SybaseServerVersion.SybaseASE
+					syntaxProvider = New SybaseSyntaxProvider() With { _
+						.ServerVersion = SybaseServerVersion.SybaseASE _
+					}
 					Exit Select
 				Case "Sybase SQL Anywhere"
-					_syntaxProvider = New SybaseSyntaxProvider()
-					TryCast(_syntaxProvider, SybaseSyntaxProvider).ServerVersion = SybaseServerVersion.SybaseASA
+					syntaxProvider = New SybaseSyntaxProvider() With { _
+						.ServerVersion = SybaseServerVersion.SybaseASA _
+					}
 					Exit Select
 				Case "Teradata"
-					_syntaxProvider = New TeradataSyntaxProvider()
+					syntaxProvider = New TeradataSyntaxProvider()
 					Exit Select
 				Case "VistaDB"
-					_syntaxProvider = New VistaDBSyntaxProvider()
+					syntaxProvider = New VistaDBSyntaxProvider()
 					Exit Select
 				Case "Generic"
-					_syntaxProvider = New GenericSyntaxProvider()
-					DirectCast(_syntaxProvider, GenericSyntaxProvider).RedetectServer(_sqlContext)
+					syntaxProvider = New GenericSyntaxProvider()
+					DirectCast(syntaxProvider, GenericSyntaxProvider).RedetectServer(_sqlContext)
 					Exit Select
 				Case Else
-					_syntaxProvider = New GenericSyntaxProvider()
+					syntaxProvider = New GenericSyntaxProvider()
 					Exit Select
 			End Select
 
-			comboIdentCaseSens.SelectedIndex = CInt(_syntaxProvider.IdentCaseSens)
-			textBeginQuotationSymbol.Text = _syntaxProvider.QuoteBegin
-			textEndQuotationSymbol.Text = _syntaxProvider.QuoteEnd
+			Dim oldSyntaxProvider = _sqlContext.SyntaxProvider
+			_sqlContext.SyntaxProvider = syntaxProvider
 
-			Me.Modified = True
+			If oldSyntaxProvider IsNot Nothing Then
+				oldSyntaxProvider.Dispose()
+			End If
+
+			' update IdentCaseSens flag
+			comboIdentCaseSens.SelectedIndex = CInt(_sqlContext.SyntaxProvider.IdentCaseSens)
+			' update quotation symbols
+			textBeginQuotationSymbol.Text = _sqlContext.SyntaxProvider.QuoteBegin
+			textEndQuotationSymbol.Text = _sqlContext.SyntaxProvider.QuoteEnd
 		End Sub
 
 		Private Sub comboIdentCaseSens_SelectedIndexChanged(sender As Object, e As EventArgs)
-			_syntaxProvider.IdentCaseSens = CType(comboIdentCaseSens.SelectedIndex, IdentCaseSensitivity)
-			comboIdentCaseSens.SelectedIndex = CInt(_syntaxProvider.IdentCaseSens)
-
-			Me.Modified = True
+			_sqlContext.SyntaxProvider.IdentCaseSens = CType(comboIdentCaseSens.SelectedIndex, IdentCaseSensitivity)
+			comboIdentCaseSens.SelectedIndex = CInt(_sqlContext.SyntaxProvider.IdentCaseSens)
 		End Sub
 
 		Private Sub checkQuoteAllIdentifiers_CheckedChanged(sender As Object, e As EventArgs)
-			Me.Modified = True
-		End Sub
-
-		Public Sub ApplyChanges()
-			If Me.Modified Then
-				Dim oldSyntaxProvider As BaseSyntaxProvider = _sqlContext.SyntaxProvider
-
-				_sqlContext.SyntaxProvider = _syntaxProvider
-				_sqlContext.SQLGenerationOptionsForServer.QuoteIdentifiers = If(cbQuoteAllIdentifiers.Checked, IdentQuotation.All, IdentQuotation.IfNeed)
-
-				If oldSyntaxProvider IsNot Nothing Then
-					oldSyntaxProvider.Dispose()
-				End If
-			End If
+			_sqlContext.SQLGenerationOptionsForServer.QuoteIdentifiers = If(cbQuoteAllIdentifiers.Checked, IdentQuotation.All, IdentQuotation.IfNeed)
 		End Sub
 	End Class
 End Namespace

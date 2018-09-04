@@ -121,6 +121,9 @@ Public Partial Class PaginationPanel
 
 	Private Sub btnNextPage_Click(sender As Object, e As EventArgs) Handles btnNextPage.Click
 		Dim currentPage__1 As Integer = CurrentPage
+		If RowsCount - PageSize * currentPage__1 <= 0 Then
+			Return
+		End If
 		CurrentPage = currentPage__1 + 1
 		RaiseEvent CurrentPageChanged(Me, e)
 	End Sub

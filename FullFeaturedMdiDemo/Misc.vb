@@ -9,24 +9,113 @@
 '*******************************************************************'
 
 Imports System.Collections
+Imports System.Collections.Generic
 Imports System.Xml.Serialization
 Imports ActiveQueryBuilder.Core
+Imports XmlSerializer = ActiveQueryBuilder.Core.Serialization.XmlSerializer
 
 Public Enum ConnectionTypes
 	MSSQL
+	MSSQLCE
+	MSSQLAzure
 	MSAccess
 	Oracle
 	MySQL
 	PostgreSQL
 	OLEDB
 	ODBC
+	SQLite	
+	Firebird
+	Excel
 End Enum
+
+Public Module Misc
+    Public ReadOnly ConnectionDescriptorList As List(Of Type) = New List(Of Type) From {
+        GetType(MSAccessConnectionDescriptor),
+        GetType(ExcelConnectionDescriptor),
+        GetType(MSSQLConnectionDescriptor),
+        GetType(MSSQLCEConnectionDescriptor),
+        GetType(MSSQLAzureConnectionDescriptor),
+        GetType(MySQLConnectionDescriptor),
+        GetType(OracleNativeConnectionDescriptor),
+        GetType(PostgreSQLConnectionDescriptor),
+        GetType(ODBCConnectionDescriptor),
+        GetType(OLEDBConnectionDescriptor),
+        GetType(SQLiteConnectionDescriptor),
+        GetType(FirebirdConnectionDescriptor)
+        }
+    Public ReadOnly ConnectionDescriptorNames As List(Of String) = New List(Of String) From {
+        "MS Access",
+        "Excel",
+        "MS SQL Server",
+        "MS SQL Server Compact Edition",
+        "MS SQL Server Azure",
+        "MySQL",
+        "Oracle Native",
+        "PostgreSQL",
+        "Generic ODBC Connection",
+        "Generic OLEDB Connection",
+        "SQLite",
+        "Firebird"
+        }
+End Module
 
 <Serializable> _
 <XmlInclude(GetType(ConnectionInfo))> _
 Public Class ConnectionList
 	<XmlElement(Type := GetType(ConnectionInfo))> _
 	Private _connections As New ArrayList()
+
+	Public Sub SaveData()
+		Dim xmlSerializer = New XmlSerializer()
+		For Each connection As ConnectionInfo In _connections
+			connection.ConnectionString = connection.ConnectionDescriptor.ConnectionString
+			connection.LoadingOptions = xmlSerializer.Serialize(connection.ConnectionDescriptor.MetadataLoadingOptions)
+			connection.SyntaxProviderState = xmlSerializer.SerializeObject(connection.ConnectionDescriptor.SyntaxProvider)
+		Next
+	End Sub
+
+	Public Sub RemoveObsoleteConnectionInfos()
+		Dim connectionsToRemove = New List(Of ConnectionInfo)()
+
+		For Each connection As ConnectionInfo In _connections
+			If connection.ConnectionDescriptor Is Nothing Then
+				connectionsToRemove.Add(connection)
+			End If
+		Next
+
+		For Each connection As ConnectionInfo In connectionsToRemove
+			_connections.Remove(connection)
+		Next
+	End Sub
+
+	Public Sub RestoreData()
+		Dim xmlSerializer = New XmlSerializer()
+
+		For Each connection As ConnectionInfo In _connections
+			If connection.ConnectionDescriptor Is Nothing Then
+				Continue For
+			End If
+
+            Try
+    			connection.ConnectionDescriptor.ConnectionString = connection.ConnectionString
+            Catch
+
+            End Try
+
+			If Not String.IsNullOrEmpty(connection.LoadingOptions) Then
+				xmlSerializer.Deserialize(connection.LoadingOptions, connection.ConnectionDescriptor.MetadataLoadingOptions)
+			End If
+
+			If Not String.IsNullOrEmpty(connection.SyntaxProviderName) AndAlso connection.IsGenericConnection() Then
+				connection.ConnectionDescriptor.SyntaxProvider = ConnectionInfo.GetSyntaxByName(connection.SyntaxProviderName)
+			End If
+
+			If Not String.IsNullOrEmpty(connection.SyntaxProviderState) Then
+				xmlSerializer.DeserializeObject(connection.SyntaxProviderState, connection.ConnectionDescriptor.SyntaxProvider)
+			End If
+		Next
+	End Sub
 
 	Public Default ReadOnly Property Item(index As Integer) As ConnectionInfo
 		Get
@@ -64,26 +153,25 @@ End Class
 
 <Serializable> _
 Public Class ConnectionInfo
-	Private _syntaxProvider As BaseSyntaxProvider
-	Private _syntaxProviderName As String
-	Public Property ConnectionType() As ConnectionTypes
+	Public Property Name() As String
 		Get
-			Return m_ConnectionType
+			Return m_Name
 		End Get
 		Set
-			m_ConnectionType = Value
+			m_Name = Value
 		End Set
 	End Property
-	Private m_ConnectionType As ConnectionTypes
-	Public Property ConnectionName() As String
+	Private m_Name As String
+	<XmlIgnore> _
+	Public Property ConnectionDescriptor() As BaseConnectionDescriptor
 		Get
-			Return m_ConnectionName
+			Return m_ConnectionDescriptor
 		End Get
 		Set
-			m_ConnectionName = Value
+			m_ConnectionDescriptor = Value
 		End Set
 	End Property
-	Private m_ConnectionName As String
+	Private m_ConnectionDescriptor As BaseConnectionDescriptor
 	Public Property ConnectionString() As String
 		Get
 			Return m_ConnectionString
@@ -102,6 +190,15 @@ Public Class ConnectionInfo
 		End Set
 	End Property
 	Private m_IsXmlFile As Boolean
+	Public Property XMLPath() As String
+		Get
+			Return m_XMLPath
+		End Get
+		Set
+			m_XMLPath = Value
+		End Set
+	End Property
+	Private m_XMLPath As String
 	Public Property CacheFile() As String
 		Get
 			Return m_CacheFile
@@ -120,111 +217,178 @@ Public Class ConnectionInfo
 		End Set
 	End Property
 	Private m_UserQueries As String
-
+	Public Property MetadataStructure() As String
+		Get
+			Return m_MetadataStructure
+		End Get
+		Set
+			m_MetadataStructure = Value
+		End Set
+	End Property
+	Private m_MetadataStructure As String
+	Public Property LoadingOptions() As String
+		Get
+			Return m_LoadingOptions
+		End Get
+		Set
+			m_LoadingOptions = Value
+		End Set
+	End Property
+	Private m_LoadingOptions As String
+	Public Property SyntaxProviderState() As String
+		Get
+			Return m_SyntaxProviderState
+		End Get
+		Set
+			m_SyntaxProviderState = Value
+		End Set
+	End Property
+	Private m_SyntaxProviderState As String
 	Public Property SyntaxProviderName() As String
-
-
-
-		' find by syntaxProvider.GetType().Name
-
-		' find by syntaxProvider.Description for backward compatibility
-
-		' same type?
-
-		' replace syntax provider
-
 		Get
-			Return _syntaxProviderName
+			Return m_SyntaxProviderName
 		End Get
 		Set
-			If _syntaxProviderName = value Then
-				Return
+			m_SyntaxProviderName = Value
+		End Set
+	End Property
+	Private m_SyntaxProviderName As String
+
+	Public Function IsGenericConnection() As Boolean
+		Return TypeOf ConnectionDescriptor Is OLEDBConnectionDescriptor OrElse TypeOf ConnectionDescriptor Is ODBCConnectionDescriptor
+	End Function
+
+	Public Shared Function GetSyntaxByName(name As String) As BaseSyntaxProvider
+		For Each syntax As Type In Helpers.SyntaxProviderList
+			If syntax.ToString() = name Then
+				Return TryCast(Activator.CreateInstance(syntax), BaseSyntaxProvider)
 			End If
-			_syntaxProviderName = value
-			Dim foundSyntaxProviderType = GetType(GenericSyntaxProvider)
-			For Each syntaxProviderType As Type In Helpers.SyntaxProviderList
-				If String.Equals(syntaxProviderType.Name, value, StringComparison.InvariantCultureIgnoreCase) Then
-					foundSyntaxProviderType = syntaxProviderType
-					Exit For
-				End If
-			Next
-			For Each syntaxProviderType As Type In Helpers.SyntaxProviderList
-				Using syntaxProvider = DirectCast(Activator.CreateInstance(syntaxProviderType), BaseSyntaxProvider)
-					If String.Equals(syntaxProvider.Description, value, StringComparison.InvariantCultureIgnoreCase) Then
-						foundSyntaxProviderType = syntaxProviderType
-						Exit For
-					End If
-				End Using
-			Next
-			If _syntaxProvider IsNot Nothing AndAlso _syntaxProvider.[GetType]() Is foundSyntaxProviderType Then
-				Return
+		Next
+
+		Return Nothing
+	End Function
+
+	Private _type As ConnectionTypes = ConnectionTypes.MSSQL
+
+	Public Property Type() As ConnectionTypes
+		Get
+			Return _type
+		End Get
+		Set
+			_type = value
+			CreateConnectionByType()
+
+			If Not String.IsNullOrEmpty(SyntaxProviderName) AndAlso IsGenericConnection() Then
+				ConnectionDescriptor.SyntaxProvider = GetSyntaxByName(SyntaxProviderName)
 			End If
-			If _syntaxProvider IsNot Nothing Then
-				_syntaxProvider.Dispose()
-			End If
-			_syntaxProvider = DirectCast(Activator.CreateInstance(foundSyntaxProviderType), BaseSyntaxProvider)
 		End Set
 	End Property
 
-	<XmlIgnore> _
-	Public Property SyntaxProvider() As BaseSyntaxProvider
-		Get
-			Return _syntaxProvider
-		End Get
-		Set
-			_syntaxProvider = value
-			If _syntaxProvider IsNot Nothing Then
-				SyntaxProviderName = _syntaxProvider.[GetType]().Name
-			End If
-		End Set
-	End Property
+	Public Sub New(descriptor As BaseConnectionDescriptor, name__1 As String, type__2 As ConnectionTypes, connectionString__3 As String)
+		Name = name__1
+		ConnectionDescriptor = descriptor
+		Type = type__2
+		ConnectionString = connectionString__3
+		IsXmlFile = False
+		ConnectionDescriptor.ConnectionString = connectionString__3
+	End Sub
+
+	Public Sub New(xmlPath__1 As String, name__2 As String, type__3 As ConnectionTypes)
+		Name = name__2
+		XMLPath = xmlPath__1
+		Type = type__3
+		IsXmlFile = True
+		CreateConnectionByType()
+	End Sub
 
 	Public Sub New()
-		ConnectionType = ConnectionTypes.MSSQL
-		ConnectionName = Nothing
-		ConnectionString = Nothing
-		IsXmlFile = False
-		CacheFile = Nothing
 	End Sub
 
-	Public Sub New(connectionType__1 As ConnectionTypes, connectionName__2 As String, connectionString__3 As String, isFromXml As Boolean, cacheFile__4 As String, userQueriesXml As String)
-		ConnectionType = connectionType__1
-		ConnectionName = connectionName__2
-		ConnectionString = connectionString__3
-		IsXmlFile = isFromXml
-		CacheFile = cacheFile__4
-		UserQueries = userQueriesXml
-	End Sub
-
-	Public Sub CreateSyntaxByType()
-		Select Case ConnectionType
-			Case ConnectionTypes.MSSQL
-				SyntaxProvider = New MSSQLSyntaxProvider()
-				Exit Select
+	Private Sub CreateConnectionByType()
+		Select Case Type
 			Case ConnectionTypes.MSAccess
-				SyntaxProvider = New MSAccessSyntaxProvider()
-				Exit Select
-			Case ConnectionTypes.Oracle
-				SyntaxProvider = New OracleSyntaxProvider()
-				Exit Select
+				ConnectionDescriptor = New MSAccessConnectionDescriptor()
+				Return
+			Case ConnectionTypes.MSSQL
+				ConnectionDescriptor = New MSSQLConnectionDescriptor()
+				Return
+			Case ConnectionTypes.MSSQLCE
+				ConnectionDescriptor = New MSSQLCEConnectionDescriptor()
+				Return
+			Case ConnectionTypes.MSSQLAzure
+				ConnectionDescriptor = New MSSQLAzureConnectionDescriptor()
+				Return
 			Case ConnectionTypes.MySQL
-				SyntaxProvider = New MySQLSyntaxProvider()
-				Exit Select
+				ConnectionDescriptor = New MySQLConnectionDescriptor()
+				Return
+			Case ConnectionTypes.Oracle
+				ConnectionDescriptor = New OracleNativeConnectionDescriptor()
+				Return
 			Case ConnectionTypes.PostgreSQL
-				SyntaxProvider = New PostgreSQLSyntaxProvider()
-				Exit Select
-			Case ConnectionTypes.OLEDB
-				SyntaxProvider = New SQL92SyntaxProvider()
-				Exit Select
+				ConnectionDescriptor = New PostgreSQLConnectionDescriptor()
+				Return
 			Case ConnectionTypes.ODBC
-				SyntaxProvider = New SQL92SyntaxProvider()
-				Exit Select
+				ConnectionDescriptor = New ODBCConnectionDescriptor()
+				Return
+			Case ConnectionTypes.OLEDB
+				ConnectionDescriptor = New OLEDBConnectionDescriptor()
+				Return
+			Case ConnectionTypes.Firebird
+				ConnectionDescriptor = New FirebirdConnectionDescriptor()
+				Return
+			Case ConnectionTypes.SQLite
+				ConnectionDescriptor = New SQLiteConnectionDescriptor()
+				Return
+			Case ConnectionTypes.Excel
+				ConnectionDescriptor = New ExcelConnectionDescriptor()
+				Return				
 		End Select
 	End Sub
 
-	Public Overrides Function Equals(obj As System.Object) As Boolean
+	Public Function GetConnectionType(descriptorType As Type) As ConnectionTypes
+		If descriptorType Is GetType(MSAccessConnectionDescriptor) Then
+			Return ConnectionTypes.MSAccess
+		End If
+		If descriptorType Is GetType(MSSQLConnectionDescriptor) Then
+			Return ConnectionTypes.MSSQL
+		End If
+		If descriptorType Is GetType(MSSQLCEConnectionDescriptor) Then
+			Return ConnectionTypes.MSSQLCE
+		End If
+		If descriptorType Is GetType(MSSQLAzureConnectionDescriptor) Then
+			Return ConnectionTypes.MSSQLAzure
+		End If
+		If descriptorType Is GetType(MySQLConnectionDescriptor) Then
+			Return ConnectionTypes.MySQL
+		End If
+		If descriptorType Is GetType(OracleNativeConnectionDescriptor) Then
+			Return ConnectionTypes.Oracle
+		End If
+		If descriptorType Is GetType(ODBCConnectionDescriptor) Then
+			Return ConnectionTypes.ODBC
+		End If
+		If descriptorType Is GetType(OLEDBConnectionDescriptor) Then
+			Return ConnectionTypes.OLEDB
+		End If
+		If descriptorType Is GetType(FirebirdConnectionDescriptor) Then
+			Return ConnectionTypes.Firebird
+		End If
+		If descriptorType Is GetType(SQLiteConnectionDescriptor) Then
+			Return ConnectionTypes.SQLite
+		End If
+		If descriptorType Is GetType(ExcelConnectionDescriptor) Then
+			Return ConnectionTypes.Excel
+		End If
+		If descriptorType Is GetType(PostgreSQLConnectionDescriptor) Then
+			Return ConnectionTypes.PostgreSQL
+		End If
+		
+		Return ConnectionTypes.MSSQL
+	End Function
+
+	Public Overrides Function Equals(obj As [Object]) As Boolean
 		If obj IsNot Nothing AndAlso TypeOf obj Is ConnectionInfo Then
-			If DirectCast(obj, ConnectionInfo).ConnectionType = Me.ConnectionType AndAlso DirectCast(obj, ConnectionInfo).ConnectionName = Me.ConnectionName AndAlso DirectCast(obj, ConnectionInfo).ConnectionString = Me.ConnectionString AndAlso DirectCast(obj, ConnectionInfo).IsXmlFile = Me.IsXmlFile Then
+			If DirectCast(obj, ConnectionInfo).Type = Me.Type AndAlso DirectCast(obj, ConnectionInfo).Name = Me.Name AndAlso DirectCast(obj, ConnectionInfo).ConnectionString = Me.ConnectionString AndAlso DirectCast(obj, ConnectionInfo).IsXmlFile = Me.IsXmlFile Then
 				Return True
 			End If
 		End If
@@ -235,7 +399,4 @@ Public Class ConnectionInfo
 	Public Overrides Function GetHashCode() As Integer
 		Return MyBase.GetHashCode()
 	End Function
-End Class
-
-Public Class Misc
 End Class

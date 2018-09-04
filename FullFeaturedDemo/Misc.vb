@@ -65,7 +65,6 @@ End Class
 <Serializable> _
 Public Class ConnectionInfo
 	Private _syntaxProvider As BaseSyntaxProvider
-	Private _syntaxProviderName As String
 	Public Property ConnectionType() As ConnectionTypes
 		Get
 			Return m_ConnectionType
@@ -111,6 +110,15 @@ Public Class ConnectionInfo
 		End Set
 	End Property
 	Private m_CacheFile As String
+	Public Property SyntaxProviderName() As String
+		Get
+			Return m_SyntaxProviderName
+		End Get
+		Set
+			m_SyntaxProviderName = Value
+		End Set
+	End Property
+	Private m_SyntaxProviderName As String
 	Public Property UserQueries() As String
 		Get
 			Return m_UserQueries
@@ -121,51 +129,6 @@ Public Class ConnectionInfo
 	End Property
 	Private m_UserQueries As String
 
-	Public Property SyntaxProviderName() As String
-
-
-
-		' find by syntaxProvider.GetType().Name
-
-		' find by syntaxProvider.Description for backward compatibility
-
-		' same type?
-
-		' replace syntax provider
-
-		Get
-			Return _syntaxProviderName
-		End Get
-		Set
-			If _syntaxProviderName = value Then
-				Return
-			End If
-			_syntaxProviderName = value
-			Dim foundSyntaxProviderType = GetType(GenericSyntaxProvider)
-			For Each syntaxProviderType As Type In Helpers.SyntaxProviderList
-				If String.Equals(syntaxProviderType.Name, value, StringComparison.InvariantCultureIgnoreCase) Then
-					foundSyntaxProviderType = syntaxProviderType
-					Exit For
-				End If
-			Next
-			For Each syntaxProviderType As Type In Helpers.SyntaxProviderList
-				Using syntaxProvider = DirectCast(Activator.CreateInstance(syntaxProviderType), BaseSyntaxProvider)
-					If String.Equals(syntaxProvider.Description, value, StringComparison.InvariantCultureIgnoreCase) Then
-						foundSyntaxProviderType = syntaxProviderType
-						Exit For
-					End If
-				End Using
-			Next
-			If _syntaxProvider IsNot Nothing AndAlso _syntaxProvider.[GetType]() Is foundSyntaxProviderType Then
-				Return
-			End If
-			If _syntaxProvider IsNot Nothing Then
-				_syntaxProvider.Dispose()
-			End If
-			_syntaxProvider = DirectCast(Activator.CreateInstance(foundSyntaxProviderType), BaseSyntaxProvider)
-		End Set
-	End Property
-
 	<XmlIgnore> _
 	Public Property SyntaxProvider() As BaseSyntaxProvider
 		Get
@@ -174,7 +137,7 @@ Public Class ConnectionInfo
 		Set
 			_syntaxProvider = value
 			If _syntaxProvider IsNot Nothing Then
-				SyntaxProviderName = _syntaxProvider.[GetType]().Name
+				SyntaxProviderName = _syntaxProvider.ToString()
 			End If
 		End Set
 	End Property
@@ -194,32 +157,6 @@ Public Class ConnectionInfo
 		IsXmlFile = isFromXml
 		CacheFile = cacheFile__4
 		UserQueries = userQueriesXml
-	End Sub
-
-	Public Sub CreateSyntaxByType()
-		Select Case ConnectionType
-			Case ConnectionTypes.MSSQL
-				SyntaxProvider = New MSSQLSyntaxProvider()
-				Exit Select
-			Case ConnectionTypes.MSAccess
-				SyntaxProvider = New MSAccessSyntaxProvider()
-				Exit Select
-			Case ConnectionTypes.Oracle
-				SyntaxProvider = New OracleSyntaxProvider()
-				Exit Select
-			Case ConnectionTypes.MySQL
-				SyntaxProvider = New MySQLSyntaxProvider()
-				Exit Select
-			Case ConnectionTypes.PostgreSQL
-				SyntaxProvider = New PostgreSQLSyntaxProvider()
-				Exit Select
-			Case ConnectionTypes.OLEDB
-				SyntaxProvider = New SQL92SyntaxProvider()
-				Exit Select
-			Case ConnectionTypes.ODBC
-				SyntaxProvider = New SQL92SyntaxProvider()
-				Exit Select
-		End Select
 	End Sub
 
 	Public Overrides Function Equals(obj As System.Object) As Boolean

@@ -23,7 +23,7 @@ Public Partial Class AboutForm
 	End Sub
 
 	Private Sub linkHome_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
-		Process.Start("https://www.activequerybuilder.com/")
+		Process.Start("http://www.activequerybuilder.com/")
 	End Sub
 
 	Private Sub linkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)

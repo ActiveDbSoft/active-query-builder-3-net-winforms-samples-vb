@@ -19,6 +19,7 @@ Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.View.WinForms
 Imports ActiveQueryBuilder.Core.QueryTransformer
+Imports ActiveQueryBuilder.View
 Imports ActiveQueryBuilder.View.WinForms.QueryView
 Imports FullFeaturedMdiDemo.Common
 Imports FullFeaturedMdiDemo.Dailogs
@@ -77,6 +78,96 @@ Partial Public Class ChildForm
         End Set
     End Property
 
+    Public Property BehaviorOptions() As BehaviorOptions
+        Get
+            Return SqlQuery.BehaviorOptions
+        End Get
+        Set
+            SqlQuery.BehaviorOptions = Value
+        End Set
+    End Property
+
+    Public Property DesignPaneOptions() As DesignPaneOptions
+        Get
+            Return designPaneControl1.Options
+        End Get
+        Set
+            designPaneControl1.Options = Value
+        End Set
+    End Property
+
+    Public Property VisualOptions() As VisualOptions
+        Get
+            Return dockManager1.Options
+        End Get
+        Set
+            dockManager1.Options = Value
+        End Set
+    End Property
+
+    Public Property AddObjectDialogOptions() As AddObjectDialogOptions
+        Get
+            Return addObjectDialog1.Options
+        End Get
+        Set
+            addObjectDialog1.Options = Value
+        End Set
+    End Property
+
+    Public Property DataSourceOptions() As DataSourceOptions
+        Get
+            Return CType(designPaneControl1.DataSourceOptions, DataSourceOptions)
+        End Get
+        Set
+            designPaneControl1.DataSourceOptions = Value
+        End Set
+    End Property
+
+    Public Property MetadataLoadingOptions() As MetadataLoadingOptions
+        Get
+            Return _sqlContext.LoadingOptions
+        End Get
+        Set
+            _sqlContext.LoadingOptions = Value
+        End Set
+    End Property
+
+    Public Property MetadataStructureOptions() As MetadataStructureOptions
+        Get
+            Return _sqlContext.MetadataStructureOptions
+        End Get
+        Set
+            _sqlContext.MetadataStructureOptions = Value
+        End Set
+    End Property
+
+    Public Property QueryColumnListOptions() As QueryColumnListOptions
+        Get
+            Return queryColumnListControl1.Options
+        End Get
+        Set
+            queryColumnListControl1.Options = Value
+        End Set
+    End Property
+
+    Public Property QueryNavBarOptions() As QueryNavBarOptions
+        Get
+            Return NavBar.Options
+        End Get
+        Set
+            NavBar.Options = Value
+        End Set
+    End Property
+
+    Public Property UserInterfaceOptions() As UserInterfaceOptions
+        Get
+            Return QueryView.UserInterfaceOptions
+        End Get
+        Set
+            QueryView.UserInterfaceOptions = Value
+        End Set
+    End Property
+
     Public Property SqlQuery As SQLQuery
 
     Public Property QueryText() As String
@@ -120,6 +211,12 @@ Partial Public Class ChildForm
 
         rtbQueryText.QueryProvider = SqlQuery
         TextBoxCurrentSubQuerySql.QueryProvider = SqlQuery
+
+        rtbQueryText.ActiveUnionSubQuery = QView.ActiveUnionSubQuery
+        TextBoxCurrentSubQuerySql.ActiveUnionSubQuery = QView.ActiveUnionSubQuery
+
+        AddHandler QView.ActiveUnionSubQueryChanged, ActiveUnionSubQueryChanged
+
         resultGrid1.SqlQuery = SqlQuery
         resultGrid2.SqlQuery = SqlQuery
         resultGrid1.QueryTransformer = CBuilder.QueryTransformer
@@ -142,6 +239,11 @@ Partial Public Class ChildForm
 
         UpdateLanguage()
     End Sub
+
+    Private Function ActiveUnionSubQueryChanged() As EventHandler
+        rtbQueryText.ActiveUnionSubQuery = QView.ActiveUnionSubQuery
+        TextBoxCurrentSubQuerySql.ActiveUnionSubQuery = QView.ActiveUnionSubQuery
+    End Function
 
     Private Sub TimerForFastResult_Elapsed(state As Object)
         Invoke(DirectCast(Sub()
@@ -502,7 +604,7 @@ Partial Public Class ChildForm
     End Sub
 
     Public Sub EditMetadata()
-        QueryBuilder.EditMetadataContainer(_sqlContext.MetadataContainer, _sqlContext.MetadataStructure, _sqlContext.MetadataContainer.LoadingOptions)
+        QueryBuilder.EditMetadataContainer(_sqlContext, _sqlContext.LoadingOptions)
     End Sub
 
     Public Sub ClearMetadata()
@@ -913,7 +1015,7 @@ Partial Public Class ChildForm
 
         Try
             _queryTransformerTop10.Query = New SQLQuery(QueryView.ActiveUnionSubQuery.ParentSubQuery.SQLContext) With {
-                .SQL = TextBoxCurrentSubQuerySql.Text
+                .SQL = QueryView.ActiveUnionSubQuery.ParentSubQuery.GetSqlForDataPreview()
             }
 
             _timerForFastReuslt.Change(400, Timeout.Infinite)

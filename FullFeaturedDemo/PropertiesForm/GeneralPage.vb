@@ -11,81 +11,80 @@
 Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
+Imports ActiveQueryBuilder.View.WinForms
 
-Namespace PropertiesForm
-	<ToolboxItem(False)> _
-	Friend Partial Class GeneralPage
-		Inherits UserControl
-		Private ReadOnly _sqlFormattingOptions As SQLFormattingOptions
-
-		Public Property Modified() As Boolean
-			Get
-				Return m_Modified
-			End Get
-			Set
-				m_Modified = Value
-			End Set
-		End Property
-		Private m_Modified As Boolean
+<ToolboxItem(False)> _
+Friend Partial Class GeneralPage
+	Inherits UserControl
+	Private _queryBuilder As QueryBuilder = Nothing
+	Private _modified As Boolean = False
 
 
-		Public Sub New(sqlFormattingOptions As SQLFormattingOptions)
-			Modified = False
-			_sqlFormattingOptions = sqlFormattingOptions
+	Public Property Modified() As Boolean
+		Get
+			Return _modified
+		End Get
+		Set
+			_modified = value
+		End Set
+	End Property
 
-			InitializeComponent()
 
-			cbWordWrap.Checked = (_sqlFormattingOptions.RightMargin <> 0)
-			updownRightMargin.Enabled = cbWordWrap.Checked
+	Public Sub New(queryBuilder As QueryBuilder)
+		_queryBuilder = queryBuilder
 
-			updownRightMargin.Value = If(_sqlFormattingOptions.RightMargin = 0, 80, _sqlFormattingOptions.RightMargin)
+		InitializeComponent()
 
-			comboKeywordsCasing.Items.Add("Capitalized")
-			comboKeywordsCasing.Items.Add("Uppercase")
-			comboKeywordsCasing.Items.Add("Lowercase")
+		cbWordWrap.Checked = (_queryBuilder.SQLFormattingOptions.RightMargin <> 0)
+		updownRightMargin.Enabled = cbWordWrap.Checked
 
-			comboKeywordsCasing.SelectedIndex = CInt(_sqlFormattingOptions.KeywordFormat)
+		updownRightMargin.Value = If(_queryBuilder.SQLFormattingOptions.RightMargin = 0, 80, _queryBuilder.SQLFormattingOptions.RightMargin)
 
-			AddHandler cbWordWrap.CheckedChanged, AddressOf checkWordWrap_CheckedChanged
-			AddHandler updownRightMargin.ValueChanged, AddressOf updownRightMargin_ValueChanged
-			AddHandler comboKeywordsCasing.SelectedIndexChanged, AddressOf comboKeywordsCasing_SelectedIndexChanged
-		End Sub
+		comboKeywordsCasing.Items.Add("Capitalized")
+		comboKeywordsCasing.Items.Add("Uppercase")
+		comboKeywordsCasing.Items.Add("Lowercase")
 
-		Protected Overrides Sub Dispose(disposing As Boolean)
-			RemoveHandler cbWordWrap.CheckedChanged, AddressOf checkWordWrap_CheckedChanged
-			RemoveHandler updownRightMargin.ValueChanged, AddressOf updownRightMargin_ValueChanged
-			RemoveHandler comboKeywordsCasing.SelectedIndexChanged, AddressOf comboKeywordsCasing_SelectedIndexChanged
+		comboKeywordsCasing.SelectedIndex = CInt(queryBuilder.SQLFormattingOptions.KeywordFormat)
 
-			If disposing AndAlso (components IsNot Nothing) Then
-				components.Dispose()
+		AddHandler cbWordWrap.CheckedChanged, AddressOf checkWordWrap_CheckedChanged
+		AddHandler updownRightMargin.ValueChanged, AddressOf updownRightMargin_ValueChanged
+		AddHandler comboKeywordsCasing.SelectedIndexChanged, AddressOf comboKeywordsCasing_SelectedIndexChanged
+	End Sub
+
+	Protected Overrides Sub Dispose(disposing As Boolean)
+		RemoveHandler cbWordWrap.CheckedChanged, AddressOf checkWordWrap_CheckedChanged
+		RemoveHandler updownRightMargin.ValueChanged, AddressOf updownRightMargin_ValueChanged
+		RemoveHandler comboKeywordsCasing.SelectedIndexChanged, AddressOf comboKeywordsCasing_SelectedIndexChanged
+
+		If disposing AndAlso (components IsNot Nothing) Then
+			components.Dispose()
+		End If
+
+		MyBase.Dispose(disposing)
+	End Sub
+
+	Private Sub comboKeywordsCasing_SelectedIndexChanged(sender As Object, e As EventArgs)
+		Modified = True
+	End Sub
+
+	Private Sub checkWordWrap_CheckedChanged(sender As Object, e As EventArgs)
+		updownRightMargin.Enabled = cbWordWrap.Checked
+		Modified = True
+	End Sub
+
+	Private Sub updownRightMargin_ValueChanged(sender As Object, e As EventArgs)
+		Modified = True
+	End Sub
+
+	Public Sub ApplyChanges()
+		If Me.Modified Then
+			If cbWordWrap.Checked Then
+				_queryBuilder.SQLFormattingOptions.RightMargin = CInt(Math.Truncate(updownRightMargin.Value))
+			Else
+				_queryBuilder.SQLFormattingOptions.RightMargin = 0
 			End If
 
-			MyBase.Dispose(disposing)
-		End Sub
-
-		Private Sub comboKeywordsCasing_SelectedIndexChanged(sender As Object, e As EventArgs)
-			Modified = True
-		End Sub
-
-		Private Sub checkWordWrap_CheckedChanged(sender As Object, e As EventArgs)
-			updownRightMargin.Enabled = cbWordWrap.Checked
-			Modified = True
-		End Sub
-
-		Private Sub updownRightMargin_ValueChanged(sender As Object, e As EventArgs)
-			Modified = True
-		End Sub
-
-		Public Sub ApplyChanges()
-			If Me.Modified Then
-				If cbWordWrap.Checked Then
-					_sqlFormattingOptions.RightMargin = CInt(Math.Truncate(updownRightMargin.Value))
-				Else
-					_sqlFormattingOptions.RightMargin = 0
-				End If
-
-				_sqlFormattingOptions.KeywordFormat = CType(comboKeywordsCasing.SelectedIndex, KeywordFormat)
-			End If
-		End Sub
-	End Class
-End Namespace
+			_queryBuilder.SQLFormattingOptions.KeywordFormat = CType(comboKeywordsCasing.SelectedIndex, KeywordFormat)
+		End If
+	End Sub
+End Class

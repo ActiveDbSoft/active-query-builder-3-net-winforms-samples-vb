@@ -20,7 +20,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyConfiguration("")>
 <Assembly: AssemblyCompany("Active Database Software")>
 <Assembly: AssemblyProduct("Active Query Builder. NET")>
-<Assembly: AssemblyCopyright("Copyright © 2006-2018 Active Database Software")>
+<Assembly: AssemblyCopyright("Copyright © 2006-2014 Active Database Software")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: AssemblyCulture("")>
 
