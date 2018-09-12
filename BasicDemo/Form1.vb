@@ -25,25 +25,27 @@ Public Partial Class Form1
 	Public Sub New()
 		InitializeComponent()
 		' DEMO WARNING
-		Dim trialNoticePanel As New Panel() With { 
-			.AutoSize = True, 
-			.AutoSizeMode = AutoSizeMode.GrowAndShrink, 
-			.BackColor = Color.LightGreen, 
-			.BorderStyle = BorderStyle.FixedSingle, 
-			.Dock = DockStyle.Top, 
-			.Padding = New Padding(6, 5, 3, 0) 
-		}
+	    If ActiveQueryBuilder.Core.BuildInfo.GetEdition() = ActiveQueryBuilder.Core.BuildInfo.Edition.Trial Then
+		    Dim trialNoticePanel As New Panel() With { 
+			    .AutoSize = True, 
+			    .AutoSizeMode = AutoSizeMode.GrowAndShrink, 
+			    .BackColor = Color.LightGreen, 
+			    .BorderStyle = BorderStyle.FixedSingle, 
+			    .Dock = DockStyle.Top, 
+			    .Padding = New Padding(6, 5, 3, 0) 
+		    }
 
-		Dim label As New Label() With { _
-			.AutoSize = True, _
-			.Margin = New Padding(0), _
-			.Text = "Generation of random aliases for the query output columns is the limitation of the trial version. The full version is free from this behavior.", _
-			.Dock = DockStyle.Fill, _
-			.UseCompatibleTextRendering = True _
-		}
+		    Dim label As New Label() With { _
+			    .AutoSize = True, _
+			    .Margin = New Padding(0), _
+			    .Text = "Generation of random aliases for the query output columns is the limitation of the trial version. The full version is free from this behavior.", _
+			    .Dock = DockStyle.Fill, _
+			    .UseCompatibleTextRendering = True _
+		    }
 
-		trialNoticePanel.Controls.Add(label)
-		Controls.Add(trialNoticePanel)
+		    trialNoticePanel.Controls.Add(label)
+		    Controls.Add(trialNoticePanel)
+        End If
 		AddHandler Load, AddressOf Form1_Load
 
         sqlTextEditor1.ActiveUnionSubQuery = queryBuilder1.ActiveUnionSubQuery

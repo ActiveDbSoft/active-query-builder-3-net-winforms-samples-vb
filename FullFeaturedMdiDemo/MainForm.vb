@@ -79,39 +79,41 @@ Public Partial Class MainForm
         AddHandler userQueriesView1.ValidateItemContextMenu, AddressOf userQueriesView1_ValidateItemContextMenu
 
 		' DEMO WARNING
-		Dim trialNoticePanel As New Panel() With { _
-			.AutoSize = True, _
-			.AutoSizeMode = AutoSizeMode.GrowAndShrink, _
-			.BackColor = Color.LightGreen, _
-			.BorderStyle = BorderStyle.FixedSingle, _
-			.Dock = DockStyle.Top, _
-			.Padding = New Padding(6, 5, 3, 0) _
-		}
+	    If ActiveQueryBuilder.Core.BuildInfo.GetEdition() = ActiveQueryBuilder.Core.BuildInfo.Edition.Trial Then
+		    Dim trialNoticePanel As New Panel() With { _
+			    .AutoSize = True, _
+			    .AutoSizeMode = AutoSizeMode.GrowAndShrink, _
+			    .BackColor = Color.LightGreen, _
+			    .BorderStyle = BorderStyle.FixedSingle, _
+			    .Dock = DockStyle.Top, _
+			    .Padding = New Padding(6, 5, 3, 0) _
+		    }
 
-		Dim label As New Label() With { _
-			.AutoSize = True, _
-			.Margin = New Padding(0), _
-			.Text = "Generation of random aliases for the query output columns is the limitation of the trial version. The full version is free from this behavior.", _
-			.Dock = DockStyle.Fill, _
-			.UseCompatibleTextRendering = True _
-		}
+		    Dim label As New Label() With { _
+			    .AutoSize = True, _
+			    .Margin = New Padding(0), _
+			    .Text = "Generation of random aliases for the query output columns is the limitation of the trial version. The full version is free from this behavior.", _
+			    .Dock = DockStyle.Fill, _
+			    .UseCompatibleTextRendering = True _
+		    }
 
-		Dim buttonClose As New PictureBox() With { _
-			.Image = Resources.cancel, _
-			.SizeMode = PictureBoxSizeMode.AutoSize, _
-			.Cursor = Cursors.Hand _
-		}
-	    
-		AddHandler buttonClose.Click, Sub() Controls.Remove(trialNoticePanel)
+		    Dim buttonClose As New PictureBox() With { _
+			    .Image = Resources.cancel, _
+			    .SizeMode = PictureBoxSizeMode.AutoSize, _
+			    .Cursor = Cursors.Hand _
+		    }
+	        
+		    AddHandler buttonClose.Click, Sub() Controls.Remove(trialNoticePanel)
 
-		trialNoticePanel.Controls.Add(buttonClose)
+		    trialNoticePanel.Controls.Add(buttonClose)
 
-		AddHandler trialNoticePanel.Resize, Sub() buttonClose.Location = New Point(trialNoticePanel.Width - buttonClose.Width - 10, trialNoticePanel.Height \ 2 - buttonClose.Height \ 2)
+		    AddHandler trialNoticePanel.Resize, Sub() buttonClose.Location = New Point(trialNoticePanel.Width - buttonClose.Width - 10, trialNoticePanel.Height \ 2 - buttonClose.Height \ 2)
 
-		trialNoticePanel.Controls.Add(label)
-		Controls.Add(trialNoticePanel)
-			
-		Controls.SetChildIndex(trialNoticePanel, 2)
+		    trialNoticePanel.Controls.Add(label)
+		    Controls.Add(trialNoticePanel)
+			    
+		    Controls.SetChildIndex(trialNoticePanel, 2)
+        End If
 	End Sub
 
 	Private Sub MainForm_MdiChildActivate(sender As Object, e As EventArgs)
