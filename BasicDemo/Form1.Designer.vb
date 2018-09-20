@@ -167,7 +167,7 @@ Partial Class Form1
 		Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Width = 60
 		Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Caption = "Or..."
 		Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Index = 0
-		Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Width = 0
+		Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Width = 60
 		Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Caption = "Expression"
 		Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Index = 1
 		Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Width = 150
