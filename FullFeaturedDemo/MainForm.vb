@@ -345,7 +345,6 @@ Public Partial Class MainForm
 		teSql.Controls.Add(label)
 		teSql.Controls.SetChildIndex(label, 0)
 		label.Location = New Point(teSql.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-		teSql.Focus()
 	End Sub
 
 	Private Sub HideErrorBanner()
@@ -1051,7 +1050,6 @@ Public Partial Class MainForm
 
 			' Show banner with error text
 			ShowErrorBanner(ex.Message)
-			e.Cancel = True
 		End Try
 	End Sub
 

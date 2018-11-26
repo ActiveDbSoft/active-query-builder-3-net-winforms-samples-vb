@@ -647,7 +647,6 @@ Partial Public Class ChildForm
         rtbQueryText.Controls.Add(label)
         rtbQueryText.Controls.SetChildIndex(label, 0)
         label.Location = New Point(rtbQueryText.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-        rtbQueryText.Focus()
     End Sub
 
     Private Sub HideErrorBanner()
@@ -750,7 +749,6 @@ Partial Public Class ChildForm
 
             ' Show banner with error text
             ShowErrorBanner(ex.Message)
-            e.Cancel = True
         End Try
     End Sub
 

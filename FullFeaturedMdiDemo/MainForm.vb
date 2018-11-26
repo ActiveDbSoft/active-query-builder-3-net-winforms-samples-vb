@@ -287,6 +287,7 @@ Public Partial Class MainForm
 
 			userQueriesView1.SQLContext = _sqlContext
 			userQueriesView1.SQLQuery = New SQLQuery(_sqlContext)
+			userQueriesView1.Initialize()
 
 		    If Not String.IsNullOrEmpty(_selectedConnection.UserQueries) Then
 		        Dim bytes As Byte() = Encoding.UTF8.GetBytes(_selectedConnection.UserQueries)
@@ -643,12 +644,6 @@ Public Partial Class MainForm
 	End Function
 
 	Private Function SaveUserQuery(childForm As ChildForm) As Boolean
-		If childForm.SqlQuery.QueryRoot.IsQueryWithCTE AndAlso Not childForm.SqlQuery.SQLContext.SyntaxProvider.IsSupportSubQueryCTE() Then
-			Dim cannotSaveQuery = "Error: Queries with Common Table Expressions can not be saved to the repository."
-			MessageBox.Show(cannotSaveQuery, "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
-			Return False
-		End If
-
 		If childForm.UserMetadataStructureItem Is Nothing Then
 			Return False
 		End If
@@ -661,12 +656,6 @@ Public Partial Class MainForm
 	End Function
 
 	Private Function SaveNewUserQuery(childWindow As ChildForm) As Boolean
-		If childWindow.SqlQuery.QueryRoot.IsQueryWithCTE AndAlso Not childWindow.SqlQuery.SQLContext.SyntaxProvider.IsSupportSubQueryCTE() Then
-			Dim cannotSaveQuery = "Error: Queries with Common Table Expressions can not be saved to the repository."
-			MessageBox.Show(cannotSaveQuery, "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
-			Return False
-		End If
-
 		Dim node As MetadataStructureItem
 		Dim title As String
 		Do

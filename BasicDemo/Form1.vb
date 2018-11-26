@@ -433,8 +433,6 @@ Public Partial Class Form1
 			control.Controls.Add(label)
 			label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
 			label.BringToFront()
-
-			control.Focus()
 		End If
 	End Sub
 End Class
