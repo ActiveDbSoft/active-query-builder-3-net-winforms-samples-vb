@@ -1,7 +1,7 @@
 ﻿'*******************************************************************'
 '       Active Query Builder Component Suite                        '
 '                                                                   '
-'       Copyright © 2006-2018 Active Database Software              '
+'       Copyright © 2006-2019 Active Database Software              '
 '       ALL RIGHTS RESERVED                                         '
 '                                                                   '
 '       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
@@ -650,7 +650,7 @@ Public Partial Class MainForm
 		If Not UserQueries.IsUserQueryExist(childForm.SqlQuery.SQLContext.MetadataContainer, childForm.UserMetadataStructureItem.MetadataItem.Name) Then
 			Return False
 		End If
-		UserQueries.SaveUserQuery(childForm.SqlQuery.SQLContext.MetadataContainer, childForm.UserMetadataStructureItem, childForm.SqlQuery.SQL, childForm.QueryView.LayoutSQL)
+		UserQueries.SaveUserQuery(childForm.SqlQuery.SQLContext.MetadataContainer, childForm.UserMetadataStructureItem, childForm.FormattedQueryText, childForm.QueryView.LayoutSQL)
 		SaveSettings()
 		Return True
 	End Function
@@ -674,7 +674,7 @@ Public Partial Class MainForm
 				If Not UserQueries.IsFolder(atItem) Then
 					atItem = atItem.Parent
 				End If
-				node = UserQueries.AddUserQuery(childWindow.SqlQuery.SQLContext.MetadataContainer, atItem, title, childWindow.SqlQuery.SQL, CInt(DefaultImageListImageIndices.VirtualObject), childWindow.QueryView.LayoutSQL)
+				node = UserQueries.AddUserQuery(childWindow.SqlQuery.SQLContext.MetadataContainer, atItem, title, childWindow.FormattedQueryText, CInt(DefaultImageListImageIndices.VirtualObject), childWindow.QueryView.LayoutSQL)
 				Exit Do
 			End If
 
@@ -774,7 +774,7 @@ Public Partial Class MainForm
 		childWindow.SqlSourceType = ChildForm.SourceType.UserQuery
 		childWindow.Show()
 		childWindow.Activate()
-		childWindow.QueryText = DirectCast(e.MetadataStructureItem.MetadataItem, MetadataObject).Expression.Trim("("C, ")"C)
+		childWindow.QueryText = DirectCast(e.MetadataStructureItem.MetadataItem, MetadataObject).Expression
 	End Sub
 
 	' Closing the current query window on deleting the corresponding user query.
@@ -817,7 +817,7 @@ Public Partial Class MainForm
 		childWindow.SqlSourceType = ChildForm.SourceType.UserQuery
 		childWindow.Show()
 		childWindow.Activate()
-		childWindow.QueryText = DirectCast(userQueriesView1.SelectedItem.MetadataItem, MetadataObject).Expression.Trim("("C, ")"C)
+		childWindow.QueryText = DirectCast(userQueriesView1.SelectedItem.MetadataItem, MetadataObject).Expression
 		childWindow.OpenExecuteTab()
 	End Sub
 

@@ -1,7 +1,7 @@
 ﻿'*******************************************************************'
 '       Active Query Builder Component Suite                        '
 '                                                                   '
-'       Copyright © 2006-2018 Active Database Software              '
+'       Copyright © 2006-2019 Active Database Software              '
 '       ALL RIGHTS RESERVED                                         '
 '                                                                   '
 '       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
@@ -18,6 +18,7 @@ Imports ActiveQueryBuilder.View
 Imports ActiveQueryBuilder.View.NavigationBar
 Imports ActiveQueryBuilder.View.QueryView
 Imports ActiveQueryBuilder.View.WinForms.QueryView
+Imports Microsoft.VisualBasic.Devices
 
 Partial Public Class Form1
     Inherits Form
@@ -118,24 +119,49 @@ Partial Public Class Form1
         ' Insert custom menu item to the top of any context menu
         menu.InsertItem(0, "Custom Item 1", AddressOf CustomItem1EventHandler)
         menu.InsertSeparator(1)
-        ' separator
+
         If TypeOf queryelement Is Link Then
-            ' Link context menu
-            ' Add another item in the Link's menu
             menu.AddSeparator()
-            ' separator
             menu.AddItem("Custom Item 2", AddressOf CustomItem2EventHandler)
         ElseIf TypeOf queryelement Is DataSourceObject Then
-            ' Datasource context menu
         ElseIf TypeOf queryelement Is UnionSubQuery Then
+
             If TypeOf sender Is IDesignPaneControl Then
-                ' diagram pane context menu
             ElseIf TypeOf sender Is NavigationPopupBase Then
             End If
         ElseIf TypeOf queryelement Is QueryColumnListItem Then
-            ' QueryColumnListControl context menu
-            menu.ClearItems()
+            Dim queryColumnListItem As QueryColumnListItem = CType(queryelement, QueryColumnListItem)
+            Dim point As CPoint = QBuilder.QueryColumnListControl.PointToClient(new CPoint(MousePosition.X, MousePosition.Y))
+            Dim queryColumnListHitTestInfo As QueryColumnListHitTestInfo = QBuilder.QueryColumnListControl.HitTest(point)
+
+            Select Case queryColumnListHitTestInfo.ItemProperty
+                Case QueryColumnListItemProperty.Expression
+                    menu.AddSeparator()
+                    Dim menuItemExpression As ICustomSubMenu = menu.AddSubMenu("Expression property")
+                    menuItemExpression.AddItem("Show full SQL", AddressOf ExpressionColumnEventHandler, False, True, Nothing, queryColumnListItem.Expression.GetSQL())
+                Case QueryColumnListItemProperty.Selected,
+                    QueryColumnListItemProperty.[Alias],
+                    QueryColumnListItemProperty.SortType,
+                    QueryColumnListItemProperty.SortOrder,
+                    QueryColumnListItemProperty.Aggregate,
+                    QueryColumnListItemProperty.Grouping,
+                    QueryColumnListItemProperty.ConditionType,
+                    QueryColumnListItemProperty.Condition,
+                    QueryColumnListItemProperty.Custom
+                    menu.AddSeparator()
+                    menu.AddItem("Get info of current cell", Function(o, args)
+                                                                 Dim message As String = $"Item property [{queryColumnListHitTestInfo.ItemProperty}]{Environment.NewLine}Item index [{queryColumnListHitTestInfo.ItemIndex}]{Environment.NewLine}Condition index [{queryColumnListHitTestInfo.ConditionIndex}]{Environment.NewLine}Is now here [{queryColumnListHitTestInfo.IsNowhere}]"
+                                                                 MessageBox.Show(Me, message, "Information")
+                                                             End Function)
+                Case Else
+                    Throw New ArgumentOutOfRangeException()
+            End Select
         End If
+    End Sub
+
+    Private Shared Sub ExpressionColumnEventHandler(sender As Object, e As EventArgs)
+        Dim menuItem As ICustomMenuItem = CType(sender, ICustomMenuItem)
+        MessageBox.Show(menuItem.Tag.ToString())
     End Sub
 
     Private Sub QBuilder_CustomizeDataSourceCaption(dataSource As DataSource, ByRef caption As String) Handles QBuilder.CustomizeDataSourceCaption
@@ -164,46 +190,46 @@ Partial Public Class Form1
         End Try
     End Sub
 
-	Public Sub ShowErrorBanner(ByVal control As Control, ByVal text As String)
-		' Display error banner if passed text is not empty
+    Public Sub ShowErrorBanner(ByVal control As Control, ByVal text As String)
+        ' Display error banner if passed text is not empty
         ' Destory banner if already showing
-		If True Then
-			Dim existBanner As Boolean = False
-			Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
+        If True Then
+            Dim existBanner As Boolean = False
+            Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
 
-			If banners.Length > 0 Then
+            If banners.Length > 0 Then
 
-				For Each banner As Control In banners
+                For Each banner As Control In banners
 
-					If Equals(text, banner.Text) Then
-						existBanner = True
-						Continue For
-					End If
+                    If Equals(text, banner.Text) Then
+                        existBanner = True
+                        Continue For
+                    End If
 
-					banner.Dispose()
-				Next
-			End If
+                    banner.Dispose()
+                Next
+            End If
 
-			If existBanner Then Return
-		End If
+            If existBanner Then Return
+        End If
 
-		' Show new banner if text is not empty
-		If Not String.IsNullOrEmpty(text) Then
-			Dim label As Label = New Label With {
-				.Name = "ErrorBanner",
-				.Text = text,
-				.BorderStyle = BorderStyle.FixedSingle,
-				.BackColor = Color.LightPink,
-				.AutoSize = True,
-				.Visible = True
-			}
-			control.Controls.Add(label)
-			label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-			label.BringToFront()
-			control.Focus()
-		End If
-	End Sub
-	
+        ' Show new banner if text is not empty
+        If Not String.IsNullOrEmpty(text) Then
+            Dim label As Label = New Label With {
+                .Name = "ErrorBanner",
+                .Text = text,
+                .BorderStyle = BorderStyle.FixedSingle,
+                .BackColor = Color.LightPink,
+                .AutoSize = True,
+                .Visible = True
+            }
+            control.Controls.Add(label)
+            label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
+            label.BringToFront()
+            control.Focus()
+        End If
+    End Sub
+
     Private Shared Sub CustomItem1EventHandler(sender As Object, e As EventArgs)
         MessageBox.Show("Custom Item 1")
     End Sub
