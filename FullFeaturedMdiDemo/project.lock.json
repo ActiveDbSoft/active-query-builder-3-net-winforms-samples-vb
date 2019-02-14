@@ -54,7 +54,7 @@
           "lib/net40/Oracle.ManagedDataAccess.dll": {}
         }
       },
-      "System.Data.SQLite.Core/1.0.108": {
+      "System.Data.SQLite.Core/1.0.109": {
         "type": "package",
         "compile": {
           "lib/net451/System.Data.SQLite.dll": {}
@@ -150,7 +150,7 @@
           "lib/net40/Oracle.ManagedDataAccess.dll": {}
         }
       },
-      "System.Data.SQLite.Core/1.0.108": {
+      "System.Data.SQLite.Core/1.0.109": {
         "type": "package",
         "compile": {
           "lib/net451/System.Data.SQLite.dll": {}
@@ -246,7 +246,7 @@
           "lib/net40/Oracle.ManagedDataAccess.dll": {}
         }
       },
-      "System.Data.SQLite.Core/1.0.108": {
+      "System.Data.SQLite.Core/1.0.109": {
         "type": "package",
         "compile": {
           "lib/net451/System.Data.SQLite.dll": {}
@@ -342,7 +342,7 @@
           "lib/net40/Oracle.ManagedDataAccess.dll": {}
         }
       },
-      "System.Data.SQLite.Core/1.0.108": {
+      "System.Data.SQLite.Core/1.0.109": {
         "type": "package",
         "compile": {
           "lib/net451/System.Data.SQLite.dll": {}
@@ -486,11 +486,12 @@
         "readme.txt"
       ]
     },
-    "System.Data.SQLite.Core/1.0.108": {
-      "sha512": "BwfMIy9q4OBRCKlAPMOfu2SuVm/5sfHHCqIWqT9n3U4ytmv9vXSXIkpntmYACBbwcTFh1tqcoJPSLKFOsD5ruA==",
+    "System.Data.SQLite.Core/1.0.109": {
+      "sha512": "pszWTuZLeg86kyQRydjmBtq3wqxEsUbMpdpz03sN6qi1GWJ5dRVtMyulPiQZlP9UkJYv6FCKBUAXLxfiyoiUrw==",
       "type": "package",
-      "path": "system.data.sqlite.core/1.0.108",
+      "path": "system.data.sqlite.core/1.0.109",
       "files": [
+        ".signature.p7s",
         "build/net20/System.Data.SQLite.Core.targets",
         "build/net20/x64/SQLite.Interop.dll",
         "build/net20/x86/SQLite.Interop.dll",
@@ -506,6 +507,11 @@
         "build/net46/System.Data.SQLite.Core.targets",
         "build/net46/x64/SQLite.Interop.dll",
         "build/net46/x86/SQLite.Interop.dll",
+        "build/netstandard2.0/System.Data.SQLite.Core.targets",
+        "build/netstandard2.0/linux-x64/SQLite.Interop.dll",
+        "build/netstandard2.0/osx-x64/SQLite.Interop.dll",
+        "build/netstandard2.0/x64/SQLite.Interop.dll",
+        "build/netstandard2.0/x86/SQLite.Interop.dll",
         "lib/net20/System.Data.SQLite.dll",
         "lib/net20/System.Data.SQLite.dll.config",
         "lib/net20/System.Data.SQLite.xml",
@@ -521,7 +527,10 @@
         "lib/net46/System.Data.SQLite.dll",
         "lib/net46/System.Data.SQLite.dll.config",
         "lib/net46/System.Data.SQLite.xml",
-        "system.data.sqlite.core.1.0.108.nupkg.sha512",
+        "lib/netstandard2.0/System.Data.SQLite.dll",
+        "lib/netstandard2.0/System.Data.SQLite.dll.config",
+        "lib/netstandard2.0/System.Data.SQLite.xml",
+        "system.data.sqlite.core.1.0.109.nupkg.sha512",
         "system.data.sqlite.core.nuspec"
       ]
     },
@@ -630,7 +639,7 @@
       "MySql.Data >= 6.9.12",
       "Npgsql >= 4.0.1",
       "Oracle.ManagedDataAccess >= 12.2.1100",
-      "System.Data.SQLite.Core >= 1.0.108"
+      "System.Data.SQLite.Core >= 1.0.109"
     ],
     ".NETFramework,Version=v4.5.2": []
   },
@@ -666,7 +675,7 @@
       "MySql.Data": "[6.9.12, )",
       "Npgsql": "[4.0.1, )",
       "Oracle.ManagedDataAccess": "[12.2.1100, )",
-      "System.Data.SQLite.Core": "[1.0.108, )"
+      "System.Data.SQLite.Core": "[1.0.109, )"
     },
     "frameworks": {
       "net452": {}
