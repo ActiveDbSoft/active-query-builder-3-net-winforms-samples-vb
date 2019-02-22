@@ -41,25 +41,25 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ActiveQueryBuilder.Core">
-		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.12.1122\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.12.1123\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.MSSQLMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.MSSQLMetadataProvider.3.5.12.1122\lib\net\ActiveQueryBuilder.MSSQLMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.MSSQLMetadataProvider.3.5.12.1123\lib\net\ActiveQueryBuilder.MSSQLMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.ODBCMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.ODBCMetadataProvider.3.5.12.1122\lib\net\ActiveQueryBuilder.ODBCMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.ODBCMetadataProvider.3.5.12.1123\lib\net\ActiveQueryBuilder.ODBCMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.OLEDBMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.OLEDBMetadataProvider.3.5.12.1122\lib\net\ActiveQueryBuilder.OLEDBMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.OLEDBMetadataProvider.3.5.12.1123\lib\net\ActiveQueryBuilder.OLEDBMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.OracleMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.OracleMetadataProvider.3.5.12.1122\lib\net\ActiveQueryBuilder.OracleMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.OracleMetadataProvider.3.5.12.1123\lib\net\ActiveQueryBuilder.OracleMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.12.1122\lib\net\ActiveQueryBuilder.View.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.12.1123\lib\net\ActiveQueryBuilder.View.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View.WinForms">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.12.1122\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.12.1123\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
 	</Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
