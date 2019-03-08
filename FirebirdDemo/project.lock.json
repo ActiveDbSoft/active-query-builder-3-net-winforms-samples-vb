@@ -30,6 +30,7 @@
       "type": "package",
       "path": "firebirdsql.data.firebirdclient/6.0.0",
       "files": [
+        ".nupkg.metadata",
         "content/app.config.transform",
         "content/web.config.transform",
         "firebirdsql.data.firebirdclient.6.0.0.nupkg.sha512",
@@ -60,7 +61,6 @@
       "projectPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\FirebirdDemo\\FirebirdDemo.vbproj",
       "projectJsonPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\FirebirdDemo\\project.json",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\FirebirdDemo\\obj\\",
       "projectStyle": "ProjectJson",
       "validateRuntimeAssets": true,
       "configFilePaths": [

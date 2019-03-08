@@ -30,6 +30,7 @@
       "type": "package",
       "path": "ianywhere.data.sqlanywhere.v4.5/16.0.0.20433",
       "files": [
+        ".nupkg.metadata",
         "ianywhere.data.sqlanywhere.v4.5.16.0.0.20433.nupkg.sha512",
         "ianywhere.data.sqlanywhere.v4.5.nuspec",
         "lib/net35/iAnywhere.Data.SQLAnywhere.v3.5.dll",
@@ -54,7 +55,6 @@
       "projectPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\SybaseDemo\\SybaseDemo.vbproj",
       "projectJsonPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\SybaseDemo\\project.json",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\SybaseDemo\\obj\\",
       "projectStyle": "ProjectJson",
       "validateRuntimeAssets": true,
       "configFilePaths": [

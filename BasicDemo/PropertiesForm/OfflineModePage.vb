@@ -151,7 +151,7 @@ Friend Partial Class OfflineModePage
 	End Sub
 
 	Private Sub buttonEditMetadata_Click(sender As Object, e As EventArgs)
-		If QueryBuilder.EditMetadataContainer(_sqlContext, _sqlContext.LoadingOptions) Then
+		If QueryBuilder.EditMetadataContainer(_sqlContext) Then
 			Modified = True
 		End If
 	End Sub

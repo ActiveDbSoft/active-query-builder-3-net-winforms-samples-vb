@@ -79,7 +79,7 @@ Partial Public Class Form1
             End If
         End If
 
-        Dim imageKey As Bitmap = DirectCast(QBuilder.DataSourceOptions.MarkColumnOptions.PrimaryKeyIcon, Bitmap)
+        Dim imageKey As Bitmap = DirectCast(QBuilder.DataSourceOptions.ColumnsOptions.MarkColumnOptions.PrimaryKeyIcon, Bitmap)
 
         context.DrawImage(imageKey, New Point(rect.X + 3, rect.Y))
 

@@ -37,8 +37,6 @@ Public Partial Class Form1
 			' Disable the automatic metadata structure creation
 			queryBuilder.MetadataStructure.AllowChildAutoItems = False
 
-			' queryBuilder.DatabaseSchemaTreeOptions.DefaultExpandLevel = 0;
-
 			Dim filter As MetadataFilterItem
 
 			' Create a top-level folder containing all objects

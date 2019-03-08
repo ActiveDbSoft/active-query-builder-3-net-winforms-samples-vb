@@ -707,7 +707,7 @@ Public Partial Class MainForm
 	End Sub
 
 	Private Sub tsmiEditMetadata_Click(sender As Object, e As EventArgs) Handles tsmiEditMetadata.Click 
-		QueryBuilder.EditMetadataContainer(queryBuilder1.SQLContext, queryBuilder1.SQLContext.LoadingOptions)
+		QueryBuilder.EditMetadataContainer(queryBuilder1.SQLContext)
 	End Sub
 
 	Private Sub tsmiClearMetadata_Click(sender As Object, e As EventArgs) Handles tsmiClearMetadata.Click 

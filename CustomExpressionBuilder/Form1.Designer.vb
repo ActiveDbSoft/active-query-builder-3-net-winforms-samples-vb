@@ -143,7 +143,7 @@ Partial Class Form1
         '
         Me.queryBuilder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.queryBuilder.DataSourceOptions.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.queryBuilder.DataSourceOptions.MarkColumnOptions.PrimaryKeyIcon = CType(resources.GetObject("resource.PrimaryKeyIcon"), System.Drawing.Bitmap)
+        Me.queryBuilder.DataSourceOptions.ColumnsOptions.MarkColumnOptions.PrimaryKeyIcon = CType(resources.GetObject("resource.PrimaryKeyIcon"), System.Drawing.Bitmap)
         Me.queryBuilder.DesignPaneOptions.LinkStyle = ActiveQueryBuilder.View.QueryView.LinkStyle.MSAccess
         Me.queryBuilder.Dock = System.Windows.Forms.DockStyle.Fill
         Me.queryBuilder.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World)

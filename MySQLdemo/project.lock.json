@@ -30,6 +30,7 @@
       "type": "package",
       "path": "mysql.data/6.9.12",
       "files": [
+        ".nupkg.metadata",
         "CHANGES",
         "Readme.txt",
         "content/app.config.transform",
@@ -57,7 +58,6 @@
       "projectPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\MySQLdemo\\MySQLdemo.vbproj",
       "projectJsonPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\MySQLdemo\\project.json",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\MySQLdemo\\obj\\",
       "projectStyle": "ProjectJson",
       "validateRuntimeAssets": true,
       "configFilePaths": [

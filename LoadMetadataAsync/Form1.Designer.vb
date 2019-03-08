@@ -32,7 +32,7 @@ Partial Class Form1
 		' 
 		' queryBuilder
 		' 
-		Me.queryBuilder.DataSourceOptions.MarkColumnOptions.PrimaryKeyIcon = DirectCast(resources.GetObject("resource.PrimaryKeyIcon"), System.Drawing.Image)
+		Me.queryBuilder.DataSourceOptions.ColumnsOptions.MarkColumnOptions.PrimaryKeyIcon = DirectCast(resources.GetObject("resource.PrimaryKeyIcon"), System.Drawing.Image)
 		Me.queryBuilder.Dock = System.Windows.Forms.DockStyle.Fill
 		Me.queryBuilder.Location = New System.Drawing.Point(0, 0)
 		Me.queryBuilder.MetadataStructureOptions.ProceduresFolderText = Nothing
