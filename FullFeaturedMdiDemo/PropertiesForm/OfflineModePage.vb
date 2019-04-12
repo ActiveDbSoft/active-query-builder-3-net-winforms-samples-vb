@@ -65,7 +65,7 @@ Namespace PropertiesForm
 
 			Try
 				Using f As New MetadataContainerLoadForm(_sqlContext.MetadataContainer)
-					If f.ShowDialog() = DialogResult.OK Then
+					If f.ShowDialog() Then
 						cbOfflineMode.Checked = True
 						_dbView.InitializeDatabaseSchemaTree()
 					End If

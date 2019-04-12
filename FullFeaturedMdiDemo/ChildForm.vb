@@ -212,8 +212,8 @@ Partial Public Class ChildForm
         rtbQueryText.QueryProvider = SqlQuery
         TextBoxCurrentSubQuerySql.QueryProvider = SqlQuery
 
-        rtbQueryText.ActiveUnionSubQuery = QView.ActiveUnionSubQuery
-        TextBoxCurrentSubQuerySql.ActiveUnionSubQuery = QView.ActiveUnionSubQuery
+        rtbQueryText.ExpressionContext = QView.ActiveUnionSubQuery
+        TextBoxCurrentSubQuerySql.ExpressionContext = QView.ActiveUnionSubQuery
 
         AddHandler QView.ActiveUnionSubQueryChanged, ActiveUnionSubQueryChanged
 
@@ -241,8 +241,8 @@ Partial Public Class ChildForm
     End Sub
 
     Private Function ActiveUnionSubQueryChanged() As EventHandler
-        rtbQueryText.ActiveUnionSubQuery = QView.ActiveUnionSubQuery
-        TextBoxCurrentSubQuerySql.ActiveUnionSubQuery = QView.ActiveUnionSubQuery
+        rtbQueryText.ExpressionContext = QView.ActiveUnionSubQuery
+        TextBoxCurrentSubQuerySql.ExpressionContext = QView.ActiveUnionSubQuery
     End Function
 
     Private Sub TimerForFastResult_Elapsed(state As Object)
@@ -596,31 +596,6 @@ Partial Public Class ChildForm
         QView.ShowActiveUnionSubQueryProperties()
     End Sub
 
-    Public Sub RefreshMetadata()
-        If _sqlContext.MetadataProvider IsNot Nothing AndAlso _sqlContext.MetadataProvider.Connected Then
-            ' to refresh metadata, just clear already loaded items
-            _sqlContext.MetadataContainer.Clear()
-        End If
-    End Sub
-
-    Public Sub EditMetadata()
-        QueryBuilder.EditMetadataContainer(_sqlContext, _sqlContext.LoadingOptions)
-    End Sub
-
-    Public Sub ClearMetadata()
-        _sqlContext.MetadataContainer.Clear()
-    End Sub
-
-    Public Sub LoadMetadataFromXml()
-        Dim fileDialog As New OpenFileDialog() With {
-            .Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*"
-        }
-
-        If fileDialog.ShowDialog() = DialogResult.OK Then
-            _sqlContext.MetadataContainer.LoadingOptions.OfflineMode = True
-            _sqlContext.MetadataContainer.ImportFromXML(fileDialog.FileName)
-        End If
-    End Sub
 
     Public Sub SaveMetadataToXml()
         Dim fileDialog As New SaveFileDialog() With {

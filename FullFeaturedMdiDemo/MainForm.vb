@@ -520,30 +520,37 @@ Public Partial Class MainForm
 	End Sub
 
 	Private Sub tsmiRefreshMetadata_Click(sender As Object, e As EventArgs) Handles tsmiRefreshMetadata.Click
-		If ActiveMdiChild IsNot Nothing Then
-			' to refresh metadata, just clear already loaded items
-			DirectCast(ActiveMdiChild, ChildForm).ClearMetadata()
-			DirectCast(ActiveMdiChild, ChildForm).RefreshMetadata()
-		End If
+	    If _sqlContext.MetadataProvider IsNot Nothing AndAlso _sqlContext.MetadataProvider.Connected Then
+	        ' to refresh metadata, just clear already loaded items
+
+	        _sqlContext.MetadataContainer.Clear()
+	        _sqlContext.MetadataContainer.LoadAll(true)
+            DBView.InitializeDatabaseSchemaTree()
+	    End If
 	End Sub
 
 	Private Sub tsmiEditMetadata_Click(sender As Object, e As EventArgs) Handles tsmiEditMetadata.Click
-		If ActiveMdiChild IsNot Nothing Then
-			DirectCast(ActiveMdiChild, ChildForm).EditMetadata()
-		End If
+        If _sqlContext Is Nothing Then Return
+
+	    QueryBuilder.EditMetadataContainer(_sqlContext)
 	End Sub
 
 	Private Sub tsmiClearMetadata_Click(sender As Object, e As EventArgs) Handles tsmiClearMetadata.Click
-		If ActiveMdiChild IsNot Nothing Then
-			' to refresh metadata, just clear already loaded items
-			DirectCast(ActiveMdiChild, ChildForm).ClearMetadata()
-		End If
+	    If _sqlContext Is Nothing Then Return
+
+	    _sqlContext.MetadataContainer.Clear()
 	End Sub
 
 	Private Sub tsmiLoadMetadataFromXML_Click(sender As Object, e As EventArgs) Handles tsmiLoadMetadataFromXML.Click
-		If ActiveMdiChild IsNot Nothing Then
-			DirectCast(ActiveMdiChild, ChildForm).LoadMetadataFromXml()
-		End If
+	    Dim fileDialog As New OpenFileDialog() With {
+                .Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*"
+                }
+
+	    If fileDialog.ShowDialog() = DialogResult.OK Then
+	        _sqlContext.MetadataContainer.LoadingOptions.OfflineMode = True
+	        _sqlContext.MetadataContainer.ImportFromXML(fileDialog.FileName)
+            DBView.InitializeDatabaseSchemaTree
+	    End If
 	End Sub
 
 	Private Sub tsmiSaveMetadataToXML_Click(sender As Object, e As EventArgs) Handles tsmiSaveMetadataToXML.Click

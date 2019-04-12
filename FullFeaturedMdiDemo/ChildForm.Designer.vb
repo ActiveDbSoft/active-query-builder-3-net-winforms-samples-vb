@@ -456,7 +456,6 @@ Partial Class ChildForm
         '
         'expressionEditor1
         '
-        Me.expressionEditor1.ActiveUnionSubQuery = Nothing
         Me.expressionEditor1.CloseOnEscape = False
         Me.expressionEditor1.Expression = ""
         Me.expressionEditor1.Height = 0

@@ -54,7 +54,7 @@
 		Me.label3.Name = "label3"
 		Me.label3.Size = New System.Drawing.Size(336, 13)
 		Me.label3.TabIndex = 7
-		Me.label3.Text = "Copyright © 2008-2015 Active Database Software. All rights reserved."
+		Me.label3.Text = "Copyright © 2008-2019 Active Database Software. All rights reserved."
 		' 
 		' bClose
 		' 

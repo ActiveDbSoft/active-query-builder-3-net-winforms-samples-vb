@@ -100,6 +100,7 @@ Public Partial Class MainForm
 		If fileDialog.ShowDialog() = DialogResult.OK Then
 			queryBuilder1.MetadataContainer.LoadingOptions.OfflineMode = True
 			queryBuilder1.MetadataContainer.ImportFromXML(fileDialog.FileName)
+            queryBuilder1.InitializeDatabaseSchemaTree()
 		End If
 	End Sub
 

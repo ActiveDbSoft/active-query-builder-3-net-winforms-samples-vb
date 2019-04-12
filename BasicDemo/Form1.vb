@@ -48,13 +48,13 @@ Public Partial Class Form1
         End If
 		AddHandler Load, AddressOf Form1_Load
 
-        sqlTextEditor1.ActiveUnionSubQuery = queryBuilder1.ActiveUnionSubQuery
+        sqlTextEditor1.ExpressionContext = queryBuilder1.ActiveUnionSubQuery
 
         AddHandler queryBuilder1.ActiveUnionSubQueryChanged, ActiveUnionSubQueryChanged
 	End Sub
 
 	Private Function ActiveUnionSubQueryChanged() As EventHandler
-	    sqlTextEditor1.ActiveUnionSubQuery = queryBuilder1.ActiveUnionSubQuery
+	    sqlTextEditor1.ExpressionContext = queryBuilder1.ActiveUnionSubQuery
 	End Function
 
 	Private Sub Form1_Load(sender As Object, e As EventArgs)

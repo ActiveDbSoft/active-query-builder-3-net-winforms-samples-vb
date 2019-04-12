@@ -95,7 +95,7 @@ Friend Partial Class OfflineModePage
 		_sqlContext.MetadataContainer.BeginUpdate()
 		Try
 			Using f As New MetadataContainerLoadForm(_sqlContext.MetadataContainer)
-				If f.ShowDialog() = DialogResult.OK Then
+				If f.ShowDialog() Then
 					Modified = True
 					cbOfflineMode.Checked = True
 				End If
