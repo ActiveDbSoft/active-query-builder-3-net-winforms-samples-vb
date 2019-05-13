@@ -1,25 +1,25 @@
 {
   "version": 3,
   "targets": {
-    ".NETFramework,Version=v4.0": {
+    ".NETFramework,Version=v4.5.2": {
       "MySql.Data/6.9.12": {
         "type": "package",
         "compile": {
-          "lib/net40/MySql.Data.dll": {}
+          "lib/net45/MySql.Data.dll": {}
         },
         "runtime": {
-          "lib/net40/MySql.Data.dll": {}
+          "lib/net45/MySql.Data.dll": {}
         }
       }
     },
-    ".NETFramework,Version=v4.0/win": {
+    ".NETFramework,Version=v4.5.2/win": {
       "MySql.Data/6.9.12": {
         "type": "package",
         "compile": {
-          "lib/net40/MySql.Data.dll": {}
+          "lib/net45/MySql.Data.dll": {}
         },
         "runtime": {
-          "lib/net40/MySql.Data.dll": {}
+          "lib/net45/MySql.Data.dll": {}
         }
       }
     }
@@ -46,7 +46,7 @@
     "": [
       "MySql.Data >= 6.9.12"
     ],
-    ".NETFramework,Version=v4.0": []
+    ".NETFramework,Version=v4.5.2": []
   },
   "packageFolders": {
     "C:\\Users\\user\\.nuget\\packages\\": {}
@@ -68,7 +68,7 @@
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net40": {
+        "net452": {
           "projectReferences": {}
         }
       }
@@ -77,7 +77,7 @@
       "MySql.Data": "[6.9.12, )"
     },
     "frameworks": {
-      "net40": {}
+      "net452": {}
     },
     "runtimes": {
       "win": {

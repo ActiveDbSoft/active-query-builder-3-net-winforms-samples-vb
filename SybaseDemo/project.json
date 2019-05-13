@@ -3,7 +3,7 @@
     "iAnywhere.Data.SQLAnywhere.v4.5": "16.0.0.20433"
   },
   "frameworks": {
-    "net40": {}
+    "net452": {}
   },
   "runtimes": {
     "win": {}

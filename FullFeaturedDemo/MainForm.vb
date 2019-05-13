@@ -265,7 +265,7 @@ Public Partial Class MainForm
 					Dim start As DateTime = DateTime.Now
 
 					' ask for caching
-					If (DateTime.Now - start).Seconds > 60 Then
+					If (DateTime.Now - start).TotalSeconds > 60 Then
 						Dim message As String = "Do you want to cache the database structure to quicken further loading?"
 
 						If MessageBox.Show(message, "", MessageBoxButtons.YesNo) = DialogResult.Yes Then

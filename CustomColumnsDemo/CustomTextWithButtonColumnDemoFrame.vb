@@ -19,6 +19,7 @@ Imports ActiveQueryBuilder.View.WinForms.QueryView
 Public Partial Class CustomTextWithButtonColumnDemoFrame
 	Inherits UserControl
 	Private ReadOnly _customValuesProvider As New List(Of String)()
+    Private _customColumn As TextBoxWithButtonColumn
 
 	Public Sub New()
 		InitializeComponent()
@@ -42,16 +43,17 @@ Public Partial Class CustomTextWithButtonColumnDemoFrame
 			Dim dataGridView As DataGridView = DirectCast(queryColumnListControl.DataGrid, DataGridView)
 
 			' Create custom column
-			Dim customColumn As New TextBoxWithButtonColumn()
-			customColumn.Name = "CustomColumn"
-			customColumn.HeaderText = "Custom Column"
-			customColumn.Width = 200
-			customColumn.ValueType = GetType(String)
-			customColumn.HeaderCell.Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
-			customColumn.ShowButton = True
+            _customColumn?.Dispose()
+		    _customColumn = New TextBoxWithButtonColumn()
+		    _customColumn.Name = "CustomColumn"
+		    _customColumn.HeaderText = "Custom Column"
+		    _customColumn.Width = 200
+		    _customColumn.ValueType = GetType(String)
+		    _customColumn.HeaderCell.Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
+		    _customColumn.ShowButton = True
 
 			' Insert custom column to specified position
-			dataGridView.Columns.Insert(2, customColumn)
+			dataGridView.Columns.Insert(2, _customColumn)
 
 			' Handle requierd events
 			AddHandler dataGridView.CellBeginEdit, AddressOf DataGridView_CellBeginEdit
@@ -75,7 +77,10 @@ Public Partial Class CustomTextWithButtonColumnDemoFrame
 	End Sub
 
 	Private Sub DataGridView_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs)
-		If e.ColumnIndex = 2 AndAlso e.RowIndex < DirectCast(sender, DataGridView).RowCount - 1 Then
+	    Dim dataGrid As DataGridView = CType(sender, DataGridView)
+	    If Not Equals(dataGrid.Columns(e.ColumnIndex), _customColumn) Then Return
+
+		If e.RowIndex < DirectCast(sender, DataGridView).RowCount - 1 Then
 			' Make cell editable
 				' Set true if you need read-only cell.			
 			e.Cancel = False
@@ -84,7 +89,10 @@ Public Partial Class CustomTextWithButtonColumnDemoFrame
 
 	' This event handler allows you to display some custom value in you column
 	Private Sub DataGridView_CellValueNeeded(sender As Object, e As DataGridViewCellValueEventArgs)
-		If e.ColumnIndex = 2 AndAlso e.RowIndex < DirectCast(sender, DataGridView).RowCount - 1 Then
+	    Dim dataGrid As DataGridView = CType(sender, DataGridView)
+	    If Not Equals(dataGrid.Columns(e.ColumnIndex), _customColumn) Then Return
+
+		If e.RowIndex < DirectCast(sender, DataGridView).RowCount - 1 Then
 			' Set cell value
 
 				' If you need to access to the low level data item, use the following:
@@ -95,13 +103,14 @@ Public Partial Class CustomTextWithButtonColumnDemoFrame
 
 	' This event handler allows you to store modified cell value (if your column is editable)
 	Private Sub DataGridView_CellValuePushed(sender As Object, e As DataGridViewCellValueEventArgs)
-		If e.ColumnIndex = 2 Then
+	    Dim dataGrid As DataGridView = CType(sender, DataGridView)
+	    If Not Equals(dataGrid.Columns(e.ColumnIndex), _customColumn) Then Return
+
 			' Store new cell value
 
 				' If you need to access to the low level data item, use the following:
 				'				QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
 			_customValuesProvider(e.RowIndex) = DirectCast(e.Value, String)
-		End If
 	End Sub
 
 	Private Sub DataGridView_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs)

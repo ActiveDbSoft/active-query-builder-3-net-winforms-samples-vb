@@ -3,7 +3,7 @@
     "MySql.Data": "6.9.12"
   },
   "frameworks": {
-    "net40": {}
+    "net452": {}
   },
   "runtimes": {
     "win": {}

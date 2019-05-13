@@ -1,25 +1,25 @@
 {
   "version": 3,
   "targets": {
-    ".NETFramework,Version=v4.0": {
+    ".NETFramework,Version=v4.5.2": {
       "iAnywhere.Data.SQLAnywhere.v4.5/16.0.0.20433": {
         "type": "package",
         "compile": {
-          "lib/net40/iAnywhere.Data.SQLAnywhere.v4.0.dll": {}
+          "lib/net45/iAnywhere.Data.SQLAnywhere.v4.5.dll": {}
         },
         "runtime": {
-          "lib/net40/iAnywhere.Data.SQLAnywhere.v4.0.dll": {}
+          "lib/net45/iAnywhere.Data.SQLAnywhere.v4.5.dll": {}
         }
       }
     },
-    ".NETFramework,Version=v4.0/win": {
+    ".NETFramework,Version=v4.5.2/win": {
       "iAnywhere.Data.SQLAnywhere.v4.5/16.0.0.20433": {
         "type": "package",
         "compile": {
-          "lib/net40/iAnywhere.Data.SQLAnywhere.v4.0.dll": {}
+          "lib/net45/iAnywhere.Data.SQLAnywhere.v4.5.dll": {}
         },
         "runtime": {
-          "lib/net40/iAnywhere.Data.SQLAnywhere.v4.0.dll": {}
+          "lib/net45/iAnywhere.Data.SQLAnywhere.v4.5.dll": {}
         }
       }
     }
@@ -43,7 +43,7 @@
     "": [
       "iAnywhere.Data.SQLAnywhere.v4.5 >= 16.0.0.20433"
     ],
-    ".NETFramework,Version=v4.0": []
+    ".NETFramework,Version=v4.5.2": []
   },
   "packageFolders": {
     "C:\\Users\\user\\.nuget\\packages\\": {}
@@ -65,7 +65,7 @@
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net40": {
+        "net452": {
           "projectReferences": {}
         }
       }
@@ -74,7 +74,7 @@
       "iAnywhere.Data.SQLAnywhere.v4.5": "[16.0.0.20433, )"
     },
     "frameworks": {
-      "net40": {}
+      "net452": {}
     },
     "runtimes": {
       "win": {

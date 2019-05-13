@@ -526,6 +526,6 @@ End Sub
 	Private flowLayoutPanel6 As System.Windows.Forms.FlowLayoutPanel
 	Private CbLinkCreating As System.Windows.Forms.CheckBox
 	Private CbLinkDeleting As System.Windows.Forms.CheckBox
-    Private WithEvents cbQueryColumnListItemRemoving As Windows.Forms.CheckBox
+    Private WithEvents cbQueryColumnListItemRemoving As System.Windows.Forms.CheckBox
 End Class
 
