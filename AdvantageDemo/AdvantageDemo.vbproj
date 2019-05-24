@@ -44,16 +44,16 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ActiveQueryBuilder.AdvantageMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.AdvantageMetadataProvider.3.5.17.1129\lib\net\ActiveQueryBuilder.AdvantageMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.AdvantageMetadataProvider.3.5.18.1130\lib\net\ActiveQueryBuilder.AdvantageMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.Core">
-		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.17.1129\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.18.1130\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.17.1129\lib\net\ActiveQueryBuilder.View.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.18.1130\lib\net\ActiveQueryBuilder.View.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View.WinForms">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.17.1129\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.18.1130\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
 	</Reference>
     <Reference Include="Advantage.Data.Provider">
 		<HintPath>..\third-party\Advantage.Data.Provider.dll</HintPath>
