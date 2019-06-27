@@ -15,6 +15,7 @@ Partial Class MainForm
 	Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
+        Dim LinkPainterAccess1 As ActiveQueryBuilder.View.WinForms.QueryView.LinkPainterAccess = New ActiveQueryBuilder.View.WinForms.QueryView.LinkPainterAccess()
         Me.imageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.imageList2 = New System.Windows.Forms.ImageList(Me.components)
         Me.imageList3 = New System.Windows.Forms.ImageList(Me.components)
@@ -99,7 +100,6 @@ Partial Class MainForm
         Me.pageQueryBuilder = New System.Windows.Forms.TabPage()
         Me.splitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.panel1 = New System.Windows.Forms.Panel()
-        Me.queryBuilder1 = New ActiveQueryBuilder.View.WinForms.QueryBuilder()
         Me.toolStrip2 = New System.Windows.Forms.ToolStrip()
         Me.tsbQueryProperties = New System.Windows.Forms.ToolStripButton()
         Me.tsbAddObject = New System.Windows.Forms.ToolStripButton()
@@ -115,6 +115,8 @@ Partial Class MainForm
         Me.CBuilder = New ActiveQueryBuilder.View.WinForms.CriteriaBuilder.CriteriaBuilder()
         Me.teResultSql = New System.Windows.Forms.RichTextBox()
         Me.contextMenuStripForRichTextBox = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.labelSleepMode = New System.Windows.Forms.Label()
+        Me.queryBuilder1 = New ActiveQueryBuilder.View.WinForms.QueryBuilder()
         Me.toolStripPanel1.SuspendLayout
         Me.menuStrip1.SuspendLayout
         Me.toolStrip1.SuspendLayout
@@ -125,7 +127,6 @@ Partial Class MainForm
         Me.splitContainer1.Panel2.SuspendLayout
         Me.splitContainer1.SuspendLayout
         Me.panel1.SuspendLayout
-        CType(Me.queryBuilder1,System.ComponentModel.ISupportInitialize).BeginInit
         Me.toolStrip2.SuspendLayout
         Me.pageQueryResult.SuspendLayout
         CType(Me.splitContainer2,System.ComponentModel.ISupportInitialize).BeginInit
@@ -133,6 +134,9 @@ Partial Class MainForm
         Me.splitContainer2.Panel2.SuspendLayout
         Me.splitContainer2.SuspendLayout
         CType(Me.dataGridView1,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.queryBuilder1,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.queryBuilder1.SQLFormattingOptions,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.queryBuilder1.SQLGenerationOptions,System.ComponentModel.ISupportInitialize).BeginInit
         Me.SuspendLayout
         '
         'imageList1
@@ -787,86 +791,13 @@ Partial Class MainForm
         'panel1
         '
         Me.panel1.Controls.Add(Me.queryBuilder1)
+        Me.panel1.Controls.Add(Me.labelSleepMode)
         Me.panel1.Controls.Add(Me.toolStrip2)
         Me.panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.panel1.Location = New System.Drawing.Point(0, 0)
         Me.panel1.Name = "panel1"
         Me.panel1.Size = New System.Drawing.Size(819, 408)
         Me.panel1.TabIndex = 0
-        '
-        'queryBuilder1
-        '
-        Me.queryBuilder1.BehaviorOptions.ResolveColumnNamingConflictsAutomatically = false
-        Me.queryBuilder1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.queryBuilder1.DesignPaneOptions.LinkStyle = ActiveQueryBuilder.View.QueryView.LinkStyle.MSAccess
-        Me.queryBuilder1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.queryBuilder1.Font = New System.Drawing.Font("Segoe UI", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World)
-        Me.queryBuilder1.Location = New System.Drawing.Point(0, 25)
-        Me.queryBuilder1.MetadataStructureOptions.ProceduresFolderText = "Procedures"
-        Me.queryBuilder1.MetadataStructureOptions.SynonymsFolderText = "Synonyms"
-        Me.queryBuilder1.MetadataStructureOptions.TablesFolderText = "Tables"
-        Me.queryBuilder1.MetadataStructureOptions.ViewsFolderText = "Views"
-        Me.queryBuilder1.Name = "queryBuilder1"
-        Me.queryBuilder1.PanesConfigurationOptions.DatabaseSchemaViewWidth = 168
-        Me.queryBuilder1.PanesConfigurationOptions.DisableQueryNavigationBarPopup = false
-        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarDockOptions.AutoHide = true
-        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Right
-        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarEnabled = true
-        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.AutoHide = true
-        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Left
-        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarEnabled = true
-        Me.queryBuilder1.QueryColumnListOptions.AutoSizeColumns = false
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Index = 5
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Width = 90
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AliasColumn.Index = 2
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AliasColumn.Width = 100
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Index = 7
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Width = 70
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Index = 8
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Width = 60
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Index = 1
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Width = 150
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Index = 6
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Width = 80
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.OutputColumn.Index = 0
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.OutputColumn.Width = 55
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Index = 4
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Width = 90
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Index = 3
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Width = 80
-        Me.queryBuilder1.QueryColumnListOptions.DisableDirectEditingIn = ActiveQueryBuilder.View.QueryView.AffectedColumns.None
-        Me.queryBuilder1.QueryColumnListOptions.HideAsteriskItem = false
-        Me.queryBuilder1.QueryColumnListOptions.InitialOrColumnsCount = 2
-        Me.queryBuilder1.QueryColumnListOptions.NullOrderingInOrderBy = false
-        Me.queryBuilder1.QueryColumnListOptions.RowHeadersWidth = 15
-        Me.queryBuilder1.QueryColumnListOptions.UseCustomExpressionBuilder = ActiveQueryBuilder.View.QueryView.AffectedColumns.None
-        Me.queryBuilder1.Size = New System.Drawing.Size(819, 383)
-        '
-        '
-        '
-        Me.queryBuilder1.SQLFormattingOptions.ExpandVirtualFields = false
-        Me.queryBuilder1.SQLFormattingOptions.ExpandVirtualObjects = false
-        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.FromClauseFormat.NewLineAfterDatasource = false
-        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.MainPartsFromNewLine = false
-        '
-        '
-        '
-        Me.queryBuilder1.SQLGenerationOptions.ExpandVirtualFields = true
-        Me.queryBuilder1.SQLGenerationOptions.ExpandVirtualObjects = true
-        Me.queryBuilder1.SQLGenerationOptions.UseAltNames = false
-        Me.queryBuilder1.TabIndex = 0
-        Me.queryBuilder1.VisualOptions.ActiveDockPanelCaptionColor = System.Drawing.Color.FromArgb(CType(CType(255,Byte),Integer), CType(CType(242,Byte),Integer), CType(CType(157,Byte),Integer))
-        Me.queryBuilder1.VisualOptions.ActiveDockPanelCaptionFontColor = System.Drawing.Color.Black
-        Me.queryBuilder1.VisualOptions.DockTabColor = System.Drawing.Color.FromArgb(CType(CType(41,Byte),Integer), CType(CType(57,Byte),Integer), CType(CType(85,Byte),Integer))
-        Me.queryBuilder1.VisualOptions.DockTabFontColor = System.Drawing.Color.White
-        Me.queryBuilder1.VisualOptions.DockTabFontHoverColor = System.Drawing.Color.White
-        Me.queryBuilder1.VisualOptions.DockTabHoverColor = System.Drawing.Color.FromArgb(CType(CType(41,Byte),Integer), CType(CType(57,Byte),Integer), CType(CType(85,Byte),Integer))
-        Me.queryBuilder1.VisualOptions.DockTabIndicatorColor = System.Drawing.Color.FromArgb(CType(CType(70,Byte),Integer), CType(CType(90,Byte),Integer), CType(CType(125,Byte),Integer))
-        Me.queryBuilder1.VisualOptions.DockTabIndicatorHoverColor = System.Drawing.Color.FromArgb(CType(CType(155,Byte),Integer), CType(CType(167,Byte),Integer), CType(CType(183,Byte),Integer))
-        Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionColor = System.Drawing.Color.FromArgb(CType(CType(77,Byte),Integer), CType(CType(96,Byte),Integer), CType(CType(130,Byte),Integer))
-        Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = System.Drawing.Color.White
-        Me.queryBuilder1.VisualOptions.TabFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
-        Me.queryBuilder1.VisualOptions.TabsStripBackColor = System.Drawing.Color.FromArgb(CType(CType(41,Byte),Integer), CType(CType(57,Byte),Integer), CType(CType(85,Byte),Integer))
         '
         'toolStrip2
         '
@@ -1021,6 +952,123 @@ Partial Class MainForm
         Me.contextMenuStripForRichTextBox.Name = "contextMenuStripForRichTextBox"
         Me.contextMenuStripForRichTextBox.Size = New System.Drawing.Size(61, 4)
         '
+        'labelSleepMode
+        '
+        Me.labelSleepMode.AutoEllipsis = true
+        Me.labelSleepMode.BackColor = System.Drawing.Color.Bisque
+        Me.labelSleepMode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.labelSleepMode.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.labelSleepMode.Location = New System.Drawing.Point(0, 374)
+        Me.labelSleepMode.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
+        Me.labelSleepMode.Name = "labelSleepMode"
+        Me.labelSleepMode.Padding = New System.Windows.Forms.Padding(10)
+        Me.labelSleepMode.Size = New System.Drawing.Size(819, 34)
+        Me.labelSleepMode.TabIndex = 3
+        Me.labelSleepMode.Text = "Unsupported SQL statement. Visual Query Builder has been disabled. Either type a "& _ 
+    "SELECT statement or start building a query visually to turn this mode off."
+        Me.labelSleepMode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.labelSleepMode.Visible = false
+        '
+        'queryBuilder1
+        '
+        Me.queryBuilder1.AddObjectDialogOptions.Location = New System.Drawing.Point(0, 0)
+        Me.queryBuilder1.AddObjectDialogOptions.Size = New System.Drawing.Size(430, 430)
+        Me.queryBuilder1.AddObjectDialogOptions.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.queryBuilder1.BehaviorOptions.ResolveColumnNamingConflictsAutomatically = false
+        Me.queryBuilder1.DatabaseSchemaViewOptions.DrawTreeLines = false
+        Me.queryBuilder1.DatabaseSchemaViewOptions.ImageList = Nothing
+        Me.queryBuilder1.DesignPaneOptions.Background = System.Drawing.SystemColors.Window
+        LinkPainterAccess1.LinkColor = System.Drawing.Color.Black
+        LinkPainterAccess1.LinkColorFocused = System.Drawing.Color.Black
+        LinkPainterAccess1.MarkColor = System.Drawing.SystemColors.Control
+        LinkPainterAccess1.MarkColorFocused = System.Drawing.SystemColors.ControlDark
+        LinkPainterAccess1.MarkStyle = ActiveQueryBuilder.View.QueryView.LinkMarkStyle.Access
+        Me.queryBuilder1.DesignPaneOptions.LinkPainterOptions = LinkPainterAccess1
+        Me.queryBuilder1.DesignPaneOptions.LinkStyle = ActiveQueryBuilder.View.QueryView.LinkStyle.MSAccess
+        Me.queryBuilder1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.queryBuilder1.Font = New System.Drawing.Font("Segoe UI", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World)
+        Me.queryBuilder1.Location = New System.Drawing.Point(0, 25)
+        Me.queryBuilder1.Name = "queryBuilder1"
+        Me.queryBuilder1.PanesConfigurationOptions.DatabaseSchemaViewWidth = 168
+        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarDockOptions.AutoHide = true
+        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Right
+        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarEnabled = true
+        Me.queryBuilder1.PanesConfigurationOptions.QueryColumnsPaneHeight = 120
+        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.AutoHide = true
+        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Left
+        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarEnabled = true
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Index = 5
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Width = 90R
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AliasColumn.Index = 2
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AliasColumn.Width = 100R
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Index = 7
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Width = 70R
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Index = 8
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Width = 60R
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Index = 0
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Width = 60R
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Index = 1
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Width = 150R
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Index = 6
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Width = 80R
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.OutputColumn.Index = 0
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.OutputColumn.Width = 55R
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Index = 4
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Width = 90R
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Index = 3
+        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Width = 80R
+        Me.queryBuilder1.QueryColumnListOptions.Font = Nothing
+        Me.queryBuilder1.QueryColumnListOptions.InitialOrColumnsCount = 2
+        Me.queryBuilder1.QueryColumnListOptions.NullOrderingInOrderBy = false
+        Me.queryBuilder1.QueryColumnListOptions.UseCustomExpressionBuilder = ActiveQueryBuilder.View.QueryView.AffectedColumns.None
+        Me.queryBuilder1.QueryNavBarOptions.CTEButtonBaseColor = System.Drawing.Color.Green
+        Me.queryBuilder1.QueryNavBarOptions.DisableQueryNavigationBarPopup = false
+        Me.queryBuilder1.QueryNavBarOptions.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
+        Me.queryBuilder1.QueryNavBarOptions.OverflowButtonBaseColor = System.Drawing.Color.DarkRed
+        Me.queryBuilder1.QueryNavBarOptions.RootQueryButtonBaseColor = System.Drawing.Color.Black
+        Me.queryBuilder1.QueryNavBarOptions.SubQueryButtonBaseColor = System.Drawing.Color.Blue
+        Me.queryBuilder1.Size = New System.Drawing.Size(819, 349)
+        '
+        '
+        '
+        Me.queryBuilder1.SQLFormattingOptions.CTESubQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.CTESubQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.CTESubQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.DerivedQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.DerivedQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.DerivedQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.DynamicIndents = false
+        Me.queryBuilder1.SQLFormattingOptions.DynamicRightMargin = false
+        Me.queryBuilder1.SQLFormattingOptions.ExpandVirtualFields = false
+        Me.queryBuilder1.SQLFormattingOptions.ExpandVirtualObjects = false
+        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.FromClauseFormat.NewLineAfterDatasource = false
+        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.MainPartsFromNewLine = false
+        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.MainQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.MainQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.MainQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        '
+        '
+        '
+        Me.queryBuilder1.SQLGenerationOptions.ExpandVirtualFields = true
+        Me.queryBuilder1.SQLGenerationOptions.ExpandVirtualObjects = true
+        Me.queryBuilder1.SQLGenerationOptions.UseAltNames = false
+        Me.queryBuilder1.TabIndex = 4
+        Me.queryBuilder1.VisualOptions.ActiveDockPanelCaptionColor = System.Drawing.Color.FromArgb(CType(CType(255,Byte),Integer), CType(CType(242,Byte),Integer), CType(CType(157,Byte),Integer))
+        Me.queryBuilder1.VisualOptions.ActiveDockPanelCaptionFontColor = System.Drawing.Color.Black
+        Me.queryBuilder1.VisualOptions.DockTabColor = System.Drawing.Color.FromArgb(CType(CType(41,Byte),Integer), CType(CType(57,Byte),Integer), CType(CType(85,Byte),Integer))
+        Me.queryBuilder1.VisualOptions.DockTabFontColor = System.Drawing.Color.White
+        Me.queryBuilder1.VisualOptions.DockTabFontHoverColor = System.Drawing.Color.White
+        Me.queryBuilder1.VisualOptions.DockTabHoverColor = System.Drawing.Color.FromArgb(CType(CType(41,Byte),Integer), CType(CType(57,Byte),Integer), CType(CType(85,Byte),Integer))
+        Me.queryBuilder1.VisualOptions.DockTabIndicatorColor = System.Drawing.Color.FromArgb(CType(CType(70,Byte),Integer), CType(CType(90,Byte),Integer), CType(CType(125,Byte),Integer))
+        Me.queryBuilder1.VisualOptions.DockTabIndicatorHoverColor = System.Drawing.Color.FromArgb(CType(CType(155,Byte),Integer), CType(CType(167,Byte),Integer), CType(CType(183,Byte),Integer))
+        Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionColor = System.Drawing.Color.FromArgb(CType(CType(77,Byte),Integer), CType(CType(96,Byte),Integer), CType(CType(130,Byte),Integer))
+        Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = System.Drawing.Color.White
+        Me.queryBuilder1.VisualOptions.TabFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
+        Me.queryBuilder1.VisualOptions.TabsStripBackColor = System.Drawing.Color.FromArgb(CType(CType(41,Byte),Integer), CType(CType(57,Byte),Integer), CType(CType(85,Byte),Integer))
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
@@ -1051,7 +1099,6 @@ Partial Class MainForm
         Me.splitContainer1.ResumeLayout(false)
         Me.panel1.ResumeLayout(false)
         Me.panel1.PerformLayout
-        CType(Me.queryBuilder1,System.ComponentModel.ISupportInitialize).EndInit
         Me.toolStrip2.ResumeLayout(false)
         Me.toolStrip2.PerformLayout
         Me.pageQueryResult.ResumeLayout(false)
@@ -1061,6 +1108,9 @@ Partial Class MainForm
         CType(Me.splitContainer2,System.ComponentModel.ISupportInitialize).EndInit
         Me.splitContainer2.ResumeLayout(false)
         CType(Me.dataGridView1,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.queryBuilder1.SQLFormattingOptions,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.queryBuilder1.SQLGenerationOptions,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.queryBuilder1,System.ComponentModel.ISupportInitialize).EndInit
         Me.ResumeLayout(false)
         Me.PerformLayout
 
@@ -1148,7 +1198,6 @@ End Sub
 	Private imageList2 As System.Windows.Forms.ImageList
 	Private imageList3 As System.Windows.Forms.ImageList
 	Private WithEvents tsmiSaveAs As System.Windows.Forms.ToolStripMenuItem
-	Private WithEvents queryBuilder1 As ActiveQueryBuilder.View.WinForms.QueryBuilder
 	Private splitContainer1 As System.Windows.Forms.SplitContainer
 	Private splitContainer2 As System.Windows.Forms.SplitContainer
 	Private WithEvents teSql As System.Windows.Forms.RichTextBox
@@ -1169,5 +1218,6 @@ End Sub
 	Private WithEvents tsmiPaste As System.Windows.Forms.ToolStripMenuItem
 	Private WithEvents toolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
 	Private WithEvents tsmiSelectAll As System.Windows.Forms.ToolStripMenuItem
-
+    Private WithEvents queryBuilder1 As ActiveQueryBuilder.View.WinForms.QueryBuilder
+    Private WithEvents labelSleepMode As System.Windows.Forms.Label
 End Class

@@ -44,13 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ActiveQueryBuilder.Core">
-		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.20.1133\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.21.1135\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.20.1133\lib\net\ActiveQueryBuilder.View.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.21.1135\lib\net\ActiveQueryBuilder.View.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View.WinForms">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.20.1133\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.21.1135\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
 	</Reference>
     <Reference Include="System" />
     <Reference Include="System.Deployment" />

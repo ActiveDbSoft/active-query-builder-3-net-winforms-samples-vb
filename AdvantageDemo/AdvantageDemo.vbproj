@@ -44,16 +44,16 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ActiveQueryBuilder.AdvantageMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.AdvantageMetadataProvider.3.5.20.1133\lib\net\ActiveQueryBuilder.AdvantageMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.AdvantageMetadataProvider.3.5.21.1135\lib\net\ActiveQueryBuilder.AdvantageMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.Core">
-		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.20.1133\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.21.1135\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.20.1133\lib\net\ActiveQueryBuilder.View.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.21.1135\lib\net\ActiveQueryBuilder.View.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View.WinForms">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.20.1133\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.21.1135\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
 	</Reference>
     <Reference Include="Advantage.Data.Provider">
 		<HintPath>..\third-party\Advantage.Data.Provider.dll</HintPath>
@@ -70,6 +70,12 @@
     </Compile>
     <Compile Include="AdvantageConnectionForm.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\ErrorBox.Designer.vb">
+      <DependentUpon>ErrorBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Common\ErrorBox.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>

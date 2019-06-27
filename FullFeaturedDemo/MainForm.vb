@@ -27,7 +27,6 @@ Imports ActiveQueryBuilder.Core.QueryTransformer
 Imports ActiveQueryBuilder.View.WinForms
 
 Imports FullFeaturedDemo.Dailogs
-Imports FullFeaturedDemo.PropertiesForm
 Imports MySql.Data.MySqlClient
 Imports Npgsql
 Imports Helpers = ActiveQueryBuilder.Core.Helpers
@@ -37,7 +36,6 @@ Public Partial Class MainForm
 	Inherits Form
 	Private _selectedConnection As ConnectionInfo
 	Private ReadOnly _sqlFormattingOptions As SQLFormattingOptions
-	Private ReadOnly _sqlGenerationOptions As SQLGenerationOptions
 	Private _fileSourcePath As String
 	Private _oldSql As String
 	Private ReadOnly _sortedColumns As New Dictionary(Of String, SortOrder)()
@@ -54,7 +52,7 @@ Public Partial Class MainForm
 
 		' Options to generate the SQL query text for execution against a database server
 		' Replace virtual objects with derived tables
-		_sqlGenerationOptions = New SQLGenerationOptions() With { _
+		queryBuilder1.SQLGenerationOptions = New SQLGenerationOptions() With { _
 			.ExpandVirtualObjects = True _
 		}
 
@@ -425,7 +423,7 @@ Public Partial Class MainForm
 	End Sub
 
 	Private Sub SqlQuery_SleepModeChanged(sender As Object, e As EventArgs)
-		'  panelTextInfo.Height = SqlQuery.SleepMode ? 60 : 0;
+		labelSleepMode.Visible = queryBuilder1.SleepMode
 		toolStripStatusLabel1.Text = "Query builder state: " & (If(queryBuilder1.SleepMode, "Inactive", "Active"))
 	End Sub
 
@@ -1024,7 +1022,7 @@ Public Partial Class MainForm
 
 	Private Sub queryBuilder1_SQLUpdated(sender As Object, e As EventArgs) Handles queryBuilder1.SQLUpdated
 		HideErrorBanner()
-		teSql.Text = If(queryBuilder1.SleepMode, queryBuilder1.SQL, FormattedQueryText)
+	    teSql.Text = queryBuilder1.FormattedSQL
 	End Sub
 
 	Private Sub _sqlFormattingOptions_Updated(sender As Object, e As EventArgs)
