@@ -30,7 +30,6 @@
         'pictureBox1
         '
         Me.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.pictureBox1.Image = Global.FullFeaturedDemo.Resources.cancel
         Me.pictureBox1.Location = New System.Drawing.Point(45, 11)
         Me.pictureBox1.Name = "pictureBox1"
         Me.pictureBox1.Size = New System.Drawing.Size(16, 16)

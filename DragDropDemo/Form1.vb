@@ -15,6 +15,10 @@ Imports ActiveQueryBuilder.View
 
 Public Partial Class Form1
 	Inherits Form
+
+    Dim _lastValidSql As String
+    Dim _errorPosition As Integer
+
 	Private _dragBoxFromMouseDown As Rectangle = Rectangle.Empty
 
 	Public Sub New()
@@ -31,33 +35,35 @@ Public Partial Class Form1
 		MyBase.OnLoad(e)
 	End Sub
 
-	Private Sub queryBuilder1_SQLUpdated(sender As Object, e As EventArgs)
+	Private Sub queryBuilder1_SQLUpdated(sender As Object, e As EventArgs) Handles queryBuilder1.SQLUpdated
 		' Handle the event raised by SQL Builder object that the text of SQL query is changed
 
 		' Hide error banner if any
-		ShowErrorBanner(textBox1, "")
+		ErrorBox1.Visible = False
 
 		' update the text box
 		textBox1.Text = queryBuilder1.FormattedSQL
+        _lastValidSql = queryBuilder1.FormattedSQL
 	End Sub
 
-	Private Sub textBox1_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs)
+	Private Sub textBox1_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles textBox1.Validating
 		Try
 			' Update the query builder with manually edited query text:
 			queryBuilder1.SQL = textBox1.Text
 
 			' Hide error banner if any
-			ShowErrorBanner(textBox1, "")
+			ErrorBox1.Visible = False
 		Catch ex As SQLParsingException
 			' Set caret to error position
 			textBox1.SelectionStart = ex.ErrorPos.pos
 
 			' Show banner with error text
-			ShowErrorBanner(textBox1, ex.Message)
+			_ErrorBox1.Show(ex.Message, queryBuilder1.SyntaxProvider)
+            _errorPosition = ex.ErrorPos.pos
 		End Try
 	End Sub
 
-	Private Sub listBox1_MouseDown(sender As Object, e As MouseEventArgs)
+	Private Sub listBox1_MouseDown(sender As Object, e As MouseEventArgs) Handles listBox1.MouseDown
 		' Prepare drag'n'drop:
 		If listBox1.SelectedIndex <> -1 Then
 			Dim r As Rectangle = listBox1.GetItemRectangle(listBox1.SelectedIndex)
@@ -70,11 +76,11 @@ Public Partial Class Form1
 		End If
 	End Sub
 
-	Private Sub listBox1_MouseUp(sender As Object, e As MouseEventArgs)
+	Private Sub listBox1_MouseUp(sender As Object, e As MouseEventArgs) Handles listBox1.MouseUp
 		_dragBoxFromMouseDown = Rectangle.Empty
 	End Sub
 
-	Private Sub listBox1_MouseMove(sender As Object, e As MouseEventArgs)
+	Private Sub listBox1_MouseMove(sender As Object, e As MouseEventArgs) Handles listBox1.MouseMove
 		' Do drag:
 
 		If listBox1.SelectedIndex <> -1 Then
@@ -94,7 +100,7 @@ Public Partial Class Form1
 		End If
 	End Sub
 
-	Private Sub listBox1_DoubleClick(sender As Object, e As EventArgs)
+	Private Sub listBox1_DoubleClick(sender As Object, e As EventArgs) Handles listBox1.DoubleClick
 		' Double click will add the object in automatic position:
 		If listBox1.SelectedIndex <> -1 Then
 			Dim objectName As [String] = DirectCast(listBox1.SelectedItem, [String])
@@ -102,42 +108,23 @@ Public Partial Class Form1
 		End If
 	End Sub
 
-	Public Sub ShowErrorBanner(ByVal control As Control, ByVal text As String)
-		' Destory banner if already showing
-		If True Then
-			Dim existBanner As Boolean = False
-			Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
+    Private Sub ErrorBox1_GoToErrorPosition(sender As Object, e As EventArgs) Handles ErrorBox1.GoToErrorPosition
+        If _errorPosition <> -1 Then
+            textBox1.SelectionStart = _errorPosition
+            textBox1.SelectionLength = 0
+            textBox1.ScrollToCaret()
+        End If
 
-			If banners.Length > 0 Then
+        ErrorBox1.Visible = False
+        textBox1.Focus()
+    End Sub
 
-				For Each banner As Control In banners
+    Private Sub ErrorBox1_RevertValidText(sender As Object, e As EventArgs) Handles ErrorBox1.RevertValidText
+        textBox1.Text = _lastValidSql
+        textBox1.Focus()
+    End Sub
 
-					If Equals(text, banner.Text) Then
-						existBanner = True
-						Continue For
-					End If
-
-					banner.Dispose()
-				Next
-			End If
-
-			If existBanner Then Return
-		End If
-
-		' Show new banner if text is not empty
-		If Not String.IsNullOrEmpty(text) Then
-			Dim label As Label = New Label With {
-				.Name = "ErrorBanner",
-				.Text = text,
-				.BorderStyle = BorderStyle.FixedSingle,
-				.BackColor = Color.LightPink,
-				.AutoSize = True,
-				.Visible = True
-			}
-			control.Controls.Add(label)
-			label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-			label.BringToFront()
-			control.Focus()
-		End If
-	End Sub
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles textBox1.TextChanged
+        ErrorBox1.Visible = False
+    End Sub
 End Class

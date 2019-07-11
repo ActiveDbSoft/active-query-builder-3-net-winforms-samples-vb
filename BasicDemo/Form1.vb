@@ -28,11 +28,6 @@ Partial Public Class Form1
     Public Sub New()
         InitializeComponent()
 
-        For Each syntax As Type In Helpers.SyntaxProviderList
-            Dim instance As BaseSyntaxProvider = CType(Activator.CreateInstance(syntax), BaseSyntaxProvider)
-            ErrorBox1.SyntaxProviders.Add(instance)
-        Next
-
         ' DEMO WARNING
         If ActiveQueryBuilder.Core.BuildInfo.GetEdition() = ActiveQueryBuilder.Core.BuildInfo.Edition.Trial Then
             Dim trialNoticePanel As New Panel() With {
@@ -60,11 +55,6 @@ Partial Public Class Form1
         sqlTextEditor1.ExpressionContext = queryBuilder1.ActiveUnionSubQuery
 
         AddHandler queryBuilder1.ActiveUnionSubQueryChanged, ActiveUnionSubQueryChanged()
-
-        For Each syntax As Type In Helpers.SyntaxProviderList
-            Dim instance As BaseSyntaxProvider = CType(Activator.CreateInstance(syntax), BaseSyntaxProvider)
-            'errorBox1.SyntaxProviders.Add(instance)
-        Next
     End Sub
 
     Private Function ActiveUnionSubQueryChanged() As EventHandler
@@ -126,10 +116,11 @@ Partial Public Class Form1
         ' Handle the event raised by SQL Builder object that the text of SQL query is changed
 
         ' Hide error banner if any
-        ShowErrorBanner(sqlTextEditor1, "")
+        ErrorBox1.Visible = false
 
         ' update the text box
         sqlTextEditor1.Text = queryBuilder1.FormattedSQL
+        _lastValidSql = queryBuilder1.FormattedSQL
     End Sub
 
     Public Sub ResetQueryBuilder()
@@ -203,14 +194,13 @@ Partial Public Class Form1
             queryBuilder1.SQL = sqlTextEditor1.Text
 
             ' Hide error banner if any
-            ShowErrorBanner(sqlTextEditor1, "")
-            _lastValidSql = queryBuilder1.FormattedSQL
+            ErrorBox1.Visible = False
         Catch ex As SQLParsingException
             ' Set caret to error position
             sqlTextEditor1.SelectionStart = ex.ErrorPos.pos
             _errorPosition = ex.ErrorPos.pos
             ' Show banner with error text
-            ShowErrorBanner(sqlTextEditor1, ex.Message)
+            ErrorBox1.Show(ex.Message, queryBuilder1.SyntaxProvider)
         End Try
     End Sub
 
@@ -416,14 +406,6 @@ Partial Public Class Form1
         DirectCast(source, Timer).Dispose()
     End Sub
 
-    Public Sub ShowErrorBanner(control As Control, text As [String])
-        ' Show new banner if text is not empty
-        ErrorBox1.SetSyntaxProvider(queryBuilder1.SyntaxProvider)
-        ErrorBox1.Message = text
-
-        ErrorBox1.Visible = Not String.IsNullOrEmpty(text)
-    End Sub
-
     Private Sub queryBuilder1_SleepModeChanged(sender As Object, e As EventArgs) Handles queryBuilder1.SleepModeChanged
         labelSleepMode.Visible = queryBuilder1.SleepMode
         tabPageData.Enabled = Not queryBuilder1.SleepMode
@@ -435,7 +417,7 @@ Partial Public Class Form1
         End If
     End Sub
 
-    Private Sub ErrorBox1_RevertValidTextEvent(sender As Object, e As EventArgs) Handles ErrorBox1.RevertValidTextEvent
+    Private Sub ErrorBox1_RevertValidTextEvent(sender As Object, e As EventArgs) Handles ErrorBox1.RevertValidText
         sqlTextEditor1.Text = _lastValidSql
         sqlTextEditor1.Focus()
         ErrorBox1.Visible = False
@@ -450,7 +432,7 @@ Partial Public Class Form1
         sqlTextEditor1.Focus()
     End Sub
 
-    Private Sub ErrorBox1_GoToErrorPositionEvent(sender As Object, e As EventArgs) Handles ErrorBox1.GoToErrorPositionEvent
+    Private Sub ErrorBox1_GoToErrorPositionEvent(sender As Object, e As EventArgs) Handles ErrorBox1.GoToErrorPosition
         If (_errorPosition <> -1) Then
 
             sqlTextEditor1.SelectionStart = _errorPosition

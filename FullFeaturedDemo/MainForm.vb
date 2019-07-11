@@ -34,6 +34,8 @@ Imports SortOrder = System.Windows.Forms.SortOrder
 
 Public Partial Class MainForm
 	Inherits Form
+    Dim _lastValidSql As String
+    Dim _errorPosition As Integer
 	Private _selectedConnection As ConnectionInfo
 	Private ReadOnly _sqlFormattingOptions As SQLFormattingOptions
 	Private _fileSourcePath As String
@@ -330,28 +332,6 @@ Public Partial Class MainForm
 		End Get
 	End Property
 
-	Public Sub ShowErrorBanner(text As String)
-		HideErrorBanner()
-		_hasError = True
-		Dim label As New Label() With { _
-			.Name = "ErrorBanner", _
-			.Text = text, _
-			.BorderStyle = BorderStyle.FixedSingle, _
-			.BackColor = Color.LightPink, _
-			.AutoSize = True, _
-			.Visible = True _
-		}
-		teSql.Controls.Add(label)
-		teSql.Controls.SetChildIndex(label, 0)
-		label.Location = New Point(teSql.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-	End Sub
-
-	Private Sub HideErrorBanner()
-		For Each banner As Label In teSql.Controls.OfType(Of Label)().Where(Function(item) item.Name.StartsWith("ErrorBanner"))
-			banner.Dispose()
-		Next
-		_hasError = False
-	End Sub
 
 	Private Sub Language_Click(sender As Object, e As EventArgs)
 		Dim currentItem As ToolStripMenuItem = TryCast(sender, ToolStripMenuItem)
@@ -1021,8 +1001,9 @@ Public Partial Class MainForm
 	End Sub
 
 	Private Sub queryBuilder1_SQLUpdated(sender As Object, e As EventArgs) Handles queryBuilder1.SQLUpdated
-		HideErrorBanner()
+		ErrorBox1.Visible = False
 	    teSql.Text = queryBuilder1.FormattedSQL
+        _lastValidSql = queryBuilder1.FormattedSQL
 	End Sub
 
 	Private Sub _sqlFormattingOptions_Updated(sender As Object, e As EventArgs)
@@ -1042,13 +1023,14 @@ Public Partial Class MainForm
 		Try
 			' Update the query builder with manually edited query text:
 			queryBuilder1.SQL = teSql.Text
-			HideErrorBanner()
+			ErrorBox1.Visible = False
 		Catch ex As SQLParsingException
 			' Set caret to error position
 			teSql.SelectionStart = ex.ErrorPos.pos
 
 			' Show banner with error text
-			ShowErrorBanner(ex.Message)
+			ErrorBox1.Show(ex.Message, queryBuilder1.SyntaxProvider)
+            _errorPosition = ex.ErrorPos.pos
 		End Try
 	End Sub
 
@@ -1104,4 +1086,24 @@ Public Partial Class MainForm
 		target = value
 		Return value
 	End Function
+
+    Private Sub ErrorBox1_RevertValidText(sender As Object, e As EventArgs) Handles ErrorBox1.RevertValidText
+        teSql.Text = _lastValidSql
+        teSql.Focus()
+    End Sub
+
+    Private Sub ErrorBox1_GoToErrorPosition(sender As Object, e As EventArgs) Handles ErrorBox1.GoToErrorPosition
+        If _errorPosition <> -1 Then
+            teSql.SelectionStart = _errorPosition
+            teSql.SelectionLength = 0
+            teSql.ScrollToCaret()
+        End If
+
+        ErrorBox1.Visible = False
+        teSql.Focus()
+    End Sub
+
+    Private Sub teSql_TextChanged(sender As Object, e As EventArgs) Handles teSql.TextChanged
+        ErrorBox1.Visible = False
+    End Sub
 End Class

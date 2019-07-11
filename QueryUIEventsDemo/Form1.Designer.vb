@@ -22,6 +22,7 @@
 	''' the contents of this method with the code editor.
 	''' </summary>
 	Private Sub InitializeComponent()
+        Dim LinkPainterAccess2 As ActiveQueryBuilder.View.WinForms.QueryView.LinkPainterAccess = New ActiveQueryBuilder.View.WinForms.QueryView.LinkPainterAccess()
         Me.tableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.panel1 = New System.Windows.Forms.Panel()
         Me.flowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
@@ -50,6 +51,7 @@
         Me.QBuilder = New ActiveQueryBuilder.View.WinForms.QueryBuilder()
         Me.TextBoxSQL = New System.Windows.Forms.RichTextBox()
         Me.TextBoxReport = New System.Windows.Forms.RichTextBox()
+        Me.ErrorBox1 = New QueryUIEventsDemo.Common.ErrorBox()
         Me.tableLayoutPanel1.SuspendLayout
         Me.panel1.SuspendLayout
         Me.flowLayoutPanel1.SuspendLayout
@@ -63,6 +65,8 @@
         Me.splitContainer1.Panel2.SuspendLayout
         Me.splitContainer1.SuspendLayout
         CType(Me.QBuilder,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.QBuilder.SQLFormattingOptions,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.QBuilder.SQLGenerationOptions,System.ComponentModel.ISupportInitialize).BeginInit
         Me.SuspendLayout
         '
         'tableLayoutPanel1
@@ -369,6 +373,7 @@
         '
         'splitContainer1.Panel2
         '
+        Me.splitContainer1.Panel2.Controls.Add(Me.ErrorBox1)
         Me.splitContainer1.Panel2.Controls.Add(Me.TextBoxSQL)
         Me.splitContainer1.Size = New System.Drawing.Size(1002, 557)
         Me.splitContainer1.SplitterDistance = 443
@@ -376,57 +381,82 @@
         '
         'QBuilder
         '
+        Me.QBuilder.AddObjectDialogOptions.Location = New System.Drawing.Point(0, 0)
+        Me.QBuilder.AddObjectDialogOptions.Size = New System.Drawing.Size(430, 430)
+        Me.QBuilder.AddObjectDialogOptions.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.QBuilder.BehaviorOptions.ResolveColumnNamingConflictsAutomatically = false
-        Me.QBuilder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.QBuilder.DatabaseSchemaViewOptions.DrawTreeLines = false
+        Me.QBuilder.DatabaseSchemaViewOptions.ImageList = Nothing
+        Me.QBuilder.DesignPaneOptions.Background = System.Drawing.SystemColors.Window
+        LinkPainterAccess2.LinkColor = System.Drawing.Color.Black
+        LinkPainterAccess2.LinkColorFocused = System.Drawing.Color.Black
+        LinkPainterAccess2.MarkColor = System.Drawing.SystemColors.Control
+        LinkPainterAccess2.MarkColorFocused = System.Drawing.SystemColors.ControlDark
+        LinkPainterAccess2.MarkStyle = ActiveQueryBuilder.View.QueryView.LinkMarkStyle.Access
+        Me.QBuilder.DesignPaneOptions.LinkPainterOptions = LinkPainterAccess2
         Me.QBuilder.DesignPaneOptions.LinkStyle = ActiveQueryBuilder.View.QueryView.LinkStyle.MSAccess
         Me.QBuilder.Dock = System.Windows.Forms.DockStyle.Fill
         Me.QBuilder.Font = New System.Drawing.Font("Segoe UI", 12!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World)
         Me.QBuilder.Location = New System.Drawing.Point(0, 0)
-        Me.QBuilder.MetadataStructureOptions.ProceduresFolderText = "Procedures"
-        Me.QBuilder.MetadataStructureOptions.SynonymsFolderText = "Synonyms"
-        Me.QBuilder.MetadataStructureOptions.TablesFolderText = "Tables"
-        Me.QBuilder.MetadataStructureOptions.ViewsFolderText = "Views"
         Me.QBuilder.Name = "QBuilder"
-        Me.QBuilder.PanesConfigurationOptions.DisableQueryNavigationBarPopup = false
         Me.QBuilder.PanesConfigurationOptions.PropertiesBarDockOptions.AutoHide = true
         Me.QBuilder.PanesConfigurationOptions.PropertiesBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Right
         Me.QBuilder.PanesConfigurationOptions.PropertiesBarEnabled = true
         Me.QBuilder.PanesConfigurationOptions.SubQueryNavBarDockOptions.AutoHide = true
         Me.QBuilder.PanesConfigurationOptions.SubQueryNavBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Left
         Me.QBuilder.PanesConfigurationOptions.SubQueryNavBarEnabled = true
-        Me.QBuilder.QueryColumnListOptions.AutoSizeColumns = false
         Me.QBuilder.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Index = 5
-        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Width = 90
+        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Width = 90R
         Me.QBuilder.QueryColumnListOptions.ColumnsOptions.AliasColumn.Index = 2
-        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.AliasColumn.Width = 100
+        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.AliasColumn.Width = 100R
         Me.QBuilder.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Index = 7
-        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Width = 70
+        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Width = 70R
         Me.QBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Index = 8
-        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Width = 60
+        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Width = 60R
+        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Index = 0
+        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Width = 60R
         Me.QBuilder.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Index = 1
-        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Width = 150
+        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Width = 150R
         Me.QBuilder.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Index = 6
-        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Width = 80
+        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Width = 80R
         Me.QBuilder.QueryColumnListOptions.ColumnsOptions.OutputColumn.Index = 0
-        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.OutputColumn.Width = 55
+        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.OutputColumn.Width = 55R
         Me.QBuilder.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Index = 4
-        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Width = 90
+        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Width = 90R
         Me.QBuilder.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Index = 3
-        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Width = 80
-        Me.QBuilder.QueryColumnListOptions.DisableDirectEditingIn = ActiveQueryBuilder.View.QueryView.AffectedColumns.None
-        Me.QBuilder.QueryColumnListOptions.HideAsteriskItem = false
+        Me.QBuilder.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Width = 80R
+        Me.QBuilder.QueryColumnListOptions.Font = Nothing
         Me.QBuilder.QueryColumnListOptions.InitialOrColumnsCount = 2
         Me.QBuilder.QueryColumnListOptions.NullOrderingInOrderBy = false
-        Me.QBuilder.QueryColumnListOptions.RowHeadersWidth = 15
         Me.QBuilder.QueryColumnListOptions.UseCustomExpressionBuilder = ActiveQueryBuilder.View.QueryView.AffectedColumns.None
+        Me.QBuilder.QueryNavBarOptions.CTEButtonBaseColor = System.Drawing.Color.Green
+        Me.QBuilder.QueryNavBarOptions.DisableQueryNavigationBarPopup = false
+        Me.QBuilder.QueryNavBarOptions.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
+        Me.QBuilder.QueryNavBarOptions.OverflowButtonBaseColor = System.Drawing.Color.DarkRed
+        Me.QBuilder.QueryNavBarOptions.RootQueryButtonBaseColor = System.Drawing.Color.Black
+        Me.QBuilder.QueryNavBarOptions.SubQueryButtonBaseColor = System.Drawing.Color.Blue
         Me.QBuilder.Size = New System.Drawing.Size(1002, 443)
         '
         '
         '
+        Me.QBuilder.SQLFormattingOptions.CTESubQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.QBuilder.SQLFormattingOptions.CTESubQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.QBuilder.SQLFormattingOptions.CTESubQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.QBuilder.SQLFormattingOptions.DerivedQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.QBuilder.SQLFormattingOptions.DerivedQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.QBuilder.SQLFormattingOptions.DerivedQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.QBuilder.SQLFormattingOptions.DynamicIndents = false
+        Me.QBuilder.SQLFormattingOptions.DynamicRightMargin = false
         Me.QBuilder.SQLFormattingOptions.ExpandVirtualFields = false
         Me.QBuilder.SQLFormattingOptions.ExpandVirtualObjects = false
+        Me.QBuilder.SQLFormattingOptions.ExpressionSubQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
         Me.QBuilder.SQLFormattingOptions.ExpressionSubQueryFormat.FromClauseFormat.NewLineAfterDatasource = false
+        Me.QBuilder.SQLFormattingOptions.ExpressionSubQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
         Me.QBuilder.SQLFormattingOptions.ExpressionSubQueryFormat.MainPartsFromNewLine = false
+        Me.QBuilder.SQLFormattingOptions.ExpressionSubQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.QBuilder.SQLFormattingOptions.MainQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.QBuilder.SQLFormattingOptions.MainQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.QBuilder.SQLFormattingOptions.MainQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
         '
         '
         '
@@ -466,6 +496,21 @@
         Me.TextBoxReport.TabIndex = 2
         Me.TextBoxReport.Text = ""
         '
+        'ErrorBox1
+        '
+        Me.ErrorBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.ErrorBox1.AutoSize = true
+        Me.ErrorBox1.BackColor = System.Drawing.Color.LightPink
+        Me.ErrorBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ErrorBox1.CurrentSyntaxProvider = Nothing
+        Me.ErrorBox1.IsVisibleCheckSyntaxPanel = false
+        Me.ErrorBox1.Location = New System.Drawing.Point(630, 46)
+        Me.ErrorBox1.Name = "ErrorBox1"
+        Me.ErrorBox1.Padding = New System.Windows.Forms.Padding(5)
+        Me.ErrorBox1.Size = New System.Drawing.Size(353, 61)
+        Me.ErrorBox1.TabIndex = 1
+        Me.ErrorBox1.Visible = false
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
@@ -490,8 +535,11 @@
         Me.flowLayoutPanel6.PerformLayout
         Me.splitContainer1.Panel1.ResumeLayout(false)
         Me.splitContainer1.Panel2.ResumeLayout(false)
+        Me.splitContainer1.Panel2.PerformLayout
         CType(Me.splitContainer1,System.ComponentModel.ISupportInitialize).EndInit
         Me.splitContainer1.ResumeLayout(false)
+        CType(Me.QBuilder.SQLFormattingOptions,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.QBuilder.SQLGenerationOptions,System.ComponentModel.ISupportInitialize).EndInit
         CType(Me.QBuilder,System.ComponentModel.ISupportInitialize).EndInit
         Me.ResumeLayout(false)
 
@@ -527,5 +575,6 @@ End Sub
 	Private CbLinkCreating As System.Windows.Forms.CheckBox
 	Private CbLinkDeleting As System.Windows.Forms.CheckBox
     Private WithEvents cbQueryColumnListItemRemoving As System.Windows.Forms.CheckBox
+    Friend WithEvents ErrorBox1 As Common.ErrorBox
 End Class
 

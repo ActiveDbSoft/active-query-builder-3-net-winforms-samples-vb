@@ -15,6 +15,8 @@ Imports ActiveQueryBuilder.View.QueryView
 
 Partial Public Class Form1
     Inherits Form
+    Dim _lastValidSql As String
+    Dim _errorPosition As Integer
     Public Sub New()
         InitializeComponent()
 
@@ -217,47 +219,9 @@ Partial Public Class Form1
     Private Sub QBuilder_SQLUpdated(sender As Object, e As EventArgs) Handles QBuilder.SQLUpdated
         ' Update the text of SQL query when it's changed in the query builder.
         TextBoxSQL.Text = QBuilder.FormattedSQL
+        ErrorBox1.Visible = False
+        _lastValidSql = QBuilder.FormattedSQL
     End Sub
-
-    Public Sub ShowErrorBanner(ByVal control As Control, ByVal text As String)
-		' Display error banner if passed text is not empty
-        ' Destory banner if already showing
-		If True Then
-			Dim existBanner As Boolean = False
-			Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
-
-			If banners.Length > 0 Then
-
-				For Each banner As Control In banners
-
-					If Equals(text, banner.Text) Then
-						existBanner = True
-						Continue For
-					End If
-
-					banner.Dispose()
-				Next
-			End If
-
-			If existBanner Then Return
-		End If
-
-		' Show new banner if text is not empty
-		If Not String.IsNullOrEmpty(text) Then
-			Dim label As Label = New Label With {
-				.Name = "ErrorBanner",
-				.Text = text,
-				.BorderStyle = BorderStyle.FixedSingle,
-				.BackColor = Color.LightPink,
-				.AutoSize = True,
-				.Visible = True
-			}
-			control.Controls.Add(label)
-			label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-			label.BringToFront()
-			control.Focus()
-		End If
-	End Sub
 
     Private Sub AddRowToReport(value As String)
         TextBoxReport.Text = value & Environment.NewLine & TextBoxReport.Text
@@ -270,13 +234,14 @@ Partial Public Class Form1
             QBuilder.SQL = QBuilder.Text
 
             ' Hide error banner if any
-            ShowErrorBanner(TextBoxSQL, "")
+            ErrorBox1.Visible = False
         Catch ex As SQLParsingException
             ' Set caret to error position
             TextBoxSQL.SelectionStart = ex.ErrorPos.pos
 
             ' Show banner with error text
-            ShowErrorBanner(TextBoxSQL, ex.Message)
+            ErrorBox1.Show(ex.Message, QBuilder.SyntaxProvider)
+            _errorPosition = ex.ErrorPos.pos
         End Try
     End Sub
 
@@ -296,5 +261,25 @@ Partial Public Class Form1
         Dim answer As DialogResult = MessageBox.Show(Me, "Do you want to delete the QueryColumnListItem [" & item.ExpressionString & "]", "QueryColumnListItemRemoving", MessageBoxButtons.YesNo)
 
         abort = answer = DialogResult.No
+    End Sub
+
+    Private Sub TextBoxSQL_TextChanged(sender As Object, e As EventArgs) Handles TextBoxSQL.TextChanged
+        ErrorBox1.Visible = False
+    End Sub
+
+    Private Sub ErrorBox1_GoToErrorPosition(sender As Object, e As EventArgs) Handles ErrorBox1.GoToErrorPosition
+        If _errorPosition <> -1 Then
+            TextBoxSQL.SelectionStart = _errorPosition
+            TextBoxSQL.SelectionLength = 0
+            TextBoxSQL.ScrollToCaret()
+        End If
+
+        ErrorBox1.Visible = False
+        TextBoxSQL.Focus()
+    End Sub
+
+    Private Sub ErrorBox1_RevertValidText(sender As Object, e As EventArgs) Handles ErrorBox1.RevertValidText
+        TextBoxSQL.Text = _lastValidSql
+        TextBoxSQL.Focus()
     End Sub
 End Class

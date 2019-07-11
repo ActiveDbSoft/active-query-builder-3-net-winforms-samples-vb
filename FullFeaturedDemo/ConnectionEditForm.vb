@@ -390,6 +390,12 @@ Public Partial Class ConnectionEditForm
 			BoxServerVersion.Items.Add("SQL Server 7")
 			BoxServerVersion.Items.Add("SQL Server 2000")
 			BoxServerVersion.Items.Add("SQL Server 2005")
+			BoxServerVersion.Items.Add("SQL Server 2008")
+			BoxServerVersion.Items.Add("SQL Server 2012")
+			BoxServerVersion.Items.Add("SQL Server 2014")
+			BoxServerVersion.Items.Add("SQL Server 2016")
+			BoxServerVersion.Items.Add("SQL Server 2017")
+			BoxServerVersion.Items.Add("SQL Server 2019")
 
 			If DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL7 Then
 				BoxServerVersion.SelectedItem = "SQL Server 7"
@@ -397,6 +403,18 @@ Public Partial Class ConnectionEditForm
 				BoxServerVersion.SelectedItem = "SQL Server 2000"
 			ElseIf DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2005 Then
 				BoxServerVersion.SelectedItem = "SQL Server 2005"
+			ElseIf DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2008 Then
+				BoxServerVersion.SelectedItem = "SQL Server 2008"
+			ElseIf DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2012 Then
+				BoxServerVersion.SelectedItem = "SQL Server 2012"
+			ElseIf DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2014 Then
+				BoxServerVersion.SelectedItem = "SQL Server 2014"
+			ElseIf DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2016 Then
+				BoxServerVersion.SelectedItem = "SQL Server 2016"
+			ElseIf DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2017 Then
+				BoxServerVersion.SelectedItem = "SQL Server 2017"
+			ElseIf DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2019 Then
+				BoxServerVersion.SelectedItem = "SQL Server 2019"
 			Else
 				BoxServerVersion.SelectedItem = "Auto"
 			End If
@@ -405,13 +423,16 @@ Public Partial Class ConnectionEditForm
 			BoxServerVersion.Items.Add("3.0")
 			BoxServerVersion.Items.Add("4.0")
 			BoxServerVersion.Items.Add("5.0")
+			BoxServerVersion.Items.Add("8.0")
 
 			If DirectCast(_connectionInfo.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt < 40000 Then
 				BoxServerVersion.SelectedItem = "3.0"
 			ElseIf DirectCast(_connectionInfo.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt < 50000 Then
 				BoxServerVersion.SelectedItem = "4.0"
-			Else
+			ElseIf DirectCast(_connectionInfo.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt < 80000 Then
 				BoxServerVersion.SelectedItem = "5.0"
+			Else
+				BoxServerVersion.SelectedItem = "8.0"
 			End If
 		ElseIf TypeOf _connectionInfo.SyntaxProvider Is OracleSyntaxProvider Then
 			BoxServerVersion.Enabled = True
@@ -419,7 +440,10 @@ Public Partial Class ConnectionEditForm
 			BoxServerVersion.Items.Add("Oracle 8")
 			BoxServerVersion.Items.Add("Oracle 9")
 			BoxServerVersion.Items.Add("Oracle 10")
-			BoxServerVersion.Items.Add("Oracle 11")
+			BoxServerVersion.Items.Add("Oracle 11g")
+			BoxServerVersion.Items.Add("Oracle 12c")
+			BoxServerVersion.Items.Add("Oracle 18c")
+			BoxServerVersion.Items.Add("Oracle 19c")
 
 			If DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle7 Then
 				BoxServerVersion.SelectedItem = "Oracle 7"
@@ -430,7 +454,13 @@ Public Partial Class ConnectionEditForm
 			ElseIf DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle10 Then
 				BoxServerVersion.SelectedItem = "Oracle 10"
 			ElseIf DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle11 Then
-				BoxServerVersion.SelectedItem = "Oracle 11"
+				BoxServerVersion.SelectedItem = "Oracle 11g"
+			ElseIf DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle12 Then
+				BoxServerVersion.SelectedItem = "Oracle 12c"
+			ElseIf DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle18 Then
+				BoxServerVersion.SelectedItem = "Oracle 18c"
+			ElseIf DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle19 Then
+				BoxServerVersion.SelectedItem = "Oracle 19c"
 			End If
 		ElseIf TypeOf _connectionInfo.SyntaxProvider Is PostgreSQLSyntaxProvider Then
 			BoxServerVersion.Enabled = False
@@ -542,6 +572,18 @@ Public Partial Class ConnectionEditForm
 				DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2000
 			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "SQL Server 2005" Then
 				DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2005
+			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "SQL Server 2008" Then
+				DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2008
+			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "SQL Server 2012" Then
+				DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2012
+			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "SQL Server 2014" Then
+				DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2014
+			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "SQL Server 2016" Then
+				DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2016
+			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "SQL Server 2017" Then
+				DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2017
+			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "SQL Server 2019" Then
+				DirectCast(_connectionInfo.SyntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2019
 			End If
 		ElseIf TypeOf _connectionInfo.SyntaxProvider Is MySQLSyntaxProvider Then
 			If DirectCast(BoxServerVersion.SelectedItem, String) = "3.0" Then
@@ -550,6 +592,8 @@ Public Partial Class ConnectionEditForm
 				DirectCast(_connectionInfo.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt = 49999
 			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "5.0" Then
 				DirectCast(_connectionInfo.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt = 50000
+			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "8.0" Then
+				DirectCast(_connectionInfo.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt = 80012
 			End If
 		ElseIf TypeOf _connectionInfo.SyntaxProvider Is OracleSyntaxProvider Then
 			If DirectCast(BoxServerVersion.SelectedItem, String) = "Oracle 7" Then
@@ -560,6 +604,14 @@ Public Partial Class ConnectionEditForm
 				DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle9
 			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "Oracle 10" Then
 				DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle10
+			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "Oracle 11g" Then
+				DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle11
+			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "Oracle 12c" Then
+				DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle12
+			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "Oracle 18c" Then
+				DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle18
+			ElseIf DirectCast(BoxServerVersion.SelectedItem, String) = "Oracle 19c" Then
+				DirectCast(_connectionInfo.SyntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle19
 			End If
 		ElseIf TypeOf _connectionInfo.SyntaxProvider Is SybaseSyntaxProvider Then
 			If DirectCast(BoxServerVersion.SelectedItem, String) = "ASE" Then

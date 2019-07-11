@@ -226,15 +226,15 @@ Partial Class Form1
         'expressionEditor1
         '
         Me.expressionEditor1.ActiveUnionSubQuery = Nothing
-        Me.expressionEditor1.CloseOnEscape = false
+        Me.expressionEditor1.Options.CloseOnEscape = false
         Me.expressionEditor1.Expression = ""
-        Me.expressionEditor1.Height = 0
-        Me.expressionEditor1.HighlightMatchingParentheses = ActiveQueryBuilder.View.ExpressionEditor.ParenthesesHighlighting.NoHighlight
-        Me.expressionEditor1.KeepMetadataObjectsOnTopOfSuggestionList = true
-        Me.expressionEditor1.LoadMetadataOnCodeCompletion = true
-        Me.expressionEditor1.SearchFields = false
-        Me.expressionEditor1.TextEditorFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.expressionEditor1.Width = 0
+        
+        Me.expressionEditor1.TextEditorOptions.HighlightMatchingParentheses = ActiveQueryBuilder.View.ExpressionEditor.ParenthesesHighlighting.NoHighlight
+        Me.expressionEditor1.TextEditorSqlOptions.KeepMetadataObjectsOnTopOfSuggestionList = true
+        Me.expressionEditor1.TextEditorSqlOptions.LoadMetadataOnCodeCompletion = true
+        Me.expressionEditor1.Options.SearchFields = false
+        Me.expressionEditor1.TextEditorOptions.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.expressionEditor1.Options.Size = New Size(0,0)
         '
         'labelSleepMode
         '
@@ -255,7 +255,7 @@ Partial Class Form1
         '
         'sqlTextEditor1
         '
-        Me.sqlTextEditor1.AcceptTabs = false
+        Me.sqlTextEditor1.Options.AcceptTabs = false
         Me.sqlTextEditor1.AllowShowSuggestionByMouse = false
         Me.sqlTextEditor1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.sqlTextEditor1.CaretOffset = 0
@@ -263,7 +263,7 @@ Partial Class Form1
         Me.sqlTextEditor1.Location = New System.Drawing.Point(0, 0)
         Me.sqlTextEditor1.Name = "sqlTextEditor1"
         Me.sqlTextEditor1.Options.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
-        Me.sqlTextEditor1.Padding = New System.Windows.Forms.Padding(0)
+        Me.sqlTextEditor1.Options.Padding = New System.Windows.Forms.Padding(0)
         Me.sqlTextEditor1.Query = Nothing
         Me.sqlTextEditor1.QueryProvider = Nothing
         Me.sqlTextEditor1.SelectedText = ""
@@ -272,7 +272,6 @@ Partial Class Form1
         Me.sqlTextEditor1.Size = New System.Drawing.Size(870, 141)
         Me.sqlTextEditor1.SQLContext = Nothing
         Me.sqlTextEditor1.SqlOptions.SuggestionWindowSize = New System.Drawing.Size(200, 200)
-        Me.sqlTextEditor1.SuggestionWindowSize = New System.Drawing.Size(200, 200)
         Me.sqlTextEditor1.TabIndex = 0
         '
         'tabPageData
@@ -334,7 +333,7 @@ Partial Class Form1
         'oracleSyntaxProvider1
         '
         Me.oracleSyntaxProvider1.OnCalcExpressionType = Nothing
-        Me.oracleSyntaxProvider1.ServerVersion = ActiveQueryBuilder.Core.OracleServerVersion.Oracle10
+        Me.oracleSyntaxProvider1.ServerVersion = ActiveQueryBuilder.Core.OracleServerVersion.Oracle18
         '
         'msaccessSyntaxProvider1
         '
@@ -453,7 +452,7 @@ Partial Class Form1
         Me.ErrorBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.ErrorBox1.CurrentSyntaxProvider = Nothing
         Me.ErrorBox1.Location = New System.Drawing.Point(577, 36)
-        Me.ErrorBox1.Message = "Some Text"
+        Me.ErrorBox1.IsVisibleCheckSyntaxPanel = true
         Me.ErrorBox1.Name = "ErrorBox1"
         Me.ErrorBox1.Padding = New System.Windows.Forms.Padding(5)
         Me.ErrorBox1.Size = New System.Drawing.Size(288, 100)

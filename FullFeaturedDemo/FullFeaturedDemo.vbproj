@@ -83,34 +83,34 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ActiveQueryBuilder.Core">
-		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.21.1135\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.22.1136\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.MSSQLMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.MSSQLMetadataProvider.3.5.21.1135\lib\net\ActiveQueryBuilder.MSSQLMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.MSSQLMetadataProvider.3.5.22.1136\lib\net\ActiveQueryBuilder.MSSQLMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.MySQLMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.MySQLMetadataProvider.3.5.21.1135\lib\net\ActiveQueryBuilder.MySQLMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.MySQLMetadataProvider.3.5.22.1136\lib\net\ActiveQueryBuilder.MySQLMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.ODBCMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.ODBCMetadataProvider.3.5.21.1135\lib\net\ActiveQueryBuilder.ODBCMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.ODBCMetadataProvider.3.5.22.1136\lib\net\ActiveQueryBuilder.ODBCMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.OLEDBMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.OLEDBMetadataProvider.3.5.21.1135\lib\net\ActiveQueryBuilder.OLEDBMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.OLEDBMetadataProvider.3.5.22.1136\lib\net\ActiveQueryBuilder.OLEDBMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.OracleNativeMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.OracleNativeMetadataProvider.3.5.21.1135\lib\net\ActiveQueryBuilder.OracleNativeMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.OracleNativeMetadataProvider.3.5.22.1136\lib\net\ActiveQueryBuilder.OracleNativeMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.PostgreSQLMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.PostgreSQLMetadataProvider.3.5.21.1135\lib\net\ActiveQueryBuilder.PostgreSQLMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.PostgreSQLMetadataProvider.3.5.22.1136\lib\net\ActiveQueryBuilder.PostgreSQLMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.UniversalMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.UniversalMetadataProvider.3.5.21.1135\lib\net\ActiveQueryBuilder.UniversalMetadataProvider.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.UniversalMetadataProvider.3.5.22.1136\lib\net\ActiveQueryBuilder.UniversalMetadataProvider.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.21.1135\lib\net\ActiveQueryBuilder.View.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.22.1136\lib\net\ActiveQueryBuilder.View.dll</HintPath>
 	</Reference>
     <Reference Include="ActiveQueryBuilder.View.WinForms">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.21.1135\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
+		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.22.1136\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
 	</Reference>
     <Reference Include="adodb, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
@@ -128,6 +128,25 @@
     </Compile>
     <Compile Include="AboutForm.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\ErrorBox.Designer.vb">
+      <DependentUpon>ErrorBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Common\ErrorBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Common\Helpers.vb" />
+    <Compile Include="Common\InfoPanel.Designer.vb">
+      <DependentUpon>InfoPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Common\InfoPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Common\ResultGrid.Designer.vb">
+      <DependentUpon>ResultGrid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Common\ResultGrid.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ConnectionEditForm.Designer.vb">
       <DependentUpon>ConnectionEditForm.vb</DependentUpon>
@@ -292,6 +311,12 @@
       <SubType>Designer</SubType>
       <DependentUpon>AboutForm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Common\InfoPanel.resx">
+      <DependentUpon>InfoPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\ResultGrid.resx">
+      <DependentUpon>ResultGrid.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConnectionEditForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ConnectionEditForm.vb</DependentUpon>
@@ -385,6 +410,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <EmbeddedResource Include="Resources\cancel.png" />
     <EmbeddedResource Include="Resources\database.ico" />
     <EmbeddedResource Include="Resources\cut.ico" />
     <EmbeddedResource Include="Resources\copy_union_subquery.png" />

@@ -14,6 +14,10 @@ Imports ActiveQueryBuilder.Core
 
 Public Partial Class Form1
 	Inherits Form
+
+    Dim _lastValidSql As String
+    Dim _errorPosition As Integer = -1
+
 	Public Sub New()
 		InitializeComponent()
 
@@ -37,6 +41,7 @@ Public Partial Class Form1
 	Private Sub queryBuilder1_SQLUpdated(sender As Object, e As EventArgs) Handles QBuilder.SQLUpdated
 		' Update the text of SQL query when it's changed in the query builder.
 		TextBoxSQL.Text = QBuilder.FormattedSQL
+        _lastValidSql = QBuilder.FormattedSQL
 	End Sub
 
 	''' <summary>
@@ -82,50 +87,34 @@ Public Partial Class Form1
 			QBuilder.SQL = TextBoxSQL.Text
 
 			' Hide error banner if any
-			ShowErrorBanner(TextBoxSQL, "")
+			ErrorBox1.Visible = False
 		Catch ex As SQLParsingException
 			' Set caret to error position
 			TextBoxSQL.SelectionStart = ex.ErrorPos.pos
+            _errorPosition = ex.ErrorPos.pos
 
 			' Show banner with error text
-			ShowErrorBanner(TextBoxSQL, ex.Message)
+			ErrorBox1.Show(ex.Message, QBuilder.SyntaxProvider)
 		End Try
 	End Sub
 
-	Public Sub ShowErrorBanner(ByVal control As Control, ByVal text As String)
-		If True Then
-			Dim existBanner As Boolean = False
-			Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
+    Private Sub ErrorBox1_RevertValidText(sender As Object, e As EventArgs) Handles ErrorBox1.RevertValidText
+        TextBoxSQL.Text = _lastValidSql
+        TextBoxSQL.Focus()
+    End Sub
 
-			If banners.Length > 0 Then
+    Private Sub ErrorBox1_GoToErrorPosition(sender As Object, e As EventArgs) Handles ErrorBox1.GoToErrorPosition
+        If _errorPosition <> -1 Then
+            TextBoxSQL.SelectionStart = _errorPosition
+            TextBoxSQL.SelectionLength = 0
+            TextBoxSQL.ScrollToCaret()
+        End If
 
-				For Each banner As Control In banners
+        ErrorBox1.Visible = False
+        TextBoxSQL.Focus()
+    End Sub
 
-					If Equals(text, banner.Text) Then
-						existBanner = True
-						Continue For
-					End If
-
-					banner.Dispose()
-				Next
-			End If
-
-			If existBanner Then Return
-		End If
-
-		If Not String.IsNullOrEmpty(text) Then
-			Dim label As Label = New Label With {
-				.Name = "ErrorBanner",
-				.Text = text,
-				.BorderStyle = BorderStyle.FixedSingle,
-				.BackColor = Color.LightPink,
-				.AutoSize = True,
-				.Visible = True
-			}
-			control.Controls.Add(label)
-			label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-			label.BringToFront()
-			control.Focus()
-		End If
-	End Sub
+    Private Sub TextBoxSQL_TextChanged(sender As Object, e As EventArgs) Handles TextBoxSQL.TextChanged
+        ErrorBox1.Visible = False
+    End Sub
 End Class

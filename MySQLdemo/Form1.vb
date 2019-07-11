@@ -17,11 +17,15 @@ Imports MySql.Data.MySqlClient
 
 Public Partial Class Form1
 	Inherits Form
+
+    Dim _lastValidSql As String
+    Dim _errorPosition As Integer
+
 	Public Sub New()
 		InitializeComponent()
 	End Sub
 
-	Private Sub connectMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs)
+	Private Sub connectMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectMetadataToolStripMenuItem.Click
 		' Connect to MySQL database
 
 		' show the connection form
@@ -40,20 +44,20 @@ Public Partial Class Form1
 		End Using
 	End Sub
 
-	Private Sub refreshMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs)
+	Private Sub refreshMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles refreshMetadataToolStripMenuItem.Click
 		' Force the query builder to refresh metadata from current connection
 
 		queryBuilder.ClearMetadata()
 		queryBuilder.InitializeDatabaseSchemaTree()
 	End Sub
 
-	Private Sub editMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs)
+	Private Sub editMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles editMetadataToolStripMenuItem.Click
 		' Open the metadata container editor
 
-	    QueryBuilder.EditMetadataContainer(queryBuilder.SQLContext, queryBuilder.MetadataLoadingOptions)
+	    QueryBuilder.EditMetadataContainer(queryBuilder.SQLContext)
 	End Sub
 
-	Private Sub clearMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs)
+	Private Sub clearMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles clearMetadataToolStripMenuItem.Click
 		' Clear the metadata
 
 		If MessageBox.Show("Clear Metadata Container?", "Confirmation", MessageBoxButtons.YesNo) = DialogResult.Yes Then
@@ -61,7 +65,7 @@ Public Partial Class Form1
 		End If
 	End Sub
 
-	Private Sub loadFromXMLToolStripMenuItem_Click(sender As Object, e As EventArgs)
+	Private Sub loadFromXMLToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles loadFromXMLToolStripMenuItem.Click
 		' Load metadata from XML file
 
 		If openMetadataFileDialog.ShowDialog() = DialogResult.OK AndAlso openMetadataFileDialog.FileName <> "" Then
@@ -71,7 +75,7 @@ Public Partial Class Form1
 		End If
 	End Sub
 
-	Private Sub saveToXMLToolStripMenuItem_Click(sender As Object, e As EventArgs)
+	Private Sub saveToXMLToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles saveToXMLToolStripMenuItem.Click
 		' Save metadata to XML file
 
 		If saveMetadataFileDialog.ShowDialog() = DialogResult.OK AndAlso saveMetadataFileDialog.FileName <> "" Then
@@ -79,37 +83,39 @@ Public Partial Class Form1
 		End If
 	End Sub
 
-	Private Sub aboutToolStripMenuItem_Click(sender As Object, e As EventArgs)
+	Private Sub aboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles aboutToolStripMenuItem.Click
 		QueryBuilder.ShowAboutDialog()
 	End Sub
 
-	Private Sub queryBuilder_SQLUpdated(sender As Object, e As EventArgs)
+	Private Sub queryBuilder_SQLUpdated(sender As Object, e As EventArgs) Handles queryBuilder.SQLUpdated
 		' Handle the event raised by SQL builder object that the text of SQL query is changed
 
 		' Hide error banner if any
-		ShowErrorBanner(textBox1, "")
+		ErrorBox1.Visible = False
 
 		' update the text box
 		textBox1.Text = queryBuilder.FormattedSQL
+        _lastValidSql = queryBuilder.FormattedSQL
 	End Sub
 
-	Private Sub textBox1_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs)
+	Private Sub textBox1_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles textBox1.Validating
 		Try
 			' Update the query builder with manually edited query text:
 			queryBuilder.SQL = textBox1.Text
 
 			' Hide error banner if any
-			ShowErrorBanner(textBox1, "")
+			ErrorBox1.Visible = False
 		Catch ex As SQLParsingException
 			' Set caret to error position
 			textBox1.SelectionStart = ex.ErrorPos.pos
 
 			' Show banner with error text
-			ShowErrorBanner(textBox1, ex.Message)
+			ErrorBox1.Show(ex.Message, queryBuilder.SyntaxProvider)
+            _errorPosition = ex.ErrorPos.pos
 		End Try
 	End Sub
 
-	Private Sub tabControl1_Selected(sender As Object, e As TabControlEventArgs)
+	Private Sub tabControl1_Selected(sender As Object, e As TabControlEventArgs) Handles tabControl1.Selected
 		' Move the input focus to the query builder.
 		' This will fire Leave event in the text box and update the query builder 
 		' with modified query text.
@@ -154,7 +160,7 @@ Public Partial Class Form1
 		End If
 	End Sub
 
-	Private Sub queryStatisticsMenuItem_Click(sender As Object, e As EventArgs)
+	Private Sub queryStatisticsMenuItem_Click(sender As Object, e As EventArgs) Handles queryStatisticsMenuItem.Click
 		Dim stats As String = ""
 
 		Dim qs As QueryStatistics = queryBuilder.QueryStatistics
@@ -177,43 +183,23 @@ Public Partial Class Form1
 		MessageBox.Show(stats)
 	End Sub
 
-	Public Sub ShowErrorBanner(ByVal control As Control, ByVal text As String)
-		' Display error banner if passed text is not empty
-        ' Destory banner if already showing
-		If True Then
-			Dim existBanner As Boolean = False
-			Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
+    Private Sub ErrorBox1_GoToErrorPosition(sender As Object, e As EventArgs) Handles ErrorBox1.GoToErrorPosition
+        If _errorPosition <> -1 Then
+            textBox1.SelectionStart = _errorPosition
+            textBox1.SelectionLength = 0
+            textBox1.ScrollToCaret()
+        End If
 
-			If banners.Length > 0 Then
+        ErrorBox1.Visible = False
+        textBox1.Focus()
+    End Sub
 
-				For Each banner As Control In banners
+    Private Sub ErrorBox1_RevertValidText(sender As Object, e As EventArgs) Handles ErrorBox1.RevertValidText
+        textBox1.Text = _lastValidSql
+        textBox1.Focus()
+    End Sub
 
-					If Equals(text, banner.Text) Then
-						existBanner = True
-						Continue For
-					End If
-
-					banner.Dispose()
-				Next
-			End If
-
-			If existBanner Then Return
-		End If
-
-		' Show new banner if text is not empty
-		If Not String.IsNullOrEmpty(text) Then
-			Dim label As Label = New Label With {
-				.Name = "ErrorBanner",
-				.Text = text,
-				.BorderStyle = BorderStyle.FixedSingle,
-				.BackColor = Color.LightPink,
-				.AutoSize = True,
-				.Visible = True
-			}
-			control.Controls.Add(label)
-			label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-			label.BringToFront()
-			control.Focus()
-		End If
-	End Sub
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles textBox1.TextChanged
+        ErrorBox1.Show(Nothing, queryBuilder.SyntaxProvider)
+    End Sub
 End Class

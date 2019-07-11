@@ -100,6 +100,8 @@ Partial Class MainForm
         Me.pageQueryBuilder = New System.Windows.Forms.TabPage()
         Me.splitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.panel1 = New System.Windows.Forms.Panel()
+        Me.queryBuilder1 = New ActiveQueryBuilder.View.WinForms.QueryBuilder()
+        Me.labelSleepMode = New System.Windows.Forms.Label()
         Me.toolStrip2 = New System.Windows.Forms.ToolStrip()
         Me.tsbQueryProperties = New System.Windows.Forms.ToolStripButton()
         Me.tsbAddObject = New System.Windows.Forms.ToolStripButton()
@@ -108,6 +110,7 @@ Partial Class MainForm
         Me.tsbAddUnionSubquery = New System.Windows.Forms.ToolStripButton()
         Me.tsbCopyUnionSubquery = New System.Windows.Forms.ToolStripButton()
         Me.toolStripSeparator15 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ErrorBox1 = New FullFeaturedDemo.Common.ErrorBox()
         Me.teSql = New System.Windows.Forms.RichTextBox()
         Me.pageQueryResult = New System.Windows.Forms.TabPage()
         Me.splitContainer2 = New System.Windows.Forms.SplitContainer()
@@ -115,8 +118,6 @@ Partial Class MainForm
         Me.CBuilder = New ActiveQueryBuilder.View.WinForms.CriteriaBuilder.CriteriaBuilder()
         Me.teResultSql = New System.Windows.Forms.RichTextBox()
         Me.contextMenuStripForRichTextBox = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.labelSleepMode = New System.Windows.Forms.Label()
-        Me.queryBuilder1 = New ActiveQueryBuilder.View.WinForms.QueryBuilder()
         Me.toolStripPanel1.SuspendLayout
         Me.menuStrip1.SuspendLayout
         Me.toolStrip1.SuspendLayout
@@ -127,6 +128,9 @@ Partial Class MainForm
         Me.splitContainer1.Panel2.SuspendLayout
         Me.splitContainer1.SuspendLayout
         Me.panel1.SuspendLayout
+        CType(Me.queryBuilder1,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.queryBuilder1.SQLFormattingOptions,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.queryBuilder1.SQLGenerationOptions,System.ComponentModel.ISupportInitialize).BeginInit
         Me.toolStrip2.SuspendLayout
         Me.pageQueryResult.SuspendLayout
         CType(Me.splitContainer2,System.ComponentModel.ISupportInitialize).BeginInit
@@ -134,9 +138,6 @@ Partial Class MainForm
         Me.splitContainer2.Panel2.SuspendLayout
         Me.splitContainer2.SuspendLayout
         CType(Me.dataGridView1,System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.queryBuilder1,System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.queryBuilder1.SQLFormattingOptions,System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.queryBuilder1.SQLGenerationOptions,System.ComponentModel.ISupportInitialize).BeginInit
         Me.SuspendLayout
         '
         'imageList1
@@ -783,6 +784,7 @@ Partial Class MainForm
         '
         'splitContainer1.Panel2
         '
+        Me.splitContainer1.Panel2.Controls.Add(Me.ErrorBox1)
         Me.splitContainer1.Panel2.Controls.Add(Me.teSql)
         Me.splitContainer1.Size = New System.Drawing.Size(819, 503)
         Me.splitContainer1.SplitterDistance = 408
@@ -799,182 +801,13 @@ Partial Class MainForm
         Me.panel1.Size = New System.Drawing.Size(819, 408)
         Me.panel1.TabIndex = 0
         '
-        'toolStrip2
-        '
-        Me.toolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbQueryProperties, Me.tsbAddObject, Me.toolStripSeparator14, Me.tsbAddDerivedTable, Me.tsbAddUnionSubquery, Me.tsbCopyUnionSubquery, Me.toolStripSeparator15})
-        Me.toolStrip2.Location = New System.Drawing.Point(0, 0)
-        Me.toolStrip2.Name = "toolStrip2"
-        Me.toolStrip2.Size = New System.Drawing.Size(819, 25)
-        Me.toolStrip2.Stretch = true
-        Me.toolStrip2.TabIndex = 2
-        '
-        'tsbQueryProperties
-        '
-        Me.tsbQueryProperties.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbQueryProperties.Image = CType(resources.GetObject("tsbQueryProperties.Image"),System.Drawing.Image)
-        Me.tsbQueryProperties.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbQueryProperties.Name = "tsbQueryProperties"
-        Me.tsbQueryProperties.Size = New System.Drawing.Size(23, 22)
-        Me.tsbQueryProperties.Text = "Properties"
-        '
-        'tsbAddObject
-        '
-        Me.tsbAddObject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbAddObject.Image = CType(resources.GetObject("tsbAddObject.Image"),System.Drawing.Image)
-        Me.tsbAddObject.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbAddObject.Name = "tsbAddObject"
-        Me.tsbAddObject.Size = New System.Drawing.Size(23, 22)
-        Me.tsbAddObject.Text = "Add Object"
-        '
-        'toolStripSeparator14
-        '
-        Me.toolStripSeparator14.Name = "toolStripSeparator14"
-        Me.toolStripSeparator14.Size = New System.Drawing.Size(6, 25)
-        '
-        'tsbAddDerivedTable
-        '
-        Me.tsbAddDerivedTable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbAddDerivedTable.Image = CType(resources.GetObject("tsbAddDerivedTable.Image"),System.Drawing.Image)
-        Me.tsbAddDerivedTable.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbAddDerivedTable.Name = "tsbAddDerivedTable"
-        Me.tsbAddDerivedTable.Size = New System.Drawing.Size(23, 22)
-        Me.tsbAddDerivedTable.Text = "Add Derived Table"
-        '
-        'tsbAddUnionSubquery
-        '
-        Me.tsbAddUnionSubquery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbAddUnionSubquery.Image = CType(resources.GetObject("tsbAddUnionSubquery.Image"),System.Drawing.Image)
-        Me.tsbAddUnionSubquery.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbAddUnionSubquery.Name = "tsbAddUnionSubquery"
-        Me.tsbAddUnionSubquery.Size = New System.Drawing.Size(23, 22)
-        Me.tsbAddUnionSubquery.Text = "New union sub-query"
-        '
-        'tsbCopyUnionSubquery
-        '
-        Me.tsbCopyUnionSubquery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbCopyUnionSubquery.Image = CType(resources.GetObject("tsbCopyUnionSubquery.Image"),System.Drawing.Image)
-        Me.tsbCopyUnionSubquery.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbCopyUnionSubquery.Name = "tsbCopyUnionSubquery"
-        Me.tsbCopyUnionSubquery.Size = New System.Drawing.Size(23, 22)
-        Me.tsbCopyUnionSubquery.Text = "Copy Union Sub-query"
-        '
-        'toolStripSeparator15
-        '
-        Me.toolStripSeparator15.Name = "toolStripSeparator15"
-        Me.toolStripSeparator15.Size = New System.Drawing.Size(6, 25)
-        '
-        'teSql
-        '
-        Me.teSql.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.teSql.Font = New System.Drawing.Font("Courier New", 10!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
-        Me.teSql.Location = New System.Drawing.Point(0, 0)
-        Me.teSql.Name = "teSql"
-        Me.teSql.Size = New System.Drawing.Size(819, 91)
-        Me.teSql.TabIndex = 0
-        Me.teSql.Text = ""
-        '
-        'pageQueryResult
-        '
-        Me.pageQueryResult.Controls.Add(Me.splitContainer2)
-        Me.pageQueryResult.ImageIndex = 1
-        Me.pageQueryResult.Location = New System.Drawing.Point(4, 27)
-        Me.pageQueryResult.Name = "pageQueryResult"
-        Me.pageQueryResult.Padding = New System.Windows.Forms.Padding(3)
-        Me.pageQueryResult.Size = New System.Drawing.Size(825, 509)
-        Me.pageQueryResult.TabIndex = 1
-        Me.pageQueryResult.Text = "Query Result"
-        Me.pageQueryResult.UseVisualStyleBackColor = true
-        '
-        'splitContainer2
-        '
-        Me.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
-        Me.splitContainer2.Location = New System.Drawing.Point(3, 3)
-        Me.splitContainer2.Name = "splitContainer2"
-        Me.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal
-        '
-        'splitContainer2.Panel1
-        '
-        Me.splitContainer2.Panel1.Controls.Add(Me.paginationPanel1)
-        Me.splitContainer2.Panel1.Controls.Add(Me.dataGridView1)
-        Me.splitContainer2.Panel1.Controls.Add(Me.CBuilder)
-        '
-        'splitContainer2.Panel2
-        '
-        Me.splitContainer2.Panel2.Controls.Add(Me.teResultSql)
-        Me.splitContainer2.Size = New System.Drawing.Size(819, 503)
-        Me.splitContainer2.SplitterDistance = 408
-        Me.splitContainer2.TabIndex = 0
-        '
-        'dataGridView1
-        '
-        Me.dataGridView1.AllowUserToAddRows = false
-        Me.dataGridView1.AllowUserToDeleteRows = false
-        Me.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
-        Me.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dataGridView1.Location = New System.Drawing.Point(0, 51)
-        Me.dataGridView1.Name = "dataGridView1"
-        Me.dataGridView1.ReadOnly = true
-        Me.dataGridView1.Size = New System.Drawing.Size(819, 357)
-        Me.dataGridView1.TabIndex = 0
-        '
-        'CBuilder
-        '
-        Me.CBuilder.AutoSize = true
-        Me.CBuilder.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.CBuilder.Dock = System.Windows.Forms.DockStyle.Top
-        Me.CBuilder.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
-        Me.CBuilder.JunctionPostfix = Nothing
-        Me.CBuilder.Location = New System.Drawing.Point(0, 0)
-        Me.CBuilder.MinimumSize = New System.Drawing.Size(188, 51)
-        Me.CBuilder.Name = "CBuilder"
-        Me.CBuilder.QueryTransformer = Nothing
-        Me.CBuilder.RootItemFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
-        Me.CBuilder.RootJunctionPrefix = Nothing
-        Me.CBuilder.Size = New System.Drawing.Size(819, 51)
-        Me.CBuilder.TabIndex = 1
-        '
-        'teResultSql
-        '
-        Me.teResultSql.BackColor = System.Drawing.Color.LemonChiffon
-        Me.teResultSql.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.teResultSql.Font = New System.Drawing.Font("Courier New", 10!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
-        Me.teResultSql.Location = New System.Drawing.Point(0, 0)
-        Me.teResultSql.Name = "teResultSql"
-        Me.teResultSql.ReadOnly = true
-        Me.teResultSql.Size = New System.Drawing.Size(819, 91)
-        Me.teResultSql.TabIndex = 0
-        Me.teResultSql.Text = ""
-        '
-        'contextMenuStripForRichTextBox
-        '
-        Me.contextMenuStripForRichTextBox.Name = "contextMenuStripForRichTextBox"
-        Me.contextMenuStripForRichTextBox.Size = New System.Drawing.Size(61, 4)
-        '
-        'labelSleepMode
-        '
-        Me.labelSleepMode.AutoEllipsis = true
-        Me.labelSleepMode.BackColor = System.Drawing.Color.Bisque
-        Me.labelSleepMode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.labelSleepMode.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.labelSleepMode.Location = New System.Drawing.Point(0, 374)
-        Me.labelSleepMode.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
-        Me.labelSleepMode.Name = "labelSleepMode"
-        Me.labelSleepMode.Padding = New System.Windows.Forms.Padding(10)
-        Me.labelSleepMode.Size = New System.Drawing.Size(819, 34)
-        Me.labelSleepMode.TabIndex = 3
-        Me.labelSleepMode.Text = "Unsupported SQL statement. Visual Query Builder has been disabled. Either type a "& _ 
-    "SELECT statement or start building a query visually to turn this mode off."
-        Me.labelSleepMode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.labelSleepMode.Visible = false
-        '
         'queryBuilder1
         '
         Me.queryBuilder1.AddObjectDialogOptions.Location = New System.Drawing.Point(0, 0)
         Me.queryBuilder1.AddObjectDialogOptions.Size = New System.Drawing.Size(430, 430)
         Me.queryBuilder1.AddObjectDialogOptions.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.queryBuilder1.BehaviorOptions.ResolveColumnNamingConflictsAutomatically = false
+        Me.queryBuilder1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.queryBuilder1.DatabaseSchemaViewOptions.DrawTreeLines = false
         Me.queryBuilder1.DatabaseSchemaViewOptions.ImageList = Nothing
         Me.queryBuilder1.DesignPaneOptions.Background = System.Drawing.SystemColors.Window
@@ -1069,6 +902,191 @@ Partial Class MainForm
         Me.queryBuilder1.VisualOptions.TabFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
         Me.queryBuilder1.VisualOptions.TabsStripBackColor = System.Drawing.Color.FromArgb(CType(CType(41,Byte),Integer), CType(CType(57,Byte),Integer), CType(CType(85,Byte),Integer))
         '
+        'labelSleepMode
+        '
+        Me.labelSleepMode.AutoEllipsis = true
+        Me.labelSleepMode.BackColor = System.Drawing.Color.Bisque
+        Me.labelSleepMode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.labelSleepMode.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.labelSleepMode.Location = New System.Drawing.Point(0, 374)
+        Me.labelSleepMode.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
+        Me.labelSleepMode.Name = "labelSleepMode"
+        Me.labelSleepMode.Padding = New System.Windows.Forms.Padding(10)
+        Me.labelSleepMode.Size = New System.Drawing.Size(819, 34)
+        Me.labelSleepMode.TabIndex = 3
+        Me.labelSleepMode.Text = "Unsupported SQL statement. Visual Query Builder has been disabled. Either type a "& _ 
+    "SELECT statement or start building a query visually to turn this mode off."
+        Me.labelSleepMode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.labelSleepMode.Visible = false
+        '
+        'toolStrip2
+        '
+        Me.toolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbQueryProperties, Me.tsbAddObject, Me.toolStripSeparator14, Me.tsbAddDerivedTable, Me.tsbAddUnionSubquery, Me.tsbCopyUnionSubquery, Me.toolStripSeparator15})
+        Me.toolStrip2.Location = New System.Drawing.Point(0, 0)
+        Me.toolStrip2.Name = "toolStrip2"
+        Me.toolStrip2.Size = New System.Drawing.Size(819, 25)
+        Me.toolStrip2.Stretch = true
+        Me.toolStrip2.TabIndex = 2
+        '
+        'tsbQueryProperties
+        '
+        Me.tsbQueryProperties.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbQueryProperties.Image = CType(resources.GetObject("tsbQueryProperties.Image"),System.Drawing.Image)
+        Me.tsbQueryProperties.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbQueryProperties.Name = "tsbQueryProperties"
+        Me.tsbQueryProperties.Size = New System.Drawing.Size(23, 22)
+        Me.tsbQueryProperties.Text = "Properties"
+        '
+        'tsbAddObject
+        '
+        Me.tsbAddObject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbAddObject.Image = CType(resources.GetObject("tsbAddObject.Image"),System.Drawing.Image)
+        Me.tsbAddObject.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbAddObject.Name = "tsbAddObject"
+        Me.tsbAddObject.Size = New System.Drawing.Size(23, 22)
+        Me.tsbAddObject.Text = "Add Object"
+        '
+        'toolStripSeparator14
+        '
+        Me.toolStripSeparator14.Name = "toolStripSeparator14"
+        Me.toolStripSeparator14.Size = New System.Drawing.Size(6, 25)
+        '
+        'tsbAddDerivedTable
+        '
+        Me.tsbAddDerivedTable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbAddDerivedTable.Image = CType(resources.GetObject("tsbAddDerivedTable.Image"),System.Drawing.Image)
+        Me.tsbAddDerivedTable.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbAddDerivedTable.Name = "tsbAddDerivedTable"
+        Me.tsbAddDerivedTable.Size = New System.Drawing.Size(23, 22)
+        Me.tsbAddDerivedTable.Text = "Add Derived Table"
+        '
+        'tsbAddUnionSubquery
+        '
+        Me.tsbAddUnionSubquery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbAddUnionSubquery.Image = CType(resources.GetObject("tsbAddUnionSubquery.Image"),System.Drawing.Image)
+        Me.tsbAddUnionSubquery.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbAddUnionSubquery.Name = "tsbAddUnionSubquery"
+        Me.tsbAddUnionSubquery.Size = New System.Drawing.Size(23, 22)
+        Me.tsbAddUnionSubquery.Text = "New union sub-query"
+        '
+        'tsbCopyUnionSubquery
+        '
+        Me.tsbCopyUnionSubquery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbCopyUnionSubquery.Image = CType(resources.GetObject("tsbCopyUnionSubquery.Image"),System.Drawing.Image)
+        Me.tsbCopyUnionSubquery.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbCopyUnionSubquery.Name = "tsbCopyUnionSubquery"
+        Me.tsbCopyUnionSubquery.Size = New System.Drawing.Size(23, 22)
+        Me.tsbCopyUnionSubquery.Text = "Copy Union Sub-query"
+        '
+        'toolStripSeparator15
+        '
+        Me.toolStripSeparator15.Name = "toolStripSeparator15"
+        Me.toolStripSeparator15.Size = New System.Drawing.Size(6, 25)
+        '
+        'ErrorBox1
+        '
+        Me.ErrorBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.ErrorBox1.AutoSize = true
+        Me.ErrorBox1.BackColor = System.Drawing.Color.LightPink
+        Me.ErrorBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ErrorBox1.CurrentSyntaxProvider = Nothing
+        Me.ErrorBox1.IsVisibleCheckSyntaxPanel = false
+        Me.ErrorBox1.Location = New System.Drawing.Point(481, 25)
+        Me.ErrorBox1.Name = "ErrorBox1"
+        Me.ErrorBox1.Padding = New System.Windows.Forms.Padding(5)
+        Me.ErrorBox1.Size = New System.Drawing.Size(333, 61)
+        Me.ErrorBox1.TabIndex = 1
+        Me.ErrorBox1.Visible = false
+        '
+        'teSql
+        '
+        Me.teSql.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.teSql.Font = New System.Drawing.Font("Courier New", 10!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
+        Me.teSql.Location = New System.Drawing.Point(0, 0)
+        Me.teSql.Name = "teSql"
+        Me.teSql.Size = New System.Drawing.Size(819, 91)
+        Me.teSql.TabIndex = 0
+        Me.teSql.Text = ""
+        '
+        'pageQueryResult
+        '
+        Me.pageQueryResult.Controls.Add(Me.splitContainer2)
+        Me.pageQueryResult.ImageIndex = 1
+        Me.pageQueryResult.Location = New System.Drawing.Point(4, 27)
+        Me.pageQueryResult.Name = "pageQueryResult"
+        Me.pageQueryResult.Padding = New System.Windows.Forms.Padding(3)
+        Me.pageQueryResult.Size = New System.Drawing.Size(825, 509)
+        Me.pageQueryResult.TabIndex = 1
+        Me.pageQueryResult.Text = "Query Result"
+        Me.pageQueryResult.UseVisualStyleBackColor = true
+        '
+        'splitContainer2
+        '
+        Me.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
+        Me.splitContainer2.Location = New System.Drawing.Point(3, 3)
+        Me.splitContainer2.Name = "splitContainer2"
+        Me.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'splitContainer2.Panel1
+        '
+        Me.splitContainer2.Panel1.Controls.Add(Me.paginationPanel1)
+        Me.splitContainer2.Panel1.Controls.Add(Me.dataGridView1)
+        Me.splitContainer2.Panel1.Controls.Add(Me.CBuilder)
+        '
+        'splitContainer2.Panel2
+        '
+        Me.splitContainer2.Panel2.Controls.Add(Me.teResultSql)
+        Me.splitContainer2.Size = New System.Drawing.Size(819, 503)
+        Me.splitContainer2.SplitterDistance = 408
+        Me.splitContainer2.TabIndex = 0
+        '
+        'dataGridView1
+        '
+        Me.dataGridView1.AllowUserToAddRows = false
+        Me.dataGridView1.AllowUserToDeleteRows = false
+        Me.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dataGridView1.Location = New System.Drawing.Point(0, 51)
+        Me.dataGridView1.Name = "dataGridView1"
+        Me.dataGridView1.ReadOnly = true
+        Me.dataGridView1.Size = New System.Drawing.Size(819, 357)
+        Me.dataGridView1.TabIndex = 0
+        '
+        'CBuilder
+        '
+        Me.CBuilder.AutoSize = true
+        Me.CBuilder.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.CBuilder.Dock = System.Windows.Forms.DockStyle.Top
+        Me.CBuilder.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
+        Me.CBuilder.JunctionPostfix = Nothing
+        Me.CBuilder.Location = New System.Drawing.Point(0, 0)
+        Me.CBuilder.MinimumSize = New System.Drawing.Size(188, 51)
+        Me.CBuilder.Name = "CBuilder"
+        Me.CBuilder.QueryTransformer = Nothing
+        Me.CBuilder.RootItemFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
+        Me.CBuilder.RootJunctionPrefix = Nothing
+        Me.CBuilder.Size = New System.Drawing.Size(819, 51)
+        Me.CBuilder.TabIndex = 1
+        '
+        'teResultSql
+        '
+        Me.teResultSql.BackColor = System.Drawing.Color.LemonChiffon
+        Me.teResultSql.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.teResultSql.Font = New System.Drawing.Font("Courier New", 10!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
+        Me.teResultSql.Location = New System.Drawing.Point(0, 0)
+        Me.teResultSql.Name = "teResultSql"
+        Me.teResultSql.ReadOnly = true
+        Me.teResultSql.Size = New System.Drawing.Size(819, 91)
+        Me.teResultSql.TabIndex = 0
+        Me.teResultSql.Text = ""
+        '
+        'contextMenuStripForRichTextBox
+        '
+        Me.contextMenuStripForRichTextBox.Name = "contextMenuStripForRichTextBox"
+        Me.contextMenuStripForRichTextBox.Size = New System.Drawing.Size(61, 4)
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
@@ -1095,10 +1113,14 @@ Partial Class MainForm
         Me.pageQueryBuilder.ResumeLayout(false)
         Me.splitContainer1.Panel1.ResumeLayout(false)
         Me.splitContainer1.Panel2.ResumeLayout(false)
+        Me.splitContainer1.Panel2.PerformLayout
         CType(Me.splitContainer1,System.ComponentModel.ISupportInitialize).EndInit
         Me.splitContainer1.ResumeLayout(false)
         Me.panel1.ResumeLayout(false)
         Me.panel1.PerformLayout
+        CType(Me.queryBuilder1.SQLFormattingOptions,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.queryBuilder1.SQLGenerationOptions,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.queryBuilder1,System.ComponentModel.ISupportInitialize).EndInit
         Me.toolStrip2.ResumeLayout(false)
         Me.toolStrip2.PerformLayout
         Me.pageQueryResult.ResumeLayout(false)
@@ -1108,9 +1130,6 @@ Partial Class MainForm
         CType(Me.splitContainer2,System.ComponentModel.ISupportInitialize).EndInit
         Me.splitContainer2.ResumeLayout(false)
         CType(Me.dataGridView1,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.queryBuilder1.SQLFormattingOptions,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.queryBuilder1.SQLGenerationOptions,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.queryBuilder1,System.ComponentModel.ISupportInitialize).EndInit
         Me.ResumeLayout(false)
         Me.PerformLayout
 
@@ -1220,4 +1239,5 @@ End Sub
 	Private WithEvents tsmiSelectAll As System.Windows.Forms.ToolStripMenuItem
     Private WithEvents queryBuilder1 As ActiveQueryBuilder.View.WinForms.QueryBuilder
     Private WithEvents labelSleepMode As System.Windows.Forms.Label
+    Friend WithEvents ErrorBox1 As Common.ErrorBox
 End Class

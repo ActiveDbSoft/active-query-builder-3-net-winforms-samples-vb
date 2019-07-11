@@ -17,12 +17,13 @@ Imports System.Drawing
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.Core.QueryTransformer
-Imports ActiveQueryBuilder.View
-Imports ActiveQueryBuilder.View.WinForms
 
 
 Public Partial Class Form1
 	Inherits Form
+    Dim _lastValidSql As String
+    Dim _errorPosition As Integer
+
 	Public Sub New()
 		InitializeComponent()
 
@@ -32,41 +33,46 @@ Public Partial Class Form1
 		queryBuilder.SQL = "Select Orders.OrderID, Orders.CustomerID, Orders.EmployeeID, Query1.Subtotal From Orders Inner Join (Select [Order Subtotals].Subtotal, [Order Subtotals].OrderID From [Order Subtotals]) Query1 On Query1.OrderID = Orders.OrderID Union Select [Orders Qry].OrderID, [Orders Qry].CustomerID, [Orders Qry].EmployeeID, Query2.Quantity * Query2.UnitPrice From [Orders Qry] Inner Join (Select [Order Details].OrderID, [Order Details].Quantity, [Order Details].UnitPrice From [Order Details]) Query2 On Query2.OrderID = [Orders Qry].OrderID Where ([Orders Qry].OrderID > 100) Or ([Orders Qry].OrderID < 1000)"
 	End Sub
 
-	Private Sub queryBuilder_SQLUpdated(sender As Object, e As EventArgs)
+	Private Sub queryBuilder_SQLUpdated(sender As Object, e As EventArgs) Handles queryBuilder.SQLUpdated
 		' Hide error banner if any
-		ShowErrorBanner(textBox1, "")
+		ErrorBox1.Visible = False
 
 		QueryPartChanged(sender, e)
-		'textBox1.Text =  queryBuilder.FormattedSQL;
-
+	    textBox1.Text = queryBuilder.FormattedSQL
+	    _lastValidSql = textBox1.Text
+		
 		If tabControl1.SelectedTab Is tabPageResultsPreview Then
 			UpdateResultsGrid()
 		End If
 	End Sub
 
-	Private Sub textBox1_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs)
+	Private Sub textBox1_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles textBox1.Validating
 		Try
 			' Update the target query part with manually edited query text:
 			queryBuilder.SQL = textBox1.Text
 
 			' Hide error banner if any
-			ShowErrorBanner(textBox1, "")
+		    ErrorBox1.Visible = False
 		Catch ex As SQLParsingException
 			' Set caret to error position
 			textBox1.SelectionStart = ex.ErrorPos.pos
 
 			' Show banner with error text
-			ShowErrorBanner(textBox1, ex.Message)
+			ErrorBox1.Show(ex.Message, queryBuilder.SyntaxProvider)
+		    _errorPosition = ex.ErrorPos.pos
 		End Try
 	End Sub
 
-	Private Sub QueryPartChanged(sender As Object, e As EventArgs)
+	Private Sub QueryPartChanged(sender As Object, e As EventArgs) Handles rbQuery.CheckedChanged, rbUnionSubQuery.CheckedChanged, rbSubQuery.CheckedChanged
 		If rbQuery.Checked Then
 			textBox1.Text = New SQLFormattingOptions(New SQLGenerationOptions()).GetSQLBuilder().GetSQL(queryBuilder.ActiveUnionSubQuery.QueryRoot)
+            _lastValidSql = textBox1.Text
 		ElseIf rbSubQuery.Checked Then
 			textBox1.Text = New SQLFormattingOptions(New SQLGenerationOptions()).GetSQLBuilder().GetSQL(queryBuilder.ActiveUnionSubQuery.ParentSubQuery)
+		    _lastValidSql = textBox1.Text
 		ElseIf rbUnionSubQuery.Checked Then
 			textBox1.Text = New SQLFormattingOptions(New SQLGenerationOptions()).GetSQLBuilder().GetSQL(queryBuilder.ActiveUnionSubQuery)
+		    _lastValidSql = textBox1.Text
 		End If
 	End Sub
 
@@ -77,7 +83,7 @@ Public Partial Class Form1
 		queryBuilder.MetadataLoadingOptions.OfflineMode = False
 	End Sub
 
-	Private Sub connectToMicrosoftSQLServerToolStripMenuItem_Click(sender As Object, e As EventArgs)
+	Private Sub connectToMicrosoftSQLServerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToMicrosoftSQLServerToolStripMenuItem.Click
 		ResetQueryBuilder()
 
 		' Connect to MS SQL Server
@@ -97,7 +103,7 @@ Public Partial Class Form1
         End Using
     End Sub
 
-    Private Sub connectToOracleServerToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub connectToOracleServerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToOracleServerToolStripMenuItem.Click
         ResetQueryBuilder()
 
         ' Connect to Oracle Server
@@ -116,7 +122,7 @@ Public Partial Class Form1
         End Using
     End Sub
 
-    Private Sub connectToMicrosoftAccessDatabaseToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub connectToMicrosoftAccessDatabaseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToMicrosoftAccessDatabaseToolStripMenuItem.Click
         ResetQueryBuilder()
 
         ' Connect to MS Access database using OLE DB provider
@@ -135,7 +141,7 @@ Public Partial Class Form1
         End Using
     End Sub
 
-    Private Sub connectToDatabaseThroughOLEDBToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub connectToDatabaseThroughOLEDBToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToDatabaseThroughOLEDBToolStripMenuItem.Click
         ResetQueryBuilder()
 
         ' Connect to a database through the OLE DB provider
@@ -154,7 +160,7 @@ Public Partial Class Form1
         End Using
     End Sub
 
-    Private Sub connectToDatabaseThroughODBCToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub connectToDatabaseThroughODBCToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToDatabaseThroughODBCToolStripMenuItem.Click
         ResetQueryBuilder()
 
         ' Connect to a database through the ODBC provider
@@ -173,7 +179,7 @@ Public Partial Class Form1
         End Using
     End Sub
 
-    Private Sub tabControl1_Selected(sender As Object, e As TabControlEventArgs)
+    Private Sub tabControl1_Selected(sender As Object, e As TabControlEventArgs) Handles tabControl1.Selected
         ' Move the input focus to the query builder.
         ' This will cause the validation in the text box and update the query builder with modified query text.
         queryBuilder.Focus()
@@ -352,47 +358,28 @@ Public Partial Class Form1
         End If
     End Sub
 
-    Public Sub ShowErrorBanner(ByVal control As Control, ByVal text As String)
-		' Display error banner if passed text is not empty
-        ' Destory banner if already showing
-		If True Then
-			Dim existBanner As Boolean = False
-			Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
 
-			If banners.Length > 0 Then
-
-				For Each banner As Control In banners
-
-					If Equals(text, banner.Text) Then
-						existBanner = True
-						Continue For
-					End If
-
-					banner.Dispose()
-				Next
-			End If
-
-			If existBanner Then Return
-		End If
-
-		' Show new banner if text is not empty
-		If Not String.IsNullOrEmpty(text) Then
-			Dim label As Label = New Label With {
-				.Name = "ErrorBanner",
-				.Text = text,
-				.BorderStyle = BorderStyle.FixedSingle,
-				.BackColor = Color.LightPink,
-				.AutoSize = True,
-				.Visible = True
-			}
-			control.Controls.Add(label)
-			label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-			label.BringToFront()
-			control.Focus()
-		End If
-	End Sub
-
-	Private Sub queryBuilder_ActiveUnionSubQueryChanged(sender As Object, e As EventArgs)
+	Private Sub queryBuilder_ActiveUnionSubQueryChanged(sender As Object, e As EventArgs) Handles queryBuilder.ActiveUnionSubQueryChanged
 		QueryPartChanged(sender, e)
 	End Sub
+
+    Private Sub ErrorBox1_RevertValidText(sender As Object, e As EventArgs) Handles ErrorBox1.RevertValidText
+        textBox1.Text = _lastValidSql
+        textBox1.Focus()
+    End Sub
+
+    Private Sub ErrorBox1_GoToErrorPosition(sender As Object, e As EventArgs) Handles ErrorBox1.GoToErrorPosition
+        If _errorPosition <> -1 Then
+            textBox1.SelectionStart = _errorPosition
+            textBox1.SelectionLength = 0
+            textBox1.ScrollToCaret()
+        End If
+
+        ErrorBox1.Visible = False
+        textBox1.Focus()
+    End Sub
+
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles textBox1.TextChanged
+        ErrorBox1.Visible = False
+    End Sub
 End Class

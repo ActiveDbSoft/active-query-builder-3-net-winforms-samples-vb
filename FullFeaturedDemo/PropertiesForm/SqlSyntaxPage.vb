@@ -63,16 +63,23 @@ Friend Partial Class SqlSyntaxPage
 		comboSqlDialect.Items.Add("MS SQL Server 2008")
 		comboSqlDialect.Items.Add("MS SQL Server 2012")
 		comboSqlDialect.Items.Add("MS SQL Server 2014")
+		comboSqlDialect.Items.Add("MS SQL Server 2016")
+		comboSqlDialect.Items.Add("MS SQL Server 2017")
+		comboSqlDialect.Items.Add("MS SQL Server 2019")
 		comboSqlDialect.Items.Add("MS SQL Server Compact Edition")
 		comboSqlDialect.Items.Add("MySQL 3.xx")
 		comboSqlDialect.Items.Add("MySQL 4.0")
 		comboSqlDialect.Items.Add("MySQL 4.1")
 		comboSqlDialect.Items.Add("MySQL 5.0")
+		comboSqlDialect.Items.Add("MySQL 8.0")
 		comboSqlDialect.Items.Add("Oracle 7")
 		comboSqlDialect.Items.Add("Oracle 8")
 		comboSqlDialect.Items.Add("Oracle 9")
 		comboSqlDialect.Items.Add("Oracle 10")
-		comboSqlDialect.Items.Add("Oracle 11")
+		comboSqlDialect.Items.Add("Oracle 11g")
+		comboSqlDialect.Items.Add("Oracle 12c")
+		comboSqlDialect.Items.Add("Oracle 18c")
+		comboSqlDialect.Items.Add("Oracle 19c")
 		comboSqlDialect.Items.Add("PostgreSQL")
 		comboSqlDialect.Items.Add("SQLite")
 		comboSqlDialect.Items.Add("Sybase ASE")
@@ -152,8 +159,17 @@ Friend Partial Class SqlSyntaxPage
 				Case MSSQLServerVersion.MSSQL2014
 					comboSqlDialect.SelectedItem = "MS SQL Server 2014"
 					Exit Select
+				Case MSSQLServerVersion.MSSQL2016
+					comboSqlDialect.SelectedItem = "MS SQL Server 2016"
+					Exit Select
+				Case MSSQLServerVersion.MSSQL2017
+					comboSqlDialect.SelectedItem = "MS SQL Server 2017"
+					Exit Select
+				Case MSSQLServerVersion.MSSQL2019
+					comboSqlDialect.SelectedItem = "MS SQL Server 2019"
+					Exit Select
 				Case Else
-					comboSqlDialect.SelectedItem = "MS SQL Server 7"
+					comboSqlDialect.SelectedItem = "MS SQL Server 2017"
 					Exit Select
 			End Select
 		ElseIf TypeOf queryBuilder.SyntaxProvider Is MySQLSyntaxProvider Then
@@ -163,8 +179,10 @@ Friend Partial Class SqlSyntaxPage
 				comboSqlDialect.SelectedItem = "MySQL 4.0"
 			ElseIf TryCast(queryBuilder.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt < 50000 Then
 				comboSqlDialect.SelectedItem = "MySQL 4.1"
-			Else
+			ElseIf TryCast(queryBuilder.SyntaxProvider, MySQLSyntaxProvider).ServerVersionInt < 80000 Then
 				comboSqlDialect.SelectedItem = "MySQL 5.0"
+			Else
+				comboSqlDialect.SelectedItem = "MySQL 8.0"
 			End If
 		ElseIf TypeOf queryBuilder.SyntaxProvider Is OracleSyntaxProvider Then
 			Select Case TryCast(queryBuilder.SyntaxProvider, OracleSyntaxProvider).ServerVersion
@@ -181,10 +199,19 @@ Friend Partial Class SqlSyntaxPage
 					comboSqlDialect.SelectedItem = "Oracle 10"
 					Exit Select
 				Case OracleServerVersion.Oracle11
-					comboSqlDialect.SelectedItem = "Oracle 11"
+					comboSqlDialect.SelectedItem = "Oracle 11g"
+					Exit Select
+				Case OracleServerVersion.Oracle12
+					comboSqlDialect.SelectedItem = "Oracle 12c"
+					Exit Select
+				Case OracleServerVersion.Oracle18
+					comboSqlDialect.SelectedItem = "Oracle 18c"
+					Exit Select
+				Case OracleServerVersion.Oracle19
+					comboSqlDialect.SelectedItem = "Oracle 19c"
 					Exit Select
 				Case Else
-					comboSqlDialect.SelectedItem = "Oracle 11"
+					comboSqlDialect.SelectedItem = "Oracle 18c"
 					Exit Select
 			End Select
 		ElseIf TypeOf queryBuilder.SyntaxProvider Is PostgreSQLSyntaxProvider Then
@@ -315,6 +342,18 @@ Friend Partial Class SqlSyntaxPage
 				_syntaxProvider = New MSSQLSyntaxProvider()
 				TryCast(_syntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2014
 				Exit Select
+			Case "MS SQL Server 2016"
+				_syntaxProvider = New MSSQLSyntaxProvider()
+				TryCast(_syntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2016
+				Exit Select
+			Case "MS SQL Server 2017"
+				_syntaxProvider = New MSSQLSyntaxProvider()
+				TryCast(_syntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2017
+				Exit Select
+			Case "MS SQL Server 2019"
+				_syntaxProvider = New MSSQLSyntaxProvider()
+				TryCast(_syntaxProvider, MSSQLSyntaxProvider).ServerVersion = MSSQLServerVersion.MSSQL2019
+				Exit Select
 			Case "MS SQL Server Compact Edition"
 				_syntaxProvider = New MSSQLCESyntaxProvider()
 				Exit Select
@@ -334,6 +373,10 @@ Friend Partial Class SqlSyntaxPage
 				_syntaxProvider = New MySQLSyntaxProvider()
 				TryCast(_syntaxProvider, MySQLSyntaxProvider).ServerVersionInt = 50000
 				Exit Select
+			Case "MySQL 8.0"
+				_syntaxProvider = New MySQLSyntaxProvider()
+				TryCast(_syntaxProvider, MySQLSyntaxProvider).ServerVersionInt = 80012
+				Exit Select
 			Case "Oracle 7"
 				_syntaxProvider = New OracleSyntaxProvider()
 				TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle7
@@ -350,9 +393,21 @@ Friend Partial Class SqlSyntaxPage
 				_syntaxProvider = New OracleSyntaxProvider()
 				TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle10
 				Exit Select
-			Case "Oracle 11"
+			Case "Oracle 11g"
 				_syntaxProvider = New OracleSyntaxProvider()
 				TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle11
+				Exit Select
+			Case "Oracle 12c"
+				_syntaxProvider = New OracleSyntaxProvider()
+				TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle12
+				Exit Select
+			Case "Oracle 18c"
+				_syntaxProvider = New OracleSyntaxProvider()
+				TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle18
+				Exit Select
+			Case "Oracle 19c"
+				_syntaxProvider = New OracleSyntaxProvider()
+				TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle19
 				Exit Select
 			Case "PostgreSQL"
 				_syntaxProvider = New PostgreSQLSyntaxProvider()
