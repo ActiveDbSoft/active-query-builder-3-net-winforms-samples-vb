@@ -40,7 +40,7 @@ Namespace Common
             Visible = False
             comboBoxSyntaxProvider.Items.Clear()
 
-            For Each baseSyntaxProvider As Type In Helpers.SyntaxProviderList
+            For Each baseSyntaxProvider As Type In ActiveQueryBuilder.Core.Helpers.SyntaxProviderList
                 Dim instance = TryCast(Activator.CreateInstance(baseSyntaxProvider), BaseSyntaxProvider)
                 comboBoxSyntaxProvider.Items.Add(New ComboBoxItem(instance))
             Next

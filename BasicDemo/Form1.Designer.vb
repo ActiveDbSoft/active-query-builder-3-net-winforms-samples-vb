@@ -226,7 +226,7 @@ Partial Class Form1
         'expressionEditor1
         '
         Me.expressionEditor1.ActiveUnionSubQuery = Nothing
-        Me.expressionEditor1.Options.CloseOnEscape = false
+        Me.expressionEditor1.Options.CloseOnEscape = true
         Me.expressionEditor1.Expression = ""
         
         Me.expressionEditor1.TextEditorOptions.HighlightMatchingParentheses = ActiveQueryBuilder.View.ExpressionEditor.ParenthesesHighlighting.NoHighlight

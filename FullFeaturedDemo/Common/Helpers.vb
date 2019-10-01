@@ -11,14 +11,14 @@
 Imports System.Data
 Imports System.Data.Common
 Imports System.Data.SqlClient
+Imports System.Drawing
 Imports System.Linq
 Imports ActiveQueryBuilder.Core
 
 Namespace Common
-    Public NotInheritable Class Helpers
-        Private Sub New()
-        End Sub
-        Public Shared Function CreateSqlCommand(sqlCommand As String, sqlQuery As SQLQuery) As DbCommand
+    Friend Module Helpers
+
+        Public Function CreateSqlCommand(sqlCommand As String, sqlQuery As SQLQuery) As DbCommand
             Dim command As DbCommand = DirectCast(sqlQuery.SQLContext.MetadataProvider.Connection.CreateCommand(), DbCommand)
             command.CommandText = sqlCommand
 
@@ -39,7 +39,7 @@ Namespace Common
             Return command
         End Function
 
-        Public Shared Function ExecuteSql(sqlCommand As String, sqlQuery As SQLQuery) As DataTable
+        Public Function ExecuteSql(sqlCommand As String, sqlQuery As SQLQuery) As DataTable
             If String.IsNullOrEmpty(sqlCommand) Then
                 Return Nothing
             End If
@@ -79,5 +79,39 @@ Namespace Common
                 Return table
             End Using
         End Function
-    End Class
+
+        Private Const DesignTimeDpi As Integer = 96
+        Private _currentDPI As Integer = -1
+
+        Private Function MulDiv(ByVal number As Integer, numerator As Integer, denominator As Integer) As Integer
+            Return (CLng(number) * numerator / denominator)
+        End Function
+
+        Function GetCurrentDPI() As Integer
+            Try
+                Dim graphics As Graphics = Graphics.FromHwnd(IntPtr.Zero)
+                Dim result As Int32 = CInt(graphics.DpiX)
+                graphics.Dispose()
+                Return result
+            Catch
+                Return DesignTimeDpi
+            End Try
+        End Function
+
+        Function ScaleByCurrentDPI(ByVal value As Integer) As Integer
+            If _currentDPI = -1 Then
+                _currentDPI = GetCurrentDPI()
+            End If
+
+            Return MulDiv(value, _currentDPI, DesignTimeDpi)
+        End Function
+
+        Function ScaleByCurrentDPI(ByVal bounds As Rectangle) As Rectangle
+            If _currentDPI = -1 Then
+                _currentDPI = GetCurrentDPI()
+            End If
+
+            Return New Rectangle(MulDiv(bounds.X, _currentDPI, DesignTimeDpi), MulDiv(bounds.Y, _currentDPI, DesignTimeDpi), MulDiv(bounds.Width, _currentDPI, DesignTimeDpi), MulDiv(bounds.Height, _currentDPI, DesignTimeDpi))
+        End Function
+    End Module
 End Namespace

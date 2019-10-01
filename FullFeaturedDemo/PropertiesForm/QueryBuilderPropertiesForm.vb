@@ -14,6 +14,7 @@ Imports System.Drawing
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.View.WinForms
+Imports FullFeaturedDemo.PropertiesForm
 
 Friend Partial Class QueryBuilderPropertiesForm
 	Inherits Form

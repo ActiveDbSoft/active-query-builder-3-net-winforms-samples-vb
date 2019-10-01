@@ -466,7 +466,7 @@ Partial Class ChildForm
         'expressionEditor1
         '
         Me.expressionEditor1.ActiveUnionSubQuery = Nothing
-        Me.expressionEditor1.Options.CloseOnEscape = false
+        Me.expressionEditor1.Options.CloseOnEscape = true
         Me.expressionEditor1.Expression = ""
         Me.expressionEditor1.TextEditorSqlOptions.SuggestionWindowSize = new Size(200,200)
         Me.expressionEditor1.TextEditorOptions.HighlightMatchingParentheses = ActiveQueryBuilder.View.ExpressionEditor.ParenthesesHighlighting.NoHighlight
