@@ -57,16 +57,16 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\FirebirdDemo\\FirebirdDemo.vbproj",
+      "projectUniqueName": "C:\\TeamCity_work\\ActiveQueryBuilderNET3\\_deployment\\Files\\Samples\\vb\\FirebirdDemo\\FirebirdDemo.vbproj",
       "projectName": "FirebirdDemo",
-      "projectPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\FirebirdDemo\\FirebirdDemo.vbproj",
-      "projectJsonPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\FirebirdDemo\\project.json",
+      "projectPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3\\_deployment\\Files\\Samples\\vb\\FirebirdDemo\\FirebirdDemo.vbproj",
+      "projectJsonPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3\\_deployment\\Files\\Samples\\vb\\FirebirdDemo\\project.json",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\_deployment\\Files\\Samples\\vb\\FirebirdDemo\\obj\\",
+      "outputPath": "C:\\TeamCity_work\\ActiveQueryBuilderNET3\\_deployment\\Files\\Samples\\vb\\FirebirdDemo\\obj\\",
       "projectStyle": "ProjectJson",
       "validateRuntimeAssets": true,
       "configFilePaths": [
-        "C:\\TeamCity_work\\ActiveQueryBuilderNET3_release\\NuGet.Config",
+        "C:\\TeamCity_work\\ActiveQueryBuilderNET3\\NuGet.Config",
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"

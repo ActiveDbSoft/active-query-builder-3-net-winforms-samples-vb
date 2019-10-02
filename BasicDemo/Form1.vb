@@ -54,12 +54,12 @@ Partial Public Class Form1
 
         sqlTextEditor1.ExpressionContext = queryBuilder1.ActiveUnionSubQuery
 
-        AddHandler queryBuilder1.ActiveUnionSubQueryChanged, ActiveUnionSubQueryChanged()
+        AddHandler queryBuilder1.ActiveUnionSubQueryChanged, AddressOf ActiveUnionSubQueryChanged
     End Sub
 
-    Private Function ActiveUnionSubQueryChanged() As EventHandler
+    Private Sub ActiveUnionSubQueryChanged(sender As Object, e As EventArgs)
         sqlTextEditor1.ExpressionContext = queryBuilder1.ActiveUnionSubQuery
-    End Function
+    End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs)
         RemoveHandler Load, AddressOf Form1_Load
@@ -133,9 +133,9 @@ Partial Public Class Form1
     Private Sub ConnectionForm_Click(sender As Object, e As EventArgs) Handles menuItem5.Click
         ResetQueryBuilder()
 
-        Using connectionForm = New ConnectionForm()
+        Using connectionForm As ConnectionForm = New ConnectionForm()
             If connectionForm.ShowDialog() = DialogResult.OK Then
-                Dim context = connectionForm.Connection.GetSqlContext()
+                Dim context As SQLContext = connectionForm.Connection.GetSqlContext()
                 queryBuilder1.SQLContext.Assign(context)
             End If
         End Using

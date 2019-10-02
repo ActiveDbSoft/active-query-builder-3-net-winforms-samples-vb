@@ -124,7 +124,7 @@ Partial Friend Class DatabaseSchemaViewPage
         Dim result As List(Of [Enum]) = New List(Of [Enum])
 
         For Each value As Object In values
-            If IsDegreeOf2(value) Then result.Add(CType(value, [Enum]))
+            If IsDegreeOf2(CType(value, Integer)) Then result.Add(CType(value, [Enum]))
         Next
 
         Return result
@@ -163,7 +163,7 @@ Partial Friend Class DatabaseSchemaViewPage
         Dim result As List(Of Integer) = New List(Of Integer)
 
         For i As Integer = 0 To binary.Count - 1
-            If binary(i) = "1"c Then result.Add(Math.Pow(2, i))
+            If binary(i) = "1"c Then result.Add(CType(Math.Pow(2, i), Integer))
         Next
 
         Return result

@@ -203,7 +203,7 @@ Public Partial Class ConnectionForm
 	End Sub
 
 	Private Sub btnAddXml_Click(sender As Object, e As EventArgs)
-		Dim name = GetNewXmlFileEntryName()
+		Dim name As String = GetNewXmlFileEntryName()
 		Dim ci As New ConnectionInfo(String.Empty, name, ConnectionTypes.ODBC) With { _
 			.IsXmlFile = True _
 		}

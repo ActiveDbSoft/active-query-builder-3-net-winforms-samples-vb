@@ -112,7 +112,7 @@ Public Partial Class ConnectionEditForm
 			Return
 		End If
 
-		Dim connectionType = ConnectionTypes.MSSQL
+		Dim connectionType As ConnectionTypes = ConnectionTypes.MSSQL
 
 		If Equals(sender, rbMSSQL) Then
 			connectionType = ConnectionTypes.MSSQL

@@ -29,10 +29,10 @@ Friend NotInheritable Class Program
 	    AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf CurrentDomain_UnhandledException
 	    AddHandler Application.ThreadException, AddressOf Thread_UnhandledException
 
-	    Dim i = ControlFactory.Instance
-	    ' force call static constructor of control factory
-	    'if new version, import upgrade from previous version
-	    If Settings.CallUpgrade Then
+        Dim i As ControlFactory = ControlFactory.Instance
+        ' force call static constructor of control factory
+        'if new version, import upgrade from previous version
+        If Settings.CallUpgrade Then
 	        Settings.Upgrade()
 	        Settings.CallUpgrade = False
 	    End If

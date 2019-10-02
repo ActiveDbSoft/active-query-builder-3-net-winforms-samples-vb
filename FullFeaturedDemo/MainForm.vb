@@ -772,16 +772,16 @@ Public Partial Class MainForm
 
 	Private Sub tsbAddDerivedTable_Click(sender As Object, e As EventArgs) Handles tsbAddDerivedTable.Click
 		Using New UpdateRegion(queryBuilder1.ActiveUnionSubQuery.FromClause)
-			Dim sqlContext = queryBuilder1.ActiveUnionSubQuery.SQLContext
+			Dim sqlContext As SQLContext = queryBuilder1.ActiveUnionSubQuery.SQLContext
 
-			Dim fq = New SQLFromQuery(sqlContext) With { _
+			Dim fq As SQLFromQuery = New SQLFromQuery(sqlContext) With { _
 				.[Alias] = New SQLAliasObjectAlias(sqlContext) With { _
 					.[Alias] = queryBuilder1.ActiveUnionSubQuery.QueryRoot.CreateUniqueSubQueryName() _
 				}, _
 				.SubQuery = New SQLSubSelectStatement(sqlContext) _
 			}
 
-			Dim sqse = New SQLSubQuerySelectExpression(sqlContext)
+			Dim sqse As SQLSubQuerySelectExpression = New SQLSubQuerySelectExpression(sqlContext)
 			fq.SubQuery.Add(sqse)
 			sqse.SelectItems = New SQLSelectItems(sqlContext)
 			sqse.From = New SQLFromClause(sqlContext)
@@ -1069,7 +1069,7 @@ Public Partial Class MainForm
 		paginationPanel1.Clear()
 		CBuilder.QueryTransformer.Skip("")
 		CBuilder.QueryTransformer.Take("")
-		Dim sql = CBuilder.QueryTransformer.SQL
+		Dim sql As String = CBuilder.QueryTransformer.SQL
 		teResultSql.Text = sql
 		FillDataGrid(sql)
 		paginationPanel1.RowsCount = dataGridView1.RowCount

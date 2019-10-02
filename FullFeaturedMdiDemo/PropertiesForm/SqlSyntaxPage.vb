@@ -456,7 +456,7 @@ Namespace PropertiesForm
 					Exit Select
 			End Select
 
-			Dim oldSyntaxProvider = _sqlContext.SyntaxProvider
+			Dim oldSyntaxProvider As BaseSyntaxProvider = _sqlContext.SyntaxProvider
 			_sqlContext.SyntaxProvider = syntaxProvider
 
 			If oldSyntaxProvider IsNot Nothing Then

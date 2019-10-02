@@ -41,12 +41,12 @@ Namespace Common
             comboBoxSyntaxProvider.Items.Clear()
 
             For Each baseSyntaxProvider As Type In ActiveQueryBuilder.Core.Helpers.SyntaxProviderList
-                Dim instance = TryCast(Activator.CreateInstance(baseSyntaxProvider), BaseSyntaxProvider)
+                Dim instance As BaseSyntaxProvider = TryCast(Activator.CreateInstance(baseSyntaxProvider), BaseSyntaxProvider)
                 comboBoxSyntaxProvider.Items.Add(New ComboBoxItem(instance))
             Next
         End Sub
 
-        Public Sub Show(ByVal message As String, ByVal baseSyntaxProvider As BaseSyntaxProvider)
+        Public Overloads Sub Show(ByVal message As String, ByVal baseSyntaxProvider As BaseSyntaxProvider)
             labelMessage.Text = message
 
             If String.IsNullOrEmpty(message) Then

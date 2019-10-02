@@ -9,17 +9,12 @@
 '*******************************************************************'
 
 Imports System.ComponentModel
-Imports System.Data.Odbc
-Imports System.Data.OleDb
-Imports Oracle.ManagedDataAccess.Client
-Imports System.Data.SqlClient
 Imports System.Diagnostics
 Imports System.Drawing
 Imports System.Globalization
 Imports System.IO
 Imports System.Linq
 Imports System.Text
-Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.View
@@ -27,8 +22,6 @@ Imports ActiveQueryBuilder.View.EventHandlers.MetadataStructureItems
 Imports ActiveQueryBuilder.View.WinForms
 Imports FullFeaturedMdiDemo.Dailogs
 Imports FullFeaturedMdiDemo.PropertiesForm
-Imports MySql.Data.MySqlClient
-Imports Npgsql
 Imports Helpers = ActiveQueryBuilder.Core.Helpers
 
 Public Partial Class MainForm
@@ -150,10 +143,10 @@ Public Partial Class MainForm
 		If (metadataItem.Type And MetadataType.Objects) <= 0 AndAlso metadataItem.Type <> MetadataType.Field Then
 			Return
 		End If
-		Using qualifiedName = metadataItem.GetSQLQualifiedName(Nothing, True)
-			window.QueryView.AddObjectToActiveUnionSubQuery(qualifiedName.GetSQL())
-		End Using
-	End Sub
+        Using qualifiedName As SQLQualifiedName = metadataItem.GetSQLQualifiedName(Nothing, True)
+            window.QueryView.AddObjectToActiveUnionSubQuery(qualifiedName.GetSQL())
+        End Using
+    End Sub
 
 	Protected Overrides Sub Dispose(disposing As Boolean)
 		If disposing Then
@@ -339,7 +332,7 @@ Public Partial Class MainForm
 					End If
 					If Not String.IsNullOrEmpty(_selectedConnection.UserQueries) Then
 						Dim bytes As Byte() = Encoding.UTF8.GetBytes(_selectedConnection.UserQueries)
-						Using reader = New MemoryStream(bytes)
+						Using reader As MemoryStream = New MemoryStream(bytes)
 							userQueriesView1.ImportFromXML(reader)
 						End Using
 					End If
@@ -354,8 +347,8 @@ Public Partial Class MainForm
 		If openFileDialog1.ShowDialog() = DialogResult.OK Then
 			Dim sb As New StringBuilder()
 			Using sr As New StreamReader(openFileDialog1.FileName)
-				Dim s As String
-				While (InlineAssignHelper(s, sr.ReadLine())) IsNot Nothing
+                Dim s As String = Nothing
+                While (InlineAssignHelper(s, sr.ReadLine())) IsNot Nothing
 					sb.AppendLine(s)
 				End While
 			End Using
@@ -663,8 +656,8 @@ Public Partial Class MainForm
 	End Function
 
 	Private Function SaveNewUserQuery(childWindow As ChildForm) As Boolean
-		Dim node As MetadataStructureItem
-		Dim title As String
+        Dim node As MetadataStructureItem = Nothing
+        Dim title As String
 		Do
 			Using window As New QueryNameForm()
 				window.QueryName = childWindow.SqlQuery.SQLContext.MetadataContainer.GetUniqueItemName(MetadataType.UserQuery, Helpers.Localizer.GetString("strNewQuery", LocalizableConstantsUI.strNewQuery))
@@ -677,19 +670,23 @@ Public Partial Class MainForm
 			End Using
 
 			If Not UserQueries.IsUserQueryExist(childWindow.SqlQuery.SQLContext.MetadataContainer, title) Then
-				Dim atItem = If(userQueriesView1.SelectedItem, userQueriesView1.MetadataStructure)
-				If Not UserQueries.IsFolder(atItem) Then
-					atItem = atItem.Parent
-				End If
-				node = UserQueries.AddUserQuery(childWindow.SqlQuery.SQLContext.MetadataContainer, atItem, title, childWindow.FormattedQueryText, CInt(DefaultImageListImageIndices.VirtualObject), childWindow.QueryView.LayoutSQL)
-				Exit Do
-			End If
+                Dim atItem As MetadataStructureItem = userQueriesView1.MetadataStructure
+                If atItem Is Nothing Then
+                    atItem = userQueriesView1.MetadataStructure
+                End If
 
-			Dim path = userQueriesView1.GetPathAtUserQuery(title)
-			Dim message = If(String.IsNullOrEmpty(path), "The same-named query already exists in the root folder.", String.Format("The same-named query already exists in the ""{0}"" folder.", path))
+                If Not UserQueries.IsFolder(atItem) Then
+                    atItem = atItem.Parent
+                End If
+                node = UserQueries.AddUserQuery(childWindow.SqlQuery.SQLContext.MetadataContainer, atItem, title, childWindow.FormattedQueryText, CInt(DefaultImageListImageIndices.VirtualObject), childWindow.QueryView.LayoutSQL)
+                Exit Do
+            End If
+
+            Dim path As String = userQueriesView1.GetPathAtUserQuery(title)
+            Dim message As String = If(String.IsNullOrEmpty(path), "The same-named query already exists in the root folder.", String.Format("The same-named query already exists in the ""{0}"" folder.", path))
 
 
-			MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
+            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
 		Loop While True
 		childWindow.SqlSourceType = ChildForm.SourceType.UserQuery
 		childWindow.FileSourcePath = title
@@ -719,56 +716,56 @@ Public Partial Class MainForm
 		If ActiveMdiChild Is Nothing Then
 			Return
 		End If
-		Dim form = DirectCast(ActiveMdiChild, ChildForm)
-		form.AddDerivedTable()
+        Dim form As ChildForm = DirectCast(ActiveMdiChild, ChildForm)
+        form.AddDerivedTable()
 	End Sub
 
 	Private Sub addUnionSubqueryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles addUnionSubqueryToolStripMenuItem.Click
 		If ActiveMdiChild Is Nothing Then
 			Return
 		End If
-		Dim form = DirectCast(ActiveMdiChild, ChildForm)
-		form.AddUnionSubQuery()
+        Dim form As ChildForm = DirectCast(ActiveMdiChild, ChildForm)
+        form.AddUnionSubQuery()
 	End Sub
 
 	Private Sub copyUnionSubwueryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles copyUnionSubwueryToolStripMenuItem.Click
 		If ActiveMdiChild Is Nothing Then
 			Return
 		End If
-		Dim form = DirectCast(ActiveMdiChild, ChildForm)
-		form.CopyUnionSubQuery()
+        Dim form As ChildForm = DirectCast(ActiveMdiChild, ChildForm)
+        form.CopyUnionSubQuery()
 	End Sub
 
 	Private Sub addObjectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles addObjectToolStripMenuItem.Click
 		If ActiveMdiChild Is Nothing Then
 			Return
 		End If
-		Dim form = DirectCast(ActiveMdiChild, ChildForm)
-		form.AddObject()
+        Dim form As ChildForm = DirectCast(ActiveMdiChild, ChildForm)
+        form.AddObject()
 	End Sub
 
 	Private Sub queryPropertiesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles queryPropertiesToolStripMenuItem.Click
 		If ActiveMdiChild Is Nothing Then
 			Return
 		End If
-		Dim form = DirectCast(ActiveMdiChild, ChildForm)
-		form.PropertiesQuery()
+        Dim form As ChildForm = DirectCast(ActiveMdiChild, ChildForm)
+        form.PropertiesQuery()
 	End Sub
 
 	Private Sub propertiesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles propertiesToolStripMenuItem.Click
-		Dim childForm = TryCast(ActiveMdiChild, ChildForm)
-		If childForm Is Nothing Then
+        Dim childForm As ChildForm = TryCast(ActiveMdiChild, ChildForm)
+        If childForm Is Nothing Then
 			Return
 		End If
 
-		Dim propWindow = New QueryPropertiesForm(_sqlContext, childForm, DBView)
+        Dim propWindow As QueryPropertiesForm = New QueryPropertiesForm(_sqlContext, childForm, DBView)
 
-		propWindow.ShowDialog()
+        propWindow.ShowDialog()
 	End Sub
 
 	Private Sub tsbEditMetadata_Click(sender As Object, e As EventArgs) Handles tsbEditMetadata.Click
-		QueryBuilder.EditMetadataContainer(_sqlContext, _sqlContext.MetadataContainer.LoadingOptions)
-	End Sub
+        QueryBuilder.EditMetadataContainer(_sqlContext)
+    End Sub
 
 	Private Sub userQueriesView1_EditUserQuery(sender As Object, e As MetadataStructureItemCancelEventArgs)
 		' Opening the user query in a new query window.
@@ -786,8 +783,8 @@ Public Partial Class MainForm
 
 	' Closing the current query window on deleting the corresponding user query.
 	Private Sub userQueriesView1_UserQueryItemRemoved(sender As Object, item As MetadataStructureItem)
-		Dim childWindow = MdiChildren.OfType(Of ChildForm)().FirstOrDefault(Function(x) x.UserMetadataStructureItem Is item)
-		If childWindow IsNot Nothing Then
+        Dim childWindow As ChildForm = MdiChildren.OfType(Of ChildForm)().FirstOrDefault(Function(x) x.UserMetadataStructureItem Is item)
+        If childWindow IsNot Nothing Then
 			childWindow.Close()
 		End If
 		SaveSettings()
@@ -807,30 +804,30 @@ Public Partial Class MainForm
 	End Sub
 
 	Private Shared Sub Execute_SqlExpression(sender As Object, eventArgs As EventArgs)
-		Dim item = DirectCast(sender, ICustomMenuItem)
+        Dim item As ICustomMenuItem = DirectCast(sender, ICustomMenuItem)
 
-		Clipboard.SetText(item.Tag.ToString(), TextDataFormat.UnicodeText)
+        Clipboard.SetText(item.Tag.ToString(), TextDataFormat.UnicodeText)
 
 		Debug.WriteLine("SQL: {0}", item.Tag)
 	End Sub
 
 	Private Sub toolStripExecuteUserQuery_Click(sender As Object, e As EventArgs) Handles toolStripExecuteUserQuery.Click
-		If userQueriesView1.SelectedItem Is Nothing Then
-			Return
-		End If
+        If userQueriesView1.FocusedItem Is Nothing Then
+            Return
+        End If
 
-		Dim childWindow = CreateChildForm(userQueriesView1.SelectedItem.MetadataItem.Name)
-		childWindow.UserMetadataStructureItem = userQueriesView1.SelectedItem
-		childWindow.SqlSourceType = ChildForm.SourceType.UserQuery
+        Dim childWindow As ChildForm = CreateChildForm(userQueriesView1.FocusedItem.MetadataItem.Name)
+        childWindow.UserMetadataStructureItem = userQueriesView1.FocusedItem
+        childWindow.SqlSourceType = ChildForm.SourceType.UserQuery
 		childWindow.Show()
 		childWindow.Activate()
-		childWindow.QueryText = DirectCast(userQueriesView1.SelectedItem.MetadataItem, MetadataObject).Expression
-		childWindow.OpenExecuteTab()
+        childWindow.QueryText = DirectCast(userQueriesView1.FocusedItem.MetadataItem, MetadataObject).Expression
+        childWindow.OpenExecuteTab()
 	End Sub
 
 	Private Sub userQueriesView1_SelectedItemChanged(sender As Object, e As EventArgs)
-		toolStripExecuteUserQuery.Enabled = userQueriesView1.SelectedItem IsNot Nothing AndAlso Not userQueriesView1.SelectedItem.IsFolder()
-	End Sub
+        toolStripExecuteUserQuery.Enabled = userQueriesView1.FocusedItem IsNot Nothing AndAlso Not userQueriesView1.FocusedItem.IsFolder()
+    End Sub
 	Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
 		target = value
 		Return value

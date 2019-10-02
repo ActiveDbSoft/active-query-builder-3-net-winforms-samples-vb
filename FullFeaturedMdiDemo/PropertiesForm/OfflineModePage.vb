@@ -87,12 +87,12 @@ Namespace PropertiesForm
 		Private Sub UpdateMetadataStats()
 			Dim metadataObjects As IEnumerable(Of MetadataObject) = _sqlContext.MetadataContainer.Items.GetItemsRecursive(Of MetadataObject)(MetadataType.Objects)
 
-			Dim t = metadataObjects.Count(Function(i) i.Type = MetadataType.Table)
-			Dim v = metadataObjects.Count(Function(i) i.Type = MetadataType.View)
-			Dim p = metadataObjects.Count(Function(i) i.Type = MetadataType.Procedure)
-			Dim s = metadataObjects.Count(Function(i) i.Type = MetadataType.Synonym)
+            Dim t As Integer = metadataObjects.Count(Function(i) i.Type = MetadataType.Table)
+            Dim v As Integer = metadataObjects.Count(Function(i) i.Type = MetadataType.View)
+            Dim p As Integer = metadataObjects.Count(Function(i) i.Type = MetadataType.Procedure)
+            Dim s As Integer = metadataObjects.Count(Function(i) i.Type = MetadataType.Synonym)
 
-			Const  tmp As String = "Loaded Metadata: {0} tables, {1} views, {2} procedures, {3} synonyms."
+            Const  tmp As String = "Loaded Metadata: {0} tables, {1} views, {2} procedures, {3} synonyms."
 			lMetadataObjectCount.Text = String.Format(tmp, t, v, p, s)
 		End Sub
 
@@ -115,7 +115,7 @@ Namespace PropertiesForm
 		End Sub
 
 		Private Sub buttonEditMetadata_Click(sender As Object, e As EventArgs)
-			QueryBuilder.EditMetadataContainer(_sqlContext, _sqlContext.LoadingOptions)
-		End Sub
+            QueryBuilder.EditMetadataContainer(_sqlContext)
+        End Sub
 	End Class
 End Namespace

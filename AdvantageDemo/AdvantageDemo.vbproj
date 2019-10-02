@@ -39,22 +39,15 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="project.json" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ActiveQueryBuilder.AdvantageMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.AdvantageMetadataProvider.3.5.25.1142\lib\net\ActiveQueryBuilder.AdvantageMetadataProvider.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.Core">
-		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.25.1142\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.View">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.25.1142\lib\net\ActiveQueryBuilder.View.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.View.WinForms">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.25.1142\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
-	</Reference>
+    
+    
+    
+    
     <Reference Include="Advantage.Data.Provider">
 		<HintPath>..\third-party\Advantage.Data.Provider.dll</HintPath>
 	</Reference>

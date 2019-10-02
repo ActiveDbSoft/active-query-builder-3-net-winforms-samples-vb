@@ -39,31 +39,17 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="project.json" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ActiveQueryBuilder.Core">
-		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.25.1142\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.MSSQLMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.MSSQLMetadataProvider.3.5.25.1142\lib\net\ActiveQueryBuilder.MSSQLMetadataProvider.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.ODBCMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.ODBCMetadataProvider.3.5.25.1142\lib\net\ActiveQueryBuilder.ODBCMetadataProvider.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.OLEDBMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.OLEDBMetadataProvider.3.5.25.1142\lib\net\ActiveQueryBuilder.OLEDBMetadataProvider.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.OracleMetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.OracleMetadataProvider.3.5.25.1142\lib\net\ActiveQueryBuilder.OracleMetadataProvider.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.View">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.25.1142\lib\net\ActiveQueryBuilder.View.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.View.WinForms">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.25.1142\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
-	</Reference>
+    
+    
+    
+    
+    
+    
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.OracleClient" />
@@ -103,12 +89,6 @@
     <Compile Include="ConnectionForms\OLEDBConnectionForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConnectionForms\OracleConnectionForm.designer.vb">
-      <DependentUpon>OracleConnectionForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ConnectionForms\OracleConnectionForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
     </Compile>
@@ -146,9 +126,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConnectionForms\OLEDBConnectionForm.resx">
       <DependentUpon>OLEDBConnectionForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ConnectionForms\OracleConnectionForm.resx">
-      <DependentUpon>OracleConnectionForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <SubType>Designer</SubType>

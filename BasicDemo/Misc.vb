@@ -16,7 +16,6 @@ Public Module Misc
         GetType(MSAccessConnectionDescriptor),
         GetType(ExcelConnectionDescriptor),
         GetType(MSSQLConnectionDescriptor),
-        GetType(MSSQLCEConnectionDescriptor),
         GetType(MSSQLAzureConnectionDescriptor),
         GetType(MySQLConnectionDescriptor),
         GetType(OracleNativeConnectionDescriptor),

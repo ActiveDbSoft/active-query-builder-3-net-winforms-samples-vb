@@ -45,7 +45,7 @@ Public Partial Class EditXMLConnectionForm
 
 	Private Sub FillSyntaxTypes()
 		For Each syntax As Type In Helpers.SyntaxProviderList
-			Dim instance = TryCast(Activator.CreateInstance(syntax), BaseSyntaxProvider)
+			Dim instance As BaseSyntaxProvider = TryCast(Activator.CreateInstance(syntax), BaseSyntaxProvider)
 			cbSyntax.Items.Add(instance.Description)
 		Next
 	End Sub
@@ -61,7 +61,7 @@ Public Partial Class EditXMLConnectionForm
 	End Sub
 
 	Private Sub cbSyntax_SelectedIndexChanged(sender As Object, e As EventArgs)
-		Dim syntaxType = GetSelectedSyntaxType()
+		Dim syntaxType As Type = GetSelectedSyntaxType()
 		If _connection.ConnectionDescriptor.SyntaxProvider.[GetType]() Is syntaxType Then
 			Return
 		End If
@@ -81,14 +81,14 @@ Public Partial Class EditXMLConnectionForm
 
 	Private Sub RecreateSyntaxFrame()
 		RemoveSyntaxFrame()
-		Dim syntxProps = _connection.ConnectionDescriptor.SyntaxProperties
-		If syntxProps Is Nothing Then
+		Dim syntaxProps As ObjectProperties = _connection.ConnectionDescriptor.SyntaxProperties
+		If syntaxProps Is Nothing Then
 			pbSyntax.Height = 0
 			Return
 		End If
 
-		ClearProperties(syntxProps)
-		Dim container = PropertiesFactory.GetPropertiesContainer(syntxProps)
+		ClearProperties(syntaxProps)
+		Dim container As IPropertiesContainer = PropertiesFactory.GetPropertiesContainer(syntaxProps)
 		TryCast(pbSyntax, IPropertiesControl).SetProperties(container)
 
 		pbSyntax.Height = pbSyntax.Controls(0).Bottom + 5

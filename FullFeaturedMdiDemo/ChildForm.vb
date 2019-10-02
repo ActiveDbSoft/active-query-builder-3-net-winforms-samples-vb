@@ -221,7 +221,7 @@ Partial Public Class ChildForm
         rtbQueryText.ExpressionContext = QView.ActiveUnionSubQuery
         TextBoxCurrentSubQuerySql.ExpressionContext = QView.ActiveUnionSubQuery
 
-        AddHandler QView.ActiveUnionSubQueryChanged, ActiveUnionSubQueryChanged
+        AddHandler QView.ActiveUnionSubQueryChanged, AddressOf ActiveUnionSubQueryChanged
 
         resultGrid1.SqlQuery = SqlQuery
         resultGrid2.SqlQuery = SqlQuery
@@ -246,10 +246,10 @@ Partial Public Class ChildForm
         UpdateLanguage()
     End Sub
 
-    Private Function ActiveUnionSubQueryChanged() As EventHandler
+    Private Sub ActiveUnionSubQueryChanged(sender As Object, e As EventArgs)
         rtbQueryText.ExpressionContext = QView.ActiveUnionSubQuery
         TextBoxCurrentSubQuerySql.ExpressionContext = QView.ActiveUnionSubQuery
-    End Function
+    End Sub
 
     Private Sub TimerForFastResult_Elapsed(state As Object)
         Invoke(DirectCast(Sub()

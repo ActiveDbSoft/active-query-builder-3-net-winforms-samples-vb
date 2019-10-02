@@ -907,7 +907,6 @@ Partial Class ChildForm
         Me.CBuilder.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.CBuilder.Dock = System.Windows.Forms.DockStyle.Top
         Me.CBuilder.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
-        Me.CBuilder.JunctionPostfix = Nothing
         Me.CBuilder.Location = New System.Drawing.Point(3, 3)
         Me.CBuilder.MinimumSize = New System.Drawing.Size(188, 51)
         Me.CBuilder.Name = "CBuilder"

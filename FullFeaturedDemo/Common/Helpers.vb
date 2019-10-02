@@ -84,7 +84,7 @@ Namespace Common
         Private _currentDPI As Integer = -1
 
         Private Function MulDiv(ByVal number As Integer, numerator As Integer, denominator As Integer) As Integer
-            Return (CLng(number) * numerator / denominator)
+            Return CType(CLng(number) * numerator / denominator, Integer)
         End Function
 
         Function GetCurrentDPI() As Integer

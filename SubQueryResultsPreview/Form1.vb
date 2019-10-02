@@ -19,102 +19,83 @@ Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.Core.QueryTransformer
 
 
-Public Partial Class Form1
-	Inherits Form
+Partial Public Class Form1
+    Inherits Form
     Dim _lastValidSql As String
     Dim _errorPosition As Integer
 
-	Public Sub New()
-		InitializeComponent()
+    Public Sub New()
+        InitializeComponent()
 
-		queryBuilder.SyntaxProvider = New MSSQLSyntaxProvider()
+        queryBuilder.SyntaxProvider = New MSSQLSyntaxProvider()
 
-		' Set a demo query
-		queryBuilder.SQL = "Select Orders.OrderID, Orders.CustomerID, Orders.EmployeeID, Query1.Subtotal From Orders Inner Join (Select [Order Subtotals].Subtotal, [Order Subtotals].OrderID From [Order Subtotals]) Query1 On Query1.OrderID = Orders.OrderID Union Select [Orders Qry].OrderID, [Orders Qry].CustomerID, [Orders Qry].EmployeeID, Query2.Quantity * Query2.UnitPrice From [Orders Qry] Inner Join (Select [Order Details].OrderID, [Order Details].Quantity, [Order Details].UnitPrice From [Order Details]) Query2 On Query2.OrderID = [Orders Qry].OrderID Where ([Orders Qry].OrderID > 100) Or ([Orders Qry].OrderID < 1000)"
-	End Sub
+        ' Set a demo query
+        queryBuilder.SQL = "Select Orders.OrderID, Orders.CustomerID, Orders.EmployeeID, Query1.Subtotal From Orders Inner Join (Select [Order Subtotals].Subtotal, [Order Subtotals].OrderID From [Order Subtotals]) Query1 On Query1.OrderID = Orders.OrderID Union Select [Orders Qry].OrderID, [Orders Qry].CustomerID, [Orders Qry].EmployeeID, Query2.Quantity * Query2.UnitPrice From [Orders Qry] Inner Join (Select [Order Details].OrderID, [Order Details].Quantity, [Order Details].UnitPrice From [Order Details]) Query2 On Query2.OrderID = [Orders Qry].OrderID Where ([Orders Qry].OrderID > 100) Or ([Orders Qry].OrderID < 1000)"
+    End Sub
 
-	Private Sub queryBuilder_SQLUpdated(sender As Object, e As EventArgs) Handles queryBuilder.SQLUpdated
-		' Hide error banner if any
-		ErrorBox1.Visible = False
+    Private Sub queryBuilder_SQLUpdated(sender As Object, e As EventArgs) Handles queryBuilder.SQLUpdated
+        ' Hide error banner if any
+        ErrorBox1.Visible = False
 
-		QueryPartChanged(sender, e)
-	    textBox1.Text = queryBuilder.FormattedSQL
-	    _lastValidSql = textBox1.Text
-		
-		If tabControl1.SelectedTab Is tabPageResultsPreview Then
-			UpdateResultsGrid()
-		End If
-	End Sub
+        QueryPartChanged(sender, e)
+        textBox1.Text = queryBuilder.FormattedSQL
+        _lastValidSql = textBox1.Text
 
-	Private Sub textBox1_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles textBox1.Validating
-		Try
-			' Update the target query part with manually edited query text:
-			queryBuilder.SQL = textBox1.Text
+        If tabControl1.SelectedTab Is tabPageResultsPreview Then
+            UpdateResultsGrid()
+        End If
+    End Sub
 
-			' Hide error banner if any
-		    ErrorBox1.Visible = False
-		Catch ex As SQLParsingException
-			' Set caret to error position
-			textBox1.SelectionStart = ex.ErrorPos.pos
+    Private Sub textBox1_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles textBox1.Validating
+        Try
+            ' Update the target query part with manually edited query text:
+            queryBuilder.SQL = textBox1.Text
 
-			' Show banner with error text
-			ErrorBox1.Show(ex.Message, queryBuilder.SyntaxProvider)
-		    _errorPosition = ex.ErrorPos.pos
-		End Try
-	End Sub
+            ' Hide error banner if any
+            ErrorBox1.Visible = False
+        Catch ex As SQLParsingException
+            ' Set caret to error position
+            textBox1.SelectionStart = ex.ErrorPos.pos
 
-	Private Sub QueryPartChanged(sender As Object, e As EventArgs) Handles rbQuery.CheckedChanged, rbUnionSubQuery.CheckedChanged, rbSubQuery.CheckedChanged
-		If rbQuery.Checked Then
-			textBox1.Text = New SQLFormattingOptions(New SQLGenerationOptions()).GetSQLBuilder().GetSQL(queryBuilder.ActiveUnionSubQuery.QueryRoot)
+            ' Show banner with error text
+            ErrorBox1.Show(ex.Message, queryBuilder.SyntaxProvider)
+            _errorPosition = ex.ErrorPos.pos
+        End Try
+    End Sub
+
+    Private Sub QueryPartChanged(sender As Object, e As EventArgs) Handles rbQuery.CheckedChanged, rbUnionSubQuery.CheckedChanged, rbSubQuery.CheckedChanged
+        If rbQuery.Checked Then
+            textBox1.Text = New SQLFormattingOptions(New SQLGenerationOptions()).GetSQLBuilder().GetSQL(queryBuilder.ActiveUnionSubQuery.QueryRoot)
             _lastValidSql = textBox1.Text
-		ElseIf rbSubQuery.Checked Then
-			textBox1.Text = New SQLFormattingOptions(New SQLGenerationOptions()).GetSQLBuilder().GetSQL(queryBuilder.ActiveUnionSubQuery.ParentSubQuery)
-		    _lastValidSql = textBox1.Text
-		ElseIf rbUnionSubQuery.Checked Then
-			textBox1.Text = New SQLFormattingOptions(New SQLGenerationOptions()).GetSQLBuilder().GetSQL(queryBuilder.ActiveUnionSubQuery)
-		    _lastValidSql = textBox1.Text
-		End If
-	End Sub
+        ElseIf rbSubQuery.Checked Then
+            textBox1.Text = New SQLFormattingOptions(New SQLGenerationOptions()).GetSQLBuilder().GetSQL(queryBuilder.ActiveUnionSubQuery.ParentSubQuery)
+            _lastValidSql = textBox1.Text
+        ElseIf rbUnionSubQuery.Checked Then
+            textBox1.Text = New SQLFormattingOptions(New SQLGenerationOptions()).GetSQLBuilder().GetSQL(queryBuilder.ActiveUnionSubQuery)
+            _lastValidSql = textBox1.Text
+        End If
+    End Sub
 
-	Public Sub ResetQueryBuilder()
-		queryBuilder.Clear()
-		queryBuilder.MetadataProvider = Nothing
-		queryBuilder.SyntaxProvider = Nothing
-		queryBuilder.MetadataLoadingOptions.OfflineMode = False
-	End Sub
+    Public Sub ResetQueryBuilder()
+        queryBuilder.Clear()
+        queryBuilder.MetadataProvider = Nothing
+        queryBuilder.SyntaxProvider = Nothing
+        queryBuilder.MetadataLoadingOptions.OfflineMode = False
+    End Sub
 
-	Private Sub connectToMicrosoftSQLServerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToMicrosoftSQLServerToolStripMenuItem.Click
-		ResetQueryBuilder()
+    Private Sub connectToMicrosoftSQLServerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToMicrosoftSQLServerToolStripMenuItem.Click
+        ResetQueryBuilder()
 
-		' Connect to MS SQL Server
+        ' Connect to MS SQL Server
 
-		' show the connection form
-		Using f As New MSSQLConnectionForm()
-			If f.ShowDialog() = DialogResult.OK Then
-				' setup the query builder with metadata and syntax providers
+        ' show the connection form
+        Using f As New MSSQLConnectionForm()
+            If f.ShowDialog() = DialogResult.OK Then
+                ' setup the query builder with metadata and syntax providers
                 queryBuilder.MetadataProvider = New MSSQLMetadataProvider() With {
                     .Connection = New SqlConnection(f.ConnectionString)
                 }
                 queryBuilder.SyntaxProvider = New MSSQLSyntaxProvider()
-
-                ' kick the query builder to fill database schema tree
-                queryBuilder.InitializeDatabaseSchemaTree()
-            End If
-        End Using
-    End Sub
-
-    Private Sub connectToOracleServerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToOracleServerToolStripMenuItem.Click
-        ResetQueryBuilder()
-
-        ' Connect to Oracle Server
-
-        ' show the connection form
-        Using f As New OracleConnectionForm()
-            If f.ShowDialog() = DialogResult.OK Then
-                ' setup the query builder with metadata and syntax providers
-                queryBuilder.MetadataProvider = New OracleMetadataProvider()
-                queryBuilder.MetadataProvider.Connection = New OracleConnection(f.ConnectionString)
-                queryBuilder.SyntaxProvider = New OracleSyntaxProvider()
 
                 ' kick the query builder to fill database schema tree
                 queryBuilder.InitializeDatabaseSchemaTree()
@@ -207,7 +188,7 @@ Public Partial Class Form1
             dataGridView1.Controls.Clear()
         End If
 
-        Dim queryToExecute = ""
+        Dim queryToExecute As String = ""
 
         ' Limit query results to 10 rows for preview purposes
 
@@ -253,35 +234,6 @@ Public Partial Class Form1
                     End If
 
                     Dim adapter As New SqlDataAdapter(command)
-                    Dim dataset As New DataSet()
-
-                    Try
-                        adapter.Fill(dataset, "QueryResult")
-                        dataGridView1.DataSource = dataset.Tables("QueryResult")
-                    Catch ex As Exception
-                        MessageBox.Show(ex.Message, "SQL query error")
-                    End Try
-                ElseIf TypeOf queryBuilder.MetadataProvider Is OracleMetadataProvider Then
-                    Dim command As OracleCommand = DirectCast(queryBuilder.MetadataProvider.Connection.CreateCommand(), OracleCommand)
-                    command.CommandText = queryToExecute
-
-                    ' handle the query parameters
-                    If queryBuilder.Parameters.Count > 0 Then
-                        For i As Integer = 0 To queryBuilder.Parameters.Count - 1
-                            If Not command.Parameters.Contains(queryBuilder.Parameters(i).FullName) Then
-                                Dim parameter As New OracleParameter()
-                                parameter.ParameterName = queryBuilder.Parameters(i).FullName
-                                parameter.DbType = queryBuilder.Parameters(i).DataType
-                                command.Parameters.Add(parameter)
-                            End If
-                        Next
-
-                        Using qpf As New QueryParametersForm(command)
-                            qpf.ShowDialog()
-                        End Using
-                    End If
-
-                    Dim adapter As New OracleDataAdapter(command)
                     Dim dataset As New DataSet()
 
                     Try
@@ -359,9 +311,9 @@ Public Partial Class Form1
     End Sub
 
 
-	Private Sub queryBuilder_ActiveUnionSubQueryChanged(sender As Object, e As EventArgs) Handles queryBuilder.ActiveUnionSubQueryChanged
-		QueryPartChanged(sender, e)
-	End Sub
+    Private Sub queryBuilder_ActiveUnionSubQueryChanged(sender As Object, e As EventArgs) Handles queryBuilder.ActiveUnionSubQueryChanged
+        QueryPartChanged(sender, e)
+    End Sub
 
     Private Sub ErrorBox1_RevertValidText(sender As Object, e As EventArgs) Handles ErrorBox1.RevertValidText
         textBox1.Text = _lastValidSql

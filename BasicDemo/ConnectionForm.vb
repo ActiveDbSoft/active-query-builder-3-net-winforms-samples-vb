@@ -60,8 +60,8 @@ Public Partial Class ConnectionForm
 
 	Private Sub FillSyntaxTypes()
 		For Each syntax As Type In Helpers.SyntaxProviderList
-			Dim instance = TryCast(Activator.CreateInstance(syntax), BaseSyntaxProvider)
-			cbSyntax.Items.Add(instance.Description)
+            Dim instance As BaseSyntaxProvider = TryCast(Activator.CreateInstance(syntax), BaseSyntaxProvider)
+            cbSyntax.Items.Add(instance.Description)
 		Next
 	End Sub
 
@@ -72,9 +72,9 @@ Public Partial Class ConnectionForm
 	End Sub
 
 	Private Sub cbConnectionType_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs)
-	    Dim descriptorType = GetSelectedDescriptorType()
+        Dim descriptorType As Type = GetSelectedDescriptorType()
 
-	    If _connection IsNot Nothing AndAlso _connection.[GetType]() Is descriptorType Then
+        If _connection IsNot Nothing AndAlso _connection.[GetType]() Is descriptorType Then
 	        Return
 	    End If
 
@@ -142,8 +142,8 @@ Public Partial Class ConnectionForm
 	Private Sub RecreateConnectionFrame()
 		RemoveConnectionPropertiesFrame()
 		ClearProperties(_connection.MetadataProperties)
-		Dim container = PropertiesFactory.GetPropertiesContainer(_connection.MetadataProperties)
-		TryCast(pbConnection, IPropertiesControl).SetProperties(container)
+        Dim container As IPropertiesContainer = PropertiesFactory.GetPropertiesContainer(_connection.MetadataProperties)
+        TryCast(pbConnection, IPropertiesControl).SetProperties(container)
 		cbLoadFromDefaultDatabase.Top = pbConnection.Controls(0).Bottom + 5
 	End Sub
 
@@ -153,23 +153,23 @@ Public Partial Class ConnectionForm
 	End Sub
 
 	Private Sub RemoveConnectionPropertiesFrame()
-		Dim container = TryCast(pbConnection.Controls.OfType(Of IPropertiesContainer)().FirstOrDefault(), Control)
-		If container IsNot Nothing Then
+        Dim container As Control = TryCast(pbConnection.Controls.OfType(Of IPropertiesContainer)().FirstOrDefault(), Control)
+        If container IsNot Nothing Then
 			pbConnection.Controls.Remove(container)
 		End If
 	End Sub
 
 	Private Sub RecreateSyntaxFrame()
 		RemoveSyntaxFrame()
-		Dim syntxProps = _connection.SyntaxProperties
-		If syntxProps Is Nothing Then
-			pbSyntax.Height = 0
-			Return
-		End If
+        Dim syntaxProps As ObjectProperties = _connection.SyntaxProperties
+        If syntaxProps Is Nothing Then
+            pbSyntax.Height = 0
+            Return
+        End If
 
-		ClearProperties(syntxProps)
-		Dim container = PropertiesFactory.GetPropertiesContainer(syntxProps)
-		TryCast(pbSyntax, IPropertiesControl).SetProperties(container)
+        ClearProperties(syntaxProps)
+        Dim container As IPropertiesContainer = PropertiesFactory.GetPropertiesContainer(syntaxProps)
+        TryCast(pbSyntax, IPropertiesControl).SetProperties(container)
 
 		cbLoadFromDefaultDatabase.Visible = _connection.SyntaxProvider.IsSupportDatabases()
 		pbSyntax.Height = pbSyntax.Controls(0).Bottom + 5
@@ -222,24 +222,24 @@ Public Partial Class ConnectionForm
 	End Sub
 
 	Private Sub LoadIncludeFilters()
-		Dim filter = _connection.MetadataLoadingOptions.IncludeFilter
-		LoadFilterTo(filter, lvInclude)
+        Dim filter As MetadataSimpleFilter = _connection.MetadataLoadingOptions.IncludeFilter
+        LoadFilterTo(filter, lvInclude)
 	End Sub
 
 	Private Sub LoadExcludeFilters()
-		Dim filter = _connection.MetadataLoadingOptions.ExcludeFilter
-		LoadFilterTo(filter, lvExclude)
+        Dim filter As MetadataSimpleFilter = _connection.MetadataLoadingOptions.ExcludeFilter
+        LoadFilterTo(filter, lvExclude)
 	End Sub
 
 	Private Sub LoadFilterTo(filter As MetadataSimpleFilter, listBox As ListView)
 		For Each filterObject As string In filter.Objects
-			Dim item = FindItemByName(filterObject)
-			listBox.Items.Add(filterObject, filterObject, GetImageKeyByItem(item))
+            Dim item As MetadataItem = FindItemByName(filterObject)
+            listBox.Items.Add(filterObject, filterObject, GetImageKeyByItem(item))
 		Next
 
 		For Each filterSchema As string In filter.Schemas
-			Dim item = FindItemByName(filterSchema)
-			listBox.Items.Add(filterSchema, filterSchema, GetImageKeyByItem(item))
+            Dim item As MetadataItem = FindItemByName(filterSchema)
+            listBox.Items.Add(filterSchema, filterSchema, GetImageKeyByItem(item))
 		Next
 	End Sub
 
@@ -260,8 +260,8 @@ Public Partial Class ConnectionForm
 	End Sub
 
 	Private Sub AddIncludeFilter(items As MetadataStructureItem())
-		Dim filter = _connection.MetadataLoadingOptions.IncludeFilter
-		For Each structureItem As MetadataStructureItem In items
+        Dim filter As MetadataSimpleFilter = _connection.MetadataLoadingOptions.IncludeFilter
+        For Each structureItem As MetadataStructureItem In items
 			Dim metadataItem As MetadataItem = structureItem.MetadataItem
 			If metadataItem Is Nothing Then
 				Continue For
@@ -278,8 +278,8 @@ Public Partial Class ConnectionForm
 	End Sub
 
 	Private Sub AddExcludeFilter(items As MetadataStructureItem())
-		Dim filter = _connection.MetadataLoadingOptions.ExcludeFilter
-		For Each structureItem As MetadataStructureItem In items
+        Dim filter As MetadataSimpleFilter = _connection.MetadataLoadingOptions.ExcludeFilter
+        For Each structureItem As MetadataStructureItem In items
 		    Dim metadataItem As MetadataItem = structureItem.MetadataItem
 			If metadataItem Is Nothing Then
 				Continue For
@@ -348,13 +348,13 @@ Public Partial Class ConnectionForm
 		End If
 
 		If tcFilters.SelectedTab Is tpInclude Then
-			Dim items = lvInclude.Items.Find(itemName, False)
-			If items.Length <> 0 Then
+            Dim items As ListViewItem() = lvInclude.Items.Find(itemName, False)
+            If items.Length <> 0 Then
 				lvInclude.Items.Remove(items(0))
 			End If
 		ElseIf tcFilters.SelectedTab Is tpExclude Then
-			Dim items = lvExclude.Items.Find(itemName, False)
-			If items.Length <> 0 Then
+            Dim items As ListViewItem() = lvExclude.Items.Find(itemName, False)
+            If items.Length <> 0 Then
 				lvExclude.Items.Remove(items(0))
 			End If
 		End If
@@ -365,8 +365,8 @@ Public Partial Class ConnectionForm
 	End Sub
 
 	Private Sub DropItems(e As DragEventArgs, toInclude As Boolean)
-		Dim dragObject = TryCast(e.Data.GetData(e.Data.GetFormats()(0)), MetadataDragObject)
-		If dragObject IsNot Nothing Then
+        Dim dragObject As MetadataDragObject = TryCast(e.Data.GetData(e.Data.GetFormats()(0)), MetadataDragObject)
+        If dragObject IsNot Nothing Then
 			If toInclude Then
 				AddIncludeFilter(dragObject.MetadataStructureItems.ToArray())
 			Else
@@ -396,8 +396,8 @@ Public Partial Class ConnectionForm
 			Return
 		End If
 
-		Dim syntaxType = GetSelectedSyntaxType()
-		If _connection.SyntaxProvider.[GetType]() = syntaxType Then
+        Dim syntaxType As Type = GetSelectedSyntaxType()
+        If _connection.SyntaxProvider.[GetType]() = syntaxType Then
 			Return
 		End If
 

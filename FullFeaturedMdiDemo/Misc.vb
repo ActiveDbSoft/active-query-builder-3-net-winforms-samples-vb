@@ -16,7 +16,6 @@ Imports XmlSerializer = ActiveQueryBuilder.Core.Serialization.XmlSerializer
 
 Public Enum ConnectionTypes
 	MSSQL
-	MSSQLCE
 	MSSQLAzure
 	MSAccess
 	Oracle
@@ -34,7 +33,6 @@ Public Module Misc
         GetType(MSAccessConnectionDescriptor),
         GetType(ExcelConnectionDescriptor),
         GetType(MSSQLConnectionDescriptor),
-        GetType(MSSQLCEConnectionDescriptor),
         GetType(MSSQLAzureConnectionDescriptor),
         GetType(MySQLConnectionDescriptor),
         GetType(OracleNativeConnectionDescriptor),
@@ -48,7 +46,6 @@ Public Module Misc
         "MS Access",
         "Excel",
         "MS SQL Server",
-        "MS SQL Server Compact Edition",
         "MS SQL Server Azure",
         "MySQL",
         "Oracle Native",
@@ -67,8 +64,8 @@ Public Class ConnectionList
 	Private _connections As New ArrayList()
 
 	Public Sub SaveData()
-		Dim xmlSerializer = New XmlSerializer()
-		For Each connection As ConnectionInfo In _connections
+        Dim xmlSerializer As XmlSerializer = New XmlSerializer()
+        For Each connection As ConnectionInfo In _connections
 			connection.ConnectionString = connection.ConnectionDescriptor.ConnectionString
 			connection.LoadingOptions = xmlSerializer.Serialize(connection.ConnectionDescriptor.MetadataLoadingOptions)
 			connection.SyntaxProviderState = xmlSerializer.SerializeObject(connection.ConnectionDescriptor.SyntaxProvider)
@@ -76,9 +73,9 @@ Public Class ConnectionList
 	End Sub
 
 	Public Sub RemoveObsoleteConnectionInfos()
-		Dim connectionsToRemove = New List(Of ConnectionInfo)()
+        Dim connectionsToRemove As List(Of ConnectionInfo) = New List(Of ConnectionInfo)()
 
-		For Each connection As ConnectionInfo In _connections
+        For Each connection As ConnectionInfo In _connections
 			If connection.ConnectionDescriptor Is Nothing Then
 				connectionsToRemove.Add(connection)
 			End If
@@ -90,9 +87,9 @@ Public Class ConnectionList
 	End Sub
 
 	Public Sub RestoreData()
-		Dim xmlSerializer = New XmlSerializer()
+        Dim xmlSerializer As XmlSerializer = New XmlSerializer()
 
-		For Each connection As ConnectionInfo In _connections
+        For Each connection As ConnectionInfo In _connections
 			If connection.ConnectionDescriptor Is Nothing Then
 				Continue For
 			End If
@@ -312,11 +309,8 @@ Public Class ConnectionInfo
 			Case ConnectionTypes.MSSQL
 				ConnectionDescriptor = New MSSQLConnectionDescriptor()
 				Return
-			Case ConnectionTypes.MSSQLCE
-				ConnectionDescriptor = New MSSQLCEConnectionDescriptor()
-				Return
-			Case ConnectionTypes.MSSQLAzure
-				ConnectionDescriptor = New MSSQLAzureConnectionDescriptor()
+            Case ConnectionTypes.MSSQLAzure
+                ConnectionDescriptor = New MSSQLAzureConnectionDescriptor()
 				Return
 			Case ConnectionTypes.MySQL
 				ConnectionDescriptor = New MySQLConnectionDescriptor()
@@ -351,9 +345,6 @@ Public Class ConnectionInfo
 		End If
 		If descriptorType Is GetType(MSSQLConnectionDescriptor) Then
 			Return ConnectionTypes.MSSQL
-		End If
-		If descriptorType Is GetType(MSSQLCEConnectionDescriptor) Then
-			Return ConnectionTypes.MSSQLCE
 		End If
 		If descriptorType Is GetType(MSSQLAzureConnectionDescriptor) Then
 			Return ConnectionTypes.MSSQLAzure

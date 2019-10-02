@@ -39,22 +39,15 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="project.json" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ActiveQueryBuilder.Core">
-		<HintPath>..\packages\ActiveQueryBuilder.Core.3.5.25.1142\lib\net\ActiveQueryBuilder.Core.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.DB2MetadataProvider">
-		<HintPath>..\packages\ActiveQueryBuilder.DB2MetadataProvider.3.5.25.1142\lib\net\ActiveQueryBuilder.DB2MetadataProvider.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.View">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.25.1142\lib\net\ActiveQueryBuilder.View.dll</HintPath>
-	</Reference>
-    <Reference Include="ActiveQueryBuilder.View.WinForms">
-		<HintPath>..\packages\ActiveQueryBuilder.View.WinForms.3.5.25.1142\lib\net\ActiveQueryBuilder.View.WinForms.dll</HintPath>
-	</Reference>
+    
+    
+    
+    
     <Reference Include="IBM.Data.DB2">
 		<HintPath>..\third-party\IBM.Data.DB2.dll</HintPath>
 	</Reference>

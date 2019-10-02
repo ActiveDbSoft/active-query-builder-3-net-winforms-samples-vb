@@ -11,18 +11,13 @@
 Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.IO
-Imports System.Text
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.Core.PropertiesEditors
-Imports ActiveQueryBuilder.Core.Serialization
 Imports ActiveQueryBuilder.View
 Imports ActiveQueryBuilder.View.PropertiesEditors
-Imports ActiveQueryBuilder.View.WinForms
 Imports ActiveQueryBuilder.View.WinForms.DatabaseSchemaView
-Imports ActiveQueryBuilder.View.WinForms.PropertiesEditors
 Imports ActiveQueryBuilder.View.WinForms.QueryView
-Imports ActiveQueryBuilder.View.WinForms.Serialization
 Imports Helpers = FullFeaturedMdiDemo.Common.Helpers
 
 Namespace PropertiesForm
