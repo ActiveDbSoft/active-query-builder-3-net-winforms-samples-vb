@@ -267,20 +267,13 @@ Partial Class Form1
         '
         Me.expressionEditor1.ActiveUnionSubQuery = Nothing
         Me.expressionEditor1.Expression = ""
-        Me.expressionEditor1.Height = 531
-        Me.expressionEditor1.HighlightMatchingParentheses = ActiveQueryBuilder.View.ExpressionEditor.ParenthesesHighlighting.NoHighlight
-        Me.expressionEditor1.KeepMetadataObjectsOnTopOfSuggestionList = true
-        Me.expressionEditor1.LoadMetadataOnCodeCompletion = true
-        Me.expressionEditor1.SearchFields = false
+
         Me.expressionEditor1.SQLContext = Me.sqlContext1
         Me.expressionEditor1.SQLFormattingOptions = Nothing
-        Me.expressionEditor1.TextEditorFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.expressionEditor1.Width = 754
         '
         'sqlTextEditor1
         '
-        Me.sqlTextEditor1.AcceptTabs = false
-        Me.sqlTextEditor1.AllowShowSuggestionByMouse = false
+        Me.sqlTextEditor1.AllowShowSuggestionByMouse = False
         Me.sqlTextEditor1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left)  _
             Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
         Me.sqlTextEditor1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64,Byte),Integer), CType(CType(64,Byte),Integer), CType(CType(64,Byte),Integer))
@@ -291,7 +284,6 @@ Partial Class Form1
         Me.sqlTextEditor1.Name = "sqlTextEditor1"
         Me.sqlTextEditor1.Options.Font = New System.Drawing.Font("Courier New", 9!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204,Byte))
         Me.sqlTextEditor1.Options.Padding = New System.Windows.Forms.Padding(6, 3, 3, 3)
-        Me.sqlTextEditor1.Padding = New System.Windows.Forms.Padding(6, 3, 3, 3)
         Me.sqlTextEditor1.Query = Me.sqlQuery1
         Me.sqlTextEditor1.QueryProvider = Me.sqlQuery1
         Me.sqlTextEditor1.SelectedText = ""
@@ -300,7 +292,6 @@ Partial Class Form1
         Me.sqlTextEditor1.Size = New System.Drawing.Size(920, 93)
         Me.sqlTextEditor1.SQLContext = Me.sqlContext1
         Me.sqlTextEditor1.SqlOptions.KeywordColor = System.Drawing.Color.LightSkyBlue
-        Me.sqlTextEditor1.SuggestionWindowSize = New System.Drawing.Size(2147483647, 200)
         Me.sqlTextEditor1.TabIndex = 2
         '
         'databaseSchemaView1

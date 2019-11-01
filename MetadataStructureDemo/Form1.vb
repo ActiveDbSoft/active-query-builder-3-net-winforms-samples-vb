@@ -114,7 +114,7 @@ Public Partial Class Form1
     End Sub
 
     Private Sub tsbMetadataEditor_Click(sender As Object, e As EventArgs)
-        QueryBuilder.EditMetadataContainer(queryBuilder.SQLContext, queryBuilder.MetadataLoadingOptions)
+        QueryBuilder.EditMetadataContainer(queryBuilder.SQLContext)
     End Sub
 
     Public Sub ShowErrorBanner(ByVal control As Control, ByVal text As String)

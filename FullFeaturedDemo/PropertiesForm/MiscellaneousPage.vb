@@ -13,70 +13,62 @@ Imports System.Windows.Forms
 Imports ActiveQueryBuilder.View.QueryView
 Imports ActiveQueryBuilder.View.WinForms
 
-<ToolboxItem(False)> _
-Friend Partial Class MiscellaneousPage
-	Inherits UserControl
-	Private _queryBuilder As QueryBuilder = Nothing
-	Private _modified As Boolean = False
+Namespace PropertiesForm
+	<ToolboxItem(False)> _
+	Friend Partial Class MiscellaneousPage
+		Inherits UserControl
+        Private ReadOnly _queryBuilder As QueryBuilder = Nothing
 
+        Public Property Modified As Boolean = False
 
-	Public Property Modified() As Boolean
-		Get
-			Return _modified
-		End Get
-		Set
-			_modified = value
-		End Set
-	End Property
+        Public Sub New(qb As QueryBuilder)
+            _queryBuilder = qb
 
+            InitializeComponent()
 
-	Public Sub New(qb As QueryBuilder)
-		_queryBuilder = qb
+            comboLinksStyle.Items.Add("Simple style")
+            comboLinksStyle.Items.Add("MS Access style")
+            comboLinksStyle.Items.Add("SQL Server Enterprise Manager style")
 
-		InitializeComponent()
+            If _queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.Simple Then
+                comboLinksStyle.SelectedIndex = 0
+            ElseIf _queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.MSAccess Then
+                comboLinksStyle.SelectedIndex = 1
+            ElseIf _queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.MSSQL Then
+                comboLinksStyle.SelectedIndex = 2
+            End If
 
-		comboLinksStyle.Items.Add("Simple style")
-		comboLinksStyle.Items.Add("MS Access style")
-		comboLinksStyle.Items.Add("SQL Server Enterprise Manager style")
+            AddHandler comboLinksStyle.SelectedIndexChanged, AddressOf Changed
+        End Sub
 
-		If _queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.Simple Then
-			comboLinksStyle.SelectedIndex = 0
-		ElseIf _queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.MSAccess Then
-			comboLinksStyle.SelectedIndex = 1
-		ElseIf _queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.MSSQL Then
-			comboLinksStyle.SelectedIndex = 2
-		End If
+        Protected Overrides Sub Dispose(disposing As Boolean)
+			RemoveHandler comboLinksStyle.SelectedIndexChanged, AddressOf Changed
 
-		AddHandler comboLinksStyle.SelectedIndexChanged, AddressOf Changed
-	End Sub
+			If disposing AndAlso (components IsNot Nothing) Then
+				components.Dispose()
+			End If
 
-	Protected Overrides Sub Dispose(disposing As Boolean)
-		RemoveHandler comboLinksStyle.SelectedIndexChanged, AddressOf Changed
+			MyBase.Dispose(disposing)
+		End Sub
 
-		If disposing AndAlso (components IsNot Nothing) Then
-			components.Dispose()
-		End If
+		Public Sub ApplyChanges()
+			If Modified Then
+				Select Case comboLinksStyle.SelectedIndex
+					Case 0
+						_queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.Simple
+						Exit Select
+					Case 2
+						_queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.MSSQL
+						Exit Select
+					Case Else
+						_queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.MSAccess
+						Exit Select
+				End Select
+			End If
+		End Sub
 
-		MyBase.Dispose(disposing)
-	End Sub
-
-	Public Sub ApplyChanges()
-		If Modified Then
-			Select Case comboLinksStyle.SelectedIndex
-				Case 0
-					_queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.Simple
-					Exit Select
-				Case 2
-					_queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.MSSQL
-					Exit Select
-				Case Else
-					_queryBuilder.DesignPaneOptions.LinkStyle = LinkStyle.MSAccess
-					Exit Select
-			End Select
-		End If
-	End Sub
-
-	Private Sub Changed(sender As Object, e As EventArgs)
-		Modified = True
-	End Sub
-End Class
+		Private Sub Changed(sender As Object, e As EventArgs)
+			Modified = True
+		End Sub
+	End Class
+End Namespace

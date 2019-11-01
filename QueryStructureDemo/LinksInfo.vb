@@ -15,9 +15,9 @@ Imports ActiveQueryBuilder.Core
 
 Partial Class Form1
 	Private Shared Function GetLinkList(unionSubQuery As UnionSubQuery) As List(Of Link)
-		Dim links = New List(Of Link)()
+        Dim links As List(Of Link) = New List(Of Link)()
 
-		unionSubQuery.FromClause.GetLinksRecursive(links)
+        unionSubQuery.FromClause.GetLinksRecursive(links)
 
 		Return links
 	End Function

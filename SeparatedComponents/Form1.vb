@@ -57,7 +57,7 @@ Partial Public Class Form1
     Private Sub editMetadataMenuItem_Click(sender As Object, e As EventArgs) Handles editMetadataMenuItem.Click
         ' Open the metadata container editor
 
-        QueryBuilder.EditMetadataContainer(sqlContext1, sqlContext1.LoadingOptions)
+        QueryBuilder.EditMetadataContainer(sqlContext1)
     End Sub
 
     Private Sub clearMetadataMenuItem_Click(sender As Object, e As EventArgs) Handles clearMetadataMenuItem.Click

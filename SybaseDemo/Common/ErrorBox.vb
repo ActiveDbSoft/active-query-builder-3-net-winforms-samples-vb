@@ -25,8 +25,8 @@ Namespace Common
             Get
                 Return panelCheckSyntax.Visible
             End Get
-            Set(ByVal value As Boolean)
-                panelCheckSyntax.Visible = value
+            Set
+                panelCheckSyntax.Visible = Value
             End Set
         End Property
 
@@ -41,12 +41,12 @@ Namespace Common
             comboBoxSyntaxProvider.Items.Clear()
 
             For Each baseSyntaxProvider As Type In Helpers.SyntaxProviderList
-                Dim instance = TryCast(Activator.CreateInstance(baseSyntaxProvider), BaseSyntaxProvider)
+                Dim instance As BaseSyntaxProvider = TryCast(Activator.CreateInstance(baseSyntaxProvider), BaseSyntaxProvider)
                 comboBoxSyntaxProvider.Items.Add(New ComboBoxItem(instance))
             Next
         End Sub
 
-        Public Sub Show(ByVal message As String, ByVal baseSyntaxProvider As BaseSyntaxProvider)
+        Public Overloads Sub Show(message As String, baseSyntaxProvider As BaseSyntaxProvider)
             labelMessage.Text = message
 
             If String.IsNullOrEmpty(message) Then
@@ -78,15 +78,15 @@ Namespace Common
             Visible = False
         End Sub
 
-        Private Sub linkLabelGoTo_LinkClicked(ByVal sender As Object, ByVal e As LinkLabelLinkClickedEventArgs)
+        Private Sub linkLabelGoTo_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
             OnGoToErrorPositionEvent()
         End Sub
 
-        Private Sub linkLabelRevert_LinkClicked(ByVal sender As Object, ByVal e As LinkLabelLinkClickedEventArgs)
+        Private Sub linkLabelRevert_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
             OnRevertValidTextEvent()
         End Sub
 
-        Private Sub comboBoxSyntaxProvider_SelectedValueChanged(ByVal sender As Object, ByVal e As EventArgs)
+        Private Sub comboBoxSyntaxProvider_SelectedValueChanged(sender As Object, e As EventArgs)
             OnSyntaxProviderChanged()
         End Sub
     End Class
@@ -103,7 +103,7 @@ Namespace Common
         Public Sub New()
         End Sub
 
-        Public Sub New(ByVal provider As BaseSyntaxProvider)
+        Public Sub New(provider As BaseSyntaxProvider)
             SyntaxProvider = provider
         End Sub
     End Class
@@ -121,12 +121,12 @@ Namespace Common
             Get
                 Return MyBase.AutoSize
             End Get
-            Set(ByVal value As Boolean)
-                MyBase.AutoSize = value
+            Set
+                MyBase.AutoSize = Value
             End Set
         End Property
 
-        Private Sub resizeLabel()
+        Private Sub ResizeLabel()
             If _mGrowing Then Return
 
             Try
@@ -139,17 +139,17 @@ Namespace Common
             End Try
         End Sub
 
-        Protected Overrides Sub OnTextChanged(ByVal e As EventArgs)
+        Protected Overrides Sub OnTextChanged(e As EventArgs)
             MyBase.OnTextChanged(e)
             resizeLabel()
         End Sub
 
-        Protected Overrides Sub OnFontChanged(ByVal e As EventArgs)
+        Protected Overrides Sub OnFontChanged(e As EventArgs)
             MyBase.OnFontChanged(e)
             resizeLabel()
         End Sub
 
-        Protected Overrides Sub OnSizeChanged(ByVal e As EventArgs)
+        Protected Overrides Sub OnSizeChanged(e As EventArgs)
             MyBase.OnSizeChanged(e)
             resizeLabel()
         End Sub

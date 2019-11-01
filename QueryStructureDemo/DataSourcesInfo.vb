@@ -14,9 +14,9 @@ Imports ActiveQueryBuilder.Core
 
 Partial Class Form1
 	Private Function GetDataSourceList(unionSubQuery As UnionSubQuery) As List(Of DataSource)
-		Dim list = New List(Of DataSource)()
+        Dim list As List(Of DataSource) = New List(Of DataSource)()
 
-		unionSubQuery.FromClause.GetDatasourceByClass(list)
+        unionSubQuery.FromClause.GetDatasourceByClass(list)
 
 		Return list
 	End Function

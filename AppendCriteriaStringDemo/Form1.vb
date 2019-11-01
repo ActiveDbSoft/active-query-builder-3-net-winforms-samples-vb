@@ -8,7 +8,6 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Collections
 Imports System.Collections.Generic
 Imports System.Diagnostics
 Imports System.Windows.Forms

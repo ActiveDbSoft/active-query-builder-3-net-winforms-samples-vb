@@ -227,42 +227,54 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Program.vb" />
-    <Compile Include="PropertiesForm\DatabaseSchemaViewPage.designer.vb" />
+    <Compile Include="PropertiesForm\DatabaseSchemaViewPage.designer.vb">
+      <DependentUpon>DatabaseSchemaViewPage.vb</DependentUpon>
+    </Compile>
     <Compile Include="PropertiesForm\DatabaseSchemaViewPage.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PropertiesForm\GeneralPage.Designer.vb" />
+    <Compile Include="PropertiesForm\GeneralPage.designer.vb">
+      <DependentUpon>GeneralPage.vb</DependentUpon>
+    </Compile>
     <Compile Include="PropertiesForm\GeneralPage.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PropertiesForm\GroupLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PropertiesForm\MetadataTreePage.Designer.vb" />
-    <Compile Include="PropertiesForm\MetadataTreePage.vb">
-      <SubType>UserControl</SubType>
+    <Compile Include="PropertiesForm\MiscellaneousPage.designer.vb">
+      <DependentUpon>MiscellaneousPage.vb</DependentUpon>
     </Compile>
-    <Compile Include="PropertiesForm\MiscellaneousPage.Designer.vb" />
     <Compile Include="PropertiesForm\MiscellaneousPage.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PropertiesForm\OfflineModePage.Designer.vb" />
+    <Compile Include="PropertiesForm\OfflineModePage.designer.vb">
+      <DependentUpon>OfflineModePage.vb</DependentUpon>
+    </Compile>
     <Compile Include="PropertiesForm\OfflineModePage.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PropertiesForm\PanesVisibilityPage.Designer.vb" />
+    <Compile Include="PropertiesForm\PanesVisibilityPage.designer.vb">
+      <DependentUpon>PanesVisibilityPage.vb</DependentUpon>
+    </Compile>
     <Compile Include="PropertiesForm\PanesVisibilityPage.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PropertiesForm\QueryBuilderPropertiesForm.Designer.vb" />
+    <Compile Include="PropertiesForm\QueryBuilderPropertiesForm.designer.vb">
+      <DependentUpon>QueryBuilderPropertiesForm.vb</DependentUpon>
+    </Compile>
     <Compile Include="PropertiesForm\QueryBuilderPropertiesForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PropertiesForm\SqlFormattingPage.designer.vb" />
+    <Compile Include="PropertiesForm\SqlFormattingPage.designer.vb">
+      <DependentUpon>SqlFormattingPage.vb</DependentUpon>
+    </Compile>
     <Compile Include="PropertiesForm\SqlFormattingPage.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PropertiesForm\SqlSyntaxPage.Designer.vb" />
+    <Compile Include="PropertiesForm\SqlSyntaxPage.designer.vb">
+      <DependentUpon>SqlSyntaxPage.vb</DependentUpon>
+    </Compile>
     <Compile Include="PropertiesForm\SqlSyntaxPage.vb">
       <SubType>UserControl</SubType>
     </Compile>
@@ -358,15 +370,30 @@
     <EmbeddedResource Include="PaginationPanel.resx">
       <DependentUpon>PaginationPanel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\DatabaseSchemaViewPage.resx" />
-    <EmbeddedResource Include="PropertiesForm\GeneralPage.resx" />
-    <EmbeddedResource Include="PropertiesForm\MetadataTreePage.resx" />
-    <EmbeddedResource Include="PropertiesForm\MiscellaneousPage.resx" />
-    <EmbeddedResource Include="PropertiesForm\OfflineModePage.resx" />
-    <EmbeddedResource Include="PropertiesForm\PanesVisibilityPage.resx" />
-    <EmbeddedResource Include="PropertiesForm\QueryBuilderPropertiesForm.resx" />
-    <EmbeddedResource Include="PropertiesForm\SqlFormattingPage.resx" />
-    <EmbeddedResource Include="PropertiesForm\SqlSyntaxPage.resx" />
+    <EmbeddedResource Include="PropertiesForm\DatabaseSchemaViewPage.resx">
+      <DependentUpon>DatabaseSchemaViewPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\GeneralPage.resx">
+      <DependentUpon>GeneralPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\MiscellaneousPage.resx">
+      <DependentUpon>MiscellaneousPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\OfflineModePage.resx">
+      <DependentUpon>OfflineModePage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\PanesVisibilityPage.resx">
+      <DependentUpon>PanesVisibilityPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\QueryBuilderPropertiesForm.resx">
+      <DependentUpon>QueryBuilderPropertiesForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\SqlFormattingPage.resx">
+      <DependentUpon>SqlFormattingPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesForm\SqlSyntaxPage.resx">
+      <DependentUpon>SqlSyntaxPage.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>

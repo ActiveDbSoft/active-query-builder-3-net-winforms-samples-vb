@@ -9,7 +9,6 @@
 '*******************************************************************'
 
 Imports System.Data
-Imports System.Drawing
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.View.WinForms
@@ -163,18 +162,18 @@ Public Partial Class Form1
 
 		Dim qs As QueryStatistics = queryBuilder1.QueryStatistics
 
-		stats = "Used Objects (" + qs.UsedDatabaseObjects.Count & "): "
-		For i As Integer = 0 To qs.UsedDatabaseObjects.Count - 1
+        stats = $"Used Objects ({qs.UsedDatabaseObjects.Count}): "
+        For i As Integer = 0 To qs.UsedDatabaseObjects.Count - 1
 			stats += vbLf + qs.UsedDatabaseObjects(i).ObjectName.QualifiedName
 		Next
 
-		stats += (vbLf & vbLf & "Used Columns (") + qs.UsedDatabaseObjectFields.Count & "): "
-		For i As Integer = 0 To qs.UsedDatabaseObjectFields.Count - 1
+        stats += vbLf & vbLf & $"Used Columns ({qs.UsedDatabaseObjectFields.Count}): "
+        For i As Integer = 0 To qs.UsedDatabaseObjectFields.Count - 1
 			stats += vbLf + qs.UsedDatabaseObjectFields(i).ObjectName.QualifiedName
 		Next
 
-		stats += (vbLf & vbLf & "Output Expressions (") + qs.OutputColumns.Count & "): "
-		For i As Integer = 0 To qs.OutputColumns.Count - 1
+        stats += vbLf & vbLf & $"Output Expressions ({qs.OutputColumns.Count}): "
+        For i As Integer = 0 To qs.OutputColumns.Count - 1
 			stats += vbLf + qs.OutputColumns(i).Expression
 		Next
 

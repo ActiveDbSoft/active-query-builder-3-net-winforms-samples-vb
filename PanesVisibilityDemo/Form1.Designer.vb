@@ -130,8 +130,8 @@ Partial Class Form1
 		Me.queryBuilder.MetadataStructureOptions.TablesFolderText = Nothing
 		Me.queryBuilder.MetadataStructureOptions.ViewsFolderText = Nothing
 		Me.queryBuilder.Name = "queryBuilder"
-		Me.queryBuilder.QueryColumnListOptions.UseCustomExpressionBuilder = DirectCast((ActiveQueryBuilder.View.QueryView.AffectedColumns.ExpressionColumn Or ActiveQueryBuilder.View.QueryView.AffectedColumns.ConditionColumns), ActiveQueryBuilder.View.QueryView.AffectedColumns)
-		Me.queryBuilder.Size = New System.Drawing.Size(793, 422)
+        Me.queryBuilder.QueryColumnListOptions.UseCustomExpressionBuilder = (ActiveQueryBuilder.View.QueryView.AffectedColumns.ExpressionColumn Or ActiveQueryBuilder.View.QueryView.AffectedColumns.ConditionColumns)
+        Me.queryBuilder.Size = New System.Drawing.Size(793, 422)
 		' 
 		' 
 		' 

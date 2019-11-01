@@ -52,10 +52,10 @@ Public Partial Class Form1
 	End Sub
 
 	Private Sub editMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles editMetadataToolStripMenuItem.Click
-		' Open the metadata container editor
+        ' Open the metadata container editor
 
-		QueryBuilder.EditMetadataContainer(queryBuilder1.SQLContext, queryBuilder1.MetadataLoadingOptions)
-	End Sub
+        QueryBuilder.EditMetadataContainer(queryBuilder1.SQLContext)
+    End Sub
 
 	Private Sub clearMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles clearMetadataToolStripMenuItem.Click
 		' Clear the metadata

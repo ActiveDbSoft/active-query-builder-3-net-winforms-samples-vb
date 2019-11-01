@@ -70,23 +70,23 @@ Partial Public Class Form1
         End If
 
         handled = True
-
-        context.FillRectangle(Brushes.White, New Rectangle(New Point(rect.X, rect.Y), New Size(rect.Width, rect.Height)))
+        Dim point As Point = New Point(CInt(rect.X), CInt(rect.Y))
+        context.FillRectangle(Brushes.White, New Rectangle(point, New Size(CInt(rect.Width), CInt(rect.Height))))
 
         If ((CDrawItemState.Selected And state)) <> 0 AndAlso (CDrawItemState.Focus And state) <> 0 Then
-            context.FillRectangle(Brushes.DodgerBlue, New Rectangle(New Point(rect.X, rect.Y), New Size(rect.Width, rect.Height)))
+            context.FillRectangle(Brushes.DodgerBlue, New Rectangle(point, New Size(CInt(rect.Width), CInt(rect.Height))))
             context.DrawRectangle(New Pen(Color.Black) With {
                 .DashStyle = DashStyle.Dot
-            }, New Rectangle(New Point(rect.X, rect.Y), New Size(rect.Width, rect.Height - 1)))
+            }, New Rectangle(point, New Size(CInt(rect.Width), CInt(rect.Height - 1))))
         Else
             If (CDrawItemState.Selected And state) <> 0 AndAlso (CDrawItemState.Focus And state) = 0 Then
-                context.FillRectangle(Brushes.DodgerBlue, New Rectangle(New Point(rect.X, rect.Y), New Size(rect.Width, rect.Height)))
+                context.FillRectangle(Brushes.DodgerBlue, New Rectangle(New Point(CInt(rect.X), CInt(rect.Y)), New Size(CInt(rect.Width), CInt(rect.Height))))
             End If
         End If
 
         Dim imageKey As Bitmap = DirectCast(QBuilder.DataSourceOptions.ColumnsOptions.MarkColumnOptions.PrimaryKeyIcon, Bitmap)
 
-        context.DrawImage(imageKey, New Point(rect.X + 3, rect.Y))
+        context.DrawImage(imageKey, New Point(CInt(rect.X + 3), CInt(rect.Y)))
 
         Const textFormatFlags1 As TextFormatFlags = TextFormatFlags.NoClipping Or TextFormatFlags.VerticalCenter Or TextFormatFlags.NoPrefix
 
@@ -95,7 +95,7 @@ Partial Public Class Form1
         Dim text As String = "(" & field.FieldTypeName & ") " & field.Name
         Dim textSize As Size = TextRenderer.MeasureText(text, font)
 
-        TextRenderer.DrawText(context, text, font, New Rectangle(New Point(rect.X + imageKey.Width + 2, rect.Y), New Size(textSize.Width, rect.Height)), colorText, textFormatFlags1)
+        TextRenderer.DrawText(context, text, font, New Rectangle(New Point(CInt(rect.X + imageKey.Width + 2), CInt(rect.Y)), New Size(textSize.Width, CInt(rect.Height))), colorText, textFormatFlags1)
     End Sub
 
     Private Sub QBuilder_QueryElementControlDestroying(owner As QueryElement, control As IQueryElementControl) Handles QBuilder.QueryElementControlDestroying
@@ -154,10 +154,10 @@ Partial Public Class Form1
                     QueryColumnListItemProperty.Condition,
                     QueryColumnListItemProperty.Custom
                     menu.AddSeparator()
-                    menu.AddItem("Get info of current cell", Function(o, args)
+                    menu.AddItem("Get info of current cell", Sub(o, args)
                                                                  Dim message As String = $"Item property [{queryColumnListHitTestInfo.ItemProperty}]{Environment.NewLine}Item index [{queryColumnListHitTestInfo.ItemIndex}]{Environment.NewLine}Condition index [{queryColumnListHitTestInfo.ConditionIndex}]{Environment.NewLine}Is now here [{queryColumnListHitTestInfo.IsNowhere}]"
                                                                  MessageBox.Show(Me, message, "Information")
-                                                             End Function)
+                                                             End Sub)
                 Case Else
                     Throw New ArgumentOutOfRangeException()
             End Select

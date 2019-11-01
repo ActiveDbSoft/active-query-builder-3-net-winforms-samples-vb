@@ -27,6 +27,7 @@ Imports ActiveQueryBuilder.Core.QueryTransformer
 Imports ActiveQueryBuilder.View.WinForms
 
 Imports FullFeaturedDemo.Dailogs
+Imports FullFeaturedDemo.PropertiesForm
 Imports MySql.Data.MySqlClient
 Imports Npgsql
 Imports Helpers = ActiveQueryBuilder.Core.Helpers
@@ -826,9 +827,9 @@ Public Partial Class MainForm
 		End Using
     End Sub
 
-	Private Sub tsbEditMetadata_Click(sender As Object, e As EventArgs) Handles tsbEditMetadata.Click 
-		QueryBuilder.EditMetadataContainer(queryBuilder1.SQLContext, queryBuilder1.SQLContext.LoadingOptions)
-	End Sub
+	Private Sub tsbEditMetadata_Click(sender As Object, e As EventArgs) Handles tsbEditMetadata.Click
+        QueryBuilder.EditMetadataContainer(queryBuilder1.SQLContext)
+    End Sub
 
 	Private Sub tsbSaveInFile_Click(sender As Object, e As EventArgs) Handles tsmiSaveAs.Click, tsbSaveInFile.Click 
 		Dim path As String = SaveInFile(Nothing)

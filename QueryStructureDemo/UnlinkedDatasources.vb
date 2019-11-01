@@ -8,7 +8,6 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Collections
 Imports System.Collections.Generic
 Imports System.Text
 Imports ActiveQueryBuilder.Core
@@ -19,35 +18,35 @@ Partial Class Form1
 		dataSources.Remove(firstDataSource)
 
 		For i As Integer = 0 To links.Count - 1
-			Dim link = links(i)
+            Dim link As Link = links(i)
 
-			' If left end of the link is connected to firstDataSource,
-			' then link.RightDatasource is reachable.
-			' If it's still in dataSources list (not yet processed), process it recursivelly.
-			If link.LeftDataSource = firstDataSource AndAlso dataSources.IndexOf(link.RightDataSource) <> -1 Then
-				GetUnlinkedDatsourcesRecursive(link.RightDataSource, dataSources, links)
-			' If right end of the link is connected to firstDataSource,
-			' then link.LeftDatasource is reachable.
-			' If it's still in dataSources list (not yet processed), process it recursivelly.
-			ElseIf link.RightDataSource = firstDataSource AndAlso dataSources.IndexOf(link.LeftDataSource) <> -1 Then
-				GetUnlinkedDatsourcesRecursive(link.LeftDataSource, dataSources, links)
+            ' If left end of the link is connected to firstDataSource,
+            ' then link.RightDatasource is reachable.
+            ' If it's still in dataSources list (not yet processed), process it recursivelly.
+            If Equals(link.LeftDataSource, firstDataSource) AndAlso dataSources.IndexOf(link.RightDataSource) <> -1 Then
+                GetUnlinkedDatsourcesRecursive(link.RightDataSource, dataSources, links)
+                ' If right end of the link is connected to firstDataSource,
+                ' then link.LeftDatasource is reachable.
+                ' If it's still in dataSources list (not yet processed), process it recursivelly.
+            ElseIf Equals(link.RightDataSource, firstDataSource) AndAlso dataSources.IndexOf(link.LeftDataSource) <> -1 Then
+                GetUnlinkedDatsourcesRecursive(link.LeftDataSource, dataSources, links)
 			End If
 		Next
 	End Sub
 
 	Public Function GetUnlinkedDataSourcesFromUnionSubQuery(unionSubQuery As UnionSubQuery) As String
-		Dim dataSources = GetDataSourceList(unionSubQuery)
+        Dim dataSources As List(Of DataSource) = GetDataSourceList(unionSubQuery)
 
-		' Process trivial cases
-		If dataSources.Count = 0 Then
+        ' Process trivial cases
+        If dataSources.Count = 0 Then
 			Return "There are no datasources in current UnionSubQuery!"
 		ElseIf dataSources.Count = 1 Then
 			Return "There are only one datasource in current UnionSubQuery!"
 		Else
-			Dim links = GetLinkList(unionSubQuery)
+            Dim links As List(Of Link) = GetLinkList(unionSubQuery)
 
-			' The first DataSource is the initial point of reachability algorithm
-			Dim firstDataSource As DataSource = dataSources(0)
+            ' The first DataSource is the initial point of reachability algorithm
+            Dim firstDataSource As DataSource = dataSources(0)
 
 			' Remove all linked DataSources from dataSources list
 			GetUnlinkedDatsourcesRecursive(firstDataSource, dataSources, links)
