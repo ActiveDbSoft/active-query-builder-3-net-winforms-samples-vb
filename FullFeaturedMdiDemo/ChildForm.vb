@@ -20,6 +20,7 @@ Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.View.WinForms
 Imports ActiveQueryBuilder.Core.QueryTransformer
 Imports ActiveQueryBuilder.View
+Imports ActiveQueryBuilder.View.QueryView
 Imports ActiveQueryBuilder.View.WinForms.QueryView
 Imports FullFeaturedMdiDemo.Common
 Imports FullFeaturedMdiDemo.Dailogs
@@ -156,12 +157,13 @@ Partial Public Class ChildForm
         End Set
     End Property
 
-    Public Property QueryNavBarOptions() As QueryNavBarOptions
+    Public Property QueryNavBarOptions As QueryNavBarOptions
         Get
             Return NavBar.Options
         End Get
         Set
-            NavBar.Options = Value
+            NavBar.Options.Assign(Value)
+            subQueryNavBar1.Options.Assign(DirectCast(Value, IQueryNavigationBarOptions))
         End Set
     End Property
 
@@ -244,6 +246,11 @@ Partial Public Class ChildForm
         tsbCopyUnionSubquery.ToolTipText = ActiveQueryBuilder.View.Helpers.Localizer.GetString("strCopyToNewUnionSubQuery", "Copy union sub-query")
 
         UpdateLanguage()
+        AddHandler QueryNavBarOptions.Updated, AddressOf QueryNavBarOptionsUpdated
+    End Sub
+
+    Private Sub QueryNavBarOptionsUpdated(sender As Object, e As EventArgs)
+        subQueryNavBar1.Options.Assign(DirectCast(QueryNavBarOptions, IQueryNavigationBarOptions))
     End Sub
 
     Private Sub ActiveUnionSubQueryChanged(sender As Object, e As EventArgs)

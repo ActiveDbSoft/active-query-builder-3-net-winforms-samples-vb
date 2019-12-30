@@ -232,7 +232,8 @@ Public Partial Class MainForm
 		tsmiClearMetadata.Enabled = (ActiveMdiChild IsNot Nothing)
 		tsmiLoadMetadataFromXML.Enabled = (ActiveMdiChild IsNot Nothing)
 		tsmiSaveMetadataToXML.Enabled = (ActiveMdiChild IsNot Nothing)
-
+        propertiesToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing)
+	    propertiesToolStripMenuItem.Text = If(propertiesToolStripMenuItem.Enabled, "Properties", "Properties (open a query to edit)")
 		addDerivedTableToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing AndAlso DirectCast(ActiveMdiChild, ChildForm).CanAddDerivedTable())
 		addObjectToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing AndAlso DirectCast(ActiveMdiChild, ChildForm).CanAddObject())
 		addUnionSubqueryToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing AndAlso DirectCast(ActiveMdiChild, ChildForm).CanAddUnionSubQuery())
