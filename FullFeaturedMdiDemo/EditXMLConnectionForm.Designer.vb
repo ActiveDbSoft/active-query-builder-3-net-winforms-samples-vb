@@ -24,7 +24,6 @@ Partial Class EditXMLConnectionForm
 	''' the contents of this method with the code editor.
 	''' </summary>
 	Private Sub InitializeComponent()
-		Dim propertiesEditorsOptions6 As New ActiveQueryBuilder.Core.PropertiesEditors.PropertiesEditorsOptions()
 		Me.pnlTop = New System.Windows.Forms.Panel()
 		Me.label3 = New System.Windows.Forms.Label()
 		Me.cbSyntax = New System.Windows.Forms.ComboBox()
@@ -126,19 +125,6 @@ Partial Class EditXMLConnectionForm
 		' 
 		Me.pbSyntax.AutoScroll = True
 		Me.pbSyntax.Dock = System.Windows.Forms.DockStyle.Top
-		propertiesEditorsOptions6.CaptionsMaxWidth = 120
-		propertiesEditorsOptions6.DescriptionMaxHeight = 200
-		propertiesEditorsOptions6.DescriptionMaxWidth = 200
-		propertiesEditorsOptions6.DescriptionMinWidth = 150
-		propertiesEditorsOptions6.MultiLineEditorsCaptionPosition = ActiveQueryBuilder.Core.PropertiesEditors.MultiLineEditorCaptionPosition.Above
-		propertiesEditorsOptions6.MultiLineEditorsMaxWidth = 500
-		propertiesEditorsOptions6.MultiLineEditorsMinWidth = 120
-		propertiesEditorsOptions6.NarrowEditControlsMaxWidth = 80
-		propertiesEditorsOptions6.NarrowEditControlsMinWidth = 80
-		propertiesEditorsOptions6.ShowDescriptions = False
-		propertiesEditorsOptions6.WideEditControlsMaxWidth = 500
-		propertiesEditorsOptions6.WideEditControlsMinWidth = 120
-		Me.pbSyntax.EditorsOptions = propertiesEditorsOptions6
 		Me.pbSyntax.InformationMessageHost = Nothing
 		Me.pbSyntax.Location = New System.Drawing.Point(0, 68)
 		Me.pbSyntax.Name = "pbSyntax"

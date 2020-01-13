@@ -27,7 +27,7 @@
 			Me.pLoading = New System.Windows.Forms.Panel()
 			Me.bCancel = New System.Windows.Forms.Button()
 			Me.label1 = New System.Windows.Forms.Label()
-			Me.infoPanel1 = New FullFeaturedMdiDemo.Common.InfoPanel()
+			Me.infoPanel1 = New InfoPanel()
 			DirectCast(Me.dataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
 			Me.pLoading.SuspendLayout()
 			Me.SuspendLayout()

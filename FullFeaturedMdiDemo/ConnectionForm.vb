@@ -8,6 +8,7 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
+Imports System.Collections.Generic
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 
@@ -34,6 +35,7 @@ Public Partial Class ConnectionForm
 
 	Public Sub New()
 		InitializeComponent()
+		AddPresets()
 
 		' fill connection list
 		For i As Integer = 0 To Program.Connections.Count - 1
@@ -44,23 +46,6 @@ Public Partial Class ConnectionForm
 
 		If lvConnections.Items.Count > 0 Then
 			lvConnections.Items(0).Selected = True
-		End If
-
-		' add preset
-
-		Dim found As Boolean = False
-		Dim northwind As New ConnectionInfo("Northwind.xml", "Northwind.xml", ConnectionTypes.ODBC) With { _
-			.IsXmlFile = True _
-		}
-
-		For i As Integer = 0 To Program.XmlFiles.Count - 1
-			If Program.XmlFiles(i).Equals(northwind) Then
-				found = True
-			End If
-		Next
-
-		If Not found Then
-			Program.XmlFiles.Insert(0, northwind)
 		End If
 
 		' fill XML files list
@@ -76,6 +61,44 @@ Public Partial Class ConnectionForm
 
 		AddHandler Application.Idle, AddressOf Application_Idle
 	End Sub
+
+	Private Sub AddPresets()
+
+		Dim presets As List(Of ConnectionInfo) = New List(Of ConnectionInfo)() From { _
+			New ConnectionInfo("Northwind.xml", "Northwind.xml", ConnectionTypes.ODBC) With { _
+				.IsXmlFile = True _
+			}, _
+			New ConnectionInfo(New SQLiteConnectionDescriptor(), "SQLite", ConnectionTypes.SQLite, "data source=northwind.sqlite"), _
+			New ConnectionInfo(New MSAccessConnectionDescriptor(), "MS Access", ConnectionTypes.MSAccess, "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=Nwind.mdb") _
+		}
+
+		For Each preset As ConnectionInfo In presets
+			If Not FindConnectionInfo(preset) Then
+				If preset.IsXmlFile Then
+					Program.XmlFiles.Add(preset)
+				Else
+					Program.Connections.Add(preset)
+				End If
+			End If
+		Next
+	End Sub
+
+	Private Function FindConnectionInfo(connectionInfo As ConnectionInfo) As Boolean
+		Dim connectionList As ConnectionList
+		If connectionInfo.IsXmlFile Then
+			connectionList = Program.XmlFiles
+		Else
+			connectionList = Program.Connections
+		End If
+
+		For i As Integer = 0 To connectionList.Count - 1
+			If connectionList(i).Equals(connectionInfo) Then
+				Return True
+			End If
+		Next
+
+		Return False
+	End Function
 
 	Protected Overrides Sub Dispose(disposing As Boolean)
 		If disposing Then
@@ -203,7 +226,7 @@ Public Partial Class ConnectionForm
 	End Sub
 
 	Private Sub btnAddXml_Click(sender As Object, e As EventArgs)
-		Dim name As String = GetNewXmlFileEntryName()
+		Dim name = GetNewXmlFileEntryName()
 		Dim ci As New ConnectionInfo(String.Empty, name, ConnectionTypes.ODBC) With { _
 			.IsXmlFile = True _
 		}

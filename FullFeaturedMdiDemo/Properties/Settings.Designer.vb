@@ -12,7 +12,7 @@ Namespace Properties
 
 
 	<System.Runtime.CompilerServices.CompilerGeneratedAttribute> _
-	<System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")> _
+	<System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0")> _
 	Friend NotInheritable Partial Class Settings
 		Inherits Global.System.Configuration.ApplicationSettingsBase
 
@@ -91,6 +91,18 @@ Namespace Properties
 			End Get
 			Set
 				Me("Language") = value
+			End Set
+		End Property
+
+		<System.Configuration.UserScopedSettingAttribute> _
+		<System.Diagnostics.DebuggerNonUserCodeAttribute> _
+		<System.Configuration.DefaultSettingValueAttribute("")> _
+		Public Property Options() As String
+			Get
+				Return DirectCast(Me("Options"), String)
+			End Get
+			Set
+				Me("Options") = value
 			End Set
 		End Property
 	End Class

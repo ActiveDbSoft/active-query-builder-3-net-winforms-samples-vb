@@ -8,6 +8,13 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
+Imports ActiveQueryBuilder.Core
+Imports ActiveQueryBuilder.View
+Imports ActiveQueryBuilder.View.EventHandlers.MetadataStructureItems
+Imports ActiveQueryBuilder.View.WinForms
+Imports FullFeaturedMdiDemo.Common
+Imports FullFeaturedMdiDemo.Dailogs
+Imports FullFeaturedMdiDemo.PropertiesForm
 Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.Drawing
@@ -16,12 +23,7 @@ Imports System.IO
 Imports System.Linq
 Imports System.Text
 Imports System.Windows.Forms
-Imports ActiveQueryBuilder.Core
-Imports ActiveQueryBuilder.View
-Imports ActiveQueryBuilder.View.EventHandlers.MetadataStructureItems
-Imports ActiveQueryBuilder.View.WinForms
-Imports FullFeaturedMdiDemo.Dailogs
-Imports FullFeaturedMdiDemo.PropertiesForm
+Imports BuildInfo = ActiveQueryBuilder.Core.BuildInfo
 Imports Helpers = ActiveQueryBuilder.Core.Helpers
 
 Public Partial Class MainForm
@@ -30,6 +32,8 @@ Public Partial Class MainForm
 	Private _sqlContext As SQLContext
 	Private ReadOnly _sqlFormattingOptions As SQLFormattingOptions
 	Private ReadOnly _sqlGenerationOptions As SQLGenerationOptions
+
+	Private _options As Options
 
 	Public Sub New()
 		InitializeComponent()
@@ -64,49 +68,60 @@ Public Partial Class MainForm
 		AddHandler Application.Idle, AddressOf Application_Idle
 		AddHandler DBView.ItemDoubleClick, AddressOf DBView_ItemDoubleClick
 
-        AddHandler userQueriesView1.SelectedItemChanged, AddressOf userQueriesView1_SelectedItemChanged
-        AddHandler userQueriesView1.QueryEdit, AddressOf userQueriesView1_EditUserQuery
-        AddHandler userQueriesView1.QueryRemoved, AddressOf userQueriesView1_UserQueryItemRemoved
-        AddHandler userQueriesView1.ErrorMessage, AddressOf userQueriesView1_ErrorMessage
-        AddHandler userQueriesView1.QueryRenamed, AddressOf userQueriesView1_UserQueryItemRenamed
-        AddHandler userQueriesView1.ValidateItemContextMenu, AddressOf userQueriesView1_ValidateItemContextMenu
+		TryToLoadOptions()
 
 		' DEMO WARNING
-	    If ActiveQueryBuilder.Core.BuildInfo.GetEdition() = ActiveQueryBuilder.Core.BuildInfo.Edition.Trial Then
-		    Dim trialNoticePanel As New Panel() With { _
-			    .AutoSize = True, _
-			    .AutoSizeMode = AutoSizeMode.GrowAndShrink, _
-			    .BackColor = Color.LightGreen, _
-			    .BorderStyle = BorderStyle.FixedSingle, _
-			    .Dock = DockStyle.Top, _
-			    .Padding = New Padding(6, 5, 3, 0) _
-		    }
 
-		    Dim label As New Label() With { _
-			    .AutoSize = True, _
-			    .Margin = New Padding(0), _
-			    .Text = "Generation of random aliases for the query output columns is the limitation of the trial version. The full version is free from this behavior.", _
-			    .Dock = DockStyle.Fill, _
-			    .UseCompatibleTextRendering = True _
-		    }
+		If BuildInfo.GetEdition() = BuildInfo.Edition.Trial Then
+			Dim trialNoticePanel As New Panel() With { _
+				.AutoSize = True, _
+				.AutoSizeMode = AutoSizeMode.GrowAndShrink, _
+				.BackColor = Color.LightGreen, _
+				.BorderStyle = BorderStyle.FixedSingle, _
+				.Dock = DockStyle.Top, _
+				.Padding = New Padding(6, 5, 3, 0) _
+			}
 
-		    Dim buttonClose As New PictureBox() With { _
-			    .Image = Resources.cancel, _
-			    .SizeMode = PictureBoxSizeMode.AutoSize, _
-			    .Cursor = Cursors.Hand _
-		    }
-	        
-		    AddHandler buttonClose.Click, Sub() Controls.Remove(trialNoticePanel)
+			Dim label As New Label() With { _
+				.AutoSize = True, _
+				.Margin = New Padding(0), _
+				.Text = "Generation of random aliases for the query output columns is the limitation of the trial version. The full version is free from this behavior.", _
+				.Dock = DockStyle.Fill, _
+				.UseCompatibleTextRendering = True _
+			}
 
-		    trialNoticePanel.Controls.Add(buttonClose)
+			Dim buttonClose As PictureBox = New PictureBox() With { _
+				.Image = Resources.cancel, _
+				.SizeMode = PictureBoxSizeMode.AutoSize, _
+				.Cursor = Cursors.Hand _
+			}
+			AddHandler buttonClose.Click, Sub() Controls.Remove(trialNoticePanel)
 
-		    AddHandler trialNoticePanel.Resize, Sub() buttonClose.Location = New Point(trialNoticePanel.Width - buttonClose.Width - 10, trialNoticePanel.Height \ 2 - buttonClose.Height \ 2)
+			trialNoticePanel.Controls.Add(buttonClose)
 
-		    trialNoticePanel.Controls.Add(label)
-		    Controls.Add(trialNoticePanel)
-			    
-		    Controls.SetChildIndex(trialNoticePanel, 2)
-        End If
+			AddHandler trialNoticePanel.Resize, Sub() buttonClose.Location = New Point(trialNoticePanel.Width - buttonClose.Width - 10, trialNoticePanel.Height \ 2 - buttonClose.Height \ 2)
+
+			trialNoticePanel.Controls.Add(label)
+			Controls.Add(trialNoticePanel)
+
+			Controls.SetChildIndex(trialNoticePanel, 2)
+
+		End If
+	End Sub
+
+	Private Sub TryToLoadOptions()
+		If String.IsNullOrEmpty(Program.Settings.Options) Then
+			Return
+		End If
+
+		_options = New Options()
+		_options.CreateDefaultOptions()
+		Try
+			_options.DeserializeFromString(Program.Settings.Options)
+		Catch
+			_options = Nothing
+			Program.Settings.Options = String.Empty
+		End Try
 	End Sub
 
 	Private Sub MainForm_MdiChildActivate(sender As Object, e As EventArgs)
@@ -120,6 +135,10 @@ Public Partial Class MainForm
 	End Sub
 
 	Private Sub DBView_ItemDoubleClick(sender As Object, clickedItem As MetadataStructureItem)
+		If clickedItem.MetadataItem Is Nothing Then
+			Return
+		End If
+
 		' Adding a table to the currently active query.
 		If (MetadataType.Objects And clickedItem.MetadataItem.Type) = 0 AndAlso (MetadataType.ObjectMetadata And clickedItem.MetadataItem.Type) = 0 Then
 			Return
@@ -143,24 +162,15 @@ Public Partial Class MainForm
 		If (metadataItem.Type And MetadataType.Objects) <= 0 AndAlso metadataItem.Type <> MetadataType.Field Then
 			Return
 		End If
-        Using qualifiedName As SQLQualifiedName = metadataItem.GetSQLQualifiedName(Nothing, True)
-            window.QueryView.AddObjectToActiveUnionSubQuery(qualifiedName.GetSQL())
-        End Using
-    End Sub
+		Using qualifiedName = metadataItem.GetSQLQualifiedName(Nothing, True)
+			window.QueryView.AddObjectToActiveUnionSubQuery(qualifiedName.GetSQL())
+		End Using
+	End Sub
 
 	Protected Overrides Sub Dispose(disposing As Boolean)
 		If disposing Then
-		    RemoveHandler SizeChanged, AddressOf MainForm_SizeChanged
-		    RemoveHandler LocationChanged, AddressOf MainForm_LocationChanged
-		    RemoveHandler MdiChildActivate, AddressOf MainForm_MdiChildActivate
-		    RemoveHandler Application.Idle, AddressOf Application_Idle
-		    RemoveHandler DBView.ItemDoubleClick, AddressOf DBView_ItemDoubleClick
-		    RemoveHandler userQueriesView1.SelectedItemChanged, AddressOf userQueriesView1_SelectedItemChanged
-		    RemoveHandler userQueriesView1.QueryEdit, AddressOf userQueriesView1_EditUserQuery
-		    RemoveHandler userQueriesView1.QueryRemoved, AddressOf userQueriesView1_UserQueryItemRemoved
-		    RemoveHandler userQueriesView1.ErrorMessage, AddressOf userQueriesView1_ErrorMessage
-		    RemoveHandler userQueriesView1.QueryRenamed, AddressOf userQueriesView1_UserQueryItemRenamed
-		    RemoveHandler userQueriesView1.ValidateItemContextMenu, AddressOf userQueriesView1_ValidateItemContextMenu
+			RemoveHandler Application.Idle, AddressOf Application_Idle
+			RemoveHandler DBView.ItemDoubleClick, AddressOf DBView_ItemDoubleClick
 
 			If components IsNot Nothing Then
 				components.Dispose()
@@ -199,6 +209,7 @@ Public Partial Class MainForm
 			checkedItem.Checked = False
 		End If
 		Program.Settings.Language = DirectCast(currentItem.Tag, String)
+		Helpers.Localizer.Language = DirectCast(currentItem.Tag, String)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).UpdateLanguage()
 		End If
@@ -225,15 +236,18 @@ Public Partial Class MainForm
 		tsbCut.Enabled = (ActiveMdiChild IsNot Nothing AndAlso DirectCast(ActiveMdiChild, ChildForm).CanCut())
 		tsbCopy.Enabled = (ActiveMdiChild IsNot Nothing AndAlso DirectCast(ActiveMdiChild, ChildForm).CanCopy())
 		tsbPaste.Enabled = (ActiveMdiChild IsNot Nothing AndAlso DirectCast(ActiveMdiChild, ChildForm).CanPaste())
-		tsmiOfflineMode.Enabled = (ActiveMdiChild IsNot Nothing)
-		tsmiOfflineMode.Checked = (ActiveMdiChild IsNot Nothing AndAlso DirectCast(ActiveMdiChild, ChildForm).IsOfflineMode())
-		tsmiRefreshMetadata.Enabled = (ActiveMdiChild IsNot Nothing)
-		tsmiEditMetadata.Enabled = (ActiveMdiChild IsNot Nothing)
-		tsmiClearMetadata.Enabled = (ActiveMdiChild IsNot Nothing)
-		tsmiLoadMetadataFromXML.Enabled = (ActiveMdiChild IsNot Nothing)
-		tsmiSaveMetadataToXML.Enabled = (ActiveMdiChild IsNot Nothing)
-        propertiesToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing)
-	    propertiesToolStripMenuItem.Text = If(propertiesToolStripMenuItem.Enabled, "Properties", "Properties (open a query to edit)")
+		tsmiOfflineMode.Enabled = (_sqlContext IsNot Nothing)
+		tsmiOfflineMode.Checked = (_sqlContext IsNot Nothing AndAlso _sqlContext.MetadataContainer.LoadingOptions.OfflineMode)
+		tsmiRefreshMetadata.Enabled = (_sqlContext IsNot Nothing)
+		tsmiEditMetadata.Enabled = (_sqlContext IsNot Nothing)
+		tsmiClearMetadata.Enabled = (_sqlContext IsNot Nothing)
+		tsmiLoadMetadataFromXML.Enabled = (_sqlContext IsNot Nothing)
+		tsmiSaveMetadataToXML.Enabled = (_sqlContext IsNot Nothing)
+		propertiesToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing)
+		propertiesToolStripMenuItem.Text = If(propertiesToolStripMenuItem.Enabled, "Properties", "Properties (open a query to edit)")
+
+		queryPropertiesToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing)
+
 		addDerivedTableToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing AndAlso DirectCast(ActiveMdiChild, ChildForm).CanAddDerivedTable())
 		addObjectToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing AndAlso DirectCast(ActiveMdiChild, ChildForm).CanAddObject())
 		addUnionSubqueryToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing AndAlso DirectCast(ActiveMdiChild, ChildForm).CanAddUnionSubQuery())
@@ -242,59 +256,69 @@ Public Partial Class MainForm
 		tsbEditMetadata.Enabled = _sqlContext IsNot Nothing AndAlso _sqlContext.MetadataContainer IsNot Nothing
 	End Sub
 
-	Private Sub tsbNew_Click(sender As Object, e As EventArgs) Handles tsbNew.Click
+	Private Sub tsbNew_Click(sender As Object, e As EventArgs)
 		tsmiNew_Click(sender, e)
 	End Sub
 
 	Private Function InitializeSqlContext() As Boolean
 		Try
 			Cursor = Cursors.WaitCursor
-            
+
 			If _selectedConnection.IsXmlFile Then
 				_sqlContext = New SQLContext() With { _
 					.SyntaxProvider = _selectedConnection.ConnectionDescriptor.SyntaxProvider
-				}
-
-                _sqlContext.LoadingOptions.OfflineMode = True
-
-				_sqlContext.MetadataContainer.ImportFromXML(_selectedConnection.XMLPath)
+				    }
+                _sqlContext.LoadingOptions.OfflineMode = true
+				Try
+					_sqlContext.MetadataContainer.ImportFromXML(_selectedConnection.XMLPath)
+				Catch e As Exception
+					MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
+					Return False
+				End Try
 			Else
-			    Try
-			        _sqlContext = _selectedConnection.ConnectionDescriptor.GetSqlContext()
-			    Catch e As Exception
-			        MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
-			        Return False
-			    End Try
+				Try
+					_sqlContext = _selectedConnection.ConnectionDescriptor.GetSqlContext()
+				Catch e As Exception
+					MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
+					Return False
+				End Try
 			End If
+
+			_sqlContext.LoadingOptions.Assign(_selectedConnection.ConnectionDescriptor.MetadataLoadingOptions)
+			_sqlContext.MetadataStructure.Options.Assign(_selectedConnection.StructureOptions)
 
 			DBView.SQLContext = _sqlContext
 			DBView.InitializeDatabaseSchemaTree()
 
-			_sqlContext.MetadataStructure.Options.AllowFavourites = True
 			If Not String.IsNullOrEmpty(_selectedConnection.MetadataStructure) Then
 				_sqlContext.MetadataStructure.XML = _selectedConnection.MetadataStructure
 				_sqlContext.MetadataStructure.Refresh()
 			End If
-			AddHandler _sqlContext.MetadataStructure.FavouritesItem.UpdateEnded, AddressOf Favourites_Updated
+
+			Dim favouritesItem As MetadataStructureItem= _sqlContext.MetadataStructure.FavouritesItem
+			If favouritesItem IsNot Nothing Then
+				AddHandler favouritesItem.UpdateEnded, AddressOf Favourites_Updated
+			End If
 
 			CaptionConnection.Text = _selectedConnection.Name
 
 			userQueriesView1.SQLContext = _sqlContext
 			userQueriesView1.SQLQuery = New SQLQuery(_sqlContext)
-			userQueriesView1.Initialize()
 
-		    If Not String.IsNullOrEmpty(_selectedConnection.UserQueries) Then
-		        Dim bytes As Byte() = Encoding.UTF8.GetBytes(_selectedConnection.UserQueries)
+			If Not String.IsNullOrEmpty(_selectedConnection.UserQueries) Then
+				Dim bytes As Byte() = Encoding.UTF8.GetBytes(_selectedConnection.UserQueries)
 
-		        Using reader As MemoryStream = New MemoryStream(bytes)
-		            userQueriesView1.ImportFromXML(reader)
-		        End Using
-		    End If
+				Using reader = New MemoryStream(bytes)
+					userQueriesView1.ImportFromXML(reader)
+				End Using
+			Else
+				userQueriesView1.Initialize()
+			End If
 		Finally
 			Cursor = Cursors.[Default]
 		End Try
 
-        Return True
+		Return True
 	End Function
 
 	Private Sub Favourites_Updated(sender As Object, eventArgs As EventArgs)
@@ -316,24 +340,22 @@ Public Partial Class MainForm
 			If cf.ShowDialog() = DialogResult.OK Then
 				Try
 					Cursor = Cursors.WaitCursor
-					If Equals(_selectedConnection, cf.SelectedConnection) Then
-						If MessageBox.Show("Reconnect the current connection?", "Confirm", MessageBoxButtons.YesNo) = DialogResult.No Then
-							Return
-						End If
-					End If
 					For Each mdiChild As Form In MdiChildren
 						mdiChild.Close()
 					Next
 					If MdiChildren.Length > 0 Then
 						Return
 					End If
+
 					_selectedConnection = cf.SelectedConnection
-					If (Not InitializeSqlContext())
-                        Return
+					Dim contextInitilized = InitializeSqlContext()
+					If Not contextInitilized Then
+						Return
 					End If
+
 					If Not String.IsNullOrEmpty(_selectedConnection.UserQueries) Then
 						Dim bytes As Byte() = Encoding.UTF8.GetBytes(_selectedConnection.UserQueries)
-						Using reader As MemoryStream = New MemoryStream(bytes)
+						Using reader = New MemoryStream(bytes)
 							userQueriesView1.ImportFromXML(reader)
 						End Using
 					End If
@@ -348,8 +370,8 @@ Public Partial Class MainForm
 		If openFileDialog1.ShowDialog() = DialogResult.OK Then
 			Dim sb As New StringBuilder()
 			Using sr As New StreamReader(openFileDialog1.FileName)
-                Dim s As String = Nothing
-                While (InlineAssignHelper(s, sr.ReadLine())) IsNot Nothing
+				Dim s As String
+				While (InlineAssignHelper(s, sr.ReadLine())) IsNot Nothing
 					sb.AppendLine(s)
 				End While
 			End Using
@@ -360,7 +382,7 @@ Public Partial Class MainForm
 				Return
 			End If
 			Dim f As ChildForm = CreateChildForm(openFileDialog1.FileName)
-			f.QueryText = sb.ToString()
+			f.SqlEditorText = sb.ToString()
 			f.FileSourcePath = openFileDialog1.FileName
 			f.SqlSourceType = ChildForm.SourceType.File
 			f.Show()
@@ -373,7 +395,7 @@ Public Partial Class MainForm
 		End If
 	End Sub
 
-	Private Sub tsmiExit_Click(sender As Object, e As EventArgs) Handles tsmiExit.Click
+	Private Sub tsmiExit_Click(sender As Object, e As EventArgs)
 		Close()
 	End Sub
 
@@ -393,113 +415,113 @@ Public Partial Class MainForm
 		End If
 	End Sub
 
-	Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+	Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs)
 		SaveFavourites()
 	End Sub
 
-	Private Sub tsbCascade_Click(sender As Object, e As EventArgs) Handles tsbCascade.Click
+	Private Sub tsbCascade_Click(sender As Object, e As EventArgs)
 		LayoutMdi(MdiLayout.Cascade)
 	End Sub
 
-	Private Sub tsbTileHorizontally_Click(sender As Object, e As EventArgs) Handles tsbTileHorizontally.Click
+	Private Sub tsbTileHorizontally_Click(sender As Object, e As EventArgs)
 		LayoutMdi(MdiLayout.TileHorizontal)
 	End Sub
 
-	Private Sub tsbTileVertically_Click(sender As Object, e As EventArgs) Handles tsbTileVertically.Click
+	Private Sub tsbTileVertically_Click(sender As Object, e As EventArgs)
 		LayoutMdi(MdiLayout.TileVertical)
 	End Sub
 
-	Private Sub tsmiParseQuery_Click(sender As Object, e As EventArgs) Handles tsmiParseQuery.Click
+	Private Sub tsmiParseQuery_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).ParseQuery()
 		End If
 	End Sub
 
-	Private Sub tsmiBuildQuery_Click(sender As Object, e As EventArgs) Handles tsmiBuildQuery.Click
+	Private Sub tsmiBuildQuery_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).ActivateBuildQueryTab()
 		End If
 	End Sub
 
-	Private Sub tsmiRunQuery_Click(sender As Object, e As EventArgs) Handles tsmiRunQuery.Click
+	Private Sub tsmiRunQuery_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).ActivateRunQueryTab()
 		End If
 	End Sub
 
-	Private Sub tsmiQueryStatistics_Click(sender As Object, e As EventArgs) Handles tsmiQueryStatistics.Click
+	Private Sub tsmiQueryStatistics_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).ShowQueryStatistics()
 		End If
 	End Sub
 
-	Private Sub tsmiAbout_Click(sender As Object, e As EventArgs) Handles tsmiAbout.Click
+	Private Sub tsmiAbout_Click(sender As Object, e As EventArgs)
 		Using f As New AboutForm()
 			f.ShowDialog()
 		End Using
 	End Sub
 
-	Private Sub tsmiUndo_Click(sender As Object, e As EventArgs) Handles tsmiUndo.Click
+	Private Sub tsmiUndo_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).Undo()
 		End If
 	End Sub
 
-	Private Sub tsmiRedo_Click(sender As Object, e As EventArgs) Handles tsmiRedo.Click
+	Private Sub tsmiRedo_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).Redo()
 		End If
 	End Sub
 
-	Private Sub tsmiCut_Click(sender As Object, e As EventArgs) Handles tsmiCut.Click
+	Private Sub tsmiCut_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).Cut()
 		End If
 	End Sub
 
-	Private Sub tsmiCopy_Click(sender As Object, e As EventArgs) Handles tsmiCopy.Click
+	Private Sub tsmiCopy_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).Copy()
 		End If
 	End Sub
 
-	Private Sub tsmiPaste_Click(sender As Object, e As EventArgs) Handles tsmiPaste.Click
+	Private Sub tsmiPaste_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).Paste()
 		End If
 	End Sub
 
-	Private Sub tsmiSelectAll_Click(sender As Object, e As EventArgs) Handles tsmiSelectAll.Click
+	Private Sub tsmiSelectAll_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).SelectAll()
 		End If
 	End Sub
 
-	Private Sub tsbOpen_Click(sender As Object, e As EventArgs) Handles tsbOpen.Click
+	Private Sub tsbOpen_Click(sender As Object, e As EventArgs)
 		tsmiOpen_Click(sender, e)
 	End Sub
 
-	Private Sub tsbSave_Click(sender As Object, e As EventArgs) Handles tsbSave.Click
+	Private Sub tsbSave_Click(sender As Object, e As EventArgs)
 		tsmiSave_Click(sender, e)
 	End Sub
 
-	Private Sub tsbAbout_Click(sender As Object, e As EventArgs) Handles tsbAbout.Click
+	Private Sub tsbAbout_Click(sender As Object, e As EventArgs)
 		tsmiAbout_Click(sender, e)
 	End Sub
 
-	Private Sub tsbCut_Click(sender As Object, e As EventArgs) Handles tsbCut.Click
+	Private Sub tsbCut_Click(sender As Object, e As EventArgs)
 		tsmiCut_Click(sender, e)
 	End Sub
 
-	Private Sub tsbCopy_Click(sender As Object, e As EventArgs) Handles tsbCopy.Click
+	Private Sub tsbCopy_Click(sender As Object, e As EventArgs)
 		tsmiCopy_Click(sender, e)
 	End Sub
 
-	Private Sub tsbPaste_Click(sender As Object, e As EventArgs) Handles tsbPaste.Click
+	Private Sub tsbPaste_Click(sender As Object, e As EventArgs)
 		tsmiPaste_Click(sender, e)
 	End Sub
 
-	Private Sub tsmiOfflineMode_Click(sender As Object, e As EventArgs) Handles tsmiOfflineMode.Click
+	Private Sub tsmiOfflineMode_Click(sender As Object, e As EventArgs)
 		If tsmiOfflineMode.Checked Then
 			Try
 				Cursor = Cursors.WaitCursor
@@ -513,62 +535,76 @@ Public Partial Class MainForm
 		_sqlContext.MetadataContainer.LoadingOptions.OfflineMode = tsmiOfflineMode.Checked
 	End Sub
 
-	Private Sub tsmiRefreshMetadata_Click(sender As Object, e As EventArgs) Handles tsmiRefreshMetadata.Click
-	    If _sqlContext.MetadataProvider IsNot Nothing AndAlso _sqlContext.MetadataProvider.Connected Then
-	        ' to refresh metadata, just clear already loaded items
+	Private Sub tsmiRefreshMetadata_Click(sender As Object, e As EventArgs)
+		If _sqlContext.MetadataProvider Is Nothing OrElse Not _sqlContext.MetadataProvider.Connected Then
+			Return
+		End If
 
-	        _sqlContext.MetadataContainer.Clear()
-	        _sqlContext.MetadataContainer.LoadAll(true)
-            DBView.InitializeDatabaseSchemaTree()
-	    End If
+		' to refresh metadata, just clear already loaded items
+		_sqlContext.MetadataContainer.Clear()
+		_sqlContext.MetadataContainer.LoadAll(True)
+		DBView.InitializeDatabaseSchemaTree()
 	End Sub
 
-	Private Sub tsmiEditMetadata_Click(sender As Object, e As EventArgs) Handles tsmiEditMetadata.Click
-        If _sqlContext Is Nothing Then Return
+	Private Sub tsmiEditMetadata_Click(sender As Object, e As EventArgs)
+		If _sqlContext Is Nothing Then
+			Return
+		End If
 
-	    QueryBuilder.EditMetadataContainer(_sqlContext)
+		QueryBuilder.EditMetadataContainer(_sqlContext)
 	End Sub
 
-	Private Sub tsmiClearMetadata_Click(sender As Object, e As EventArgs) Handles tsmiClearMetadata.Click
-	    If _sqlContext Is Nothing Then Return
-
-	    _sqlContext.MetadataContainer.Clear()
+	Private Sub tsmiClearMetadata_Click(sender As Object, e As EventArgs)
+		If _sqlContext Is Nothing Then
+			Return
+		End If
+		_sqlContext.MetadataContainer.Clear()
 	End Sub
 
-	Private Sub tsmiLoadMetadataFromXML_Click(sender As Object, e As EventArgs) Handles tsmiLoadMetadataFromXML.Click
-	    Dim fileDialog As New OpenFileDialog() With {
-                .Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*"
-                }
-
-	    If fileDialog.ShowDialog() = DialogResult.OK Then
-	        _sqlContext.MetadataContainer.LoadingOptions.OfflineMode = True
-	        _sqlContext.MetadataContainer.ImportFromXML(fileDialog.FileName)
-            DBView.InitializeDatabaseSchemaTree
-	    End If
+	Private Sub tsmiLoadMetadataFromXML_Click(sender As Object, e As EventArgs)
+		If ActiveMdiChild IsNot Nothing Then
+			DirectCast(ActiveMdiChild, ChildForm).LoadMetadataFromXml()
+		End If
 	End Sub
 
-	Private Sub tsmiSaveMetadataToXML_Click(sender As Object, e As EventArgs) Handles tsmiSaveMetadataToXML.Click
+	Private Sub tsmiSaveMetadataToXML_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).SaveMetadataToXml()
 		End If
 	End Sub
 
-	Private Sub tsmiLanguageAuto_Click(sender As Object, e As EventArgs) Handles tsmiLanguageAuto.Click
+	Private Sub tsmiLanguageAuto_Click(sender As Object, e As EventArgs)
 		Program.Settings.Language = "Auto"
+		Helpers.Localizer.Language = "Auto"
+		Dim checkedItem As ToolStripMenuItem = languageToolStripMenuItem.DropDownItems.OfType(Of ToolStripMenuItem)().FirstOrDefault(Function(item) item.Checked)
+		If checkedItem IsNot Nothing Then
+			checkedItem.Checked = False
+		End If
+
+		tsmiLanguageAuto.Checked = True
 
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).UpdateLanguage()
 		End If
 	End Sub
 
-	Private Sub tsmiLanguageDefault_Click(sender As Object, e As EventArgs) Handles tsmiLanguageDefault.Click
+	Private Sub tsmiLanguageDefault_Click(sender As Object, e As EventArgs)
 		Program.Settings.Language = "Default"
+		Helpers.Localizer.Language = "Default"
+
+		Dim checkedItem As ToolStripMenuItem = languageToolStripMenuItem.DropDownItems.OfType(Of ToolStripMenuItem)().FirstOrDefault(Function(item) item.Checked)
+		If checkedItem IsNot Nothing Then
+			checkedItem.Checked = False
+		End If
+
+		tsmiLanguageDefault.Checked = True
+
 		If ActiveMdiChild IsNot Nothing Then
 			DirectCast(ActiveMdiChild, ChildForm).UpdateLanguage()
 		End If
 	End Sub
 
-	Private Sub newQueryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles toolStripButtonNewQuery.Click, newQueryToolStripMenuItem1.Click
+	Private Sub newQueryToolStripMenuItem_Click(sender As Object, e As EventArgs)
 		CreateChildForm("New query").Show()
 	End Sub
 
@@ -583,6 +619,10 @@ Public Partial Class MainForm
 		AddHandler childForm.SaveQueryEvent, AddressOf ChildForm_SaveQueryEvent
 		AddHandler childForm.SaveAsInFileEvent, AddressOf ChildForm_SaveAsInFileEvent
 		AddHandler childForm.SaveAsNewUserQueryEvent, AddressOf ChildForm_SaveAsNewUserQueryEvent
+
+		If _options IsNot Nothing Then
+			childForm.SetOptions(_options)
+		End If
 
 		Return childForm
 	End Function
@@ -657,8 +697,13 @@ Public Partial Class MainForm
 	End Function
 
 	Private Function SaveNewUserQuery(childWindow As ChildForm) As Boolean
-        Dim node As MetadataStructureItem = Nothing
-        Dim title As String
+		If String.IsNullOrEmpty(childWindow.SqlQuery.SQL) Then
+			MessageBox.Show("Nothing to save: SQL query is empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
+			Return False
+		End If
+
+		Dim node As MetadataStructureItem = Nothing
+		Dim title As String
 		Do
 			Using window As New QueryNameForm()
 				window.QueryName = childWindow.SqlQuery.SQLContext.MetadataContainer.GetUniqueItemName(MetadataType.UserQuery, Helpers.Localizer.GetString("strNewQuery", LocalizableConstantsUI.strNewQuery))
@@ -671,23 +716,26 @@ Public Partial Class MainForm
 			End Using
 
 			If Not UserQueries.IsUserQueryExist(childWindow.SqlQuery.SQLContext.MetadataContainer, title) Then
-                Dim atItem As MetadataStructureItem = userQueriesView1.MetadataStructure
-                If atItem Is Nothing Then
-                    atItem = userQueriesView1.MetadataStructure
-                End If
+				Dim atItem = If(userQueriesView1.SelectedItem, userQueriesView1.MetadataStructure)
+				If Not UserQueries.IsFolder(atItem) Then
+					atItem = atItem.Parent
+				End If
 
-                If Not UserQueries.IsFolder(atItem) Then
-                    atItem = atItem.Parent
-                End If
-                node = UserQueries.AddUserQuery(childWindow.SqlQuery.SQLContext.MetadataContainer, atItem, title, childWindow.FormattedQueryText, CInt(DefaultImageListImageIndices.VirtualObject), childWindow.QueryView.LayoutSQL)
-                Exit Do
-            End If
+				Try
+					node = UserQueries.AddUserQuery(childWindow.SqlQuery.SQLContext.MetadataContainer, atItem, title, childWindow.FormattedQueryText, CInt(DefaultImageListImageIndices.VirtualObject), childWindow.QueryView.LayoutSQL)
+				Catch e As Exception
+					MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
+					Return False
+				End Try
 
-            Dim path As String = userQueriesView1.GetPathAtUserQuery(title)
-            Dim message As String = If(String.IsNullOrEmpty(path), "The same-named query already exists in the root folder.", String.Format("The same-named query already exists in the ""{0}"" folder.", path))
+				Exit Do
+			End If
+
+			Dim path = userQueriesView1.GetPathAtUserQuery(title)
+			Dim message = If(String.IsNullOrEmpty(path), "The same-named query already exists in the root folder.", String.Format("The same-named query already exists in the ""{0}"" folder.", path))
 
 
-            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
+			MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
 		Loop While True
 		childWindow.SqlSourceType = ChildForm.SourceType.UserQuery
 		childWindow.FileSourcePath = title
@@ -713,60 +761,68 @@ Public Partial Class MainForm
 		userQueriesView1.QueryView = Nothing
 	End Sub
 
-	Private Sub addDerivedTableToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles addDerivedTableToolStripMenuItem.Click
+	Private Sub addDerivedTableToolStripMenuItem_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild Is Nothing Then
 			Return
 		End If
-        Dim form As ChildForm = DirectCast(ActiveMdiChild, ChildForm)
-        form.AddDerivedTable()
+		Dim form = DirectCast(ActiveMdiChild, ChildForm)
+		form.AddDerivedTable()
 	End Sub
 
-	Private Sub addUnionSubqueryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles addUnionSubqueryToolStripMenuItem.Click
+	Private Sub addUnionSubqueryToolStripMenuItem_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild Is Nothing Then
 			Return
 		End If
-        Dim form As ChildForm = DirectCast(ActiveMdiChild, ChildForm)
-        form.AddUnionSubQuery()
+		Dim form = DirectCast(ActiveMdiChild, ChildForm)
+		form.AddUnionSubQuery()
 	End Sub
 
-	Private Sub copyUnionSubwueryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles copyUnionSubwueryToolStripMenuItem.Click
+	Private Sub copyUnionSubwueryToolStripMenuItem_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild Is Nothing Then
 			Return
 		End If
-        Dim form As ChildForm = DirectCast(ActiveMdiChild, ChildForm)
-        form.CopyUnionSubQuery()
+		Dim form = DirectCast(ActiveMdiChild, ChildForm)
+		form.CopyUnionSubQuery()
 	End Sub
 
-	Private Sub addObjectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles addObjectToolStripMenuItem.Click
+	Private Sub addObjectToolStripMenuItem_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild Is Nothing Then
 			Return
 		End If
-        Dim form As ChildForm = DirectCast(ActiveMdiChild, ChildForm)
-        form.AddObject()
+		Dim form = DirectCast(ActiveMdiChild, ChildForm)
+		form.AddObject()
 	End Sub
 
-	Private Sub queryPropertiesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles queryPropertiesToolStripMenuItem.Click
+	Private Sub queryPropertiesToolStripMenuItem_Click(sender As Object, e As EventArgs)
 		If ActiveMdiChild Is Nothing Then
 			Return
 		End If
-        Dim form As ChildForm = DirectCast(ActiveMdiChild, ChildForm)
-        form.PropertiesQuery()
+		Dim form = DirectCast(ActiveMdiChild, ChildForm)
+		form.PropertiesQuery()
 	End Sub
 
-	Private Sub propertiesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles propertiesToolStripMenuItem.Click
-        Dim childForm As ChildForm = TryCast(ActiveMdiChild, ChildForm)
-        If childForm Is Nothing Then
+	Private Sub propertiesToolStripMenuItem_Click(sender As Object, e As EventArgs)
+		Dim childForm = TryCast(ActiveMdiChild, ChildForm)
+		If childForm Is Nothing Then
 			Return
 		End If
 
-        Dim propWindow As QueryPropertiesForm = New QueryPropertiesForm(_sqlContext, childForm, DBView)
+		Dim propWindow = New QueryPropertiesForm(childForm, DBView)
 
-        propWindow.ShowDialog()
+		propWindow.ShowDialog()
+
+		Dim options = childForm.GetOptions()
+		_options = options
+
+		For Each form As Form In MdiChildren
+			Dim child = TryCast(form, ChildForm)
+			child.SetOptions(options)
+		Next
 	End Sub
 
-	Private Sub tsbEditMetadata_Click(sender As Object, e As EventArgs) Handles tsbEditMetadata.Click
-        QueryBuilder.EditMetadataContainer(_sqlContext)
-    End Sub
+	Private Sub tsbEditMetadata_Click(sender As Object, e As EventArgs)
+		QueryBuilder.EditMetadataContainer(_sqlContext)
+	End Sub
 
 	Private Sub userQueriesView1_EditUserQuery(sender As Object, e As MetadataStructureItemCancelEventArgs)
 		' Opening the user query in a new query window.
@@ -784,8 +840,8 @@ Public Partial Class MainForm
 
 	' Closing the current query window on deleting the corresponding user query.
 	Private Sub userQueriesView1_UserQueryItemRemoved(sender As Object, item As MetadataStructureItem)
-        Dim childWindow As ChildForm = MdiChildren.OfType(Of ChildForm)().FirstOrDefault(Function(x) x.UserMetadataStructureItem Is item)
-        If childWindow IsNot Nothing Then
+		Dim childWindow = MdiChildren.OfType(Of ChildForm)().FirstOrDefault(Function(x) x.UserMetadataStructureItem Is item)
+		If childWindow IsNot Nothing Then
 			childWindow.Close()
 		End If
 		SaveSettings()
@@ -800,35 +856,48 @@ Public Partial Class MainForm
 	End Sub
 
 	Private Sub userQueriesView1_ValidateItemContextMenu(sender As Object, e As MetadataStructureItemMenuEventArgs)
+		If e.MetadataStructureItem.MetadataItem Is Nothing Then
+			Return
+		End If
+
+		Dim metadataObject = TryCast(e.MetadataStructureItem.MetadataItem, MetadataObject)
+		If metadataObject Is Nothing Then
+			Return
+		End If
+
 		e.Menu.InsertItem(2, "Copy SQL", AddressOf Execute_SqlExpression, False, True, Nothing, _
-			DirectCast(e.MetadataStructureItem.MetadataItem, MetadataObject).Expression)
+			metadataObject.Expression)
 	End Sub
 
 	Private Shared Sub Execute_SqlExpression(sender As Object, eventArgs As EventArgs)
-        Dim item As ICustomMenuItem = DirectCast(sender, ICustomMenuItem)
+		Dim item = DirectCast(sender, ICustomMenuItem)
 
-        Clipboard.SetText(item.Tag.ToString(), TextDataFormat.UnicodeText)
+		Clipboard.SetText(item.Tag.ToString(), TextDataFormat.UnicodeText)
 
 		Debug.WriteLine("SQL: {0}", item.Tag)
 	End Sub
 
-	Private Sub toolStripExecuteUserQuery_Click(sender As Object, e As EventArgs) Handles toolStripExecuteUserQuery.Click
-        If userQueriesView1.FocusedItem Is Nothing Then
-            Return
-        End If
+	Private Sub toolStripExecuteUserQuery_Click(sender As Object, e As EventArgs)
+		If userQueriesView1.SelectedItem Is Nothing Then
+			Return
+		End If
 
-        Dim childWindow As ChildForm = CreateChildForm(userQueriesView1.FocusedItem.MetadataItem.Name)
-        childWindow.UserMetadataStructureItem = userQueriesView1.FocusedItem
-        childWindow.SqlSourceType = ChildForm.SourceType.UserQuery
+		Dim childWindow = CreateChildForm(userQueriesView1.SelectedItem.MetadataItem.Name)
+		childWindow.UserMetadataStructureItem = userQueriesView1.SelectedItem
+		childWindow.SqlSourceType = ChildForm.SourceType.UserQuery
 		childWindow.Show()
 		childWindow.Activate()
-        childWindow.QueryText = DirectCast(userQueriesView1.FocusedItem.MetadataItem, MetadataObject).Expression
-        childWindow.OpenExecuteTab()
+		childWindow.QueryText = DirectCast(userQueriesView1.SelectedItem.MetadataItem, MetadataObject).Expression
+		childWindow.OpenExecuteTab()
 	End Sub
 
 	Private Sub userQueriesView1_SelectedItemChanged(sender As Object, e As EventArgs)
-        toolStripExecuteUserQuery.Enabled = userQueriesView1.FocusedItem IsNot Nothing AndAlso Not userQueriesView1.FocusedItem.IsFolder()
-    End Sub
+		toolStripExecuteUserQuery.Enabled = userQueriesView1.SelectedItem IsNot Nothing AndAlso Not userQueriesView1.SelectedItem.IsFolder()
+	End Sub
+
+	Private Sub MainForm_Shown(sender As Object, e As EventArgs)
+		Connect()
+	End Sub
 	Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
 		target = value
 		Return value

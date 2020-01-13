@@ -48,14 +48,9 @@ Namespace PropertiesForm
 			chBxStartSelectListItemsOnNewLines.Checked = SelectFormat.SelectListFormat.NewLineAfterItem
 
 			radButNewLineBeforeComma.Checked = SelectFormat.SelectListFormat.NewLineBeforeComma
-			radButNewLineBeforeComma.Checked = SelectFormat.OrderByFormat.NewLineBeforeComma
-			radButNewLineBeforeComma.Checked = SelectFormat.GroupByFormat.NewLineBeforeComma
-
 			radButNewLineAfterComma.Checked = SelectFormat.SelectListFormat.NewLineAfterItem
-			radButNewLineAfterComma.Checked = SelectFormat.OrderByFormat.NewLineAfterItem
-			radButNewLineAfterComma.Checked = SelectFormat.GroupByFormat.NewLineAfterItem
 
-			radButStartJoinKeywordsFromNewLines.Checked = SelectFormat.FromClauseFormat.NewLineAfterDatasource
+			radButStartDataSourcesFromNewLines.Checked = SelectFormat.FromClauseFormat.NewLineAfterDatasource
 			chBxStartJoinConditionsOnNewLines.Checked = SelectFormat.FromClauseFormat.NewLineBeforeJoinExpression
 		End Sub
 

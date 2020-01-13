@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8B737754-2690-431C-8D42-4AE5E2269253}</ProjectGuid>
+    <ProjectGuid>{8E830DAF-40CA-4836-B000-719639C64BC2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FullFeaturedMdiDemo</RootNamespace>
@@ -66,6 +66,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
@@ -75,7 +76,11 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <None Include="project.json" />
@@ -94,12 +99,11 @@
     
     
     
-    <Reference Include="adodb, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -117,7 +121,7 @@
     <Compile Include="ChildForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Common\ErrorBox.Designer.vb">
+    <Compile Include="Common\ErrorBox.designer.vb">
       <DependentUpon>ErrorBox.vb</DependentUpon>
     </Compile>
     <Compile Include="Common\ErrorBox.vb">
@@ -130,6 +134,13 @@
     <Compile Include="Common\InfoPanel.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Common\InformationPanel.Designer.vb">
+      <DependentUpon>InformationPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Common\InformationPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Common\Options.vb" />
     <Compile Include="Common\ResultGrid.Designer.vb">
       <DependentUpon>ResultGrid.vb</DependentUpon>
     </Compile>
@@ -175,7 +186,7 @@
     <Compile Include="EditConnectionForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditXMLConnectionForm.designer.vb">
+    <Compile Include="EditXMLConnectionForm.Designer.vb">
       <DependentUpon>EditXMLConnectionForm.vb</DependentUpon>
     </Compile>
     <Compile Include="EditXMLConnectionForm.vb">
@@ -201,13 +212,13 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Program.vb" />
-    <Compile Include="PropertiesForm\CommonTab.designer.vb">
+    <Compile Include="PropertiesForm\CommonTab.Designer.vb">
       <DependentUpon>CommonTab.vb</DependentUpon>
     </Compile>
     <Compile Include="PropertiesForm\CommonTab.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PropertiesForm\ExpressionsTab.designer.vb">
+    <Compile Include="PropertiesForm\ExpressionsTab.Designer.vb">
       <DependentUpon>ExpressionsTab.vb</DependentUpon>
     </Compile>
     <Compile Include="PropertiesForm\ExpressionsTab.vb">
@@ -228,12 +239,6 @@
     <Compile Include="PropertiesForm\MainQueryTab.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PropertiesForm\OfflineModePage.designer.vb">
-      <DependentUpon>OfflineModePage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PropertiesForm\OfflineModePage.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="PropertiesForm\QueryPropertiesForm.designer.vb">
       <DependentUpon>QueryPropertiesForm.vb</DependentUpon>
     </Compile>
@@ -246,10 +251,10 @@
     <Compile Include="PropertiesForm\SqlFormattingPage.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PropertiesForm\SqlSyntaxPage.designer.vb">
-      <DependentUpon>SqlSyntaxPage.vb</DependentUpon>
+    <Compile Include="PropertiesForm\SqlGenerationPage.Designer.vb">
+      <DependentUpon>SqlGenerationPage.vb</DependentUpon>
     </Compile>
-    <Compile Include="PropertiesForm\SqlSyntaxPage.vb">
+    <Compile Include="PropertiesForm\SqlGenerationPage.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PropertiesForm\SubQueryTab.designer.vb">
@@ -261,8 +266,8 @@
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Properties\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Properties\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -289,11 +294,13 @@
       <DependentUpon>AboutForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ChildForm.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>ChildForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Common\InfoPanel.resx">
       <DependentUpon>InfoPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\InformationPanel.resx">
+      <DependentUpon>InformationPanel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Common\ResultGrid.resx">
       <DependentUpon>ResultGrid.vb</DependentUpon>
@@ -343,25 +350,22 @@
     <EmbeddedResource Include="PropertiesForm\MainQueryTab.resx">
       <DependentUpon>MainQueryTab.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\OfflineModePage.resx">
-      <DependentUpon>OfflineModePage.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm\QueryPropertiesForm.resx">
       <DependentUpon>QueryPropertiesForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm\SqlFormattingPage.resx">
       <DependentUpon>SqlFormattingPage.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\SqlSyntaxPage.resx">
-      <DependentUpon>SqlSyntaxPage.vb</DependentUpon>
+    <EmbeddedResource Include="PropertiesForm\SqlGenerationPage.resx">
+      <DependentUpon>SqlGenerationPage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm\SubQueryTab.resx">
       <DependentUpon>SubQueryTab.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="QueryParametersForm.resx">
       <DependentUpon>QueryParametersForm.vb</DependentUpon>
@@ -374,7 +378,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="demo.snk" />
+    <None Include="northwind.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Northwind.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -385,19 +395,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
-    <None Include="Resources\cancel.png" />
-    <None Include="Resources\run.png" />
+    <Content Include="Nwind.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\application_cascade.png" />
+    <None Include="Resources\add_union_subquery.png" />
     <None Include="Resources\add_derived_table.png" />
     <None Include="Resources\table_sort.ico" />
     <None Include="Resources\table_multiple.ico" />
     <None Include="Resources\table_lightning.ico" />
     <None Include="Resources\table_gear.ico" />
     <None Include="Resources\table.ico" />
+    <None Include="Resources\run.png" />
     <None Include="Resources\query_properties.png" />
     <None Include="Resources\page_white.ico" />
     <None Include="Resources\page_paste.png" />
     <None Include="Resources\page_copy.png" />
     <None Include="Resources\new_object.png" />
+    <None Include="Resources\info.png" />
     <None Include="Resources\help.ico" />
     <None Include="Resources\folder_table.ico" />
     <None Include="Resources\folder_page.ico" />
@@ -418,6 +433,7 @@
     <None Include="Resources\connect.ico" />
     <None Include="Resources\cog.ico" />
     <None Include="Resources\chart_organisation.ico" />
+    <None Include="Resources\cancel.png" />
     <None Include="Resources\bullet_green.ico" />
     <None Include="Resources\bricks.ico" />
     <None Include="Resources\arrow_right.png" />
@@ -425,8 +441,6 @@
     <None Include="Resources\application_tile_vertical.png" />
     <None Include="Resources\application_tile_horizontal.png" />
     <None Include="Resources\application_side_tree.ico" />
-    <None Include="Resources\application_cascade.png" />
-    <None Include="Resources\add_union_subquery.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

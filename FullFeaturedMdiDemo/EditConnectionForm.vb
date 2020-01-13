@@ -10,6 +10,7 @@
 
 Imports System.Drawing
 Imports System.Linq
+Imports System.Text
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.Core.PropertiesEditors
@@ -17,6 +18,7 @@ Imports ActiveQueryBuilder.Core.Serialization
 Imports ActiveQueryBuilder.View
 Imports ActiveQueryBuilder.View.PropertiesEditors
 Imports ActiveQueryBuilder.View.WinForms.Images
+Imports ActiveQueryBuilder.View.WinForms.QueryView
 Imports Helpers = ActiveQueryBuilder.Core.Helpers
 
 Public Partial Class EditConnectionForm
@@ -30,6 +32,10 @@ Public Partial Class EditConnectionForm
 
 	Public Sub New(connection As ConnectionInfo)
 		Me.New()
+		pnlFilterInfo.InfoText = "1. Add unwanted objects to Exclude tab. Any other objects will be displayed." & vbCr & vbLf & "2. Add the needed objects to Include tab. Only those objects will be displayed."
+
+		pnlFilterInfo.Tooltip = "By adding a namespace (database, schema, etc.) you instruct to include or exclude all objects from this namespace." & vbCr & vbLf & vbCr & vbLf & "You can add the needed namespaces to the Include tab but exclude certain objects or nested namespaces by adding them to the Exclude tab at the same time."
+
 		lbMenu.SelectedIndex = 0
 		_connection = connection
 		tbConnectionName.Text = connection.Name
@@ -39,8 +45,6 @@ Public Partial Class EditConnectionForm
 
 		cbConnectionType.SelectedItem = _connection.ConnectionDescriptor.GetDescription()
 		UpdateConnectionPropertiesFrames()
-		cbLoadFromDefaultDatabase.Visible = _connection.ConnectionDescriptor.SyntaxProvider.IsSupportDatabases()
-		cbLoadFromDefaultDatabase.Checked = _connection.ConnectionDescriptor.MetadataLoadingOptions.LoadDefaultDatabaseOnly
 
 		FillImageList()
 	End Sub
@@ -58,14 +62,14 @@ Public Partial Class EditConnectionForm
 
 	Private Sub FillSyntaxTypes()
 		For Each syntax As Type In Helpers.SyntaxProviderList
-			Dim instance As BaseSyntaxProvider = TryCast(Activator.CreateInstance(syntax), BaseSyntaxProvider)
+			Dim instance = TryCast(Activator.CreateInstance(syntax), BaseSyntaxProvider)
 			cbSyntax.Items.Add(instance.Description)
 		Next
 	End Sub
 
 	Private Sub FillConnectionTypes()
-		For Each descriptor As String In Misc.ConnectionDescriptorNames
-			cbConnectionType.Items.Add(descriptor)
+		For Each name As String In Common.Helpers.ConnectionDescriptorNames
+			cbConnectionType.Items.Add(name)
 		Next
 	End Sub
 
@@ -73,45 +77,59 @@ Public Partial Class EditConnectionForm
 		_connection.Name = tbConnectionName.Text
 	End Sub
 
-	Private Sub cbConnectionType_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs)
-        Dim descriptorType As Type = GetSelectedDescriptorType()
+	Private Sub cbConnectionType_SelectedIndexChanged(sender As Object, e As EventArgs)
+		Dim descriptorType = GetSelectedDescriptorType()
+		If _connection.ConnectionDescriptor IsNot Nothing AndAlso _connection.ConnectionDescriptor.[GetType]() = descriptorType Then
+			Return
+		End If
 
-        If _connection.ConnectionDescriptor IsNot Nothing AndAlso _connection.ConnectionDescriptor.[GetType]() Is descriptorType Then
-	        Return
-	    End If
+		_connection.ConnectionDescriptor = CreateConnectionDescriptor(descriptorType)
 
-	    _connection.ConnectionDescriptor = CreateConnectionDescriptor(descriptorType)
+		If _connection.ConnectionDescriptor Is Nothing Then
+			LockUI()
+			Return
+		Else
+			UnlockUI()
+		End If
 
-	    If _connection Is Nothing Then
-	        LockUI()
-	        Return
-	    Else
-	        UnlockUI()
-	    End If
-		
 		_connection.Type = _connection.GetConnectionType(descriptorType)
-		
-	    UpdateConnectionPropertiesFrames()
+
+		UpdateConnectionPropertiesFrames()
 	End Sub
 
 	Private Sub LockUI()
-	    lbMenu.Enabled = False
-	    btnOk.Enabled = False
-	    cbLoadFromDefaultDatabase.Visible = False
-	    RemoveConnectionPropertiesFrame()
-	    RemoveSyntaxFrame()
+		lbMenu.Enabled = False
+		btnOk.Enabled = False
+
+		RemoveConnectionPropertiesFrame()
+		RemoveSyntaxFrame()
 	End Sub
 
 	Private Sub UnlockUI()
-	    lbMenu.Enabled = True
-	    btnOk.Enabled = True
-	    cbLoadFromDefaultDatabase.Visible = True
+		lbMenu.Enabled = True
+		btnOk.Enabled = True
 	End Sub
 
 	Private Sub UpdateConnectionPropertiesFrames()
 		SetupSyntaxCombobox()
 		RecreateConnectionFrame()
 		RecreateSyntaxFrame()
+		RecreateLoadingOptions()
+		RecreateStructureOptions()
+	End Sub
+
+	Private Sub RecreateLoadingOptions()
+		RecreateProperties(pbMetadataLoading, _connection.ConnectionDescriptor.MetadataLoadingOptions)
+	End Sub
+
+	Private Sub RecreateStructureOptions()
+		RecreateProperties(pbStructureOptions, _connection.StructureOptions)
+	End Sub
+
+	Private Sub RecreateProperties(propertiesBar As PropertiesBar, properties As Object)
+		propertiesBar.Controls.Clear()
+		Dim container = PropertiesFactory.GetPropertiesContainer(properties)
+		TryCast(propertiesBar, IPropertiesControl).SetProperties(container)
 	End Sub
 
 	Private Sub SetupSyntaxCombobox()
@@ -124,26 +142,25 @@ Public Partial Class EditConnectionForm
 	End Sub
 
 	Private Function GetSelectedDescriptorType() As Type
-	    Return Misc.ConnectionDescriptorList(cbConnectionType.SelectedIndex)
+		Return Common.Helpers.ConnectionDescriptorList(cbConnectionType.SelectedIndex)
 	End Function
 
-	Private Function CreateConnectionDescriptor(ByVal type As Type) As BaseConnectionDescriptor
-	    Try
-	        Return TryCast(Activator.CreateInstance(type), BaseConnectionDescriptor)
-	    Catch e As Exception
-	        Dim message as String = If(e.InnerException IsNot Nothing, e.InnerException.Message, e.Message)
-	        MessageBox.Show(message & vbcrlf & "To fix this error you may need to install the appropriate database client software or 
-                                       re-compile the project from sources and add the needed assemblies to the References section.", "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
-	        Return Nothing
-	    End Try
+	Private Function CreateConnectionDescriptor(type As Type) As BaseConnectionDescriptor
+		Try
+			Return TryCast(Activator.CreateInstance(type), BaseConnectionDescriptor)
+		Catch e As Exception
+			Dim message = If(e.InnerException IsNot Nothing, e.InnerException.Message, e.Message)
+			MessageBox.Show(message & vbCr & vbLf & " " & vbCr & vbLf & "To fix this error you may need to install the appropriate database client software or " & vbCr & vbLf & " re-compile the project from sources and add the needed assemblies to the References section.", "Error", MessageBoxButtons.OK, MessageBoxIcon.[Error])
+
+			Return Nothing
+		End Try
 	End Function
 
 	Private Sub RecreateConnectionFrame()
 		RemoveConnectionPropertiesFrame()
 		ClearProperties(_connection.ConnectionDescriptor.MetadataProperties)
-        Dim container As IPropertiesContainer = PropertiesFactory.GetPropertiesContainer(_connection.ConnectionDescriptor.MetadataProperties)
-        TryCast(pbConnection, IPropertiesControl).SetProperties(container)
-		cbLoadFromDefaultDatabase.Top = pbConnection.Controls(0).Bottom + 5
+		Dim container = PropertiesFactory.GetPropertiesContainer(_connection.ConnectionDescriptor.MetadataProperties)
+		TryCast(pbConnection, IPropertiesControl).SetProperties(container)
 	End Sub
 
 	Private Sub ClearProperties(properties As ObjectProperties)
@@ -152,25 +169,21 @@ Public Partial Class EditConnectionForm
 	End Sub
 
 	Private Sub RemoveConnectionPropertiesFrame()
-        Dim container As Control = TryCast(pbConnection.Controls.OfType(Of IPropertiesContainer)().FirstOrDefault(), Control)
-        If container IsNot Nothing Then
-			pbConnection.Controls.Remove(container)
-		End If
+		pbConnection.Controls.Clear()
 	End Sub
 
 	Private Sub RecreateSyntaxFrame()
 		RemoveSyntaxFrame()
-        Dim syntaxProps As ObjectProperties = _connection.ConnectionDescriptor.SyntaxProperties
-        If syntaxProps Is Nothing Then
-            pbSyntax.Height = 0
-            Return
-        End If
+		Dim syntxProps = _connection.ConnectionDescriptor.SyntaxProperties
+		If syntxProps Is Nothing Then
+			pbSyntax.Height = 0
+			Return
+		End If
 
-        ClearProperties(syntaxProps)
-        Dim container As IPropertiesContainer = PropertiesFactory.GetPropertiesContainer(syntaxProps)
-        TryCast(pbSyntax, IPropertiesControl).SetProperties(container)
+		ClearProperties(syntxProps)
+		Dim container = PropertiesFactory.GetPropertiesContainer(syntxProps)
+		TryCast(pbSyntax, IPropertiesControl).SetProperties(container)
 
-		cbLoadFromDefaultDatabase.Visible = _connection.ConnectionDescriptor.SyntaxProvider.IsSupportDatabases()
 		pbSyntax.Height = pbSyntax.Controls(0).Bottom + 5
 	End Sub
 
@@ -185,6 +198,12 @@ Public Partial Class EditConnectionForm
 				Exit Select
 			Case 1
 				InitializeFilterPage()
+				Exit Select
+			Case 2
+				tcProperties.SelectedTab = tpMetadataLoading
+				Exit Select
+			Case 3
+				tcProperties.SelectedTab = tpStructureOptions
 				Exit Select
 		End Select
 	End Sub
@@ -218,37 +237,56 @@ Public Partial Class EditConnectionForm
 	Private Sub LoadFilters()
 		LoadIncludeFilters()
 		LoadExcludeFilters()
+		UpdateTabFiltersCaption()
 	End Sub
 
 	Private Sub LoadIncludeFilters()
-        Dim filter As MetadataSimpleFilter = _connection.ConnectionDescriptor.MetadataLoadingOptions.IncludeFilter
-        LoadFilterTo(filter, lvInclude)
+		Dim filter = _connection.ConnectionDescriptor.MetadataLoadingOptions.IncludeFilter
+		LoadFilterTo(filter, lvInclude)
 	End Sub
 
 	Private Sub LoadExcludeFilters()
-        Dim filter As MetadataSimpleFilter = _connection.ConnectionDescriptor.MetadataLoadingOptions.ExcludeFilter
-        LoadFilterTo(filter, lvExclude)
+		Dim filter = _connection.ConnectionDescriptor.MetadataLoadingOptions.ExcludeFilter
+		LoadFilterTo(filter, lvExclude)
 	End Sub
 
 	Private Sub LoadFilterTo(filter As MetadataSimpleFilter, listBox As ListView)
-		For Each filterObject As string In filter.Objects
-            Dim item As MetadataItem = FindItemByName(filterObject)
-            listBox.Items.Add(filterObject, filterObject, GetImageKeyByItem(item))
-        Next
+		Dim sqlContext = databaseSchemaView1.SQLContext
 
-		For Each filterSchema As string In filter.Schemas
-            Dim item As MetadataItem = FindItemByName(filterSchema)
-            listBox.Items.Add(filterSchema, filterSchema, GetImageKeyByItem(item))
+		For Each filterObject As String In filter.Objects
+			Using parsedName = GetNameForSearch(sqlContext, filterObject)
+				Dim item = FindItemByName(parsedName)
+				If item IsNot Nothing Then
+					Dim listItem = listBox.Items.Add(item.NameFull, GetImageKeyByItem(item))
+					listItem.Tag = filterObject
+				Else
+					Dim listItem = listBox.Items.Add(parsedName.GetQualifiedName(), GetImageKeyByItem(Nothing))
+					listItem.Tag = filterObject
+				End If
+			End Using
+		Next
+
+		For Each filterSchema As String In filter.Schemas
+			Using parsedName = GetNameForSearch(sqlContext, filterSchema)
+				Dim item = FindItemByName(parsedName)
+				If item IsNot Nothing Then
+					Dim listItem = listBox.Items.Add(item.NameFull, GetImageKeyByItem(item))
+					listItem.Tag = filterSchema
+				Else
+					Dim listItem = listBox.Items.Add(parsedName.GetQualifiedName(), GetImageKeyByItem(Nothing))
+					listItem.Tag = filterSchema
+				End If
+			End Using
 		Next
 	End Sub
 
-	Private Function FindItemByName(name As String) As MetadataItem
-		Return databaseSchemaView1.MetadataStructure.MetadataItem.FindItem(Of MetadataItem)(name)
+	Private Function GetNameForSearch(sqlContext As SQLContext, name As String) As SQLQualifiedName
+		Return sqlContext.ParseQualifiedName(name.Replace(".%", "").Replace("%.", ""))
 	End Function
 
-	Private Sub cbLoadFromDefaultDatabase_CheckedChanged(sender As Object, e As EventArgs)
-		_connection.ConnectionDescriptor.MetadataLoadingOptions.LoadDefaultDatabaseOnly = cbLoadFromDefaultDatabase.Checked
-	End Sub
+	Private Function FindItemByName(name As SQLQualifiedName) As MetadataItem
+		Return databaseSchemaView1.MetadataStructure.MetadataItem.FindItem(Of MetadataItem)(name)
+	End Function
 
 	Private Sub btnAddFilter_Click(sender As Object, e As EventArgs)
 		If tcFilters.SelectedTab Is tpInclude Then
@@ -259,40 +297,107 @@ Public Partial Class EditConnectionForm
 	End Sub
 
 	Private Sub AddIncludeFilter(items As MetadataStructureItem())
-        Dim filter As MetadataSimpleFilter = _connection.ConnectionDescriptor.MetadataLoadingOptions.IncludeFilter
-        For Each structureItem As MetadataStructureItem In items
-            Dim metadataItem As MetadataItem = structureItem.MetadataItem
-            If metadataItem Is Nothing Then
-                Continue For
-            End If
-
-            If metadataItem.Type.IsNamespace() Then
-				filter.Schemas.Add(metadataItem.NameFull)
-				lvInclude.Items.Add(metadataItem.NameFull, metadataItem.NameFull, GetImageKeyByItem(metadataItem))
-			ElseIf metadataItem.Type.IsObject() Then
-				filter.Objects.Add(metadataItem.NameFull)
-				lvInclude.Items.Add(metadataItem.NameFull, metadataItem.NameFull, GetImageKeyByItem(metadataItem))
-			End If
-		Next
-	End Sub
-
-	Private Sub AddExcludeFilter(items As MetadataStructureItem())
-        Dim filter As MetadataSimpleFilter = _connection.ConnectionDescriptor.MetadataLoadingOptions.ExcludeFilter
-        For Each structureItem As MetadataStructureItem In items
-            Dim metadataItem As MetadataItem = structureItem.MetadataItem
-            If metadataItem Is Nothing Then
+		Dim filter = _connection.ConnectionDescriptor.MetadataLoadingOptions.IncludeFilter
+		For Each structureItem As MetadataStructureItem In items
+			Dim metadataItem = structureItem.MetadataItem
+			If metadataItem Is Nothing Then
 				Continue For
 			End If
 
+			Dim filtrationName = GetObjectNameForFilter(metadataItem)
 			If metadataItem.Type.IsNamespace() Then
-				filter.Schemas.Add(metadataItem.NameFull)
-				lvExclude.Items.Add(metadataItem.NameFull, GetImageKeyByItem(metadataItem))
+				filter.Schemas.Add(filtrationName)
 			ElseIf metadataItem.Type.IsObject() Then
-				filter.Objects.Add(metadataItem.NameFull)
-				lvExclude.Items.Add(metadataItem.NameFull, GetImageKeyByItem(metadataItem))
+				filter.Objects.Add(filtrationName)
 			End If
+
+			Dim listItem = lvInclude.Items.Add(metadataItem.NameFull, GetImageKeyByItem(metadataItem))
+			listItem.Tag = filtrationName
 		Next
+
+		UpdateTabFiltersCaption()
 	End Sub
+
+	Private Sub AddExcludeFilter(items As MetadataStructureItem())
+		Dim filter = _connection.ConnectionDescriptor.MetadataLoadingOptions.ExcludeFilter
+		For Each structureItem As MetadataStructureItem In items
+			Dim metadataItem = structureItem.MetadataItem
+			If metadataItem Is Nothing Then
+				Continue For
+			End If
+
+			Dim filtrationName = GetObjectNameForFilter(metadataItem)
+			If metadataItem.Type.IsNamespace() Then
+				filter.Schemas.Add(filtrationName)
+			ElseIf metadataItem.Type.IsObject() Then
+				filter.Objects.Add(filtrationName)
+			End If
+
+			Dim listItem = lvExclude.Items.Add(metadataItem.NameFull, GetImageKeyByItem(metadataItem))
+			listItem.Tag = filtrationName
+		Next
+
+		UpdateTabFiltersCaption()
+	End Sub
+
+	Private Sub UpdateTabFiltersCaption()
+		tpInclude.Text = "Include"
+		If lvInclude.Items.Count <> 0 Then
+			tpInclude.Text += String.Format(" ({0})", lvInclude.Items.Count)
+		End If
+
+		tpExclude.Text = "Exclude"
+		If lvExclude.Items.Count <> 0 Then
+			tpExclude.Text += String.Format(" ({0})", lvExclude.Items.Count)
+		End If
+	End Sub
+
+	Private Function GetObjectNameForFilter(item As MetadataItem) As String
+		If _connection.ConnectionDescriptor Is Nothing OrElse _connection.ConnectionDescriptor.SyntaxProvider Is Nothing Then
+			Return String.Empty
+		End If
+
+		If item.Type.IsObject() Then
+			Return item.NameFull
+		End If
+
+		Dim syntax = _connection.ConnectionDescriptor.SyntaxProvider
+		Dim servers = syntax.IsSupportServers()
+		Dim databases = syntax.IsSupportDatabases()
+		Dim packages = syntax.IsSupportPackages()
+		Dim schemas = syntax.IsSupportSchemas()
+
+		Dim result = New StringBuilder()
+		If servers Then
+			result.Append(If(item.Server IsNot Nothing, """" & item.Server.Name & """", "%"))
+		End If
+
+		If databases Then
+			If result.Length <> 0 Then
+				result.Append(".")
+			End If
+
+			result.Append(If(item.Database IsNot Nothing, """" & item.Database.Name & """", "%"))
+		End If
+
+		If packages Then
+			If result.Length <> 0 Then
+				result.Append(".")
+			End If
+
+			result.Append(If(item.Package IsNot Nothing, """" & item.Package.Name & """", "%"))
+		End If
+
+		If schemas Then
+			If result.Length <> 0 Then
+				result.Append(".")
+			End If
+
+			result.Append(If(item.Schema IsNot Nothing, """" & item.Schema.Name & """", "%"))
+		End If
+
+		Return result.ToString()
+	End Function
 
 	Private Function GetImageKeyByItem(item As MetadataItem) As String
 		If item Is Nothing Then
@@ -324,16 +429,16 @@ Public Partial Class EditConnectionForm
 	Private Sub btnDeleteFilter_Click(sender As Object, e As EventArgs)
 		If tcFilters.SelectedTab Is tpInclude Then
 			For Each selectedItem As ListViewItem In lvInclude.SelectedItems
-				DeleteFilter(selectedItem.Text)
+				DeleteFilter(selectedItem)
 			Next
 		ElseIf tcFilters.SelectedTab Is tpExclude Then
 			For Each selectedItem As ListViewItem In lvExclude.SelectedItems
-				DeleteFilter(selectedItem.Text)
+				DeleteFilter(selectedItem)
 			Next
 		End If
 	End Sub
 
-	Private Sub DeleteFilter(itemName As String)
+	Private Sub DeleteFilter(item As ListViewItem)
 		Dim filter As MetadataSimpleFilter = Nothing
 		If tcFilters.SelectedTab Is tpInclude Then
 			filter = _connection.ConnectionDescriptor.MetadataLoadingOptions.IncludeFilter
@@ -342,21 +447,17 @@ Public Partial Class EditConnectionForm
 		End If
 
 		If filter IsNot Nothing Then
-			filter.Objects.Remove(itemName)
-			filter.Schemas.Remove(itemName)
+			filter.Objects.Remove(TryCast(item.Tag, String))
+			filter.Schemas.Remove(TryCast(item.Tag, String))
 		End If
 
 		If tcFilters.SelectedTab Is tpInclude Then
-            Dim items As ListViewItem() = lvInclude.Items.Find(itemName, False)
-            If items.Length <> 0 Then
-				lvInclude.Items.Remove(items(0))
-			End If
+			lvInclude.Items.Remove(item)
 		ElseIf tcFilters.SelectedTab Is tpExclude Then
-            Dim items As ListViewItem() = lvExclude.Items.Find(itemName, False)
-            If items.Length <> 0 Then
-				lvExclude.Items.Remove(items(0))
-			End If
+			lvExclude.Items.Remove(item)
 		End If
+
+		UpdateTabFiltersCaption()
 	End Sub
 
 	Private Sub lbInclude_DragDrop(sender As Object, e As DragEventArgs)
@@ -364,8 +465,8 @@ Public Partial Class EditConnectionForm
 	End Sub
 
 	Private Sub DropItems(e As DragEventArgs, toInclude As Boolean)
-        Dim dragObject As MetadataDragObject = TryCast(e.Data.GetData(e.Data.GetFormats()(0)), MetadataDragObject)
-        If dragObject IsNot Nothing Then
+		Dim dragObject = TryCast(e.Data.GetData(e.Data.GetFormats()(0)), MetadataDragObject)
+		If dragObject IsNot Nothing Then
 			If toInclude Then
 				AddIncludeFilter(dragObject.MetadataStructureItems.ToArray())
 			Else
@@ -395,8 +496,8 @@ Public Partial Class EditConnectionForm
 			Return
 		End If
 
-        Dim syntaxType As Type = GetSelectedSyntaxType()
-        If _connection.ConnectionDescriptor.SyntaxProvider.[GetType]() Is syntaxType Then
+		Dim syntaxType = GetSelectedSyntaxType()
+		If _connection.ConnectionDescriptor.SyntaxProvider.[GetType]() = syntaxType Then
 			Return
 		End If
 
@@ -413,4 +514,20 @@ Public Partial Class EditConnectionForm
 	Private Function CreateSyntaxProvider(type As Type) As BaseSyntaxProvider
 		Return TryCast(Activator.CreateInstance(type), BaseSyntaxProvider)
 	End Function
+
+	Private Sub lvInclude_KeyDown(sender As Object, e As KeyEventArgs)
+		If e.KeyCode = Keys.Delete Then
+			btnDeleteFilter_Click(Me, EventArgs.Empty)
+		End If
+	End Sub
+
+	Private Sub lvExclude_KeyDown(sender As Object, e As KeyEventArgs)
+		If e.KeyCode = Keys.Delete Then
+			btnDeleteFilter_Click(Me, EventArgs.Empty)
+		End If
+	End Sub
+
+	Private Sub btnOk_Click(sender As Object, e As EventArgs)
+
+	End Sub
 End Class

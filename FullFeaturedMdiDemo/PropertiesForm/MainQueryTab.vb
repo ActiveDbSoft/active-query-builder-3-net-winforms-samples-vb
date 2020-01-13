@@ -36,7 +36,14 @@ Namespace PropertiesForm
 			chBxEnableDynamicIndents.Checked = Options.DynamicIndents
 			chBxEnableDynamicRightMargin.Checked = Options.DynamicRightMargin
 
-			upDownMaxCharsInLine.Value = Options.RightMargin
+			If Options.RightMargin > 0 Then
+				chBxEnableWordWrap.Checked = False
+				upDownMaxCharsInLine.Value = Options.RightMargin
+			Else
+				' no margin
+				chBxEnableWordWrap.Checked = False
+				upDownMaxCharsInLine.Value = 80
+			End If
 			chBxParenthesizeConditionsWithinAndOperators.Checked = Options.ParenthesizeANDGroups
 			chBxParenthesizeEachSingleCondition.Checked = Options.ParenthesizeSingleCriterion
 
@@ -55,7 +62,7 @@ Namespace PropertiesForm
 
 		Private Sub chBxEnableWordWrap_CheckedChanged(sender As Object, e As EventArgs)
 			If Not chBxEnableWordWrap.Checked Then
-				Options.RightMargin = 80
+				Options.RightMargin = 0
 			Else
 				Options.RightMargin = CInt(Math.Truncate(upDownMaxCharsInLine.Value))
 			End If

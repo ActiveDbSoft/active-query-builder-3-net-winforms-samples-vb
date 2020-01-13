@@ -26,6 +26,7 @@ Public Partial Class QueryParametersForm
 			grid.Rows.Add()
 			grid.Rows(i).Cells(0).Value = p.ParameterName
 			grid.Rows(i).Cells(1).Value = p.DbType
+			grid.Rows(i).Cells(2).Value = p.Value
 		Next
 	End Sub
 

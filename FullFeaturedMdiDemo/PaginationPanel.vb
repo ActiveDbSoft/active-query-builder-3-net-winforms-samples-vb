@@ -94,7 +94,7 @@ Public Partial Class PaginationPanel
 		btnPrevPage.Enabled = value
 	End Sub
 
-	Private Sub intTextBox_Validating(sender As Object, e As CancelEventArgs) Handles tbPageSize.Validating, tbCurrentPage.Validating
+	Private Sub intTextBox_Validating(sender As Object, e As CancelEventArgs)
 		Dim tb As TextBox = TryCast(sender, TextBox)
 		If tb Is Nothing Then
 			Return
@@ -105,12 +105,12 @@ Public Partial Class PaginationPanel
 		End If
 	End Sub
 
-	Private Sub ceEnabled_CheckedChanged(sender As Object, e As EventArgs) Handles ceEnabled.CheckedChanged
+	Private Sub ceEnabled_CheckedChanged(sender As Object, e As EventArgs)
 		ToggleEnabled(ceEnabled.Checked)
 		RaiseEvent EnabledPaginationChanged(Me, e)
 	End Sub
 
-	Private Sub btnPrevPage_Click(sender As Object, e As EventArgs) Handles btnPrevPage.Click
+	Private Sub btnPrevPage_Click(sender As Object, e As EventArgs)
 		Dim currentPage__1 As Integer = CurrentPage
 		If currentPage__1 = 1 Then
 			Return
@@ -119,21 +119,21 @@ Public Partial Class PaginationPanel
 		RaiseEvent CurrentPageChanged(Me, e)
 	End Sub
 
-	Private Sub btnNextPage_Click(sender As Object, e As EventArgs) Handles btnNextPage.Click
+	Private Sub btnNextPage_Click(sender As Object, e As EventArgs)
 		Dim currentPage__1 As Integer = CurrentPage
 		CurrentPage = currentPage__1 + 1
 		RaiseEvent CurrentPageChanged(Me, e)
 	End Sub
 
-	Private Sub tbCurrentPage_Validated(sender As Object, e As EventArgs) Handles tbCurrentPage.Validated
+	Private Sub tbCurrentPage_Validated(sender As Object, e As EventArgs)
 		RaiseEvent CurrentPageChanged(Me, e)
 	End Sub
 
-	Private Sub tbPageSize_Validated(sender As Object, e As EventArgs) Handles tbPageSize.Validated
+	Private Sub tbPageSize_Validated(sender As Object, e As EventArgs)
 		RaiseEvent PageSizeChanged(Me, e)
 	End Sub
 
-	Private Sub tbPageSize_KeyDown(sender As Object, e As KeyEventArgs) Handles tbPageSize.KeyDown, tbCurrentPage.KeyDown
+	Private Sub tbPageSize_KeyDown(sender As Object, e As KeyEventArgs)
 		If e.KeyCode = Keys.Enter Then
 			Validate()
 		End If

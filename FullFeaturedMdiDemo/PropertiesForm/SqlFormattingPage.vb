@@ -37,7 +37,6 @@ Namespace PropertiesForm
 		End Property
 		Private m_Modified As Boolean
 
-
 		Public Sub New(page As SqlBuilderOptionsPages, sqlFormattingOptions As SQLFormattingOptions)
 			Modified = False
 			_page = page
@@ -126,7 +125,7 @@ Namespace PropertiesForm
 		End Sub
 
 		Private Sub Changed(sender As Object, e As EventArgs)
-			Modified = True
+			ApplyChanges()
 		End Sub
 
 		Private Sub checkNewLineWhereTop_CheckedChanged(sender As Object, e As EventArgs)
@@ -138,7 +137,7 @@ Namespace PropertiesForm
 			End If
 
 			If sender IsNot Nothing Then
-				Modified = True
+				ApplyChanges()
 			End If
 		End Sub
 
@@ -146,7 +145,7 @@ Namespace PropertiesForm
 			updownWhereIndent.Enabled = cbNewLineWhereRest.Checked
 
 			If sender IsNot Nothing Then
-				Modified = True
+				ApplyChanges()
 			End If
 		End Sub
 
@@ -159,7 +158,7 @@ Namespace PropertiesForm
 			End If
 
 			If sender IsNot Nothing Then
-				Modified = True
+				ApplyChanges()
 			End If
 		End Sub
 
@@ -167,11 +166,11 @@ Namespace PropertiesForm
 			updownHavingIndent.Enabled = cbNewLineHavingRest.Checked
 
 			If sender IsNot Nothing Then
-				Modified = True
+				ApplyChanges()
 			End If
 		End Sub
 
-		Public Sub ApplyChanges()
+		Private Sub ApplyChanges()
 			If Modified Then
 				_format.MainPartsFromNewLine = cbPartsOnNewLines.Checked
 				_format.NewLineAfterPartKeywords = cbNewLineAfterKeywords.Checked

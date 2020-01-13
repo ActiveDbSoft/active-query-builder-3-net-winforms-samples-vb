@@ -25,7 +25,7 @@ Namespace Common
             Get
                 Return panelCheckSyntax.Visible
             End Get
-            Set(ByVal value As Boolean)
+            Set(value As Boolean)
                 panelCheckSyntax.Visible = value
             End Set
         End Property
@@ -46,7 +46,7 @@ Namespace Common
             Next
         End Sub
 
-        Public Overloads Sub Show(ByVal message As String, ByVal baseSyntaxProvider As BaseSyntaxProvider)
+        Public Overloads Sub Show(message As String, baseSyntaxProvider As BaseSyntaxProvider)
             labelMessage.Text = message
 
             If String.IsNullOrEmpty(message) Then
@@ -78,15 +78,15 @@ Namespace Common
             Visible = False
         End Sub
 
-        Private Sub linkLabelGoTo_LinkClicked(ByVal sender As Object, ByVal e As LinkLabelLinkClickedEventArgs)
+        Private Sub linkLabelGoTo_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
             OnGoToErrorPositionEvent()
         End Sub
 
-        Private Sub linkLabelRevert_LinkClicked(ByVal sender As Object, ByVal e As LinkLabelLinkClickedEventArgs)
+        Private Sub linkLabelRevert_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
             OnRevertValidTextEvent()
         End Sub
 
-        Private Sub comboBoxSyntaxProvider_SelectedValueChanged(ByVal sender As Object, ByVal e As EventArgs)
+        Private Sub comboBoxSyntaxProvider_SelectedValueChanged(sender As Object, e As EventArgs)
             OnSyntaxProviderChanged()
         End Sub
     End Class
@@ -103,7 +103,7 @@ Namespace Common
         Public Sub New()
         End Sub
 
-        Public Sub New(ByVal provider As BaseSyntaxProvider)
+        Public Sub New(provider As BaseSyntaxProvider)
             SyntaxProvider = provider
         End Sub
     End Class
@@ -121,7 +121,7 @@ Namespace Common
             Get
                 Return MyBase.AutoSize
             End Get
-            Set(ByVal value As Boolean)
+            Set(value As Boolean)
                 MyBase.AutoSize = value
             End Set
         End Property
@@ -139,17 +139,17 @@ Namespace Common
             End Try
         End Sub
 
-        Protected Overrides Sub OnTextChanged(ByVal e As EventArgs)
+        Protected Overrides Sub OnTextChanged(e As EventArgs)
             MyBase.OnTextChanged(e)
             resizeLabel()
         End Sub
 
-        Protected Overrides Sub OnFontChanged(ByVal e As EventArgs)
+        Protected Overrides Sub OnFontChanged(e As EventArgs)
             MyBase.OnFontChanged(e)
             resizeLabel()
         End Sub
 
-        Protected Overrides Sub OnSizeChanged(ByVal e As EventArgs)
+        Protected Overrides Sub OnSizeChanged(e As EventArgs)
             MyBase.OnSizeChanged(e)
             resizeLabel()
         End Sub

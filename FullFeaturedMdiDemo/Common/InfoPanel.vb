@@ -42,7 +42,7 @@ Namespace Common
 			AdjustLabel()
 		End Sub
 
-		Private Sub pictureBox1_Click(sender As Object, e As EventArgs) Handles MyBase.Click
+		Private Sub pictureBox1_Click(sender As Object, e As EventArgs)
 			Message = ""
 		End Sub
 	End Class
