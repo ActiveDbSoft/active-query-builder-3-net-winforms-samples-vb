@@ -121,6 +121,8 @@ Partial Public Class Form1
         ' update the text box
         sqlTextEditor1.Text = queryBuilder1.FormattedSQL
         _lastValidSql = queryBuilder1.FormattedSQL
+
+        ExecuteSql()
     End Sub
 
     Public Sub ResetQueryBuilder()
@@ -204,16 +206,10 @@ Partial Public Class Form1
         End Try
     End Sub
 
-    Private Sub tabControl1_Selected(sender As Object, e As TabControlEventArgs) Handles tabControl1.Selected
-        ' Move the input focus to the query builder.
-        ' This will fire Leave event in the text box and update the query builder
-        ' with modified query text.
-        queryBuilder1.Focus()
-        Application.DoEvents()
-
+    Private Sub ExecuteSql()
         ' Try to execute the query using current database connection:
 
-        If e.TabPage Is tabPageData Then
+        If tabControl1.SelectedTab Is tabPageData Then
             dataGridView1.DataSource = Nothing
 
             If queryBuilder1.MetadataProvider IsNot Nothing AndAlso queryBuilder1.MetadataProvider.Connected Then
@@ -343,6 +339,16 @@ Partial Public Class Form1
         End If
     End Sub
 
+    Private Sub tabControl1_Selected(sender As Object, e As TabControlEventArgs) Handles tabControl1.Selected
+        ' Move the input focus to the query builder.
+        ' This will fire Leave event in the text box and update the query builder
+        ' with modified query text.
+        queryBuilder1.Focus()
+        Application.DoEvents()
+
+        ExecuteSql()
+    End Sub
+
     Private Sub propertiesMenuItem_Click(sender As Object, e As EventArgs) Handles propertiesMenuItem.Click
         ' Show Properties form
         Using f As New QueryBuilderPropertiesForm(queryBuilder1)
@@ -406,7 +412,7 @@ Partial Public Class Form1
         DirectCast(source, Timer).Dispose()
     End Sub
 
-    Private Sub queryBuilder1_SleepModeChanged(sender As Object, e As EventArgs) Handles queryBuilder1.SleepModeChanged
+    Private Sub queryBuilder1_SleepModeChanged(sender As Object, e As EventArgs) Handles queryBuilder1.SleepModeChanged 
         labelSleepMode.Visible = queryBuilder1.SleepMode
         tabPageData.Enabled = Not queryBuilder1.SleepMode
     End Sub

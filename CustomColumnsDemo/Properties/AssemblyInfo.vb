@@ -20,7 +20,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyConfiguration("")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("CustomColumnsDemo")>
-<Assembly: AssemblyCopyright("Copyright © 2006-2019 Active Database Software")>
+<Assembly: AssemblyCopyright("Copyright © 2006-2020 Active Database Software")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: AssemblyCulture("")>
 
