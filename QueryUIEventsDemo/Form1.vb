@@ -78,7 +78,10 @@ Partial Public Class Form1
         If CbDataSourceFieldAdded.Checked <> True Then
             Return
         End If
-        AddRowToReport("DataSourceFieldAdded """ & field.Name & """")
+
+        Dim fieldText As String = If(field Is Nothing, dataSource.NameInQuery & ".*", field.Name)
+
+        AddRowToReport("DataSourceFieldAdded """ & fieldText & """")
     End Sub
 
     '
@@ -89,8 +92,10 @@ Partial Public Class Form1
             Return
         End If
 
-        AddRowToReport("DataSourceFieldAdding. Field name """ & field.Name & """")
-        Dim msg As String = "Do you want to add the field """ & field.Name & """ to the query?"
+        Dim fieldText As String = If(field Is Nothing, dataSource.NameInQuery & ".*", field.Name)
+
+        AddRowToReport("DataSourceFieldAdding. Field name """ & fieldText & """")
+        Dim msg As String = "Do you want to add the field """ & fieldText & """ to the query?"
 
         If MessageBox.Show(msg, "DatasourceFieldAdding event handler", MessageBoxButtons.YesNo) = DialogResult.No Then
             abort = True
@@ -101,17 +106,23 @@ Partial Public Class Form1
         If CbDatasourceFieldRemoved.Checked <> True Then
             Return
         End If
-        AddRowToReport("DatasourceFieldRemoved """ & field.Name & """")
+
+        Dim fieldText As String = If(field Is Nothing, dataSource.NameInQuery & ".*", field.Name)
+
+        AddRowToReport("DatasourceFieldRemoved """ & fieldText & """")
     End Sub
 
     Private Sub QBuilder_DataSourceFieldRemoving(dataSource As DataSource, field As MetadataField, ByRef abort As Boolean) Handles QBuilder.DataSourceFieldRemoving
         If CbDataSourceFieldRemoving.Checked <> True Then
             Return
         End If
-        AddRowToReport("DataSourceFieldRemoving removing field """ & field.Name & """ form """ & dataSource.NameInQuery & """")
+
+        Dim fieldText As String = If(field Is Nothing, dataSource.NameInQuery & ".*", field.Name)
+
+        AddRowToReport("DataSourceFieldRemoving removing field """ & fieldText & """ form """ & dataSource.NameInQuery & """")
 
         Dim nameInQuery As String = dataSource.NameInQuery
-        Dim msg As String = "Do you want to uncheck field """ & field.Name & """ in the object """ & nameInQuery & """?"
+        Dim msg As String = "Do you want to uncheck field """ & fieldText & """ in the object """ & nameInQuery & """?"
 
         If MessageBox.Show(msg, "DataSourceFieldRemoving event handler", MessageBoxButtons.YesNo) = DialogResult.No Then
             abort = True
@@ -184,14 +195,16 @@ Partial Public Class Form1
     ' LinkCreating event allows to prevent link creation
     '
     Private Sub QBuilder_LinkCreating(fromDataSource As DataSource, fromField As MetadataField, toDataSource As DataSource, toField As MetadataField, correspondingMetadataForeignKey As MetadataForeignKey, ByRef abort As Boolean) Handles QBuilder.LinkCreating
-        If Not CbLinkCreating.Checked Then
+        If Not CbLinkCreating.Checked Or fromField Is Nothing or toField Is Nothing Then
             Return
         End If
 
-        Dim value As String = String.Format("LinkCreating. Creating the link between {0}.{1} and {2}.{3}", fromDataSource.MetadataObject.Name, fromField.Name, toDataSource.MetadataObject.Name, toField.Name)
+        Dim value As String = String.Format("LinkCreating. Creating the link between {0}.{1} and {2}.{3}",
+                                            fromDataSource.MetadataObject.Name, fromField.Name, toDataSource.MetadataObject.Name, toField.Name)
         AddRowToReport(value)
 
-        Dim msg As String = [String].Format("Do you want to create the link between {0}.{1} and {2}.{3}?", fromDataSource.MetadataObject.Name, fromField.Name, toDataSource.MetadataObject.Name, toField.Name)
+        Dim msg As String = [String].Format("Do you want to create the link between {0}.{1} and {2}.{3}?", 
+                                            fromDataSource.MetadataObject.Name, fromField.Name, toDataSource.MetadataObject.Name, toField.Name)
 
         If MessageBox.Show(msg, "LinkCreating event handler", MessageBoxButtons.YesNo) = DialogResult.No Then
             abort = True
