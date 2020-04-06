@@ -8,24 +8,18 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Drawing
 Imports System.Text
-Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.View.WinForms
 
+
 Partial Public Class Form1
     Inherits Form
-    Dim _lastValidSql As String
-    Dim _errorPosition As Integer
+    Private _errorPosition As Integer = -1
+    Private _lastValidSql As String
 
     Public Sub New()
         InitializeComponent()
-        AddHandler sqltextEditor1.TextChanged, AddressOf SqlEditor_TextChanged
-    End Sub
-
-    Private Sub SqlEditor_TextChanged(sender As Object, e As EventArgs)
-        ErrorBox1.Visible = False
     End Sub
 
     Protected Overrides Sub OnLoad(e As EventArgs)
@@ -36,7 +30,7 @@ Partial Public Class Form1
 
             databaseSchemaView1.InitializeDatabaseSchemaTree()
 
-            sqlQuery1.SQL = "SELECT Orders.OrderID, Orders.CustomerID, Orders.OrderDate, [Order Details].ProductID," & vbCr & vbLf & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & "[Order Details].UnitPrice, [Order Details].Quantity, [Order Details].Discount" & vbCr & vbLf & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & "  FROM Orders INNER JOIN [Order Details] ON Orders.OrderID = [Order Details].OrderID" & vbCr & vbLf & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & vbTab & "  WHERE Orders.OrderID > 0 AND [Order Details].Discount > 0"
+            sqlQuery1.SQL = "SELECT Orders.OrderID, Orders.CustomerID, Orders.OrderDate, [Order Details].ProductID," & ControlChars.CrLf & "										[Order Details].UnitPrice, [Order Details].Quantity, [Order Details].Discount" & ControlChars.CrLf & "									  FROM Orders INNER JOIN [Order Details] ON Orders.OrderID = [Order Details].OrderID" & ControlChars.CrLf & "									  WHERE Orders.OrderID > 0 AND [Order Details].Discount > 0"
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -95,12 +89,12 @@ Partial Public Class Form1
         ' Handle the event raised by SQL Builder object that the text of SQL query is changed
 
         ' Hide error banner if any
-        ErrorBox1.Visible = False
+        errorBox1.Show(Nothing, sqlContext1.SyntaxProvider)
 
         ' update the text box with formatted query text created with default formatting options
-
-        sqlTextEditor1.Text = sqlQuery1.SQL
-        _lastValidSql = sqlQuery1.SQL
+        If Equals(sqlQuery1.SQLContext, Nothing) Then Return
+        sqlTextEditor1.Text = FormattedSQLBuilder.GetSQL(sqlQuery1.QueryRoot, New SQLFormattingOptions())
+        _lastValidSql = sqlTextEditor1.Text
     End Sub
 
     Public Sub ResetQueryBuilder()
@@ -116,14 +110,14 @@ Partial Public Class Form1
             sqlQuery1.SQL = sqlTextEditor1.Text
 
             ' Hide error banner if any
-            ErrorBox1.Visible = False
+            errorBox1.Show(Nothing, sqlContext1.SyntaxProvider)
         Catch ex As SQLParsingException
             ' Set caret to error position
             sqlTextEditor1.SelectionStart = ex.ErrorPos.pos
+            _errorPosition = sqlTextEditor1.SelectionStart
 
             ' Show banner with error text
-            ErrorBox1.Show(ex.Message, sqlContext1.SyntaxProvider)
-            _errorPosition = ex.ErrorPos.pos
+            errorBox1.Show(ex.Message, sqlContext1.SyntaxProvider)
         End Try
     End Sub
 
@@ -137,15 +131,15 @@ Partial Public Class Form1
 
         For i As Integer = 0 To queryStatistics.UsedDatabaseObjects.Count - 1
             builder.AppendLine(queryStatistics.UsedDatabaseObjects(i).ObjectName.QualifiedName)
-        Next
+        Next i
 
         builder.AppendLine().AppendLine()
         builder.Append("Used Columns (").Append(queryStatistics.UsedDatabaseObjectFields.Count).AppendLine("):")
         builder.AppendLine()
 
         For i As Integer = 0 To queryStatistics.UsedDatabaseObjectFields.Count - 1
-            builder.AppendLine(queryStatistics.UsedDatabaseObjectFields(i).ObjectName.QualifiedName)
-        Next
+            builder.AppendLine(queryStatistics.UsedDatabaseObjectFields(i).FullName.QualifiedName)
+        Next i
 
         builder.AppendLine().AppendLine()
         builder.Append("Output Expressions (").Append(queryStatistics.OutputColumns.Count).AppendLine("):")
@@ -153,24 +147,23 @@ Partial Public Class Form1
 
         For i As Integer = 0 To queryStatistics.OutputColumns.Count - 1
             builder.AppendLine(queryStatistics.OutputColumns(i).Expression)
-        Next
+        Next i
 
         MessageBox.Show(builder.ToString())
     End Sub
 
-    Private Sub ErrorBox1_RevertValidTextEvent(sender As Object, e As EventArgs) Handles ErrorBox1.RevertValidTextEvent
-        sqlTextEditor1.Text = _lastValidSql
-        sqlTextEditor1.Focus()
-    End Sub
-
-    Private Sub ErrorBox1_GoToErrorPositionEvent(sender As Object, e As EventArgs) Handles ErrorBox1.GoToErrorPositionEvent
+    Private Sub ErrorBox1_GoToErrorPositionEvent(sender As Object, e As EventArgs) Handles errorBox1.GoToErrorPosition
         If _errorPosition <> -1 Then
             sqlTextEditor1.SelectionStart = _errorPosition
             sqlTextEditor1.SelectionLength = 0
             sqlTextEditor1.ScrollToPosition(_errorPosition)
         End If
 
-        ErrorBox1.Visible = False
+        sqlTextEditor1.Focus()
+    End Sub
+
+    Private Sub ErrorBox1_RevertValidTextEvent(sender As Object, e As EventArgs) Handles errorBox1.RevertValidText
+        sqlTextEditor1.Text = _lastValidSql
         sqlTextEditor1.Focus()
     End Sub
 End Class

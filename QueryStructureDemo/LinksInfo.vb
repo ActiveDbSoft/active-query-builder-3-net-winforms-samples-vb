@@ -8,54 +8,37 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-
-Imports System.Collections.Generic
 Imports System.Text
 Imports ActiveQueryBuilder.Core
 
-Partial Class Form1
-	Private Shared Function GetLinkList(unionSubQuery As UnionSubQuery) As List(Of Link)
-        Dim links As List(Of Link) = New List(Of Link)()
 
-        unionSubQuery.FromClause.GetLinksRecursive(links)
+Partial Public Class Form1
+    Private Sub DumpLinkInfo(stringBuilder As StringBuilder, link As Link)
+        ' write full sql fragment of link expression
+        stringBuilder.AppendLine(link.LinkExpression.GetSQL(link.SQLContext.SQLGenerationOptionsForServer))
 
-		Return links
-	End Function
+        ' write information about left side of link
+        stringBuilder.AppendLine("  left datasource: " & link.LeftDataSource.GetResultSQL())
+        stringBuilder.AppendLine(If(link.LeftType = LinkSideType.Inner, "  left type: Inner", "  left type: Outer"))
 
-	Private Sub DumpLinkInfo(stringBuilder As StringBuilder, link As Link)
-		' write full sql fragment of link expression
-		stringBuilder.AppendLine(link.LinkExpression.GetSQL(link.SQLContext.SQLGenerationOptionsForServer))
+        ' write information about right side of link
+        stringBuilder.AppendLine("  right datasource: " & link.RightDataSource.GetResultSQL())
+        stringBuilder.AppendLine(If(link.RightType = LinkSideType.Inner, "  right type: Inner", "  right type: Outer"))
+    End Sub
 
-		' write information about left side of link
-		stringBuilder.AppendLine("  left datasource: " & link.LeftDataSource.GetResultSQL())
+    Private Sub DumpLinksInfo(stringBuilder As StringBuilder, links As IList(Of Link))
+        For Each link In links
+            ' append separator
+            If stringBuilder.Length > 0 Then
+                stringBuilder.AppendLine()
+            End If
 
-		If link.LeftType = LinkSideType.Inner Then
-			stringBuilder.AppendLine("  left type: Inner")
-		Else
-			stringBuilder.AppendLine("  left type: Outer")
-		End If
+            DumpLinkInfo(stringBuilder, link)
+        Next link
+    End Sub
 
-		' write information about right side of link
-		stringBuilder.AppendLine("  right datasource: " & link.RightDataSource.GetResultSQL())
-
-		If link.RightType = LinkSideType.Inner Then
-			stringBuilder.AppendLine("  lerightft type: Inner")
-		Else
-			stringBuilder.AppendLine("  right type: Outer")
-		End If
-	End Sub
-
-	Private Sub DumpLinksInfo(stringBuilder As StringBuilder, links As IList(Of Link))
-		For i As Integer = 0 To links.Count - 1
-			If stringBuilder.Length > 0 Then
-				stringBuilder.AppendLine()
-			End If
-
-			DumpLinkInfo(stringBuilder, links(i))
-		Next
-	End Sub
-
-	Public Sub DumpLinksInfoFromUnionSubQuery(stringBuilder As StringBuilder, unionSubQuery As UnionSubQuery)
-		DumpLinksInfo(stringBuilder, GetLinkList(unionSubQuery))
-	End Sub
+    Public Sub DumpLinksInfoFromUnionSubQuery(stringBuilder As StringBuilder, unionSubQuery As UnionSubQuery)
+        Dim links = unionSubQuery.GetChildrenRecursive(Of Link)(False)
+        DumpLinksInfo(stringBuilder, links)
+    End Sub
 End Class

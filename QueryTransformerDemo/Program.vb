@@ -8,16 +8,14 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
+Imports System.Threading.Tasks
 
-NotInheritable Class Program
-	Private Sub New()
-	End Sub
-	''' <summary>
-	''' Главная точка входа для приложения.
-	''' </summary>
+
+Friend NotInheritable Class Program
+    Private Sub New()
+    End Sub
     <STAThread>
-    Friend Shared Sub Main()
+    Shared Sub Main()
         Application.EnableVisualStyles()
         Application.SetCompatibleTextRenderingDefault(False)
         Application.Run(New Form1())

@@ -8,36 +8,19 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 
 Namespace PropertiesForm
-	Public Partial Class CommonTab
+	Partial Public Class CommonTab
 		Inherits UserControl
 		Public Property SelectFormat() As SQLBuilderSelectFormat
-			Get
-				Return m_SelectFormat
-			End Get
-			Set
-				m_SelectFormat = Value
-			End Set
-		End Property
-		Private m_SelectFormat As SQLBuilderSelectFormat
 		Public Property FormattingOptions() As SQLFormattingOptions
-			Get
-				Return m_FormattingOptions
-			End Get
-			Set
-				m_FormattingOptions = Value
-			End Set
-		End Property
-		Private m_FormattingOptions As SQLFormattingOptions
 
-		Public Sub New(formattingOptions__1 As SQLFormattingOptions, selectFormat__2 As SQLBuilderSelectFormat)
+		Public Sub New(formattingOptions As SQLFormattingOptions, selectFormat As SQLBuilderSelectFormat)
+		    Me.SelectFormat = selectFormat
+		    Me.FormattingOptions = formattingOptions
+
 			InitializeComponent()
-			SelectFormat = selectFormat__2
-			FormattingOptions = formattingOptions__1
-
 			LoadOptions()
 		End Sub
 
@@ -54,47 +37,47 @@ Namespace PropertiesForm
 			chBxStartJoinConditionsOnNewLines.Checked = SelectFormat.FromClauseFormat.NewLineBeforeJoinExpression
 		End Sub
 
-		Private Sub chBxStartPartsFromNewLines_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub chBxStartPartsFromNewLines_CheckedChanged(sender As Object, e As EventArgs) Handles chBxStartPartsFromNewLines.CheckedChanged
 			SelectFormat.MainPartsFromNewLine = chBxStartPartsFromNewLines.Checked
 		End Sub
 
-		Private Sub chBxInsertNewLineAfterPartKeywords_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub chBxInsertNewLineAfterPartKeywords_CheckedChanged(sender As Object, e As EventArgs) Handles chBxInsertNewLineAfterPartKeywords.CheckedChanged
 			SelectFormat.NewLineAfterPartKeywords = chBxInsertNewLineAfterPartKeywords.Checked
 		End Sub
 
-		Private Sub upDownPartIndent_ValueChanged(sender As Object, e As EventArgs)
-			SelectFormat.IndentInPart = CInt(Math.Truncate(upDownPartIndent.Value))
+		Private Sub upDownPartIndent_ValueChanged(sender As Object, e As EventArgs) Handles upDownPartIndent.ValueChanged
+			SelectFormat.IndentInPart = CInt(Fix(upDownPartIndent.Value))
 		End Sub
 
-		Private Sub chBxStartSelectListItemsOnNewLines_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub chBxStartSelectListItemsOnNewLines_CheckedChanged(sender As Object, e As EventArgs) Handles chBxStartSelectListItemsOnNewLines.CheckedChanged
 			SelectFormat.SelectListFormat.NewLineAfterItem = chBxStartSelectListItemsOnNewLines.Checked
 		End Sub
 
-		Private Sub radButNewLineBeforeComma_CheckedChanged(sender As Object, e As EventArgs)
-			Using New UpdateRegion(FormattingOptions)
+		Private Sub radButNewLineBeforeComma_CheckedChanged(sender As Object, e As EventArgs) Handles radButNewLineBeforeComma.CheckedChanged
+			Using TempUpdateRegion As UpdateRegion = New UpdateRegion(FormattingOptions)
 				SelectFormat.SelectListFormat.NewLineBeforeComma = radButNewLineBeforeComma.Checked
 				SelectFormat.OrderByFormat.NewLineBeforeComma = radButNewLineBeforeComma.Checked
 				SelectFormat.GroupByFormat.NewLineBeforeComma = radButNewLineBeforeComma.Checked
 			End Using
 		End Sub
 
-		Private Sub radButNewLineAfterComma_CheckedChanged(sender As Object, e As EventArgs)
-			Using New UpdateRegion(FormattingOptions)
+		Private Sub radButNewLineAfterComma_CheckedChanged(sender As Object, e As EventArgs) Handles radButNewLineAfterComma.CheckedChanged
+			Using TempUpdateRegion As UpdateRegion = New UpdateRegion(FormattingOptions)
 				SelectFormat.SelectListFormat.NewLineAfterItem = radButNewLineAfterComma.Checked
 				SelectFormat.OrderByFormat.NewLineAfterItem = radButNewLineAfterComma.Checked
 				SelectFormat.GroupByFormat.NewLineAfterItem = radButNewLineAfterComma.Checked
 			End Using
 		End Sub
 
-		Private Sub radButStartDataSourcesFromNewLines_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub radButStartDataSourcesFromNewLines_CheckedChanged(sender As Object, e As EventArgs) Handles radButStartDataSourcesFromNewLines.CheckedChanged
 			SelectFormat.FromClauseFormat.NewLineAfterDatasource = radButStartDataSourcesFromNewLines.Checked
 		End Sub
 
-		Private Sub radButStartJoinKeywordsFromNewLines_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub radButStartJoinKeywordsFromNewLines_CheckedChanged(sender As Object, e As EventArgs) Handles radButStartJoinKeywordsFromNewLines.CheckedChanged
 			SelectFormat.FromClauseFormat.NewLineAfterJoin = radButStartJoinKeywordsFromNewLines.Checked
 		End Sub
 
-		Private Sub chBxStartJoinConditionsOnNewLines_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub chBxStartJoinConditionsOnNewLines_CheckedChanged(sender As Object, e As EventArgs) Handles chBxStartJoinConditionsOnNewLines.CheckedChanged
 			SelectFormat.FromClauseFormat.NewLineBeforeJoinExpression = chBxStartJoinConditionsOnNewLines.Checked
 		End Sub
 	End Class

@@ -8,11 +8,10 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
 
-Public Partial Class Form1
-	Inherits Form
-	Public Sub New()
-		InitializeComponent()
-	End Sub
+Partial Public Class Form1
+    Inherits Form
+    Public Sub New()
+        InitializeComponent()
+    End Sub
 End Class

@@ -8,291 +8,289 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Collections.Generic
-Imports System.Diagnostics
-Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 
-Public Partial Class Form1
-	Inherits Form
-	Private Const SampleSQL As String = "select Count(o.OrderId) " + "from Orders o " + "where 1 = 1 " + "Group By Count(o.CustomerId) " + "union all " + "select 1 " + "from Orders o " + "where 2 = 2"
 
-	Public Sub New()
-		InitializeComponent()
-	End Sub
+Partial Public Class Form1
+    Inherits Form
+    Private Const SampleSQL As String = "select Count(o.OrderId) " & "from Orders o " & "where 1 = 1 " & "Group By Count(o.CustomerId) " & "union all " & "select 1 " & "from Orders o " & "where 2 = 2"
 
-	Protected Overrides Sub OnLoad(e As EventArgs)
-		' don't query issue additional queries
-		queryBuilder1.MetadataLoadingOptions.OfflineMode = True
+    Public Sub New()
+        InitializeComponent()
+    End Sub
 
-		' load sample query into internal query builder
-		queryBuilder1.SQL = SampleSQL
-	End Sub
+    Protected Overrides Sub OnLoad(ByVal e As EventArgs)
+        ' don't query issue additional queries
+        queryBuilder1.MetadataLoadingOptions.OfflineMode = True
 
-	Private Sub queryBuilder1_SQLUpdated(sender As Object, e As EventArgs)
-		textBoxQuery.Text = queryBuilder1.FormattedSQL
-	End Sub
+        ' load sample query into internal query builder
+        queryBuilder1.SQL = SampleSQL
+    End Sub
 
-	Private Sub buttonClearWhere_Click(sender As Object, e As EventArgs)
-		' get reference to first UnionSubQuery of the Main query
-		Dim usq As UnionSubQuery = queryBuilder1.SQLQuery.QueryRoot.FirstSelect()
+    Private Sub queryBuilder1_SQLUpdated(ByVal sender As Object, ByVal e As EventArgs) Handles queryBuilder1.SQLUpdated
+        textBoxQuery.Text = queryBuilder1.FormattedSQL
+    End Sub
 
-		ClearWhere(usq)
-	End Sub
+    Private Sub buttonClearWhere_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonClearWhere.Click
+        ' get reference to first UnionSubQuery of the Main query
+        Dim usq As UnionSubQuery = queryBuilder1.SQLQuery.QueryRoot.FirstSelect()
 
-	Private Sub buttonAppend_Click(sender As Object, e As EventArgs)
-		' get reference to first UnionSubQuery of the Main query
-		Dim usq As UnionSubQuery = queryBuilder1.SQLQuery.QueryRoot.FirstSelect()
+        ClearWhere(usq)
+    End Sub
 
-		AppendWhere(usq, textBoxNewWhere.Text)
-	End Sub
+    Private Sub buttonAppend_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonAppend.Click
+        ' get reference to first UnionSubQuery of the Main query
+        Dim usq As UnionSubQuery = queryBuilder1.SQLQuery.QueryRoot.FirstSelect()
 
-	Private Sub buttonReplaceWhere_Click(sender As Object, e As EventArgs)
-		' get reference to first UnionSubQuery of the Main query
-		Dim usq As UnionSubQuery = queryBuilder1.SQLQuery.QueryRoot.FirstSelect()
+        AppendWhere(usq, textBoxNewWhere.Text)
+    End Sub
 
-		ReplaceWhere(usq, textBoxNewWhere.Text)
-	End Sub
+    Private Sub buttonReplaceWhere_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonReplaceWhere.Click
+        ' get reference to first UnionSubQuery of the Main query
+        Dim usq As UnionSubQuery = queryBuilder1.SQLQuery.QueryRoot.FirstSelect()
 
-	Private Sub buttonReplaceWhereAccess_Click(sender As Object, e As EventArgs)
-		' get reference to first UnionSubQuery of the Main query
-		Dim usq As UnionSubQuery = queryBuilder1.SQLQuery.QueryRoot.FirstSelect()
+        ReplaceWhere(usq, textBoxNewWhere.Text)
+    End Sub
 
-		ReplaceWhereAccess(usq, textBoxNewWhereAccess.Text)
-	End Sub
+    Private Sub buttonReplaceWhereAccess_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonReplaceWhereAccess.Click
+        ' get reference to first UnionSubQuery of the Main query
+        Dim usq As UnionSubQuery = queryBuilder1.SQLQuery.QueryRoot.FirstSelect()
 
-	Private Sub buttonReplaceWhereAll_Click(sender As Object, e As EventArgs)
-		' get reference to the main query
-		Dim query As SubQuery = queryBuilder1.SQLQuery.QueryRoot
+        ReplaceWhereAccess(usq, textBoxNewWhereAccess.Text)
+    End Sub
 
-		ReplaceWhereAll(query, textBoxNewWhereAccess.Text)
-	End Sub
+    Private Sub buttonReplaceWhereAll_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonReplaceWhereAll.Click
+        ' get reference to the main query
+        Dim query As SubQuery = queryBuilder1.SQLQuery.QueryRoot
 
-	Private Sub ClearWhere(unionSubQuery As UnionSubQuery)
-		' get reference to QueryColumnList
-		Dim cl As QueryColumnList = unionSubQuery.QueryColumnList
+        ReplaceWhereAll(query, textBoxNewWhereAccess.Text)
+    End Sub
 
-		' disable SQL updating for QueryBuilder
-		queryBuilder1.BeginUpdate()
+    Private Sub ClearWhere(ByVal unionSubQuery As UnionSubQuery)
+        ' get reference to QueryColumnList
+        Dim cl As QueryColumnList = unionSubQuery.QueryColumnList
 
-		Try
-			' clear old Where
-			For i As Integer = 0 To cl.Count - 1
-				Dim ci As QueryColumnListItem = cl(i)
+        ' disable SQL updating for QueryBuilder
+        queryBuilder1.BeginUpdate()
 
-				If ci.ConditionType = ConditionType.Where Then
-					' clear all WHERE expressions in a row
-					For j As Integer = 0 To ci.ConditionCount - 1
-						ci.ConditionStrings(j) = ""
-					Next
-				End If
-			Next
-		Finally
-			queryBuilder1.EndUpdate()
-		End Try
-	End Sub
+        Try
+            ' clear old Where
+            For i As Integer = 0 To cl.Count - 1
+                Dim ci As QueryColumnListItem = cl(i)
 
-	Private Sub AppendWhere(unionSubQuery As UnionSubQuery, newWhereStr As String)
-		Dim resultWhere As SQLExpressionAnd
+                If ci.ConditionType = ConditionType.Where Then
+                    ' clear all WHERE expressions in a row
+                    For j As Integer = 0 To ci.ConditionCount - 1
+                        ci.ConditionStrings(j) = ""
+                    Next j
+                End If
+            Next i
+        Finally
+            queryBuilder1.EndUpdate()
+        End Try
+    End Sub
 
-		' parse and prepare new WHERE expression
-		Dim newWhere As SQLExpressionItem = ParseExpression(newWhereStr)
+    Private Sub AppendWhere(ByVal unionSubQuery As UnionSubQuery, ByVal newWhereStr As String)
+        Dim resultWhere As SQLExpressionAnd
 
-		' if there are no new expression - nothing to do
-		If newWhere Is Nothing Then
-			Return
-		End If
+        ' parse and prepare new WHERE expression
+        Dim newWhere As SQLExpressionItem = ParseExpression(newWhereStr)
 
-		' extract old WHERE expression
-        Dim oldWhere As SQLExpressionItem = unionSubQuery.QueryColumnList.GetConditionTree({ConditionType.Where})
+        ' if there are no new expression - nothing to do
+        If newWhere Is Nothing Then
+            Return
+        End If
 
-		' normalize old WHERE expression
-		If oldWhere IsNot Nothing Then
-			oldWhere.RestoreColumnPrefixRecursive(True)
-		End If
+        ' extract old WHERE expression
+        Dim oldWhere As SQLExpressionItem = unionSubQuery.QueryColumnList.GetConditionTree( { ConditionType.Where })
 
-		' simplify old WHERE expression
-		If oldWhere IsNot Nothing Then
-			' if old WHERE is a collection of ORed or ANDed expressions
-			' with only one expression in the list - remove the external list
-			While TypeOf oldWhere Is SQLExpressionLogicalCollection AndAlso DirectCast(oldWhere, SQLExpressionLogicalCollection).Count = 1
-				Using tmp As SQLExpressionLogicalCollection = DirectCast(oldWhere, SQLExpressionLogicalCollection)
-					oldWhere = tmp.Extract(0)
-				End Using
-			End While
-		End If
+        ' normalize old WHERE expression
+        If oldWhere IsNot Nothing Then
+            oldWhere.RestoreColumnPrefixRecursive(True)
+        End If
 
-		' combine old and new WHERE expressions
-		resultWhere = New SQLExpressionAnd(queryBuilder1.SQLContext)
+        ' simplify old WHERE expression
+        If oldWhere IsNot Nothing Then
+            ' if old WHERE is a collection of ORed or ANDed expressions
+            ' with only one expression in the list - remove the external list
+            Do While TypeOf oldWhere Is SQLExpressionLogicalCollection AndAlso (CType(oldWhere, SQLExpressionLogicalCollection)).Count = 1
+                Using tmp As SQLExpressionLogicalCollection = CType(oldWhere, SQLExpressionLogicalCollection)
+                    oldWhere = tmp.Extract(0)
+                End Using
+            Loop
+        End If
 
-		If oldWhere IsNot Nothing Then
-			resultWhere.Add(oldWhere)
-		End If
+        ' combine old and new WHERE expressions
+        resultWhere = New SQLExpressionAnd(queryBuilder1.SQLContext)
 
-		resultWhere.Add(newWhere)
+        If oldWhere IsNot Nothing Then
+            resultWhere.Add(oldWhere)
+        End If
 
-		' fix up combined WHERE expression
-		FixupExpression(unionSubQuery, resultWhere)
+        resultWhere.Add(newWhere)
 
-		' defer SQL updates
-		unionSubQuery.BeginUpdate()
+        ' fix up combined WHERE expression
+        FixupExpression(unionSubQuery, resultWhere)
 
-		Try
-			' clear old WHERE expression
-			ClearWhere(unionSubQuery)
+        ' defer SQL updates
+        unionSubQuery.BeginUpdate()
 
-			' load new WHERE expression (if exists)
-			unionSubQuery.QueryColumnList.LoadConditionFromAST(resultWhere, ConditionType.Where)
-		Finally
-			' enable SQL updates
-			unionSubQuery.EndUpdate()
-		End Try
-	End Sub
+        Try
+            ' clear old WHERE expression
+            ClearWhere(unionSubQuery)
 
-	Private Sub ReplaceWhere(unionSubQuery As UnionSubQuery, newWhereStr As String)
-		' parse and prepare new WHERE expression
-		Dim newWhere As SQLExpressionItem = ParseExpression(newWhereStr)
+            ' load new WHERE expression (if exists)
+            unionSubQuery.QueryColumnList.LoadConditionFromAST(resultWhere, ConditionType.Where)
+        Finally
+            ' enable SQL updates
+            unionSubQuery.EndUpdate()
+        End Try
+    End Sub
 
-		If newWhere IsNot Nothing Then
-			FixupExpression(unionSubQuery, newWhere)
-		End If
+    Private Sub ReplaceWhere(ByVal unionSubQuery As UnionSubQuery, ByVal newWhereStr As String)
+        ' parse and prepare new WHERE expression
+        Dim newWhere As SQLExpressionItem = ParseExpression(newWhereStr)
 
-		' defer SQL updates
-		unionSubQuery.BeginUpdate()
+        If newWhere IsNot Nothing Then
+            FixupExpression(unionSubQuery, newWhere)
+        End If
 
-		Try
-			' clear old WHERE expression
-			ClearWhere(unionSubQuery)
+        ' defer SQL updates
+        unionSubQuery.BeginUpdate()
 
-			' load new WHERE expression (if exists)
-			If newWhere IsNot Nothing Then
-				unionSubQuery.QueryColumnList.LoadConditionFromAST(newWhere, ConditionType.Where)
-			End If
-		Finally
-			' enable SQL updates
-			unionSubQuery.EndUpdate()
-		End Try
-	End Sub
+        Try
+            ' clear old WHERE expression
+            ClearWhere(unionSubQuery)
 
-	Private Sub ReplaceWhereAccess(unionSubQuery As UnionSubQuery, newWhereStr As String)
-		' parse and prepare new WHERE expression
-		Dim newWhere As SQLExpressionItem = ParseExpressionAccess(newWhereStr)
+            ' load new WHERE expression (if exists)
+            If newWhere IsNot Nothing Then
+                unionSubQuery.QueryColumnList.LoadConditionFromAST(newWhere, ConditionType.Where)
+            End If
+        Finally
+            ' enable SQL updates
+            unionSubQuery.EndUpdate()
+        End Try
+    End Sub
 
-		If newWhere IsNot Nothing Then
-			FixupExpression(unionSubQuery, newWhere)
-			ConvertExpressionConstantsNotation(newWhere)
-		End If
+    Private Sub ReplaceWhereAccess(ByVal unionSubQuery As UnionSubQuery, ByVal newWhereStr As String)
+        ' parse and prepare new WHERE expression
+        Dim newWhere As SQLExpressionItem = ParseExpressionAccess(newWhereStr)
 
-		' defer SQL updates
-		unionSubQuery.BeginUpdate()
+        If newWhere IsNot Nothing Then
+            FixupExpression(unionSubQuery, newWhere)
+            ConvertExpressionConstantsNotation(newWhere)
+        End If
 
-		Try
-			' clear old WHERE expression
-			ClearWhere(unionSubQuery)
+        ' defer SQL updates
+        unionSubQuery.BeginUpdate()
 
-			' load new WHERE expression (if exists)
-			If newWhere IsNot Nothing Then
-				unionSubQuery.QueryColumnList.LoadConditionFromAST(newWhere, ConditionType.Where)
-			End If
-		Finally
-			' enable SQL updates
-			unionSubQuery.EndUpdate()
-		End Try
-	End Sub
+        Try
+            ' clear old WHERE expression
+            ClearWhere(unionSubQuery)
 
-	Private Sub ReplaceWhereAll(subQuery As SubQuery, newWhere As String)
-		ReplaceWhereInGroup(subQuery, newWhere)
-	End Sub
+            ' load new WHERE expression (if exists)
+            If newWhere IsNot Nothing Then
+                unionSubQuery.QueryColumnList.LoadConditionFromAST(newWhere, ConditionType.Where)
+            End If
+        Finally
+            ' enable SQL updates
+            unionSubQuery.EndUpdate()
+        End Try
+    End Sub
 
-	Private Sub ReplaceWhereInGroup(unionGroup As UnionGroup, newWhere As String)
-		For i As Integer = 0 To unionGroup.Count - 1
-			If TypeOf unionGroup(i) Is UnionGroup Then
-				ReplaceWhereInGroup(DirectCast(unionGroup(i), UnionGroup), newWhere)
-			Else
-				Debug.Assert(TypeOf unionGroup(i) Is UnionSubQuery)
-				ReplaceWhereAccess(DirectCast(unionGroup(i), UnionSubQuery), newWhere)
-			End If
-		Next
-	End Sub
+    Private Sub ReplaceWhereAll(ByVal subQuery As SubQuery, ByVal newWhere As String)
+        ReplaceWhereInGroup(subQuery, newWhere)
+    End Sub
 
-	Private Sub FixupExpression(queryContext As QueryElement, expression As SQLExpressionItem)
-		Debug.Assert(expression IsNot Nothing)
+    Private Sub ReplaceWhereInGroup(ByVal unionGroup As UnionGroup, ByVal newWhere As String)
+        For i As Integer = 0 To unionGroup.Count - 1
+            If TypeOf unionGroup(i) Is UnionGroup Then
+                ReplaceWhereInGroup(CType(unionGroup(i), UnionGroup), newWhere)
+            Else
+                Debug.Assert(TypeOf unionGroup(i) Is UnionSubQuery)
+                ReplaceWhereAccess(CType(unionGroup(i), UnionSubQuery), newWhere)
+            End If
+        Next i
+    End Sub
 
-		Dim listCTE As New List(Of SQLWithClauseItem)()
-		Dim listFromSources As New List(Of SQLFromSource)()
+    Private Sub FixupExpression(ByVal queryContext As QueryElement, ByVal expression As SQLExpressionItem)
+        Debug.Assert(expression IsNot Nothing)
 
-		' fix up names in raw AST in given context
-		queryContext.GatherPrepareAndFixupContext(listCTE, listFromSources, True)
-		expression.PrepareAndFixupRecursive(listCTE, listFromSources)
-	End Sub
+        Dim listCTE As New List(Of SQLWithClauseItem)()
+        Dim listFromSources As New List(Of SQLFromSource)()
 
-	Private Function ParseExpression(expression As String) As SQLExpressionItem
-		' parse expression to get raw AST (Abstract Syntax Tree)
-		Return queryBuilder1.SQLContext.ParseLogicalExpression(expression)
-	End Function
+        ' fix up names in raw AST in given context
+        queryContext.GatherPrepareAndFixupContext(listCTE, listFromSources, True)
+        expression.PrepareAndFixupRecursive(listCTE, listFromSources)
+    End Sub
 
-	Private Function ParseExpressionAccess(expression As String) As SQLExpressionItem
-		Dim accessSQLContext As New SQLContext()
-		Dim accessExpression As SQLExpressionItem
+    Private Function ParseExpression(ByVal expression As String) As SQLExpressionItem
+        ' parse expression to get raw AST (Abstract Syntax Tree)
+        Return queryBuilder1.SQLContext.ParseLogicalExpression(expression)
+    End Function
 
-		Try
-			' set up context class to use Access syntax
-			accessSQLContext.SyntaxProvider = msAccessSyntaxProvider1
+    Private Function ParseExpressionAccess(ByVal expression As String) As SQLExpressionItem
+        Dim accessSQLContext As New SQLContext()
+        Dim accessExpression As SQLExpressionItem
 
-			accessExpression = accessSQLContext.ParseExpression(expression)
+        Try
+            ' set up context class to use Access syntax
+            accessSQLContext.SyntaxProvider = msAccessSyntaxProvider1
 
-			Try
-				' clone parsed expression in our default context
-				' this converts identifiers quotation, but leave the same constants notation
-				If accessExpression IsNot Nothing Then
-					Return accessExpression.Clone(queryBuilder1.SQLContext)
-				Else
-					Return Nothing
-				End If
-			Finally
-				If accessExpression IsNot Nothing Then
-					accessExpression.Dispose()
-				End If
-			End Try
-		Finally
-			accessSQLContext.Dispose()
-		End Try
-	End Function
+            accessExpression = accessSQLContext.ParseExpression(expression)
 
-	Private Sub ConvertExpressionConstantsNotation(expression As SQLExpressionItem)
-		Debug.Assert(expression IsNot Nothing)
+            Try
+                ' clone parsed expression in our default context
+                ' this converts identifiers quotation, but leave the same constants notation
+                If accessExpression IsNot Nothing Then
+                    Return accessExpression.Clone(queryBuilder1.SQLContext)
+                Else
+                    Return Nothing
+                End If
+            Finally
+                If accessExpression IsNot Nothing Then
+                    accessExpression.Dispose()
+                End If
+            End Try
+        Finally
+            accessSQLContext.Dispose()
+        End Try
+    End Function
 
-		Dim astNodes As New List(Of AstNodeBase)()
+    Private Sub ConvertExpressionConstantsNotation(ByVal expression As SQLExpressionItem)
+        Debug.Assert(expression IsNot Nothing)
 
-		' get all children (and grand[grand...]children) AST nodes as a flat list
-		expression.GetMyChildrenRecursive(astNodes)
+        Dim astNodes As New List(Of AstNodeBase)()
 
-		' add expression node itself to AST nodes list
-		' (to check is the given expression is constant itself)
-		astNodes.Add(expression)
+        ' get all children (and grand[grand...]children) AST nodes as a flat list
+        expression.GetMyChildrenRecursive(astNodes)
 
-		' remove all items from the list except TSQLExpressionConstant
-		For i As Integer = astNodes.Count - 1 To 0 Step -1
-			If Not (TypeOf astNodes(i) Is SQLExpressionConstant) Then
-				astNodes.RemoveAt(i)
-			End If
-		Next
+        ' add expression node itself to AST nodes list
+        ' (to check is the given expression is constant itself)
+        astNodes.Add(expression)
 
-		' for each item in the list
-		For i As Integer = 0 To astNodes.Count - 1
-			ConvertConstantNotation(DirectCast(astNodes(i), SQLExpressionConstant))
-		Next
-	End Sub
+        ' remove all items from the list except TSQLExpressionConstant
+        For i As Integer = astNodes.Count - 1 To 0 Step -1
+            If Not(TypeOf astNodes(i) Is SQLExpressionConstant) Then
+                astNodes.RemoveAt(i)
+            End If
+        Next i
 
-	' internal procedure to convert single constant
-	Private Sub ConvertConstantNotation(constant As SQLExpressionConstant)
-		Dim oldString As String = constant.GetSQL()
+        ' for each item in the list
+        For i As Integer = 0 To astNodes.Count - 1
+            ConvertConstantNotation(CType(astNodes(i), SQLExpressionConstant))
+        Next i
+    End Sub
 
-		' convert DATE representation
-		If oldString.Length > 0 AndAlso oldString(0) = "#"C Then
-			Dim newString As String = oldString.Replace("#"C, "'"C)
-			constant.Clear()
-			constant.AddString(newString)
-		End If
-	End Sub
+    ' internal procedure to convert single constant
+    Private Sub ConvertConstantNotation(ByVal constant As SQLExpressionConstant)
+        Dim oldString As String = constant.GetSQL()
+
+        ' convert DATE representation
+        If oldString.Length > 0 AndAlso oldString.Chars(0) = "#"c Then
+            Dim newString As String = oldString.Replace("#"c, "'"c)
+            constant.Clear()
+            constant.AddString(newString)
+        End If
+    End Sub
 End Class

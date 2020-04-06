@@ -9,66 +9,65 @@
 '*******************************************************************'
 
 Imports System.Threading
-Imports System.Windows.Forms
-Imports FullFeaturedDemo.Properties
 
-Friend NotInheritable Class Program
-	Private Sub New()
-	End Sub
-	Public Shared Name As String = "Active Query Builder Demo"
-	Public Shared Settings As New Settings()
+NotInheritable Class Program
+		Public Shared Name As String = "Active Query Builder Demo"
+		Public Shared Settings As New My.Settings()
 
-	Public Shared Connections As New ConnectionList()
-	Public Shared XmlFiles As New ConnectionList()
+		Public Shared Connections As New ConnectionList()
+		Public Shared XmlFiles As New ConnectionList()
 
-	''' <summary>
-	''' The main entry point for the application.
-	''' </summary>
-	<STAThread> _
-	Friend Shared Sub Main()
-		AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf CurrentDomain_UnhandledException
-		AddHandler Application.ThreadException, AddressOf Thread_UnhandledException
+		''' <summary>
+		''' The main entry point for the application.
+		''' </summary>
+		Private Sub New()
+		End Sub
 
-		'if new version, import upgrade from previous version
-		If Settings.CallUpgrade Then
-			Settings.Upgrade()
-			Settings.CallUpgrade = False
-		End If
+        <STAThread>
+        Friend Shared Sub Main()
+			AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf CurrentDomain_UnhandledException
+			AddHandler Application.ThreadException, AddressOf Thread_UnhandledException
 
-		If Program.Settings.Connections IsNot Nothing Then
-			Connections = Program.Settings.Connections
-		End If
-
-		If Program.Settings.XmlFiles IsNot Nothing Then
-			XmlFiles = Program.Settings.XmlFiles
-		End If
-
-		Application.EnableVisualStyles()
-		Application.SetCompatibleTextRenderingDefault(False)
-		Application.Run(New MainForm())
-
-		Program.Settings.Connections = Connections
-		Program.Settings.XmlFiles = XmlFiles
-		Program.Settings.Save()
-	End Sub
-
-	Private Shared Sub CurrentDomain_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs)
-		Dim exception As Exception = TryCast(e.ExceptionObject, Exception)
-		If exception IsNot Nothing Then
-			Dim exceptionDialog As New ThreadExceptionDialog(exception)
-			If exceptionDialog.ShowDialog() = DialogResult.Abort Then
-				Application.[Exit]()
+			'if new version, import upgrade from previous version
+			If Settings.CallUpgrade Then
+				Settings.Upgrade()
+				Settings.CallUpgrade = False
 			End If
-		End If
-	End Sub
 
-	Private Shared Sub Thread_UnhandledException(sender As Object, e As ThreadExceptionEventArgs)
-		Dim exception As Exception = e.Exception
-		If exception IsNot Nothing Then
-			Dim exceptionDialog As New ThreadExceptionDialog(exception)
-			If exceptionDialog.ShowDialog() = DialogResult.Abort Then
-				Application.[Exit]()
+			If Settings.Connections IsNot Nothing Then
+				Connections = Settings.Connections
 			End If
-		End If
-	End Sub
-End Class
+
+			If Settings.XmlFiles IsNot Nothing Then
+				XmlFiles = Settings.XmlFiles
+			End If
+
+			Application.EnableVisualStyles()
+			Application.SetCompatibleTextRenderingDefault(False)
+			Application.Run(New MainForm())
+
+			Settings.Connections = Connections
+			Settings.XmlFiles = XmlFiles
+			Settings.Save()
+		End Sub
+
+		Private Shared Sub CurrentDomain_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs)
+			Dim exception As Exception = TryCast(e.ExceptionObject, Exception)
+			If exception IsNot Nothing Then
+				Dim exceptionDialog As New ThreadExceptionDialog(exception)
+				If exceptionDialog.ShowDialog() = DialogResult.Abort Then
+					Application.Exit()
+				End If
+			End If
+		End Sub
+
+		Private Shared Sub Thread_UnhandledException(sender As Object, e As ThreadExceptionEventArgs)
+			Dim exception As Exception = e.Exception
+			If exception IsNot Nothing Then
+				Dim exceptionDialog As New ThreadExceptionDialog(exception)
+				If exceptionDialog.ShowDialog() = DialogResult.Abort Then
+					Application.Exit()
+				End If
+			End If
+		End Sub
+	End Class

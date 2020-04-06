@@ -8,255 +8,245 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Drawing
 Imports System.Text
-Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 
-Public Partial Class Form1
-	Inherits Form
-	Private Const CSampleSelect As String = "Select 1 as cid, Upper('2'), 3, 4 + 1, 5 + 2 IntExpression "
 
-	Private Const CSampleSelectFromWhere As String = "Select c.CustomerId as cid, c.CompanyName, Upper(c.CompanyName), o.OrderId " + "From Customers c Inner Join Orders o On c.CustomerID = o.CustomerID Where o.OrderId > 0 and c.CustomerId < 10"
+Partial Public Class Form1
+    Inherits Form
+    Private Const CSampleSelect As String = "Select 1 as cid, Upper('2'), 3, 4 + 1, 5 + 2 IntExpression "
 
-	Private Const CSampleSelectFromJoin As String = "Select c.CustomerId as cid, Upper(c.CompanyName), o.OrderId, " + " p.ProductName + 1, 2+2 IntExpression From Customers c Inner Join " + "Orders o On c.CustomerID = o.CustomerID Inner Join " + "[Order Details] od On o.OrderID = od.OrderID Inner Join " + "Products p On p.ProductID = od.ProductID "
+    Private Const CSampleSelectFromWhere As String = "Select c.CustomerId as cid, c.CompanyName, Upper(c.CompanyName), o.OrderId " & "From Customers c Inner Join Orders o On c.CustomerID = o.CustomerID Where o.OrderId > 0 and c.CustomerId < 10"
 
-	Private Const CSampleSelectFromJoinSubqueries As String = "Select c.CustomerId as cid, Upper(c.CompanyName), o.OrderId, " + "p.ProductName + 1, 2+2 IntExpression From Customers c Inner Join " + "Orders o On c.CustomerID = o.CustomerID Inner Join " + "[Order Details] od On o.OrderID = od.OrderID Inner Join " + "(select pr.ProductId, pr.ProductName from Products pr) p On p.ProductID = od.ProductID "
+    Private Const CSampleSelectFromJoin As String = "Select c.CustomerId as cid, Upper(c.CompanyName), o.OrderId, " & " p.ProductName + 1, 2+2 IntExpression From Customers c Inner Join " & "Orders o On c.CustomerID = o.CustomerID Inner Join " & "[Order Details] od On o.OrderID = od.OrderID Inner Join " & "Products p On p.ProductID = od.ProductID "
 
-	Private Const CSampleUnions As String = "Select c.CustomerId as cid, Upper(c.CompanyName), o.OrderId, " + "p.ProductName + 1, 2+2 IntExpression From Customers c Inner Join " + "Orders o On c.CustomerID = o.CustomerID Inner Join " + "[Order Details] od On o.OrderID = od.OrderID Inner Join " + "(select pr.ProductId, pr.ProductName from Products pr) p " + "On p.ProductID = od.ProductID union all " + "(select 1,2,3,4,5 union all select 6,7,8,9,0) union all " + "select (select Null as ""Null"") as EmptyValue, " + "SecondColumn = 2, Lower('ThirdColumn') as ThirdColumn, 0 as ""Quoted Alias"", 2+2*2 "
+    Private Const CSampleSelectFromJoinSubqueries As String = "Select c.CustomerId as cid, Upper(c.CompanyName), o.OrderId, " & "p.ProductName + 1, 2+2 IntExpression From Customers c Inner Join " & "Orders o On c.CustomerID = o.CustomerID Inner Join " & "[Order Details] od On o.OrderID = od.OrderID Inner Join " & "(select pr.ProductId, pr.ProductName from Products pr) p On p.ProductID = od.ProductID "
 
-	Public Sub New()
-		InitializeComponent()
+    Private Const CSampleUnions As String = "Select c.CustomerId as cid, Upper(c.CompanyName), o.OrderId, " & "p.ProductName + 1, 2+2 IntExpression From Customers c Inner Join " & "Orders o On c.CustomerID = o.CustomerID Inner Join " & "[Order Details] od On o.OrderID = od.OrderID Inner Join " & "(select pr.ProductId, pr.ProductName from Products pr) p " & "On p.ProductID = od.ProductID union all " & "(select 1,2,3,4,5 union all select 6,7,8,9,0) union all " & "select (select Null as ""Null"") as EmptyValue, " & "SecondColumn = 2, Lower('ThirdColumn') as ThirdColumn, 0 as ""Quoted Alias"", 2+2*2 "
 
-		' set required syntax provider
-		queryBuilder.SyntaxProvider = New MSSQLSyntaxProvider()
-	End Sub
+    Public Sub New()
+        InitializeComponent()
 
-	Protected Overrides Sub OnLoad(e As EventArgs)
-		' Load sample database metadata from XML file
-		Try
-			queryBuilder.MetadataLoadingOptions.OfflineMode = True
-			queryBuilder.MetadataContainer.ImportFromXML("Northwind.xml")
-			queryBuilder.InitializeDatabaseSchemaTree()
-		Catch ex As Exception
-			MessageBox.Show(ex.Message)
-		End Try
+        ' set required syntax provider
+        queryBuilder.SyntaxProvider = New MSSQLSyntaxProvider()
+    End Sub
 
-		' load sample query
-		queryBuilder.SQL = CSampleSelectFromWhere
+    Protected Overrides Sub OnLoad(e As EventArgs)
+        ' Load sample database metadata from XML file
+        Try
+            queryBuilder.MetadataLoadingOptions.OfflineMode = True
+            queryBuilder.MetadataContainer.ImportFromXML("Northwind.xml")
+            queryBuilder.InitializeDatabaseSchemaTree()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
 
-		MyBase.OnLoad(e)
-	End Sub
+        ' load sample query
+        queryBuilder.SQL = CSampleSelectFromWhere
 
-	Private Sub queryBuilder_SQLUpdated(sender As Object, e As EventArgs)
-		' Hide error banner if any
-		ShowErrorBanner(tbSQL, "")
+        MyBase.OnLoad(e)
+    End Sub
 
-		' QueryBuilder generates new SQL query text. Show it to user.
-		tbSQL.Text = queryBuilder.FormattedSQL
+    Private Sub queryBuilder_SQLUpdated(sender As Object, e As EventArgs) Handles queryBuilder.SQLUpdated
+        ' Hide error banner if any
+        ShowErrorBanner(tbSQL, "")
 
-		' update info for entire query
-		UpdateQueryInfo()
-	End Sub
+        ' QueryBuilder generates new SQL query text. Show it to user.
+        tbSQL.Text = queryBuilder.FormattedSQL
 
-	Private Sub btnSampleSelect_Click(sender As Object, e As EventArgs)
-		queryBuilder.SQL = CSampleSelect
-	End Sub
+        ' update info for entire query
+        UpdateQueryInfo()
+    End Sub
 
-	Private Sub btnSampleSelectFromWhere_Click(sender As Object, e As EventArgs)
-		queryBuilder.SQL = CSampleSelectFromWhere
-	End Sub
+    Private Sub btnSampleSelect_Click(sender As Object, e As EventArgs) Handles btnSampleSelect.Click
+        queryBuilder.SQL = CSampleSelect
+    End Sub
 
-	Private Sub btnSampleSelectFromJoin_Click(sender As Object, e As EventArgs)
-		queryBuilder.SQL = CSampleSelectFromJoin
-	End Sub
+    Private Sub btnSampleSelectFromWhere_Click(sender As Object, e As EventArgs) Handles btnSampleSelectFromWhere.Click
+        queryBuilder.SQL = CSampleSelectFromWhere
+    End Sub
 
-	Private Sub btnSampleSelectFromJoinSubqueries_Click(sender As Object, e As EventArgs)
-		queryBuilder.SQL = CSampleSelectFromJoinSubqueries
-	End Sub
+    Private Sub btnSampleSelectFromJoin_Click(sender As Object, e As EventArgs) Handles btnSampleSelectFromJoin.Click
+        queryBuilder.SQL = CSampleSelectFromJoin
+    End Sub
 
-	Private Sub btnSampleUnions_Click(sender As Object, e As EventArgs)
-		queryBuilder.SQL = CSampleUnions
-	End Sub
+    Private Sub btnSampleSelectFromJoinSubqueries_Click(sender As Object, e As EventArgs) Handles btnSampleSelectFromJoinSubqueries.Click
+        queryBuilder.SQL = CSampleSelectFromJoinSubqueries
+    End Sub
 
-	Private Sub btnShowUnlinkedDatasourcesButton_Click(sender As Object, e As EventArgs)
-		' get active UnionSubQuery
-		Dim unionSubQuery As UnionSubQuery = queryBuilder.ActiveUnionSubQuery.ParentUnionSubQuery
+    Private Sub btnSampleUnions_Click(sender As Object, e As EventArgs) Handles btnSampleUnions.Click
+        queryBuilder.SQL = CSampleUnions
+    End Sub
 
-		' analize links and datasources
-		Dim unlinkedDatasourcesInfo As String = GetUnlinkedDataSourcesFromUnionSubQuery(unionSubQuery)
+    Private Sub btnShowUnlinkedDatasourcesButton_Click(sender As Object, e As EventArgs) Handles btnShowUnlinkedDatasourcesButton.Click
+        ' get active UnionSubQuery
+        Dim unionSubQuery = queryBuilder.ActiveUnionSubQuery.ParentUnionSubQuery
 
-		MessageBox.Show(unlinkedDatasourcesInfo)
-	End Sub
+        ' analize links and datasources
+        Dim unlinkedDatasourcesInfo = GetUnlinkedDataSourcesFromUnionSubQuery(unionSubQuery)
 
-	Private Sub queryBuilder_ActiveUnionSubQueryChanged(sender As Object, e As EventArgs)
-		If queryBuilder.ActiveUnionSubQuery Is Nothing Then
-			Return
-		End If
-		' update Query Structure information
-		UpdateSubQueryStructureInfo()
+        MessageBox.Show(unlinkedDatasourcesInfo)
+    End Sub
 
-		' update DataSources information
-		UpdateDataSourcesInfo()
+    Private Sub queryBuilder_ActiveUnionSubQueryChanged(sender As Object, e As EventArgs) Handles queryBuilder.ActiveUnionSubQueryChanged
+        If queryBuilder.ActiveUnionSubQuery Is Nothing Then
+            Return
+        End If
+        ' update Query Structure information
+        UpdateSubQueryStructureInfo()
 
-		' update Links information
-		UpdateLinksInfo()
+        ' update DataSources information
+        UpdateDataSourcesInfo()
 
-		' and update Selected expressions information
-		UpdateSelectedExpressionsInfo()
-	End Sub
+        ' update Links information
+        UpdateLinksInfo()
 
-	Private Sub UpdateDataSourcesInfo()
-		Dim unionSubQuery As UnionSubQuery = queryBuilder.ActiveUnionSubQuery
-		Dim stringBuilder As New StringBuilder()
+        ' and update Selected expressions information
+        UpdateSelectedExpressionsInfo()
+    End Sub
 
-		DumpDataSourcesInfoFromUnionSubQuery(stringBuilder, unionSubQuery)
+    Private Sub UpdateDataSourcesInfo()
+        Dim unionSubQuery As UnionSubQuery = queryBuilder.ActiveUnionSubQuery
+        Dim stringBuilder As New StringBuilder()
 
-		tbDataSources.Text = stringBuilder.ToString()
-	End Sub
+        DumpDataSourcesInfoFromUnionSubQuery(stringBuilder, unionSubQuery)
 
-	Private Sub UpdateLinksInfo()
-		Dim unionSubQuery As UnionSubQuery = queryBuilder.ActiveUnionSubQuery
-		Dim stringBuilder As New StringBuilder()
+        tbDataSources.Text = stringBuilder.ToString()
+    End Sub
 
-		DumpLinksInfoFromUnionSubQuery(stringBuilder, unionSubQuery)
+    Private Sub UpdateLinksInfo()
+        Dim unionSubQuery As UnionSubQuery = queryBuilder.ActiveUnionSubQuery
+        Dim stringBuilder As New StringBuilder()
 
-		tbLinks.Text = stringBuilder.ToString()
-	End Sub
+        DumpLinksInfoFromUnionSubQuery(stringBuilder, unionSubQuery)
 
-	Private Sub UpdateQueryInfo()
-		' update Query Structure information
-		UpdateQueryStatisticsInfo()
+        tbLinks.Text = stringBuilder.ToString()
+    End Sub
 
-		' and update SubQueries list
-		UpdateQuerySubQueriesInfo()
+    Private Sub UpdateQueryInfo()
+        ' update Query Structure information
+        UpdateQueryStatisticsInfo()
 
-		' and update information for current SubQuery/UnionSubQuery
-		UpdateSubQueryInfo()
-	End Sub
+        ' and update SubQueries list
+        UpdateQuerySubQueriesInfo()
 
-	Private Sub UpdateQueryStatisticsInfo()
-		Dim statistics As QueryStatistics = queryBuilder.QueryStatistics
-		Dim stringBuilder As New StringBuilder()
+        ' and update information for current SubQuery/UnionSubQuery
+        UpdateSubQueryInfo()
+    End Sub
 
-		DumpQueryStatisticsInfo(stringBuilder, statistics)
+    Private Sub UpdateQueryStatisticsInfo()
+        Dim statistics As QueryStatistics = queryBuilder.QueryStatistics
+        Dim stringBuilder As New StringBuilder()
 
-		tbStatistics.Text = stringBuilder.ToString()
-	End Sub
+        DumpQueryStatisticsInfo(stringBuilder, statistics)
 
-	Private Sub UpdateQuerySubQueriesInfo()
-		Dim stringBuilder As New StringBuilder()
+        tbStatistics.Text = stringBuilder.ToString()
+    End Sub
 
-		DumpSubQueriesInfo(stringBuilder, queryBuilder)
+    Private Sub UpdateQuerySubQueriesInfo()
+        Dim stringBuilder As New StringBuilder()
 
-		tbSubQueries.Text = stringBuilder.ToString()
-	End Sub
+        DumpSubQueriesInfo(stringBuilder, queryBuilder)
 
-	Private Sub UpdateSubQueryStructureInfo()
-		Dim subQuery As SubQuery = queryBuilder.ActiveUnionSubQuery.ParentSubQuery
-		Dim stringBuilder As New StringBuilder()
+        tbSubQueries.Text = stringBuilder.ToString()
+    End Sub
 
-		DumpQueryStructureInfo(stringBuilder, subQuery)
+    Private Sub UpdateSubQueryStructureInfo()
+        Dim subQuery As SubQuery = queryBuilder.ActiveUnionSubQuery.ParentSubQuery
+        Dim stringBuilder As New StringBuilder()
 
-		tbSubQueryStructure.Text = stringBuilder.ToString()
-	End Sub
+        DumpQueryStructureInfo(stringBuilder, subQuery)
 
-	Private Sub UpdateWhereInfo()
-		Dim unionSubQuery As UnionSubQuery = queryBuilder.ActiveUnionSubQuery
-		Dim stringBuilder As New StringBuilder()
+        tbSubQueryStructure.Text = stringBuilder.ToString()
+    End Sub
 
-		Dim unionSubQueryAst As SQLSubQuerySelectExpression = unionSubQuery.ResultQueryAST
+    Private Sub UpdateWhereInfo()
+        Dim unionSubQuery As UnionSubQuery = queryBuilder.ActiveUnionSubQuery
+        Dim stringBuilder As New StringBuilder()
 
-		Try
-			If unionSubQueryAst.Where IsNot Nothing Then
-				DumpWhereInfo(stringBuilder, unionSubQueryAst.Where)
-			End If
-		Finally
-			unionSubQueryAst.Dispose()
-		End Try
+        Dim unionSubQueryAst As SQLSubQuerySelectExpression = unionSubQuery.ResultQueryAST
 
-		tbWhere.Text = stringBuilder.ToString()
-	End Sub
+        Try
+            If unionSubQueryAst.Where IsNot Nothing Then
+                DumpWhereInfo(stringBuilder, unionSubQueryAst.Where)
+            End If
+        Finally
+            unionSubQueryAst.Dispose()
+        End Try
 
-	Private Sub UpdateSelectedExpressionsInfo()
-		Dim unionSubQuery As UnionSubQuery = queryBuilder.ActiveUnionSubQuery
-		Dim stringBuilder As New StringBuilder()
+        tbWhere.Text = stringBuilder.ToString()
+    End Sub
 
-		DumpSelectedExpressionsInfoFromUnionSubQuery(stringBuilder, unionSubQuery)
+    Private Sub UpdateSelectedExpressionsInfo()
+        Dim unionSubQuery As UnionSubQuery = queryBuilder.ActiveUnionSubQuery
+        Dim stringBuilder As New StringBuilder()
 
-		tbSelectedExpressions.Text = stringBuilder.ToString()
-	End Sub
+        DumpSelectedExpressionsInfoFromUnionSubQuery(stringBuilder, unionSubQuery)
 
-	Private Sub UpdateSubQueryInfo()
-		' update Query Structure information
-		UpdateSubQueryStructureInfo()
+        tbSelectedExpressions.Text = stringBuilder.ToString()
+    End Sub
 
-		' update DataSources information
-		UpdateDataSourcesInfo()
+    Private Sub UpdateSubQueryInfo()
+        ' update Query Structure information
+        UpdateSubQueryStructureInfo()
 
-		' update Links information
-		UpdateLinksInfo()
+        ' update DataSources information
+        UpdateDataSourcesInfo()
 
-		' update Selected Expressions information
-		UpdateSelectedExpressionsInfo()
+        ' update Links information
+        UpdateLinksInfo()
 
-		' and update WHERE clause information
-		UpdateWhereInfo()
-	End Sub
+        ' update Selected Expressions information
+        UpdateSelectedExpressionsInfo()
 
-	Private Sub tbSQL_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs)
-		Try
-			' Update the query builder with manually edited query text:
-			queryBuilder.SQL = tbSQL.Text
+        ' and update WHERE clause information
+        UpdateWhereInfo()
+    End Sub
 
-			' Hide error banner if any
-			ShowErrorBanner(tbSQL, "")
-		Catch ex As SQLParsingException
-			' Set caret to error position
-			tbSQL.SelectionStart = ex.ErrorPos.pos
+    Private Sub tbSQL_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles tbSQL.Validating
+        Try
+            ' Update the query builder with manually edited query text:
+            queryBuilder.SQL = tbSQL.Text
 
-			' Show banner with error text
-			ShowErrorBanner(tbSQL, ex.Message)
-		End Try
-	End Sub
+            ' Hide error banner if any
+            ShowErrorBanner(tbSQL, "")
+        Catch ex As SQLParsingException
+            ' Set caret to error position
+            tbSQL.SelectionStart = ex.ErrorPos.pos
 
-	Public Sub ShowErrorBanner(ByVal control As Control, ByVal text As String)
-		' Display error banner if passed text is not empty
+            ' Show banner with error text
+            ShowErrorBanner(tbSQL, ex.Message)
+        End Try
+    End Sub
+
+    Public Sub ShowErrorBanner(control As Control, text As String)
         ' Destory banner if already showing
-		If True Then
-			Dim existBanner As Boolean = False
-			Dim banners As Control() = control.Controls.Find("ErrorBanner", True)
+        Dim existBanner As Boolean = False
+        Dim banners() As Control = control.Controls.Find("ErrorBanner", True)
 
-			If banners.Length > 0 Then
+        If banners.Length > 0 Then
+            For Each banner As Control In banners
+                If Equals(text, banner.Text) Then
+                    existBanner = True
+                    Continue For
+                End If
+                banner.Dispose()
+            Next banner
+        End If
 
-				For Each banner As Control In banners
+        If existBanner Then
+            Return
+        End If
 
-					If Equals(text, banner.Text) Then
-						existBanner = True
-						Continue For
-					End If
+        ' Show new banner if text is not empty
+        If Not String.IsNullOrEmpty(text) Then
+            Dim label As Label = New Label With {.Name = "ErrorBanner", .Text = text, .BorderStyle = BorderStyle.FixedSingle, .BackColor = Color.LightPink, .AutoSize = True, .Visible = True}
 
-					banner.Dispose()
-				Next
-			End If
+            control.Controls.Add(label)
+            label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
+            label.BringToFront()
 
-			If existBanner Then Return
-		End If
-
-		' Show new banner if text is not empty
-		If Not String.IsNullOrEmpty(text) Then
-			Dim label As Label = New Label With {
-				.Name = "ErrorBanner",
-				.Text = text,
-				.BorderStyle = BorderStyle.FixedSingle,
-				.BackColor = Color.LightPink,
-				.AutoSize = True,
-				.Visible = True
-			}
-			control.Controls.Add(label)
-			label.Location = New Point(control.Width - label.Width - SystemInformation.VerticalScrollBarWidth - 6, 2)
-			label.BringToFront()
-			control.Focus()
-		End If
-	End Sub
+            control.Focus()
+        End If
+    End Sub
 End Class

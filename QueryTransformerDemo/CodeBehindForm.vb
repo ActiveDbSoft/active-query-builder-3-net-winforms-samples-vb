@@ -8,24 +8,23 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
 
-Public Partial Class CodeBehindForm
-	Inherits Form
-	Public Property TextContent() As String
-		Get
-			Return TextBoxCode.Text
-		End Get
-		Set
-			TextBoxCode.Text = value
-		End Set
-	End Property
+Partial Public Class CodeBehindForm
+    Inherits Form
+    Public Property TextContent() As String
+        Set(ByVal value As String)
+            TextBoxCode.Text = value
+        End Set
+        Get
+            Return TextBoxCode.Text
+        End Get
+    End Property
 
-	Public Sub New()
-		InitializeComponent()
-	End Sub
+    Public Sub New()
+        InitializeComponent()
+    End Sub
 
-	Private Sub ButtonClose_Click(sender As Object, e As EventArgs)
-		Close()
-	End Sub
+    Private Sub ButtonClose_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ButtonClose.Click
+        Close()
+    End Sub
 End Class

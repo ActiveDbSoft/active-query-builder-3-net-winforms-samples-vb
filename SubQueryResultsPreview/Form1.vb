@@ -8,21 +8,19 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Data
 Imports System.Data.Odbc
 Imports System.Data.OleDb
-Imports System.Data.OracleClient
 Imports System.Data.SqlClient
-Imports System.Drawing
-Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.Core.QueryTransformer
+Imports Forms.QueryInformationForms
 
 
 Partial Public Class Form1
     Inherits Form
-    Dim _lastValidSql As String
-    Dim _errorPosition As Integer
+    Private _errorPosition As Integer = -1
+    Private _lastValidSql As String
+    Private _selectedConnection As ConnectionInfo
 
     Public Sub New()
         InitializeComponent()
@@ -33,37 +31,40 @@ Partial Public Class Form1
         queryBuilder.SQL = "Select Orders.OrderID, Orders.CustomerID, Orders.EmployeeID, Query1.Subtotal From Orders Inner Join (Select [Order Subtotals].Subtotal, [Order Subtotals].OrderID From [Order Subtotals]) Query1 On Query1.OrderID = Orders.OrderID Union Select [Orders Qry].OrderID, [Orders Qry].CustomerID, [Orders Qry].EmployeeID, Query2.Quantity * Query2.UnitPrice From [Orders Qry] Inner Join (Select [Order Details].OrderID, [Order Details].Quantity, [Order Details].UnitPrice From [Order Details]) Query2 On Query2.OrderID = [Orders Qry].OrderID Where ([Orders Qry].OrderID > 100) Or ([Orders Qry].OrderID < 1000)"
     End Sub
 
-    Private Sub queryBuilder_SQLUpdated(sender As Object, e As EventArgs) Handles queryBuilder.SQLUpdated
+    Private Sub queryBuilder_SQLUpdated(ByVal sender As Object, ByVal e As EventArgs) Handles queryBuilder.SQLUpdated
         ' Hide error banner if any
-        ErrorBox1.Visible = False
+        errorBox1.Show(Nothing, queryBuilder.SyntaxProvider)
 
         QueryPartChanged(sender, e)
-        textBox1.Text = queryBuilder.FormattedSQL
-        _lastValidSql = textBox1.Text
+        'textBox1.Text =  queryBuilder.FormattedSQL;
 
         If tabControl1.SelectedTab Is tabPageResultsPreview Then
             UpdateResultsGrid()
         End If
     End Sub
 
-    Private Sub textBox1_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles textBox1.Validating
+    Private Sub textBox1_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles textBox1.Validating
         Try
             ' Update the target query part with manually edited query text:
             queryBuilder.SQL = textBox1.Text
 
             ' Hide error banner if any
-            ErrorBox1.Visible = False
+            errorBox1.Show(Nothing, queryBuilder.SyntaxProvider)
         Catch ex As SQLParsingException
             ' Set caret to error position
             textBox1.SelectionStart = ex.ErrorPos.pos
+            _errorPosition = textBox1.SelectionStart
 
             ' Show banner with error text
-            ErrorBox1.Show(ex.Message, queryBuilder.SyntaxProvider)
-            _errorPosition = ex.ErrorPos.pos
+            errorBox1.Show(ex.Message, queryBuilder.SyntaxProvider)
         End Try
     End Sub
 
-    Private Sub QueryPartChanged(sender As Object, e As EventArgs) Handles rbQuery.CheckedChanged, rbUnionSubQuery.CheckedChanged, rbSubQuery.CheckedChanged
+    Private Sub QueryPartChanged(ByVal sender As Object, ByVal e As EventArgs) Handles rbQuery.CheckedChanged, rbSubQuery.CheckedChanged, rbUnionSubQuery.CheckedChanged
+        If Disposing OrElse queryBuilder.ActiveUnionSubQuery Is Nothing Then
+            Return
+        End If
+
         If rbQuery.Checked Then
             textBox1.Text = New SQLFormattingOptions(New SQLGenerationOptions()).GetSQLBuilder().GetSQL(queryBuilder.ActiveUnionSubQuery.QueryRoot)
             _lastValidSql = textBox1.Text
@@ -83,84 +84,8 @@ Partial Public Class Form1
         queryBuilder.MetadataLoadingOptions.OfflineMode = False
     End Sub
 
-    Private Sub connectToMicrosoftSQLServerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToMicrosoftSQLServerToolStripMenuItem.Click
-        ResetQueryBuilder()
 
-        ' Connect to MS SQL Server
-
-        ' show the connection form
-        Using f As New MSSQLConnectionForm()
-            If f.ShowDialog() = DialogResult.OK Then
-                ' setup the query builder with metadata and syntax providers
-                queryBuilder.MetadataProvider = New MSSQLMetadataProvider() With {
-                    .Connection = New SqlConnection(f.ConnectionString)
-                }
-                queryBuilder.SyntaxProvider = New MSSQLSyntaxProvider()
-
-                ' kick the query builder to fill database schema tree
-                queryBuilder.InitializeDatabaseSchemaTree()
-            End If
-        End Using
-    End Sub
-
-    Private Sub connectToMicrosoftAccessDatabaseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToMicrosoftAccessDatabaseToolStripMenuItem.Click
-        ResetQueryBuilder()
-
-        ' Connect to MS Access database using OLE DB provider
-
-        ' show the connection form
-        Using f As New AccessConnectionForm()
-            If f.ShowDialog() = DialogResult.OK Then
-                ' setup the query builder with metadata and syntax providers
-                queryBuilder.MetadataProvider = New OLEDBMetadataProvider()
-                queryBuilder.MetadataProvider.Connection = New OleDbConnection(f.ConnectionString)
-                queryBuilder.SyntaxProvider = New MSAccessSyntaxProvider()
-
-                ' kick the query builder to fill database schema tree
-                queryBuilder.InitializeDatabaseSchemaTree()
-            End If
-        End Using
-    End Sub
-
-    Private Sub connectToDatabaseThroughOLEDBToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToDatabaseThroughOLEDBToolStripMenuItem.Click
-        ResetQueryBuilder()
-
-        ' Connect to a database through the OLE DB provider
-
-        ' show the connection form
-        Using f As New OLEDBConnectionForm()
-            If f.ShowDialog() = DialogResult.OK Then
-                ' setup the query builder with metadata and syntax providers
-                queryBuilder.MetadataProvider = New OLEDBMetadataProvider()
-                queryBuilder.MetadataProvider.Connection = New OleDbConnection(f.ConnectionString)
-                queryBuilder.SyntaxProvider = New AutoSyntaxProvider()
-
-                ' kick the query builder to fill database schema tree
-                queryBuilder.InitializeDatabaseSchemaTree()
-            End If
-        End Using
-    End Sub
-
-    Private Sub connectToDatabaseThroughODBCToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectToDatabaseThroughODBCToolStripMenuItem.Click
-        ResetQueryBuilder()
-
-        ' Connect to a database through the ODBC provider
-
-        ' show the connection form
-        Using f As New ODBCConnectionForm()
-            If f.ShowDialog() = DialogResult.OK Then
-                ' setup the query builder with metadata and syntax providers
-                queryBuilder.MetadataProvider = New ODBCMetadataProvider()
-                queryBuilder.MetadataProvider.Connection = New OdbcConnection(f.ConnectionString)
-                queryBuilder.SyntaxProvider = New AutoSyntaxProvider()
-
-                ' kick the query builder to fill database schema tree
-                queryBuilder.InitializeDatabaseSchemaTree()
-            End If
-        End Using
-    End Sub
-
-    Private Sub tabControl1_Selected(sender As Object, e As TabControlEventArgs) Handles tabControl1.Selected
+    Private Sub tabControl1_Selected(ByVal sender As Object, ByVal e As TabControlEventArgs) Handles tabControl1.Selected
         ' Move the input focus to the query builder.
         ' This will cause the validation in the text box and update the query builder with modified query text.
         queryBuilder.Focus()
@@ -177,8 +102,7 @@ Partial Public Class Form1
             label.TextAlign = ContentAlignment.MiddleCenter
             label.Dock = DockStyle.Fill
             dataGridView1.Controls.Add(label)
-        ElseIf queryBuilder.SQL.Length = 0 Then
-            ' check the query text is not empty
+        ElseIf queryBuilder.SQL.Length = 0 Then ' check the query text is not empty
             Dim label As New Label()
             label.Text = "No query to execute"
             label.TextAlign = ContentAlignment.MiddleCenter
@@ -188,7 +112,7 @@ Partial Public Class Form1
             dataGridView1.Controls.Clear()
         End If
 
-        Dim queryToExecute As String = ""
+        Dim queryToExecute = ""
 
         ' Limit query results to 10 rows for preview purposes
 
@@ -202,8 +126,7 @@ Partial Public Class Form1
 
         Using queryTransformer As New QueryTransformer()
             queryTransformer.Query = queryBuilder.QueryView.Query
-            queryTransformer.ResultCount = "10"
-            ' select top 10 rows only
+            queryTransformer.ResultCount = "10" ' select top 10 rows only
             queryToExecute = queryTransformer.SQL
         End Using
 
@@ -214,7 +137,7 @@ Partial Public Class Form1
 
             If queryBuilder.MetadataProvider IsNot Nothing AndAlso queryBuilder.MetadataProvider.Connected Then
                 If TypeOf queryBuilder.MetadataProvider Is MSSQLMetadataProvider Then
-                    Dim command As SqlCommand = DirectCast(queryBuilder.MetadataProvider.Connection.CreateCommand(), SqlCommand)
+                    Dim command As SqlCommand = CType(queryBuilder.MetadataProvider.Connection.CreateCommand(), SqlCommand)
                     command.CommandText = queryToExecute
 
                     ' handle the query parameters
@@ -226,7 +149,7 @@ Partial Public Class Form1
                                 parameter.DbType = queryBuilder.Parameters(i).DataType
                                 command.Parameters.Add(parameter)
                             End If
-                        Next
+                        Next i
 
                         Using qpf As New QueryParametersForm(command)
                             qpf.ShowDialog()
@@ -243,7 +166,7 @@ Partial Public Class Form1
                         MessageBox.Show(ex.Message, "SQL query error")
                     End Try
                 ElseIf TypeOf queryBuilder.MetadataProvider Is OLEDBMetadataProvider Then
-                    Dim command As OleDbCommand = DirectCast(queryBuilder.MetadataProvider.Connection.CreateCommand(), OleDbCommand)
+                    Dim command As OleDbCommand = CType(queryBuilder.MetadataProvider.Connection.CreateCommand(), OleDbCommand)
                     command.CommandText = queryToExecute
 
                     ' handle the query parameters
@@ -255,7 +178,7 @@ Partial Public Class Form1
                                 parameter.DbType = queryBuilder.Parameters(i).DataType
                                 command.Parameters.Add(parameter)
                             End If
-                        Next
+                        Next i
 
                         Using qpf As New QueryParametersForm(command)
                             qpf.ShowDialog()
@@ -272,7 +195,7 @@ Partial Public Class Form1
                         MessageBox.Show(ex.Message, "SQL query error")
                     End Try
                 ElseIf TypeOf queryBuilder.MetadataProvider Is ODBCMetadataProvider Then
-                    Dim command As OdbcCommand = DirectCast(queryBuilder.MetadataProvider.Connection.CreateCommand(), OdbcCommand)
+                    Dim command As OdbcCommand = CType(queryBuilder.MetadataProvider.Connection.CreateCommand(), OdbcCommand)
                     command.CommandText = queryToExecute
 
                     ' handle the query parameters
@@ -284,7 +207,7 @@ Partial Public Class Form1
                                 parameter.DbType = queryBuilder.Parameters(i).DataType
                                 command.Parameters.Add(parameter)
                             End If
-                        Next
+                        Next i
 
                         Using qpf As New QueryParametersForm(command)
                             qpf.ShowDialog()
@@ -305,33 +228,71 @@ Partial Public Class Form1
                 ' enable sorting
                 For Each column As DataGridViewColumn In dataGridView1.Columns
                     column.SortMode = DataGridViewColumnSortMode.Automatic
-                Next
+                Next column
             End If
         End If
     End Sub
 
-
-    Private Sub queryBuilder_ActiveUnionSubQueryChanged(sender As Object, e As EventArgs) Handles queryBuilder.ActiveUnionSubQueryChanged
+    Private Sub queryBuilder_ActiveUnionSubQueryChanged(ByVal sender As Object, ByVal e As EventArgs) Handles queryBuilder.ActiveUnionSubQueryChanged
         QueryPartChanged(sender, e)
     End Sub
 
-    Private Sub ErrorBox1_RevertValidText(sender As Object, e As EventArgs) Handles ErrorBox1.RevertValidText
-        textBox1.Text = _lastValidSql
-        textBox1.Focus()
-    End Sub
-
-    Private Sub ErrorBox1_GoToErrorPosition(sender As Object, e As EventArgs) Handles ErrorBox1.GoToErrorPosition
+    Private Sub errorBox1_GoToErrorPosition(ByVal sender As Object, ByVal e As EventArgs) Handles errorBox1.GoToErrorPosition
         If _errorPosition <> -1 Then
             textBox1.SelectionStart = _errorPosition
             textBox1.SelectionLength = 0
             textBox1.ScrollToCaret()
         End If
 
-        ErrorBox1.Visible = False
         textBox1.Focus()
     End Sub
 
-    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles textBox1.TextChanged
-        ErrorBox1.Visible = False
+    Private Sub errorBox1_RevertValidText(ByVal sender As Object, ByVal e As EventArgs) Handles errorBox1.RevertValidText
+        textBox1.Text = _lastValidSql
+        textBox1.Focus()
+    End Sub
+
+    Private Sub connectToToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles connectToToolStripMenuItem.Click
+        Dim cf = New ConnectionForm() With {.Owner = Me}
+
+        If cf.ShowDialog() <> DialogResult.OK Then
+            Return
+        End If
+
+        _selectedConnection = cf.SelectedConnection
+
+        InitializeSqlContext()
+    End Sub
+    Private Sub InitializeSqlContext()
+        Try
+            queryBuilder.Clear()
+
+            Dim metadataProvider As BaseMetadataProvider = Nothing
+
+            If _selectedConnection Is Nothing Then
+                Return
+            End If
+
+            ' create new SqlConnection object using the connections string from the connection form
+            If Not _selectedConnection.IsXmlFile Then
+                metadataProvider = _selectedConnection.ConnectionDescriptor?.MetadataProvider
+            End If
+
+            ' setup the query builder with metadata and syntax providers
+            queryBuilder.SQLContext.MetadataContainer.Clear()
+            queryBuilder.MetadataProvider = metadataProvider
+            queryBuilder.SyntaxProvider = _selectedConnection.ConnectionDescriptor?.SyntaxProvider
+            queryBuilder.MetadataLoadingOptions.OfflineMode = metadataProvider Is Nothing
+
+            If metadataProvider Is Nothing Then
+                queryBuilder.MetadataContainer.ImportFromXML(_selectedConnection.ConnectionString)
+            End If
+
+            ' Instruct the query builder to fill the database schema tree
+            queryBuilder.InitializeDatabaseSchemaTree()
+
+        Finally
+
+        End Try
     End Sub
 End Class

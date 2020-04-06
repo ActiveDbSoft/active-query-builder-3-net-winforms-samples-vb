@@ -8,12 +8,9 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Collections.Generic
-Imports System.Drawing
-Imports System.Windows.Forms
-
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.View.QueryView
+
 
 Partial Public Class CustomCheckBoxColumnDemoFrame
     Inherits UserControl
@@ -33,43 +30,35 @@ Partial Public Class CustomCheckBoxColumnDemoFrame
         ' Fill custom values source (for demo purposes)
         For i As Integer = 0 To 99
             _customValuesProvider.Add(Convert.ToBoolean(i Mod 2))
-        Next
+        Next i
     End Sub
 
-    Private Sub queryBuilder1_QueryElementControlCreated(queryElement As QueryElement, queryElementControl As IQueryElementControl)
+    Private Sub queryBuilder1_QueryElementControlCreated(ByVal queryElement As QueryElement, ByVal queryElementControl As IQueryElementControl) Handles queryBuilder1.QueryElementControlCreated
         If TypeOf queryElementControl Is IQueryColumnListControl Then
-            Dim queryColumnListControl As IQueryColumnListControl = DirectCast(queryElementControl, IQueryColumnListControl)
-            Dim dataGridView As DataGridView = DirectCast(queryColumnListControl.DataGrid, DataGridView)
+            Dim queryColumnListControl As IQueryColumnListControl = CType(queryElementControl, IQueryColumnListControl)
+            Dim dataGridView As DataGridView = CType(queryColumnListControl.DataGrid, DataGridView)
 
-            ' Create custom column
             _customColumn?.Dispose()
 
-            _customColumn = New DataGridViewCheckBoxColumn With {
-                .Name = "CustomColumn",
-                .HeaderText = "Custom Column",
-                .Width = 100,
-                .FlatStyle = FlatStyle.Standard,
-                .ValueType = GetType(CheckState),
-                .TrueValue = CheckState.Checked,
-                .FalseValue = CheckState.Unchecked,
-                .IndeterminateValue = CheckState.Indeterminate
-                }
+            ' Create custom column
+            _customColumn = New DataGridViewCheckBoxColumn With {.Name = "CustomColumn", .HeaderText = "Custom Column", .Width = 100, .FlatStyle = FlatStyle.Standard, .ValueType = GetType(CheckState), .TrueValue = CheckState.Checked, .FalseValue = CheckState.Unchecked, .IndeterminateValue = CheckState.Indeterminate}
+
             _customColumn.HeaderCell.Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
 
             ' Insert custom column to specified position
             dataGridView.Columns.Insert(2, _customColumn)
 
-            ' Handle requierd events
+            ' Handle required events
             AddHandler dataGridView.CellBeginEdit, AddressOf DataGridView_CellBeginEdit
             AddHandler dataGridView.CellValueNeeded, AddressOf DataGridView_CellValueNeeded
             AddHandler dataGridView.CellValuePushed, AddressOf DataGridView_CellValuePushed
         End If
     End Sub
 
-    Private Sub queryBuilder1_QueryElementControlDestroying(queryElement As QueryElement, queryElementControl As IQueryElementControl)
+    Private Sub queryBuilder1_QueryElementControlDestroying(ByVal queryElement As QueryElement, ByVal queryElementControl As IQueryElementControl) Handles queryBuilder1.QueryElementControlDestroying
         If TypeOf queryElementControl Is IQueryColumnListControl Then
-            Dim queryColumnListControl As IQueryColumnListControl = DirectCast(queryElementControl, IQueryColumnListControl)
-            Dim dataGridView As DataGridView = DirectCast(queryColumnListControl.DataGrid, DataGridView)
+            Dim queryColumnListControl As IQueryColumnListControl = CType(queryElementControl, IQueryColumnListControl)
+            Dim dataGridView As DataGridView = CType(queryColumnListControl.DataGrid, DataGridView)
 
             ' remove event handlers to avoid memory leaking
             RemoveHandler dataGridView.CellBeginEdit, AddressOf DataGridView_CellBeginEdit
@@ -81,40 +70,48 @@ Partial Public Class CustomCheckBoxColumnDemoFrame
     ''' <summary>
     ''' This handler determines whether a custom column should be editable or not.
     ''' </summary>
-    Private Sub DataGridView_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs)
-        Dim dataGrid As DataGridView = CType(sender, DataGridView)
-        If Not Equals(dataGrid.Columns(e.ColumnIndex), _customColumn) Then Return
+    Private Sub DataGridView_CellBeginEdit(ByVal sender As Object, ByVal e As DataGridViewCellCancelEventArgs)
+        Dim dataGrid = CType(sender, DataGridView)
 
-        If e.RowIndex < DirectCast(sender, DataGridView).RowCount - 1 Then
+        If dataGrid.Columns(e.ColumnIndex) IsNot _customColumn Then
+            Return
+        End If
+
+        If e.RowIndex < (CType(sender, DataGridView)).RowCount - 1 Then
             ' Make cell editable
-            ' Set true if you need read-only cell.			
-            e.Cancel = False
+            e.Cancel = False ' Set true if you need read-only cell.
         End If
     End Sub
 
     ' This event handler allows you to display some custom value in you column
-    Private Sub DataGridView_CellValueNeeded(sender As Object, e As DataGridViewCellValueEventArgs)
-        Dim dataGrid As DataGridView = CType(sender, DataGridView)
-        If Not Equals(dataGrid.Columns(e.ColumnIndex), _customColumn) Then Return
+    Private Sub DataGridView_CellValueNeeded(ByVal sender As Object, ByVal e As DataGridViewCellValueEventArgs)
+        Dim dataGrid = CType(sender, DataGridView)
 
-        If e.RowIndex < DirectCast(sender, DataGridView).RowCount - 1 Then
+        If dataGrid.Columns(e.ColumnIndex) IsNot _customColumn Then
+            Return
+        End If
+
+        If e.RowIndex < (CType(sender, DataGridView)).RowCount - 1 Then
             ' Set cell value
+            e.Value = _customValuesProvider(e.RowIndex)
 
             ' If you need to access to the low level data item, use the following:
-            '				QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
-            e.Value = _customValuesProvider(e.RowIndex)
+            ' QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
         End If
     End Sub
 
     ' This event handler allows you to store modified cell value (if your column is editable)
-    Private Sub DataGridView_CellValuePushed(sender As Object, e As DataGridViewCellValueEventArgs)
-        Dim dataGrid As DataGridView = CType(sender, DataGridView)
-        If Not Equals(dataGrid.Columns(e.ColumnIndex), _customColumn) Then Return
-        ' Store new cell value
+    Private Sub DataGridView_CellValuePushed(ByVal sender As Object, ByVal e As DataGridViewCellValueEventArgs)
+        Dim dataGrid = CType(sender, DataGridView)
 
-        ' If you need to access to the low level data item, use the following:
-        '				QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
+        If dataGrid.Columns(e.ColumnIndex) IsNot _customColumn Then
+            Return
+        End If
+
+        ' Store new cell value
         _customValuesProvider(e.RowIndex) = (CType(e.Value, CheckState) = CheckState.Checked)
 
+        ' If you need to access to the low level data item, use the following:
+        ' QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
     End Sub
 End Class

@@ -8,48 +8,40 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
-
 Imports Advantage.Data.Provider
 
-Public Partial Class AdvantageConnectionForm
-	Inherits Form
-	Public Property ConnectionString() As String
-		Get
-			Return m_ConnectionString
-		End Get
-		Set
-			m_ConnectionString = Value
-		End Set
-	End Property
-	Private m_ConnectionString As String
+Namespace AdvantageDemo
+	Partial Public Class AdvantageConnectionForm
+		Inherits Form
+		Public Property ConnectionString() As String
 
-	Public Sub New()
-		InitializeComponent()
+		Public Sub New()
+			InitializeComponent()
 
-		cbServerType.SelectedItem = "local"
-	End Sub
+			cbServerType.SelectedItem = "local"
+		End Sub
 
-	Private Sub buttonBrowse_Click(sender As Object, e As EventArgs)
-		If openFileDialog1.ShowDialog() = DialogResult.OK Then
-			textboxDataSource.Text = openFileDialog1.FileName
-		End If
-	End Sub
+		Private Sub buttonBrowse_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonBrowse.Click
+			If openFileDialog1.ShowDialog() = DialogResult.OK Then
+				textboxDataSource.Text = openFileDialog1.FileName
+			End If
+		End Sub
 
-	Private Sub buttonConnect_Click(sender As Object, e As EventArgs)
-		Dim builder As New AdsConnectionStringBuilder()
+		Private Sub buttonConnect_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonConnect.Click
+			Dim builder As New AdsConnectionStringBuilder()
 
-		builder.DataSource = textboxDataSource.Text
-		builder.ServerType = cbServerType.SelectedItem.ToString()
+			builder.DataSource = textboxDataSource.Text
+			builder.ServerType = cbServerType.SelectedItem.ToString()
 
-		If textboxUser.Text.Length > 0 Then
-			builder.UserID = textboxUser.Text
-		End If
+			If textboxUser.Text.Length > 0 Then
+				builder.UserID = textboxUser.Text
+			End If
 
-		If textboxPassword.Text.Length > 0 Then
-			builder.Password = textboxPassword.Text
-		End If
+			If textboxPassword.Text.Length > 0 Then
+				builder.Password = textboxPassword.Text
+			End If
 
-		ConnectionString = builder.ConnectionString
-	End Sub
-End Class
+			ConnectionString = builder.ConnectionString
+		End Sub
+	End Class
+End Namespace

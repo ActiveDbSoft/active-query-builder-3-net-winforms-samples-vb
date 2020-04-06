@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8E830DAF-40CA-4836-B000-719639C64BC2}</ProjectGuid>
+    <ProjectGuid>{5398D988-F727-442E-BDE4-CDE35B956A61}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FullFeaturedMdiDemo</RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <AssemblyName>FullFeaturedMdiDemo</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>demo.snk</AssemblyOriginatorKeyFile>
-    <StartupObject>FullFeaturedMdiDemo.Program</StartupObject>
+    <StartupObject>Program</StartupObject>
     <ApplicationIcon>App.ico</ApplicationIcon>
-    <FileUpgradeFlags />
-    <UpgradeBackupLocation />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
     <OldToolsVersion>2.0</OldToolsVersion>
     <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
@@ -41,9 +47,9 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG,TRACE</DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
@@ -52,9 +58,9 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
@@ -62,7 +68,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG,TRACE</DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
@@ -71,7 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -84,226 +92,114 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="project.json" />
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <Reference Include="ActiveQueryBuilder.Core, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="ActiveQueryBuilder.View.WinForms, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="ActiveQueryBuilder.MSSQLMetadataProvider, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="ActiveQueryBuilder.OLEDBMetadataProvider, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="ActiveQueryBuilder.SQLiteMetadataProvider, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="ActiveQueryBuilder.View, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Design" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutForm.Designer.vb">
-      <DependentUpon>AboutForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="AboutForm.vb">
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChildForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ChildForm.Designer.vb">
       <DependentUpon>ChildForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="ChildForm.vb">
+    <Compile Include="ConnectionForm.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Common\ErrorBox.designer.vb">
-      <DependentUpon>ErrorBox.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Common\ErrorBox.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Common\Helpers.vb" />
-    <Compile Include="Common\InfoPanel.Designer.vb">
-      <DependentUpon>InfoPanel.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Common\InfoPanel.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Common\InformationPanel.Designer.vb">
-      <DependentUpon>InformationPanel.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Common\InformationPanel.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Common\Options.vb" />
-    <Compile Include="Common\ResultGrid.Designer.vb">
-      <DependentUpon>ResultGrid.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Common\ResultGrid.vb">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ConnectionForm.Designer.vb">
       <DependentUpon>ConnectionForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="ConnectionForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="ConnectionFrameBase.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ConnectionStringEditForm.Designer.vb">
-      <DependentUpon>ConnectionStringEditForm.vb</DependentUpon>
     </Compile>
     <Compile Include="ConnectionStringEditForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dailogs\QueryNameForm.Designer.vb">
-      <DependentUpon>QueryNameForm.vb</DependentUpon>
+    <Compile Include="ConnectionStringEditForm.Designer.vb">
+      <DependentUpon>ConnectionStringEditForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Dailogs\QueryNameForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dailogs\SaveAsForm.Designer.vb">
-      <DependentUpon>SaveAsForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Dailogs\SaveAsForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dailogs\SaveForm.Designer.vb">
-      <DependentUpon>SaveForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Dailogs\SaveForm.vb">
+    <Compile Include="EditConnectionForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditConnectionForm.designer.vb">
       <DependentUpon>EditConnectionForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="EditConnectionForm.vb">
+    <Compile Include="EditXMLConnectionForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditXMLConnectionForm.Designer.vb">
       <DependentUpon>EditXMLConnectionForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="EditXMLConnectionForm.vb">
+    <Compile Include="MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.vb">
       <DependentUpon>MainForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Misc.vb" />
-    <Compile Include="NoConnectionLabel.designer.vb">
-      <DependentUpon>NoConnectionLabel.vb</DependentUpon>
-    </Compile>
     <Compile Include="NoConnectionLabel.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PaginationPanel.Designer.vb">
-      <DependentUpon>PaginationPanel.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PaginationPanel.vb">
-      <SubType>UserControl</SubType>
+    <Compile Include="NoConnectionLabel.designer.vb">
+      <DependentUpon>NoConnectionLabel.vb</DependentUpon>
     </Compile>
     <Compile Include="Program.vb" />
+    <Compile Include="PropertiesForm\CommonTab.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="PropertiesForm\CommonTab.Designer.vb">
       <DependentUpon>CommonTab.vb</DependentUpon>
     </Compile>
-    <Compile Include="PropertiesForm\CommonTab.vb">
+    <Compile Include="PropertiesForm\ExpressionsTab.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PropertiesForm\ExpressionsTab.Designer.vb">
       <DependentUpon>ExpressionsTab.vb</DependentUpon>
     </Compile>
-    <Compile Include="PropertiesForm\ExpressionsTab.vb">
+    <Compile Include="PropertiesForm\MainQueryTab.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PropertiesForm\GeneralPage.designer.vb">
-      <DependentUpon>GeneralPage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PropertiesForm\GeneralPage.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PropertiesForm\GroupLabel.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="PropertiesForm\MainQueryTab.designer.vb">
       <DependentUpon>MainQueryTab.vb</DependentUpon>
     </Compile>
-    <Compile Include="PropertiesForm\MainQueryTab.vb">
-      <SubType>UserControl</SubType>
+    <Compile Include="PropertiesForm\QueryPropertiesForm.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="PropertiesForm\QueryPropertiesForm.designer.vb">
       <DependentUpon>QueryPropertiesForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="PropertiesForm\QueryPropertiesForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PropertiesForm\SqlFormattingPage.designer.vb">
-      <DependentUpon>SqlFormattingPage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PropertiesForm\SqlFormattingPage.vb">
+    <Compile Include="PropertiesForm\SqlGenerationPage.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PropertiesForm\SqlGenerationPage.Designer.vb">
       <DependentUpon>SqlGenerationPage.vb</DependentUpon>
     </Compile>
-    <Compile Include="PropertiesForm\SqlGenerationPage.vb">
+    <Compile Include="PropertiesForm\SubQueryTab.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PropertiesForm\SubQueryTab.designer.vb">
       <DependentUpon>SubQueryTab.vb</DependentUpon>
     </Compile>
-    <Compile Include="PropertiesForm\SubQueryTab.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.vb" />
-    <Compile Include="Properties\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="QueryParametersForm.designer.vb">
-      <DependentUpon>QueryParametersForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="QueryParametersForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="QueryStatisticsForm.designer.vb">
-      <DependentUpon>QueryStatisticsForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="QueryStatisticsForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Settings.vb" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="AboutForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>AboutForm.vb</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="My Project\AssemblyInfo.vb" />
     <EmbeddedResource Include="ChildForm.resx">
+      <SubType>Designer</SubType>
       <DependentUpon>ChildForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Common\InfoPanel.resx">
-      <DependentUpon>InfoPanel.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Common\InformationPanel.resx">
-      <DependentUpon>InformationPanel.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Common\ResultGrid.resx">
-      <DependentUpon>ResultGrid.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConnectionForm.resx">
       <SubType>Designer</SubType>
@@ -312,15 +208,6 @@
     <EmbeddedResource Include="ConnectionStringEditForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ConnectionStringEditForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dailogs\QueryNameForm.resx">
-      <DependentUpon>QueryNameForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dailogs\SaveAsForm.resx">
-      <DependentUpon>SaveAsForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dailogs\SaveForm.resx">
-      <DependentUpon>SaveForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditConnectionForm.resx">
       <DependentUpon>EditConnectionForm.vb</DependentUpon>
@@ -335,17 +222,11 @@
     <EmbeddedResource Include="NoConnectionLabel.resx">
       <DependentUpon>NoConnectionLabel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PaginationPanel.resx">
-      <DependentUpon>PaginationPanel.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm\CommonTab.resx">
       <DependentUpon>CommonTab.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm\ExpressionsTab.resx">
       <DependentUpon>ExpressionsTab.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\GeneralPage.resx">
-      <DependentUpon>GeneralPage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm\MainQueryTab.resx">
       <DependentUpon>MainQueryTab.vb</DependentUpon>
@@ -353,94 +234,129 @@
     <EmbeddedResource Include="PropertiesForm\QueryPropertiesForm.resx">
       <DependentUpon>QueryPropertiesForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\SqlFormattingPage.resx">
-      <DependentUpon>SqlFormattingPage.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm\SqlGenerationPage.resx">
       <DependentUpon>SqlGenerationPage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm\SubQueryTab.resx">
       <DependentUpon>SubQueryTab.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="QueryParametersForm.resx">
-      <DependentUpon>QueryParametersForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QueryStatisticsForm.resx">
-      <DependentUpon>QueryStatisticsForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="demo.snk" />
     <None Include="northwind.sqlite">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Northwind.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Properties\Settings.settings">
+    <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Settings.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_white.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_page.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cut.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_cascade.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_tile_horizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_tile_vertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bricks.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_go.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cog.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_side_tree.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\connect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disconnect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\connect.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disconnect.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_edit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="demo.snk" />
+    <None Include="Resources\help.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
     <Content Include="Nwind.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\application_cascade.png" />
-    <None Include="Resources\add_union_subquery.png" />
-    <None Include="Resources\add_derived_table.png" />
-    <None Include="Resources\table_sort.ico" />
-    <None Include="Resources\table_multiple.ico" />
-    <None Include="Resources\table_lightning.ico" />
-    <None Include="Resources\table_gear.ico" />
-    <None Include="Resources\table.ico" />
-    <None Include="Resources\run.png" />
-    <None Include="Resources\query_properties.png" />
-    <None Include="Resources\page_white.ico" />
-    <None Include="Resources\page_paste.png" />
-    <None Include="Resources\page_copy.png" />
-    <None Include="Resources\new_object.png" />
     <None Include="Resources\info.png" />
-    <None Include="Resources\help.ico" />
-    <None Include="Resources\folder_table.ico" />
-    <None Include="Resources\folder_page.ico" />
-    <None Include="Resources\folder_bullet_green.ico" />
-    <None Include="Resources\folder.ico" />
-    <None Include="Resources\drive_disk.png" />
-    <None Include="Resources\disk.ico" />
-    <None Include="Resources\disconnect.png" />
-    <None Include="Resources\disconnect.ico" />
-    <None Include="Resources\database_table.ico" />
-    <None Include="Resources\database_save.png" />
-    <None Include="Resources\database_go.ico" />
-    <None Include="Resources\database_edit.ico" />
-    <None Include="Resources\database.ico" />
-    <None Include="Resources\cut.ico" />
-    <None Include="Resources\copy_union_subquery.png" />
-    <None Include="Resources\connect.png" />
-    <None Include="Resources\connect.ico" />
-    <None Include="Resources\cog.ico" />
-    <None Include="Resources\chart_organisation.ico" />
     <None Include="Resources\cancel.png" />
-    <None Include="Resources\bullet_green.ico" />
-    <None Include="Resources\bricks.ico" />
+    <None Include="Resources\run.png" />
     <None Include="Resources\arrow_right.png" />
     <None Include="Resources\arrow_left.png" />
-    <None Include="Resources\application_tile_vertical.png" />
-    <None Include="Resources\application_tile_horizontal.png" />
-    <None Include="Resources\application_side_tree.ico" />
+    <None Include="Northwind.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\query_properties.png" />
+    <None Include="Resources\new_object.png" />
+    <None Include="Resources\copy_union_subquery.png" />
+    <None Include="Resources\add_union_subquery.png" />
+    <None Include="Resources\add_derived_table.png" />
+    <None Include="Resources\bullet_green.ico" />
+    <None Include="Resources\database_table.ico" />
+    <None Include="Resources\folder_bullet_green.ico" />
+    <None Include="Resources\chart_organisation.ico" />
+    <None Include="Resources\folder_table.ico" />
+    <None Include="Resources\database.ico" />
+    <None Include="Resources\folder.ico" />
+    <None Include="Resources\table_multiple.ico" />
+    <None Include="Resources\table_gear.ico" />
+    <None Include="Resources\table_sort.ico" />
+    <None Include="Resources\table_lightning.ico" />
+    <None Include="Resources\table.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -459,5 +375,18 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\GeneralAssembly_ext\GeneralAssembly_ext.vbproj">
+      <Project>{459a8dfb-6b43-4a5d-b6a0-d81b32c553ee}</Project>
+      <Name>GeneralAssembly_ext</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

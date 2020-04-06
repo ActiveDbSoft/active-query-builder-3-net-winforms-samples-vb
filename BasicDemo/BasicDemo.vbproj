@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0D345205-C8B8-4A2D-8C96-EE9FFB53B395}</ProjectGuid>
+    <ProjectGuid>{853A1B65-F7A9-4669-BBF1-DA4E8345FDAA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BasicDemo</RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <AssemblyName>BasicDemo</AssemblyName>
     <ApplicationIcon>App.ico</ApplicationIcon>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileUpgradeFlags />
-    <UpgradeBackupLocation />
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -30,7 +36,6 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <StartupObject>BasicDemo.Program</StartupObject>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -39,9 +44,9 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG,TRACE</DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -49,141 +54,53 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="project.json" />
+    <Reference Include="ActiveQueryBuilder.Core, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="ActiveQueryBuilder.MSSQLMetadataProvider, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="ActiveQueryBuilder.ODBCMetadataProvider, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="ActiveQueryBuilder.OLEDBMetadataProvider, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="ActiveQueryBuilder.OracleNativeMetadataProvider, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="ActiveQueryBuilder.View, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="ActiveQueryBuilder.View.WinForms, Version=3.6.0.1159, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Common\CheckComboBox.vb">
-      <SubType>Component</SubType>
+    <Compile Include="ConnectionForm.vb">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Common\ErrorBox.Designer.vb">
-      <DependentUpon>ErrorBox.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Common\ErrorBox.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Common\Helpers.vb" />
     <Compile Include="ConnectionForm.designer.vb">
       <DependentUpon>ConnectionForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="ConnectionForm.vb">
+    <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form1.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Misc.vb" />
     <Compile Include="Program.vb" />
-    <Compile Include="PropertiesForm\DatabaseSchemaViewPage.designer.vb">
-      <DependentUpon>DatabaseSchemaViewPage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PropertiesForm\DatabaseSchemaViewPage.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PropertiesForm\GeneralPage.designer.vb">
-      <DependentUpon>GeneralPage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PropertiesForm\GeneralPage.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PropertiesForm\GroupLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="PropertiesForm\MiscellaneousPage.designer.vb">
-      <DependentUpon>MiscellaneousPage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PropertiesForm\MiscellaneousPage.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PropertiesForm\OfflineModePage.designer.vb">
-      <DependentUpon>OfflineModePage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PropertiesForm\OfflineModePage.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PropertiesForm\PanesVisibilityPage.designer.vb">
-      <DependentUpon>PanesVisibilityPage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PropertiesForm\PanesVisibilityPage.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PropertiesForm\QueryBuilderPropertiesForm.designer.vb">
-      <DependentUpon>QueryBuilderPropertiesForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PropertiesForm\QueryBuilderPropertiesForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PropertiesForm\SqlFormattingPage.designer.vb">
-      <DependentUpon>SqlFormattingPage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PropertiesForm\SqlFormattingPage.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PropertiesForm\SqlSyntaxPage.designer.vb">
-      <DependentUpon>SqlSyntaxPage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PropertiesForm\SqlSyntaxPage.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.vb" />
-    <Compile Include="Properties\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="QueryParametersForm.designer.vb">
-      <DependentUpon>QueryParametersForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="QueryParametersForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="QueryStatisticsForm.Designer.vb">
-      <DependentUpon>QueryStatisticsForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="QueryStatisticsForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Common\ErrorBox.resx">
-      <DependentUpon>ErrorBox.vb</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="My Project\AssemblyInfo.vb" />
     <EmbeddedResource Include="ConnectionForm.resx">
       <DependentUpon>ConnectionForm.vb</DependentUpon>
     </EmbeddedResource>
@@ -191,61 +108,32 @@
       <SubType>Designer</SubType>
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\DatabaseSchemaViewPage.resx">
-      <DependentUpon>DatabaseSchemaViewPage.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\GeneralPage.resx">
-      <DependentUpon>GeneralPage.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\MiscellaneousPage.resx">
-      <DependentUpon>MiscellaneousPage.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\OfflineModePage.resx">
-      <DependentUpon>OfflineModePage.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\PanesVisibilityPage.resx">
-      <DependentUpon>PanesVisibilityPage.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\QueryBuilderPropertiesForm.resx">
-      <DependentUpon>QueryBuilderPropertiesForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\SqlFormattingPage.resx">
-      <DependentUpon>SqlFormattingPage.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm\SqlSyntaxPage.resx">
-      <DependentUpon>SqlSyntaxPage.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="QueryParametersForm.resx">
-      <DependentUpon>QueryParametersForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QueryStatisticsForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>QueryStatisticsForm.vb</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
+    <None Include="app.manifest" />
+    <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\cancel.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -264,5 +152,18 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\GeneralAssembly_ext\GeneralAssembly_ext.vbproj">
+      <Project>{459a8dfb-6b43-4a5d-b6a0-d81b32c553ee}</Project>
+      <Name>GeneralAssembly_ext</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

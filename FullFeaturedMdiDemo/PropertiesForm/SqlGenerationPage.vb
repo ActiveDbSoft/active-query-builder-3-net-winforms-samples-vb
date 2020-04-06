@@ -8,11 +8,10 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 
 Namespace PropertiesForm
-	Public Partial Class SqlGenerationPage
+	Partial Public Class SqlGenerationPage
 		Inherits UserControl
 		Private ReadOnly _generationOptions As SQLGenerationOptions
 		Private ReadOnly _formattingOptions As SQLFormattingOptions
@@ -26,20 +25,20 @@ Namespace PropertiesForm
 			_generationOptions = generationOptions
 			_formattingOptions = formattingOptions
 
-			For Each value As Object In [Enum].GetValues(_generationOptions.ObjectPrefixSkipping.[GetType]())
+			For Each value In System.Enum.GetValues(_generationOptions.ObjectPrefixSkipping.GetType())
 				cbObjectPrefixSkipping.Items.Add(value)
-			Next
+			Next value
 
 			cbObjectPrefixSkipping.SelectedItem = _generationOptions.ObjectPrefixSkipping
 			cbQuoteAllIdentifiers.Checked = _generationOptions.QuoteIdentifiers = IdentQuotation.All
 		End Sub
 
-		Private Sub cbQuoteAllIdentifiers_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub cbQuoteAllIdentifiers_CheckedChanged(sender As Object, e As EventArgs) Handles cbQuoteAllIdentifiers.CheckedChanged
 			_generationOptions.QuoteIdentifiers = If(cbQuoteAllIdentifiers.Checked, IdentQuotation.All, IdentQuotation.IfNeed)
 			_formattingOptions.QuoteIdentifiers = If(cbQuoteAllIdentifiers.Checked, IdentQuotation.All, IdentQuotation.IfNeed)
 		End Sub
 
-		Private Sub cbObjectPrefixSkipping_SelectedIndexChanged(sender As Object, e As EventArgs)
+		Private Sub cbObjectPrefixSkipping_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbObjectPrefixSkipping.SelectedIndexChanged
 			_formattingOptions.ObjectPrefixSkipping = CType(cbObjectPrefixSkipping.SelectedItem, ObjectPrefixSkipping)
 			_generationOptions.ObjectPrefixSkipping = CType(cbObjectPrefixSkipping.SelectedItem, ObjectPrefixSkipping)
 		End Sub

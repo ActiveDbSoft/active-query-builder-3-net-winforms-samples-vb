@@ -8,33 +8,35 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
+Imports System.ComponentModel
+Imports System.Text
 Imports iAnywhere.Data.SQLAnywhere
 
-Public Partial Class SybaseConnectionForm
-	Inherits Form
-	Public ConnectionString As String = ""
+
+Partial Public Class SybaseConnectionForm
+    Inherits Form
+    Public ConnectionString As String = ""
 
 
-	Public Sub New()
-		InitializeComponent()
-	End Sub
+    Public Sub New()
+        InitializeComponent()
+    End Sub
 
-	Private Sub buttonBrowse_Click(sender As Object, e As EventArgs)
-		If openFileDialog1.ShowDialog() = DialogResult.OK Then
-			textboxDatabaseFile.Text = openFileDialog1.FileName
-		End If
-	End Sub
+    Private Sub buttonBrowse_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonBrowse.Click
+        If openFileDialog1.ShowDialog() = DialogResult.OK Then
+            textboxDatabaseFile.Text = openFileDialog1.FileName
+        End If
+    End Sub
 
-	Private Sub buttonConnect_Click(sender As Object, e As EventArgs)
-		Dim builder As New SAConnectionStringBuilder()
+    Private Sub buttonConnect_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonConnect.Click
+        Dim builder As New SAConnectionStringBuilder()
 
-		builder.ServerName = textboxServerName.Text
-		builder.DataSourceName = textboxDataSourceName.Text
-		builder.DatabaseFile = textboxDatabaseFile.Text
-		builder.UserID = textboxUser.Text
-		builder.Password = textboxPassword.Text
+        builder.ServerName = textboxServerName.Text
+        builder.DataSourceName = textboxDataSourceName.Text
+        builder.DatabaseFile = textboxDatabaseFile.Text
+        builder.UserID = textboxUser.Text
+        builder.Password = textboxPassword.Text
 
-		Me.ConnectionString = builder.ConnectionString
-	End Sub
+        Me.ConnectionString = builder.ConnectionString
+    End Sub
 End Class

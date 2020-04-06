@@ -8,46 +8,41 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Collections.Generic
 Imports System.ComponentModel
-Imports System.Data
-Imports System.Drawing
 Imports System.Text
-Imports System.Windows.Forms
-
 Imports FirebirdSql.Data.FirebirdClient
 
 
-Public Partial Class FirebirdConnectionForm
-	Inherits Form
-	Public ConnectionString As String = ""
+Partial Public Class FirebirdConnectionForm
+    Inherits Form
+    Public ConnectionString As String = ""
 
 
-	Public Sub New()
-		InitializeComponent()
-	End Sub
+    Public Sub New()
+        InitializeComponent()
+    End Sub
 
-	Private Sub buttonBrowse_Click(sender As Object, e As EventArgs)
-		If openFileDialog1.ShowDialog() = DialogResult.OK Then
-			textboxDatabase.Text = openFileDialog1.FileName
-		End If
-	End Sub
+    Private Sub buttonBrowse_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonBrowse.Click
+        If openFileDialog1.ShowDialog() = DialogResult.OK Then
+            textboxDatabase.Text = openFileDialog1.FileName
+        End If
+    End Sub
 
-	Private Sub buttonConnect_Click(sender As Object, e As EventArgs)
+    Private Sub buttonConnect_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonConnect.Click
 
-		Dim builder As New FbConnectionStringBuilder()
+        Dim builder As New FbConnectionStringBuilder()
 
-		builder.DataSource = textboxServer.Text
-		builder.Database = textboxDatabase.Text
+        builder.DataSource = textboxServer.Text
+        builder.Database = textboxDatabase.Text
 
-		If textboxUser.Text.Length > 0 Then
-			builder.UserID = textboxUser.Text
-		End If
+        If textboxUser.Text.Length > 0 Then
+            builder.UserID = textboxUser.Text
+        End If
 
-		If textboxPassword.Text.Length > 0 Then
-			builder.Password = textboxPassword.Text
-		End If
+        If textboxPassword.Text.Length > 0 Then
+            builder.Password = textboxPassword.Text
+        End If
 
-		Me.ConnectionString = builder.ConnectionString
-	End Sub
+        Me.ConnectionString = builder.ConnectionString
+    End Sub
 End Class

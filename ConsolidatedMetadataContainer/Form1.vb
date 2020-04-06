@@ -8,100 +8,69 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
+Imports System
 Imports System.Collections.Generic
+Imports System.ComponentModel
 Imports System.Data.SqlClient
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
-Imports ActiveQueryBuilder.View.WinForms
 
-Public Partial Class Form1
-	Inherits Form
-	Private ReadOnly _aqb As QueryBuilder
-	Private ReadOnly _connections As New Dictionary(Of String, SQLContext)()
-	Private ReadOnly _consolidatedToInner As New Dictionary(Of MetadataItem, MetadataItem)()
-	Private ReadOnly _innerToConsolidated As New Dictionary(Of MetadataItem, MetadataItem)()
+Namespace ConsolidatedMetadataContainer
+    Public Partial Class Form1
+        Inherits Form
 
-	Public Sub New()
-		InitializeComponent()
+        ' list of connections, name -> innerContext
+        Private ReadOnly _connections As Dictionary(Of String, SQLContext) = InitConnections()
 
-		' first connection
-		Dim xmlNorthwind As SQLContext = New SQLContext() With { 
-			.SyntaxProvider = New MSSQLSyntaxProvider() _
-		}
-		xmlNorthwind.MetadataContainer.ImportFromXML("northwind.xml")
-		_connections.Add("xml", xmlNorthwind)
 
-		' second connection
-		Dim mssqlAdventureWorks As SQLContext = New SQLContext() With { 
-			.SyntaxProvider = New MSSQLSyntaxProvider(),
-			.MetadataProvider = New MSSQLMetadataProvider() With { 
-				.Connection = New SqlConnection("Server=sql2014;Database=AdventureWorks;User Id=sa;Password=********;")
-			} _
-		}
-		_connections.Add("live", mssqlAdventureWorks)
+        ' fill connections dictionary
+        Private Shared Function InitConnections() As Dictionary(Of String, SQLContext)
+            Dim result = New Dictionary(Of String, SQLContext)()
 
-		' QueryBuilder with consolidated metadata
-		_aqb = New QueryBuilder() With { 
-			.SyntaxProvider = New SQL2003SyntaxProvider(),
-			.Dock = DockStyle.Fill,
-			.Parent = Me
-		}
+            ' first connection
+            Dim innerXml = New SQLContext With {
+                .SyntaxProvider = New MSSQLSyntaxProvider()
+            }
+            innerXml.MetadataContainer.ImportFromXML("northwind.xml")
+            result.Add("xml", innerXml)
 
-		AddHandler _aqb.MetadataContainer.ItemMetadataLoading, AddressOf MetadataContainerOnItemMetadataLoading
+            ' second connection
+            Dim innerMsSql = New SQLContext With {
+                .SyntaxProvider = New MSSQLSyntaxProvider(),
+                .MetadataProvider = New MSSQLMetadataProvider With {
+                    .Connection = New SqlConnection("Server=sql2014;Database=AdventureWorks;User Id=sa;Password=********;")
+                }
+            }
+            result.Add("live", innerMsSql)
+            Return result
+        End Function
 
-		_aqb.InitializeDatabaseSchemaTree()
-	End Sub
+        Public Sub New()
+            InitializeComponent()
 
-	Private Sub MetadataContainerOnItemMetadataLoading(sender As Object, item As MetadataItem, loadTypes As MetadataType)
-		' root of consolidated metadata contains connections
-		If item Is _aqb.MetadataContainer AndAlso loadTypes.Contains(MetadataType.Connection) Then
-			' add connections (as virtual "Connection" objects)
-			For Each connectionDescription As KeyValuePair(Of string, SQLContext) In _connections
-				Dim connectionName as string= connectionDescription.Key
-				Dim connection as SQLContext = connectionDescription.Value
-				Dim innerItem As MetadataContainer = connection.MetadataContainer
+            ' sql editing events
+            AddHandler queryBuilder.SQLUpdated, AddressOf QueryBuilderOnSqlUpdated
+            AddHandler textSql.Validating, AddressOf TextSqlOnValidating
 
-				If _innerToConsolidated.ContainsKey(innerItem) Then
-					Continue For
-				End If
+            ' add connections
+            Dim metadataContainer = queryBuilder.MetadataContainer
 
-				Dim newItem as MetadataNamespace = item.AddConnection(connectionName)
-				newItem.Items = innerItem.Items
+            For Each connectionDescription In _connections
+                Dim connectionName = connectionDescription.Key
+                Dim innerContext = connectionDescription.Value
+                metadataContainer.AddConnection(connectionName, innerContext)
+            Next
 
-				MapConsolidatedToInnerRecursive(newItem, innerItem)
-			Next
+            ' init metadata tree
+            queryBuilder.InitializeDatabaseSchemaTree()
+        End Sub
 
-			Return
-		End If
+        Private Sub TextSqlOnValidating(ByVal sender As Object, ByVal e As CancelEventArgs)
+            queryBuilder.FormattedSQL = textSql.Text
+        End Sub
 
-		' find "inner" item, load it's children and copy them to consolidated container
-		If True Then
-			Dim innerItem As MetadataItem = _consolidatedToInner(item)
-			innerItem.Items.Load(loadTypes, False)
-
-			For Each childItem As MetadataItem In innerItem.Items
-				If Not loadTypes.Contains(childItem.Type) Then
-					Continue For
-				End If
-
-				If _innerToConsolidated.ContainsKey(childItem) Then
-					Continue For
-				End If
-
-				Dim newItem as MetadataItem= childItem.Clone(item.Items)
-				item.Items.Add(newItem)
-
-				MapConsolidatedToInnerRecursive(newItem, childItem)
-			Next
-		End If
-	End Sub
-
-	Private Sub MapConsolidatedToInnerRecursive(consolidated As MetadataItem, inner As MetadataItem)
-		_consolidatedToInner.Add(consolidated, inner)
-		_innerToConsolidated.Add(inner, consolidated)
-
-		For i As Integer = 0 To inner.Items.Count - 1
-			MapConsolidatedToInnerRecursive(consolidated.Items(i), inner.Items(i))
-		Next
-	End Sub
-End Class
+        Private Sub QueryBuilderOnSqlUpdated(ByVal sender As Object, ByVal e As EventArgs)
+            textSql.Text = queryBuilder.FormattedSQL
+        End Sub
+    End Class
+End Namespace

@@ -8,27 +8,23 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Collections.Generic
 Imports System.ComponentModel
-Imports System.Data
-Imports System.Drawing
 Imports System.Text
-Imports System.Windows.Forms
-
 Imports Npgsql
 
-Public Partial Class PostgreSQLConnectionForm
-	Inherits Form
-	Public ConnectionString As String = ""
+
+Partial Public Class PostgreSQLConnectionForm
+    Inherits Form
+    Public ConnectionString As String = ""
 
 
-	Public Sub New()
-		InitializeComponent()
-	End Sub
+    Public Sub New()
+        InitializeComponent()
+    End Sub
 
-	Private Sub buttonConnect_Click(sender As Object, e As EventArgs)
-		Dim connectionString As String = "Server=" & tbServer.Text & ";Port=" & tbPort.Text & ";Database=" & tbDatabase.Text & ";Userid=" & tbLogin.Text & ";Password=" & tbPassword.Text
+    Private Sub buttonConnect_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonConnect.Click
+        Dim connectionString As String = "Server=" & tbServer.Text & ";Port=" & tbPort.Text & ";Database=" & tbDatabase.Text & ";Userid=" & tbLogin.Text & ";Password=" & tbPassword.Text
 
-		Me.ConnectionString = connectionString
-	End Sub
+        Me.ConnectionString = connectionString
+    End Sub
 End Class

@@ -8,7 +8,6 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 
 Namespace PropertiesForm
@@ -18,34 +17,18 @@ Namespace PropertiesForm
 		Expression
 	End Enum
 
-	Public Partial Class SubQueryTab
+	Partial Public Class SubQueryTab
 		Inherits UserControl
 		Public Property FormattingOptions() As SQLFormattingOptions
-			Get
-				Return m_FormattingOptions
-			End Get
-			Set
-				m_FormattingOptions = Value
-			End Set
-		End Property
-		Private m_FormattingOptions As SQLFormattingOptions
 		Public Property SelectFormat() As SQLBuilderSelectFormat
-			Get
-				Return m_SelectFormat
-			End Get
-			Set
-				m_SelectFormat = Value
-			End Set
-		End Property
-		Private m_SelectFormat As SQLBuilderSelectFormat
 
-		Public Sub New(formattingOptions__1 As SQLFormattingOptions, Optional type As SubQueryType = SubQueryType.Expression)
+		Public Sub New(formattingOptions As SQLFormattingOptions, Optional type As SubQueryType = SubQueryType.Expression)
 			InitializeComponent()
 
-			FormattingOptions = formattingOptions__1
+			Me.FormattingOptions = formattingOptions
 
 			If type = SubQueryType.Expression Then
-				SelectFormat = formattingOptions__1.ExpressionSubQueryFormat
+				SelectFormat = formattingOptions.ExpressionSubQueryFormat
 
 			ElseIf type = SubQueryType.Derived Then
 				groupBox1.Text = "Derived tables format options"
@@ -53,7 +36,7 @@ Namespace PropertiesForm
 				chBxSubQueriesFromNewLines.Text = "Start derived tables from new lines"
 				label2.Text = "Derived Tables format options" & vbLf & "determine the layout of sub-queries" & vbLf & "used as data sources in the query."
 
-				SelectFormat = formattingOptions__1.DerivedQueryFormat
+				SelectFormat = formattingOptions.DerivedQueryFormat
 
 			ElseIf type = SubQueryType.Cte Then
 				groupBox1.Text = "Common table expressions format options"
@@ -61,7 +44,7 @@ Namespace PropertiesForm
 				chBxSubQueriesFromNewLines.Text = "Start CTE from new lines"
 				label2.Text = "CTE format options" & vbLf & "determine the layout of sub-queries" & vbLf & "used above the main query in the with clause."
 
-				SelectFormat = formattingOptions__1.CTESubQueryFormat
+				SelectFormat = formattingOptions.CTESubQueryFormat
 			End If
 
 			LoadOptions()
@@ -72,15 +55,15 @@ Namespace PropertiesForm
 			chBxSubQueriesFromNewLines.Checked = SelectFormat.SubQueryTextFromNewLine
 		End Sub
 
-		Private Sub UpDownSubQueryIndent_ValueChanged(sender As Object, e As EventArgs)
-			SelectFormat.IndentInPart = CInt(Math.Truncate(UpDownSubQueryIndent.Value))
+		Private Sub UpDownSubQueryIndent_ValueChanged(sender As Object, e As EventArgs) Handles UpDownSubQueryIndent.ValueChanged
+			SelectFormat.IndentInPart = CInt(Fix(UpDownSubQueryIndent.Value))
 		End Sub
 
-		Private Sub chBxSubQueriesFromNewLines_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub chBxSubQueriesFromNewLines_CheckedChanged(sender As Object, e As EventArgs) Handles chBxSubQueriesFromNewLines.CheckedChanged
 			SelectFormat.SubQueryTextFromNewLine = chBxSubQueriesFromNewLines.Checked
 		End Sub
 
-		Private Sub chBxSameFormatAsMainQuery_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub chBxSameFormatAsMainQuery_CheckedChanged(sender As Object, e As EventArgs) Handles chBxSameFormatAsMainQuery.CheckedChanged
 			SelectFormat.Assign(FormattingOptions.MainQueryFormat)
 		End Sub
 	End Class

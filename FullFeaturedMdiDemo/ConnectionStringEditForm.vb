@@ -8,27 +8,26 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
 
-Public Partial Class ConnectionStringEditForm
-	Inherits Form
-	Public Property ConnectionString() As String
-		Get
-			Return tbConnectionString.Text
-		End Get
-		Set
-			tbConnectionString.Text = value
-			tbConnectionString.Modified = False
-		End Set
-	End Property
+Partial Public Class ConnectionStringEditForm
+    Inherits Form
+    Public Property ConnectionString() As String
+        Get
+            Return tbConnectionString.Text
+        End Get
+        Set(value As String)
+            tbConnectionString.Text = value
+            tbConnectionString.Modified = False
+        End Set
+    End Property
 
-	Public ReadOnly Property Modified() As Boolean
-		Get
-			Return tbConnectionString.Modified
-		End Get
-	End Property
+    Public ReadOnly Property Modified() As Boolean
+        Get
+            Return tbConnectionString.Modified
+        End Get
+    End Property
 
-	Public Sub New()
-		InitializeComponent()
-	End Sub
+    Public Sub New()
+        InitializeComponent()
+    End Sub
 End Class

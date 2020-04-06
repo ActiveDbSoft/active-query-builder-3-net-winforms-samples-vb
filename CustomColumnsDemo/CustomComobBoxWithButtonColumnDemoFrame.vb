@@ -8,13 +8,10 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Collections.Generic
-Imports System.Drawing
-Imports System.Windows.Forms
-
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.View.QueryView
 Imports ActiveQueryBuilder.View.WinForms.QueryView
+
 
 Partial Public Class CustomComobBoxWithButtonColumnDemoFrame
     Inherits UserControl
@@ -34,23 +31,19 @@ Partial Public Class CustomComobBoxWithButtonColumnDemoFrame
         ' Fill custom values source (for demo purposes)
         For i As Integer = 0 To 99
             _customValuesProvider.Add("Some Value " & i)
-        Next
+        Next i
     End Sub
 
-    Private Sub queryBuilder1_QueryElementControlCreated(queryElement As QueryElement, queryElementControl As IQueryElementControl)
+    Private Sub queryBuilder1_QueryElementControlCreated(ByVal queryElement As QueryElement, ByVal queryElementControl As IQueryElementControl) Handles queryBuilder1.QueryElementControlCreated
         If TypeOf queryElementControl Is IQueryColumnListControl Then
-            Dim queryColumnListControl As IQueryColumnListControl = DirectCast(queryElementControl, IQueryColumnListControl)
-            Dim dataGridView As DataGridView = DirectCast(queryColumnListControl.DataGrid, DataGridView)
+            Dim queryColumnListControl As IQueryColumnListControl = CType(queryElementControl, IQueryColumnListControl)
+            Dim dataGridView As DataGridView = CType(queryColumnListControl.DataGrid, DataGridView)
+
+            _customColumn?.Dispose()
 
             ' Create custom column
-            _customColumn?.Dispose()
-            _customColumn = New ComboBoxWithButtonColumn With {
-                .Name = "CustomColumn",
-                .HeaderText = "Custom Column",
-                .Width = 200,
-                .DisplayStyle = DataGridViewComboBoxDisplayStyle.[Nothing], ' hide the combobox if cell is not focused
-                .ValueType = GetType(String)
-            }
+            _customColumn = New ComboBoxWithButtonColumn With {.Name = "CustomColumn", .HeaderText = "Custom Column", .Width = 200, .DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing, .ValueType = GetType(String)}
+
             _customColumn.HeaderCell.Style.Font = New Font("Tahoma", 8, FontStyle.Bold)
             _customColumn.ShowButton = True
 
@@ -67,10 +60,10 @@ Partial Public Class CustomComobBoxWithButtonColumnDemoFrame
         End If
     End Sub
 
-    Private Sub queryBuilder1_QueryElementControlDestroying(queryElement As QueryElement, queryElementControl As IQueryElementControl)
+    Private Sub queryBuilder1_QueryElementControlDestroying(ByVal queryElement As QueryElement, ByVal queryElementControl As IQueryElementControl) Handles queryBuilder1.QueryElementControlDestroying
         If TypeOf queryElementControl Is IQueryColumnListControl Then
-            Dim queryColumnListControl As IQueryColumnListControl = DirectCast(queryElementControl, IQueryColumnListControl)
-            Dim dataGridView As DataGridView = DirectCast(queryColumnListControl.DataGrid, DataGridView)
+            Dim queryColumnListControl As IQueryColumnListControl = CType(queryElementControl, IQueryColumnListControl)
+            Dim dataGridView As DataGridView =CType(queryColumnListControl.DataGrid, DataGridView)
 
             ' remove event handlers to avoid memory leaking
             RemoveHandler dataGridView.CellEnter, AddressOf DataGridView_CellEnter
@@ -82,100 +75,114 @@ Partial Public Class CustomComobBoxWithButtonColumnDemoFrame
         End If
     End Sub
 
-    Private Sub DataGridView_CellEnter(sender As Object, e As DataGridViewCellEventArgs)
-        Dim dataGrid As DataGridView = CType(sender, DataGridView)
-        If Not Equals(dataGrid.Columns(e.ColumnIndex), _customColumn) Then Return
+    Private Sub DataGridView_CellEnter(ByVal sender As Object, ByVal e As DataGridViewCellEventArgs)
+        Dim dataGrid = CType(sender, DataGridView)
 
+        If dataGrid.Columns(e.ColumnIndex) IsNot _customColumn Then
+            Return
+        End If
         ' Make the combobox visible when a cell got the focus
-        Dim dataGridView As DataGridView = DirectCast(sender, DataGridView)
-        Dim comboBoxCell As DataGridViewComboBoxCell = DirectCast(dataGridView(e.ColumnIndex, e.RowIndex), DataGridViewComboBoxCell)
+        Dim dataGridView As DataGridView = CType(sender, DataGridView)
+        Dim comboBoxCell As DataGridViewComboBoxCell = CType(dataGridView(e.ColumnIndex, e.RowIndex), DataGridViewComboBoxCell)
         comboBoxCell.DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton
     End Sub
 
-    Private Sub DataGridView_CellLeave(sender As Object, e As DataGridViewCellEventArgs)
-        Dim dataGrid As DataGridView = CType(sender, DataGridView)
-        If Not Equals(dataGrid.Columns(e.ColumnIndex), _customColumn) Then Return
+    Private Sub DataGridView_CellLeave(ByVal sender As Object, ByVal e As DataGridViewCellEventArgs)
+        Dim dataGrid = CType(sender, DataGridView)
 
+        If dataGrid.Columns(e.ColumnIndex) IsNot _customColumn Then
+            Return
+        End If
         ' Make the combobox invisible when a cell lost the focus
-        Dim dataGridView As DataGridView = DirectCast(sender, DataGridView)
-        Dim comboBoxCell As DataGridViewComboBoxCell = DirectCast(dataGridView(e.ColumnIndex, e.RowIndex), DataGridViewComboBoxCell)
-        comboBoxCell.DisplayStyle = DataGridViewComboBoxDisplayStyle.[Nothing]
+        Dim dataGridView As DataGridView = CType(sender, DataGridView)
+        Dim comboBoxCell As DataGridViewComboBoxCell = CType(dataGridView(e.ColumnIndex, e.RowIndex), DataGridViewComboBoxCell)
+        comboBoxCell.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing
     End Sub
 
-    Private Sub DataGridView_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs)
-        Dim dataGrid As DataGridView = CType(sender, DataGridView)
-        If Not Equals(dataGrid.Columns(e.ColumnIndex), _customColumn) Then Return
+    Private Sub DataGridView_CellBeginEdit(ByVal sender As Object, ByVal e As DataGridViewCellCancelEventArgs)
+        Dim dataGrid = CType(sender, DataGridView)
 
-        If e.RowIndex < DirectCast(sender, DataGridView).RowCount - 1 Then
+        If dataGrid.Columns(e.ColumnIndex) IsNot _customColumn Then
+            Return
+        End If
+
+        If e.RowIndex < (CType(sender, DataGridView)).RowCount - 1 Then
             ' Make cell editable
-            ' Set true if you need read-only cell.			
-            e.Cancel = False
+            e.Cancel = False ' Set true if you need read-only cell.
         End If
     End Sub
 
     ' This event handler allows you to provide cell values for your column
-    Private Sub DataGridView_CellValueNeeded(sender As Object, e As DataGridViewCellValueEventArgs)
-        Dim dataGrid As DataGridView = CType(sender, DataGridView)
-        If Not Equals(dataGrid.Columns(e.ColumnIndex), _customColumn) Then Return
+    Private Sub DataGridView_CellValueNeeded(ByVal sender As Object, ByVal e As DataGridViewCellValueEventArgs)
+        Dim dataGrid = CType(sender, DataGridView)
 
-        If e.RowIndex < DirectCast(sender, DataGridView).RowCount - 1 Then
-            Dim dataGridView As DataGridView = DirectCast(sender, DataGridView)
+        If dataGrid.Columns(e.ColumnIndex) IsNot _customColumn Then
+            Return
+        End If
+
+        If e.RowIndex < (CType(sender, DataGridView)).RowCount - 1 Then
+            Dim dataGridView As DataGridView = CType(sender, DataGridView)
 
             ' Set cell value
             e.Value = _customValuesProvider(e.RowIndex)
 
             ' Ensure the comobox list contains the value, otherwise the combobox will not show it.
-            Dim cb As DataGridViewComboBoxColumn = DirectCast(dataGridView.Columns(2), DataGridViewComboBoxColumn)
+            Dim cb As DataGridViewComboBoxColumn = CType(dataGridView.Columns(2), DataGridViewComboBoxColumn)
             If Not cb.Items.Contains(e.Value) Then
                 cb.Items.Add(e.Value)
-
-                ' If you need to access to the low level data item, use the following:
-                '				QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
             End If
+
+            ' If you need to access to the low level data item, use the following:
+            ' QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
         End If
     End Sub
 
     ' This event handler allows you to store modified cell value (if your column is editable)
-    Private Sub DataGridView_CellValuePushed(sender As Object, e As DataGridViewCellValueEventArgs)
-        Dim dataGrid As DataGridView = CType(sender, DataGridView)
-        If Not Equals(dataGrid.Columns(e.ColumnIndex), _customColumn) Then Return
+    Private Sub DataGridView_CellValuePushed(ByVal sender As Object, ByVal e As DataGridViewCellValueEventArgs)
+        Dim dataGrid = CType(sender, DataGridView)
+
+        If dataGrid.Columns(e.ColumnIndex) IsNot _customColumn Then
+            Return
+        End If
+
+
         ' Store new cell value
+        _customValuesProvider(e.RowIndex) = CStr(e.Value)
 
         ' If you need to access to the low level data item, use the following:
-        '				QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
-        _customValuesProvider(e.RowIndex) = DirectCast(e.Value, String)
+        ' QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
+
     End Sub
 
-    Private Sub DataGridView_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs)
-        Dim dataGridView As DataGridView = DirectCast(sender, DataGridView)
+    Private Sub DataGridView_EditingControlShowing(ByVal sender As Object, ByVal e As DataGridViewEditingControlShowingEventArgs)
+        Dim dataGridView As DataGridView = CType(sender, DataGridView)
         Dim currentColumn As Integer = dataGridView.CurrentCell.ColumnIndex
         Dim currentRow As Integer = dataGridView.CurrentCell.RowIndex
 
         If dataGridView.CurrentCell.ColumnIndex = 2 AndAlso TypeOf e.Control Is DataGridViewComboBoxEditingControl Then
-            Dim comboBox As DataGridViewComboBoxEditingControl = DirectCast(e.Control, DataGridViewComboBoxEditingControl)
+            Dim comboBox As DataGridViewComboBoxEditingControl = CType(e.Control, DataGridViewComboBoxEditingControl)
             comboBox.DropDownStyle = ComboBoxStyle.DropDown
 
             ' Fill the combobox dropdown list with possible values
             comboBox.Items.Clear()
             For i As Integer = 0 To 99
                 comboBox.Items.Add("Some Value " & i)
-            Next
+            Next i
 
             ' Select current value
-            comboBox.SelectedIndex = comboBox.FindStringExact(DirectCast(dataGridView(currentColumn, currentRow).Value, String))
+            comboBox.SelectedIndex = comboBox.FindStringExact(CStr(dataGridView(currentColumn, currentRow).Value))
         End If
 
         ' Handle the button click
         If TypeOf e.Control Is ComboBoxWithButtonEditingControl Then
-            Dim twb As ComboBoxWithButtonEditingControl = DirectCast(e.Control, ComboBoxWithButtonEditingControl)
-            RemoveHandler twb.ButtonClicked, AddressOf EditingControlButtonClickedEventHandler
-            ' remove the handler added in previous event occurrence
+            Dim twb As ComboBoxWithButtonEditingControl = CType(e.Control, ComboBoxWithButtonEditingControl)
+            RemoveHandler twb.ButtonClicked, AddressOf EditingControlButtonClickedEventHandler ' remove the handler added in previous event occurrence
             AddHandler twb.ButtonClicked, AddressOf EditingControlButtonClickedEventHandler
         End If
     End Sub
 
-    Private Sub EditingControlButtonClickedEventHandler(sender As Object, e As EventArgs)
-        Dim dataGridView As DataGridView = DirectCast(sender, ComboBoxWithButtonEditingControl).EditingControlDataGridView
+    Private Sub EditingControlButtonClickedEventHandler(ByVal sender As Object, ByVal e As EventArgs)
+        Dim dataGridView As DataGridView = (CType(sender, ComboBoxWithButtonEditingControl)).EditingControlDataGridView
 
         ' commit the editing before dispatching the click
         dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
@@ -184,6 +191,6 @@ Partial Public Class CustomComobBoxWithButtonColumnDemoFrame
         MessageBox.Show("Button at row " & dataGridView.CurrentCell.RowIndex & " clicked.")
 
         ' If you need to access to the low level data item, use the following:
-        '			QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[dataGridView.CurrentCell.RowIndex];
+        ' QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[dataGridView.CurrentCell.RowIndex];
     End Sub
 End Class

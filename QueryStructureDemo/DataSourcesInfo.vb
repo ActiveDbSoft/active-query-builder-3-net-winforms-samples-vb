@@ -8,61 +8,55 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Collections.Generic
 Imports System.Text
 Imports ActiveQueryBuilder.Core
 
-Partial Class Form1
-	Private Function GetDataSourceList(unionSubQuery As UnionSubQuery) As List(Of DataSource)
-        Dim list As List(Of DataSource) = New List(Of DataSource)()
 
-        unionSubQuery.FromClause.GetDatasourceByClass(list)
+Partial Public Class Form1
+    Private Sub DumpDataSourceInfo(stringBuilder As StringBuilder, dataSource As DataSource)
+        ' write full sql fragment
+        stringBuilder.AppendLine(dataSource.GetResultSQL())
 
-		Return list
-	End Function
+        ' write alias
+        stringBuilder.AppendLine("  alias: " & dataSource.Alias)
 
-	Private Sub DumpDataSourceInfo(stringBuilder As StringBuilder, dataSource As DataSource)
-		' write full sql fragment
-		stringBuilder.AppendLine(dataSource.GetResultSQL())
+        ' write referenced MetadataObject (if any)
+        If dataSource.MetadataObject IsNot Nothing Then
+            stringBuilder.AppendLine("  ref: " & dataSource.MetadataObject.Name)
+        End If
 
-		' write alias
-		stringBuilder.AppendLine("  alias: " & Convert.ToString(dataSource.[Alias]))
+        ' write subquery (if datasource is actually a derived table)
+        Dim dataSourceQuery = TryCast(dataSource, DataSourceQuery)
+        If dataSourceQuery IsNot Nothing Then
+            stringBuilder.AppendLine("  subquery sql: " & dataSourceQuery.GetResultSQL())
+        End If
 
-		' write referenced MetadataObject (if any)
-		If dataSource.MetadataObject IsNot Nothing Then
-			stringBuilder.AppendLine("  ref: " & Convert.ToString(dataSource.MetadataObject.Name))
-		End If
+        ' write fields
+        Dim fields = New StringBuilder()
 
-		' write subquery (if datasource is actually a derived table)
-		If TypeOf dataSource Is DataSourceQuery Then
-			stringBuilder.AppendLine("  subquery sql: " & DirectCast(dataSource, DataSourceQuery).GetResultSQL())
-		End If
+        For Each field In dataSource.Metadata.Fields
+            If fields.Length > 0 Then
+                fields.Append(", ")
+            End If
 
-		' write fields
-		Dim fields As String = [String].Empty
+            fields.Append(field.Name)
+        Next field
 
-		For i As Integer = 0 To dataSource.Metadata.Count - 1
-			If fields.Length > 0 Then
-				fields += ", "
-			End If
+        stringBuilder.AppendLine("  fields (" & dataSource.Metadata.Count & "): " & fields.ToString())
+    End Sub
 
-			fields += dataSource.Metadata(i).Name
-		Next
+    Private Sub DumpDataSourcesInfo(stringBuilder As StringBuilder, dataSources As IEnumerable(Of DataSource))
+        For Each dataSource In dataSources
+            If stringBuilder.Length > 0 Then
+                stringBuilder.AppendLine()
+            End If
 
-		stringBuilder.AppendLine("  fields (" & Convert.ToString(dataSource.Metadata.Count) & "): " & fields)
-	End Sub
+            DumpDataSourceInfo(stringBuilder, dataSource)
+        Next dataSource
+    End Sub
 
-	Private Sub DumpDataSourcesInfo(stringBuilder As StringBuilder, dataSources As List(Of DataSource))
-		For i As Integer = 0 To dataSources.Count - 1
-			If stringBuilder.Length > 0 Then
-				stringBuilder.AppendLine()
-			End If
-
-			DumpDataSourceInfo(stringBuilder, dataSources(i))
-		Next
-	End Sub
-
-	Public Sub DumpDataSourcesInfoFromUnionSubQuery(stringBuilder As StringBuilder, unionSubQuery As UnionSubQuery)
-		DumpDataSourcesInfo(stringBuilder, GetDataSourceList(unionSubQuery))
-	End Sub
+    Public Sub DumpDataSourcesInfoFromUnionSubQuery(stringBuilder As StringBuilder, unionSubQuery As UnionSubQuery)
+        Dim datasources = unionSubQuery.GetChildrenRecursive(Of DataSource)(False)
+        DumpDataSourcesInfo(stringBuilder, datasources)
+    End Sub
 End Class

@@ -8,36 +8,19 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 
 Namespace PropertiesForm
-	Public Partial Class ExpressionsTab
+	Partial Public Class ExpressionsTab
 		Inherits UserControl
 		Public Property SelectFormat() As SQLBuilderSelectFormat
-			Get
-				Return m_SelectFormat
-			End Get
-			Set
-				m_SelectFormat = Value
-			End Set
-		End Property
-		Private m_SelectFormat As SQLBuilderSelectFormat
 		Public Property FormattingOptions() As SQLFormattingOptions
-			Get
-				Return m_FormattingOptions
-			End Get
-			Set
-				m_FormattingOptions = Value
-			End Set
-		End Property
-		Private m_FormattingOptions As SQLFormattingOptions
 
-		Public Sub New(formattingOptions__1 As SQLFormattingOptions, selectFormat__2 As SQLBuilderSelectFormat)
+		Public Sub New(formattingOptions As SQLFormattingOptions, selectFormat As SQLBuilderSelectFormat)
+		    Me.SelectFormat = selectFormat
+		    Me.FormattingOptions = formattingOptions
+
 			InitializeComponent()
-
-			SelectFormat = selectFormat__2
-			FormattingOptions = formattingOptions__1
 
 			LoadOptions()
 		End Sub
@@ -65,8 +48,8 @@ Namespace PropertiesForm
 				End If
 			End If
 
-
 			If SelectFormat.WhereFormat.NewLineBefore = SQLBuilderConditionFormatNewLine.TopmostLogical AndAlso SelectFormat.HavingFormat.NewLineBefore = SQLBuilderConditionFormatNewLine.TopmostLogical Then
+
 			End If
 			If SelectFormat.WhereFormat.NewLineBefore = SQLBuilderConditionFormatNewLine.AllLogical AndAlso SelectFormat.HavingFormat.NewLineBefore = SQLBuilderConditionFormatNewLine.AllLogical Then
 				radButStartLines.Checked = True
@@ -95,8 +78,8 @@ Namespace PropertiesForm
 			UpDownExprsIndent.Value = SelectFormat.ConditionalOperatorsFormat.IndentExpressions
 		End Sub
 
-		Private Sub chBxUpperLvlLogicExprFromNewLines_CheckedChanged(sender As Object, e As EventArgs)
-			Using New UpdateRegion(FormattingOptions)
+		Private Sub chBxUpperLvlLogicExprFromNewLines_CheckedChanged(sender As Object, e As EventArgs) Handles chBxUpperLvlLogicExprFromNewLines.CheckedChanged
+			Using TempUpdateRegion As UpdateRegion = New UpdateRegion(FormattingOptions)
 				If chBxUpperLvlLogicExprFromNewLines.Checked Then
 					SelectFormat.WhereFormat.NewLineAfter = SQLBuilderConditionFormatNewLine.TopmostLogical
 					SelectFormat.HavingFormat.NewLineAfter = SQLBuilderConditionFormatNewLine.TopmostLogical
@@ -112,8 +95,8 @@ Namespace PropertiesForm
 			End Using
 		End Sub
 
-		Private Sub chBxStartAllLogicExprFromNewLines_CheckedChanged(sender As Object, e As EventArgs)
-			Using New UpdateRegion(FormattingOptions)
+		Private Sub chBxStartAllLogicExprFromNewLines_CheckedChanged(sender As Object, e As EventArgs) Handles chBxStartAllLogicExprFromNewLines.CheckedChanged
+			Using TempUpdateRegion As UpdateRegion = New UpdateRegion(FormattingOptions)
 				If chBxStartAllLogicExprFromNewLines.Checked Then
 					SelectFormat.WhereFormat.NewLineAfter = SQLBuilderConditionFormatNewLine.AllLogical
 					SelectFormat.HavingFormat.NewLineAfter = SQLBuilderConditionFormatNewLine.AllLogical
@@ -133,10 +116,10 @@ Namespace PropertiesForm
 			End Using
 		End Sub
 
-		Private Sub radButStartLines_CheckedChanged(sender As Object, e As EventArgs)
-			Using New UpdateRegion(FormattingOptions)
+		Private Sub radButStartLines_CheckedChanged(sender As Object, e As EventArgs) Handles radButStartLines.CheckedChanged
+			Using TempUpdateRegion As UpdateRegion = New UpdateRegion(FormattingOptions)
 				If radButStartLines.Checked Then
-					If chBxUpperLvlLogicExprFromNewLines.Checked AndAlso Not chBxStartAllLogicExprFromNewLines.Checked Then
+					If chBxUpperLvlLogicExprFromNewLines.Checked AndAlso (Not chBxStartAllLogicExprFromNewLines.Checked) Then
 						SelectFormat.WhereFormat.NewLineBefore = SQLBuilderConditionFormatNewLine.TopmostLogical
 						SelectFormat.HavingFormat.NewLineBefore = SQLBuilderConditionFormatNewLine.TopmostLogical
 					End If
@@ -148,8 +131,8 @@ Namespace PropertiesForm
 			End Using
 		End Sub
 
-		Private Sub radButEndLines_CheckedChanged(sender As Object, e As EventArgs)
-			Using New UpdateRegion(FormattingOptions)
+		Private Sub radButEndLines_CheckedChanged(sender As Object, e As EventArgs) Handles radButEndLines.CheckedChanged
+			Using TempUpdateRegion As UpdateRegion = New UpdateRegion(FormattingOptions)
 				If radButEndLines.Checked Then
 					SelectFormat.WhereFormat.NewLineBefore = SQLBuilderConditionFormatNewLine.None
 					SelectFormat.HavingFormat.NewLineBefore = SQLBuilderConditionFormatNewLine.None
@@ -157,37 +140,37 @@ Namespace PropertiesForm
 			End Using
 		End Sub
 
-		Private Sub UpDownIndentForNestedConditions_ValueChanged(sender As Object, e As EventArgs)
-			Using New UpdateRegion(FormattingOptions)
-				SelectFormat.WhereFormat.IndentNestedConditions = CInt(Math.Truncate(UpDownIndentForNestedConditions.Value))
-				SelectFormat.HavingFormat.IndentNestedConditions = CInt(Math.Truncate(UpDownIndentForNestedConditions.Value))
+		Private Sub UpDownIndentForNestedConditions_ValueChanged(sender As Object, e As EventArgs) Handles UpDownIndentForNestedConditions.ValueChanged
+			Using TempUpdateRegion As UpdateRegion = New UpdateRegion(FormattingOptions)
+				SelectFormat.WhereFormat.IndentNestedConditions = CInt(Fix(UpDownIndentForNestedConditions.Value))
+				SelectFormat.HavingFormat.IndentNestedConditions = CInt(Fix(UpDownIndentForNestedConditions.Value))
 
-				SelectFormat.FromClauseFormat.JoinConditionFormat.IndentNestedConditions = CInt(Math.Truncate(UpDownIndentForNestedConditions.Value))
+				SelectFormat.FromClauseFormat.JoinConditionFormat.IndentNestedConditions = CInt(Fix(UpDownIndentForNestedConditions.Value))
 			End Using
 		End Sub
 
-		Private Sub chBxBranchConditionKeyWrdsFromNewLinesWhen_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub chBxBranchConditionKeyWrdsFromNewLinesWhen_CheckedChanged(sender As Object, e As EventArgs) Handles chBxBranchConditionKeyWrdsFromNewLinesWhen.CheckedChanged
 			SelectFormat.ConditionalOperatorsFormat.NewLineBeforeWhen = chBxBranchConditionKeyWrdsFromNewLinesWhen.Checked
 		End Sub
 
-		Private Sub chBxBranchConditionExprFromNewLines_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub chBxBranchConditionExprFromNewLines_CheckedChanged(sender As Object, e As EventArgs) Handles chBxBranchConditionExprFromNewLines.CheckedChanged
 			SelectFormat.ConditionalOperatorsFormat.NewLineAfterWhen = chBxBranchConditionExprFromNewLines.Checked
 		End Sub
 
-		Private Sub chBxResultKwrdsFromNewLinesThen_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub chBxResultKwrdsFromNewLinesThen_CheckedChanged(sender As Object, e As EventArgs) Handles chBxResultKwrdsFromNewLinesThen.CheckedChanged
 			SelectFormat.ConditionalOperatorsFormat.NewLineBeforeThen = chBxResultKwrdsFromNewLinesThen.Checked
 		End Sub
 
-		Private Sub chBxBranchResultExprsFromNewLines_CheckedChanged(sender As Object, e As EventArgs)
+		Private Sub chBxBranchResultExprsFromNewLines_CheckedChanged(sender As Object, e As EventArgs) Handles chBxBranchResultExprsFromNewLines.CheckedChanged
 			SelectFormat.ConditionalOperatorsFormat.NewLineAfterThen = chBxBranchResultExprsFromNewLines.Checked
 		End Sub
 
-		Private Sub UpDownBranchKeyWrdsIndent_ValueChanged(sender As Object, e As EventArgs)
-			SelectFormat.ConditionalOperatorsFormat.IndentBranch = CInt(Math.Truncate(UpDownBranchKeyWrdsIndent.Value))
+		Private Sub UpDownBranchKeyWrdsIndent_ValueChanged(sender As Object, e As EventArgs) Handles UpDownBranchKeyWrdsIndent.ValueChanged
+			SelectFormat.ConditionalOperatorsFormat.IndentBranch = CInt(Fix(UpDownBranchKeyWrdsIndent.Value))
 		End Sub
 
-		Private Sub UpDownExprsIndent_ValueChanged(sender As Object, e As EventArgs)
-			SelectFormat.ConditionalOperatorsFormat.IndentExpressions = CInt(Math.Truncate(UpDownExprsIndent.Value))
+		Private Sub UpDownExprsIndent_ValueChanged(sender As Object, e As EventArgs) Handles UpDownExprsIndent.ValueChanged
+			SelectFormat.ConditionalOperatorsFormat.IndentExpressions = CInt(Fix(UpDownExprsIndent.Value))
 		End Sub
 	End Class
 End Namespace

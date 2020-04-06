@@ -8,11 +8,6 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Collections.Generic
-Imports System.Drawing
-Imports System.IO
-Imports System.Text
-Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.Core.PropertiesEditors
 Imports ActiveQueryBuilder.View
@@ -21,10 +16,9 @@ Imports ActiveQueryBuilder.View.PropertiesEditors
 Imports ActiveQueryBuilder.View.WinForms.DatabaseSchemaView
 Imports ActiveQueryBuilder.View.WinForms.ExpressionEditor
 Imports ActiveQueryBuilder.View.WinForms.QueryView
-Imports Helpers = FullFeaturedMdiDemo.Common.Helpers
 
 Namespace PropertiesForm
-	Friend Partial Class QueryPropertiesForm
+	Partial Friend Class QueryPropertiesForm
 		Inherits Form
 		Private ReadOnly _linkToPage1 As IDictionary(Of Control, UserControl) = New Dictionary(Of Control, UserControl)()
 		Private ReadOnly _linkToPage2 As IDictionary(Of Control, UserControl) = New Dictionary(Of Control, UserControl)()
@@ -40,15 +34,16 @@ Namespace PropertiesForm
 		Private _structureOptionsChanged As Boolean = False
 
 		Private Sub RegisterPropertyPage(link As Control, propertiesObject As ObjectProperties)
-			Dim propertiesContainer As IPropertiesContainer = PropertiesFactory.GetPropertiesContainer(propertiesObject)
+			Dim propertiesContainer = PropertiesFactory.GetPropertiesContainer(propertiesObject)
 
 			' create property page control
-			Dim propertyPage As PropertiesBar = New PropertiesBar()
-            propertyPage.EditorsOptions.WideEditControlsMaxWidth = 225
-            propertyPage.EditorsOptions.WideEditControlsMinWidth = 100
-            propertyPage.EditorsOptions.ShowDescriptions = True
+			Dim propertyPage = New PropertiesBar()
+
+		    propertyPage.EditorsOptions.WideEditControlsMaxWidth = 255
+		    propertyPage.EditorsOptions.WideEditControlsMinWidth = 100
+		    propertyPage.EditorsOptions.ShowDescriptions = True
 			' set properties to property page
-			Dim propertiesControl as IPropertiesControl = DirectCast(propertyPage, IPropertiesControl)
+			Dim propertiesControl = CType(propertyPage, IPropertiesControl)
 			propertiesControl.SetProperties(propertiesContainer)
 
 			' register link -> propertyPage mapping
@@ -143,35 +138,35 @@ Namespace PropertiesForm
 			_childForm.TextEditorSqlOptions = _textEditorSqlOptions
 		End Sub
 
-		Private Sub QueryBuilderPropertiesForm_Paint(sender As Object, e As PaintEventArgs)
+		Private Sub QueryBuilderPropertiesForm_Paint(sender As Object, e As PaintEventArgs) Handles MyBase.Paint
 			Dim r As Rectangle = Rectangle.Inflate(panelQueryBuilder.Bounds, 1, 1)
 
 			e.Graphics.DrawRectangle(SystemPens.ControlDark, r)
 		End Sub
 
-		Private Sub SideMenu1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
+		Private Sub SideMenu1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles linkSqlGeneration.LinkClicked, linkBehaviorOptions.LinkClicked, linkDatabaseSchemaView.LinkClicked, linkDesignPane.LinkClicked, linkVisualOptions.LinkClicked, linkAddObjectDialog.LinkClicked, linkDatasourceOptions.LinkClicked, linkQueryColumnList.LinkClicked, linkQueryNavBar.LinkClicked, linkQueryView.LinkClicked, lbExpressionEditor.LinkClicked, lbTextEditor.LinkClicked, lbTextEditorSql.LinkClicked
 			If _currentSelectedLink1 IsNot Nothing Then
 				_currentSelectedLink1.LinkColor = Color.Black
 			End If
 
-			_currentSelectedLink1 = DirectCast(sender, LinkLabel)
+			_currentSelectedLink1 = CType(sender, LinkLabel)
 			_currentSelectedLink1.LinkColor = Color.Blue
 
 			SwitchPage1(_linkToPage1(_currentSelectedLink1))
 		End Sub
 
-		Private Sub SideMenu2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
+		Private Sub SideMenu2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles linkMain.LinkClicked, linkMainCommon.LinkClicked, linkMainExpressions.LinkClicked, linkCte.LinkClicked, linkCteCommon.LinkClicked, linkCteExpressions.LinkClicked, linkDerived.LinkClicked, linkDerivedCommon.LinkClicked, linkDerivedExpressions.LinkClicked, linkExpression.LinkClicked, linkExpressionCommon.LinkClicked, linkExpressionExpressions.LinkClicked
 			If _currentSelectedLink2 IsNot Nothing Then
 				_currentSelectedLink2.LinkColor = Color.Black
 			End If
 
-			_currentSelectedLink2 = DirectCast(sender, LinkLabel)
+			_currentSelectedLink2 = CType(sender, LinkLabel)
 			_currentSelectedLink2.LinkColor = Color.Blue
 
 			SwitchPage2(_linkToPage2(_currentSelectedLink2))
 		End Sub
 
-		Private Sub flowLayoutPanel_Paint(sender As Object, e As PaintEventArgs)
+		Private Sub flowLayoutPanel_Paint(sender As Object, e As PaintEventArgs) Handles flowLayoutPanel1.Paint, flowLayoutPanel2.Paint
 			Dim p As New Pen(SystemColors.ControlDark, 1)
 			Dim first As New Point(flowLayoutPanel1.ClientRectangle.Right - 1, flowLayoutPanel1.ClientRectangle.Top + 10)
 			Dim second As New Point(flowLayoutPanel1.ClientRectangle.Right - 1, flowLayoutPanel1.ClientRectangle.Bottom - 10)
@@ -199,7 +194,7 @@ Namespace PropertiesForm
 			panelPages2.ResumeLayout()
 		End Sub
 
-		Private Sub buttonLoad_Click(sender As Object, e As System.EventArgs)
+		Private Sub buttonLoad_Click(sender As Object, e As EventArgs) Handles buttonLoad.Click
 			Using dialog = New OpenFileDialog()
 				If dialog.ShowDialog() <> DialogResult.OK Then
 					Return
@@ -210,7 +205,7 @@ Namespace PropertiesForm
 			End Using
 		End Sub
 
-		Private Sub buttonSave_Click(sender As Object, e As System.EventArgs)
+		Private Sub buttonSave_Click(sender As Object, e As EventArgs) Handles buttonSave.Click
 			Using catalog = New SaveFileDialog()
 				If catalog.ShowDialog() <> DialogResult.OK Then
 					Return
@@ -221,7 +216,7 @@ Namespace PropertiesForm
 			End Using
 		End Sub
 
-		Private Sub QueryPropertiesForm_FormClosing(sender As Object, e As FormClosingEventArgs)
+		Private Sub QueryPropertiesForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
 			Program.Settings.Options = _childForm.GetOptions().SerializeToString()
 			Program.Settings.Save()
 

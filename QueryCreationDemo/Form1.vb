@@ -8,19 +8,18 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Collections.Generic
 Imports System.Linq
-Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
+Imports Forms.QueryInformationForms
+
 
 Partial Public Class Form1
     Inherits Form
+
     Private ReadOnly _query As SQLQuery
-
     Public Sub New()
-        Dim sqlContext As New SQLContext()
+        Dim sqlContext As SQLContext = New SQLContext()
         sqlContext.LoadingOptions.OfflineMode = True
-
         _query = New SQLQuery(sqlContext)
         AddHandler _query.SQLUpdated, AddressOf Query_SQLUpdated
         InitializeComponent()
@@ -28,36 +27,34 @@ Partial Public Class Form1
         comboBoxSyntax.SelectedItem = "MS SQL Server"
     End Sub
 
-    Private Sub Query_SQLUpdated(sender As Object, e As EventArgs)
+    Private Sub Query_SQLUpdated(ByVal sender As Object, ByVal e As EventArgs)
         ' at this stage you can get simple unformatted query text...
         'SqlBox.Text = _query.SQL;
 
         ' ... or format the query text with SQL formatter
-        Dim formattingOptions As New SQLFormattingOptions() With {
-            .KeywordFormat = KeywordFormat.UpperCase
-        }
+        Dim formattingOptions As SQLFormattingOptions = New SQLFormattingOptions With {.KeywordFormat = KeywordFormat.UpperCase}
         Dim sql As String = FormattedSQLBuilder.GetSQL(_query.QueryRoot, formattingOptions)
 
         ' put the result SQL query text to the text box
         SqlBox.Text = sql
     End Sub
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs)
+    Private Sub Form1_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
         FillMetadataContainer()
         comboBoxExamples.SelectedIndex = 0
     End Sub
 
-    Private Sub buttonQueryStatistics_Click(sender As Object, e As EventArgs)
+    Private Sub buttonQueryStatistics_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonQueryStatistics.Click
         QueryStatistics()
     End Sub
 
     ' HOWTO: Fill metadata container with custom objects
     Public Sub FillMetadataContainer()
         Dim database As MetadataNamespace = _query.SQLContext.MetadataContainer.AddDatabase("MyDB")
-        database.[Default] = True
+        database.Default = True
         ' hides the default database prefix from object names
         Dim schema As MetadataNamespace = database.AddSchema("MySchema")
-        schema.[Default] = True
+        schema.Default = True
         ' hides the default schema prefix from object names
         ' create table
         Dim tableOrders As MetadataObject = schema.AddTable("Orders")
@@ -74,13 +71,13 @@ Partial Public Class Form1
         tableCustomers.AddField("CustomerAddress")
 
         Dim fieldCustValue As MetadataField = tableCustomers.AddField("CustomerValue")
-        fieldCustValue.FieldType = Data.DbType.[Double]
+        fieldCustValue.FieldType = DbType.Double
 
         Dim fieldCustBirthDate As MetadataField = tableCustomers.AddField("CustomerBirthDay")
-        fieldCustBirthDate.FieldType = Data.DbType.DateTime
+        fieldCustBirthDate.FieldType = DbType.DateTime
 
         Dim fieldCustCity As MetadataField = tableCustomers.AddField("City")
-        fieldCustCity.FieldType = Data.DbType.[String]
+        fieldCustCity.FieldType = DbType.String
         fieldCustCity.Size = 50
 
         ' add a relation between these two tables
@@ -112,114 +109,107 @@ Partial Public Class Form1
             _query.SQL = SqlBox.Text
         Catch e As Exception
             MessageBox.Show(e.Message, "Parsing error")
-
-
             Return
         End Try
 
         Dim qs As QueryStatistics = _query.QueryStatistics
 
-        Dim stats As String = "Used Objects (" & qs.UsedDatabaseObjects.Count & "):" & vbCr & vbLf
+        Dim stats = "Used Objects (" & qs.UsedDatabaseObjects.Count & "):" & vbCrLf
+
         For Each statisticsDatabaseObject As StatisticsDatabaseObject In qs.UsedDatabaseObjects
-            stats += vbCr & vbLf & statisticsDatabaseObject.ObjectName.QualifiedName
-        Next
+            stats += vbCrLf & statisticsDatabaseObject.ObjectName.QualifiedName
+        Next statisticsDatabaseObject
 
-        stats += vbCr & vbLf & vbCr & vbLf & "Used Columns (" & qs.UsedDatabaseObjectFields.Count & "):" & vbCr & vbLf
+        stats += vbCrLf & vbCrLf & "Used Columns (" & qs.UsedDatabaseObjectFields.Count & "):" & vbCrLf
+
         For Each statisticsField As StatisticsField In qs.UsedDatabaseObjectFields
-            stats += vbCr & vbLf & statisticsField.FullName.QualifiedName
-        Next
+            stats += vbCrLf & statisticsField.FullName.QualifiedName
+        Next statisticsField
 
-        stats += vbCr & vbLf & vbCr & vbLf & "Output Expressions (" & qs.OutputColumns.Count & "):" & vbCr & vbLf
+        stats += vbCrLf & vbCrLf & "Output Expressions (" & qs.OutputColumns.Count & "):" & vbCrLf
+
         For Each statisticsOutputColumn As StatisticsOutputColumn In qs.OutputColumns
-            stats += vbCr & vbLf & statisticsOutputColumn.Expression
-        Next
+            stats += vbCrLf & statisticsOutputColumn.Expression
+        Next statisticsOutputColumn
 
-        Using f As New QueryStatisticsForm()
-            f.textBox.Text = stats
-            f.ShowDialog()
-        End Using
-
+        Dim f = New QueryStatisticsForm(stats)
+        f.ShowDialog(Me)
     End Sub
 
-    Private Sub comboBoxSyntax_SelectedIndexChanged(sender As Object, e As EventArgs)
-        Select Case DirectCast(comboBoxSyntax.SelectedItem, String)
+    Private Sub comboBoxSyntax_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs) Handles comboBoxSyntax.SelectedIndexChanged
+        Select Case CStr(comboBoxSyntax.SelectedItem)
             Case "Advantage"
                 _query.SQLContext.SyntaxProvider = New AdvantageSyntaxProvider()
-                Exit Select
+
             Case "ANSI SQL-2003"
                 _query.SQLContext.SyntaxProvider = New SQL2003SyntaxProvider()
-                Exit Select
+
             Case "ANSI SQL-89"
                 _query.SQLContext.SyntaxProvider = New SQL89SyntaxProvider()
-                Exit Select
+
             Case "ANSI SQL-92"
                 _query.SQLContext.SyntaxProvider = New SQL92SyntaxProvider()
-                Exit Select
+
             Case "Firebird"
                 _query.SQLContext.SyntaxProvider = New FirebirdSyntaxProvider()
-                Exit Select
+
             Case "IBM DB2"
                 _query.SQLContext.SyntaxProvider = New DB2SyntaxProvider()
-                Exit Select
+
             Case "IBM Informix"
                 _query.SQLContext.SyntaxProvider = New InformixSyntaxProvider()
-                Exit Select
+
             Case "MS Access"
                 _query.SQLContext.SyntaxProvider = New MSAccessSyntaxProvider()
-                Exit Select
+
             Case "MS SQL Server"
                 _query.SQLContext.SyntaxProvider = New MSSQLSyntaxProvider()
-                Exit Select
+
             Case "MySQL"
                 _query.SQLContext.SyntaxProvider = New MySQLSyntaxProvider()
-                Exit Select
+
             Case "Oracle"
                 _query.SQLContext.SyntaxProvider = New OracleSyntaxProvider()
-                Exit Select
+
             Case "PostgreSQL"
                 _query.SQLContext.SyntaxProvider = New PostgreSQLSyntaxProvider()
-                Exit Select
+
             Case "SQLite"
                 _query.SQLContext.SyntaxProvider = New SQLiteSyntaxProvider()
-                Exit Select
+
             Case "Sybase"
                 _query.SQLContext.SyntaxProvider = New SybaseSyntaxProvider()
-                Exit Select
+
             Case "Teradata"
                 _query.SQLContext.SyntaxProvider = New TeradataSyntaxProvider()
-                Exit Select
+
             Case "VistaDB"
                 _query.SQLContext.SyntaxProvider = New VistaDBSyntaxProvider()
-                Exit Select
+
             Case Else
                 _query.SQLContext.SyntaxProvider = New SQL92SyntaxProvider()
-                Exit Select
+
         End Select
     End Sub
 
-    Private Sub comboBoxExamples_SelectedIndexChanged(sender As Object, e As EventArgs)
+    Private Sub comboBoxExamples_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs) Handles comboBoxExamples.SelectedIndexChanged
         _query.Clear()
 
         ' HOWTO: Create a query programmatically
         Select Case comboBoxExamples.SelectedIndex
             Case 0
                 LoadQuerySimple()
-                Exit Select
             Case 1
                 LoadQueryWithLeftJoin()
-                Exit Select
             Case 2
                 LoadQueryWithAggregateAndGroup()
-                Exit Select
             Case 3
                 LoadQueryWithDerivedTableAndCte()
-                Exit Select
             Case 4
                 LoadQueryWithUnions()
-                Exit Select
             Case 5
                 LoadQueryWithSubQueryExpression()
-                Exit Select
+
             Case Else
                 Throw New ArgumentOutOfRangeException()
         End Select
@@ -303,19 +293,14 @@ Partial Public Class Form1
         Dim unionSubQuery As UnionSubQuery = _query.QueryRoot.FirstSelect()
 
         ' Derived Table
-        Dim fq As New SQLFromQuery(_query.SQLContext) With {
-            .[Alias] = New SQLAliasObjectAlias(_query.SQLContext) With {
-                .[Alias] = _query.QueryRoot.CreateUniqueSubQueryName()
-            },
-            .SubQuery = New SQLSubSelectStatement(_query.SQLContext)
-        }
+        Dim fq As New SQLFromQuery(_query.SQLContext) With {.Alias = New SQLAliasObjectAlias(_query.SQLContext) With {.Alias = _query.QueryRoot.CreateUniqueSubQueryName()}, .SubQuery = New SQLSubSelectStatement(_query.SQLContext)}
 
-        Dim sqse As SQLSubQuerySelectExpression = New SQLSubQuerySelectExpression(_query.SQLContext)
+        Dim sqse As New SQLSubQuerySelectExpression(_query.SQLContext)
         fq.SubQuery.Add(sqse)
         sqse.SelectItems = New SQLSelectItems(_query.SQLContext)
         sqse.From = New SQLFromClause(_query.SQLContext)
 
-        Dim dataSourceQuery As DataSourceQuery = DirectCast(_query.AddObject(unionSubQuery, fq, GetType(DataSourceQuery)), DataSourceQuery)
+        Dim dataSourceQuery As DataSourceQuery = CType(_query.AddObject(unionSubQuery, fq, GetType(DataSourceQuery)), DataSourceQuery)
         Dim usc As UnionSubQuery = dataSourceQuery.SubQuery.FirstSelect()
         Dim dsDerivedTable As DataSource = _query.AddObject(usc, "MyDB.MySchema.SalesOrderHeader")
 
@@ -326,18 +311,18 @@ Partial Public Class Form1
         ciDerivedTable2.ConditionStrings(0) = "> 25"
 
         ' CTE
-        Dim qn As SQLQualifiedName = New SQLQualifiedName(_query.SQLContext)
+        Dim qn As New SQLQualifiedName(_query.SQLContext)
         If Not unionSubQuery.QueryRoot.SQLContext.SyntaxProvider.IsSupportCTE() Then
             Return
         End If
 
-        Dim dataSourceCte As DataSource
+        Dim dataSourceCte As DataSource = Nothing
         Try
             Dim withClauseItemName As AstTokenIdentifier = _query.QueryRoot.CreateUniqueCTEName("CTE")
 
             qn.Add(withClauseItemName)
 
-            Dim parentSubQuery As SubQuery = TryCast(If(unionSubQuery.ParentSubQuery, unionSubQuery.QueryRoot), SubQuery)
+            Dim parentSubQuery As SubQuery = If(unionSubQuery.ParentSubQuery, TryCast(unionSubQuery.QueryRoot, SubQuery))
 
             If parentSubQuery.IsMainQuery Then
                 _query.QueryRoot.AddNewCTE(Nothing, withClauseItemName)
@@ -408,8 +393,8 @@ Partial Public Class Form1
         Dim usqAst As SQLSubQuerySelectExpression = unionSubQuery.ResultQueryAST
         usqAst.RestoreColumnPrefixRecursive(True)
 
-        Dim lCte As List(Of SQLWithClauseItem) = New List(Of SQLWithClauseItem)()
-        Dim lFromObj As List(Of SQLFromSource) = New List(Of SQLFromSource)()
+        Dim lCte As New List(Of SQLWithClauseItem)()
+        Dim lFromObj As New List(Of SQLFromSource)()
         unionSubQuery.GatherPrepareAndFixupContext(lCte, lFromObj, False)
         usqAst.PrepareAndFixupRecursive(lCte, lFromObj)
 

@@ -8,11 +8,9 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Windows.Forms
-
-Public Partial Class NoConnectionLabel
-	Inherits UserControl
-	Public Sub New()
-		InitializeComponent()
-	End Sub
-End Class
+	Partial Public Class NoConnectionLabel
+		Inherits UserControl
+		Public Sub New()
+			InitializeComponent()
+		End Sub
+	End Class

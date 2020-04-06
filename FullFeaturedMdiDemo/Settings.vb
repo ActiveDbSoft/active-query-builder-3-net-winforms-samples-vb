@@ -8,7 +8,7 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Namespace Properties
+Namespace My
 	' This class allows you to handle specific events on the settings class:
 	'  The SettingChanging event is raised before a setting's value is changed.
 	'  The PropertyChanged event is raised after a setting's value is changed.
@@ -18,10 +18,10 @@ Namespace Properties
 		Public Sub New()
 			' // To add event handlers for saving and changing settings, uncomment the lines below:
 			'
-			AddHandler Me.SettingChanging, AddressOf Me.SettingChangingEventHandler
+			AddHandler Me.SettingChanging, AddressOf SettingChangingEventHandler
 			'
-				'
-			AddHandler Me.SettingsSaving, AddressOf Me.SettingsSavingEventHandler
+			AddHandler Me.SettingsSaving, AddressOf SettingsSavingEventHandler
+			'
 		End Sub
 
 		Private Sub SettingChangingEventHandler(sender As Object, e As System.Configuration.SettingChangingEventArgs)

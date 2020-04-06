@@ -8,35 +8,31 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Imports System.Collections.Generic
 Imports System.ComponentModel
-Imports System.Data
-Imports System.Drawing
 Imports System.Text
-Imports System.Windows.Forms
-
 Imports IBM.Data.DB2
 
-Public Partial Class DB2ConnectionForm
-	Inherits Form
-	Public ConnectionString As String = ""
+
+Partial Public Class DB2ConnectionForm
+    Inherits Form
+    Public ConnectionString As String = ""
 
 
-	Public Sub New()
-		InitializeComponent()
-	End Sub
+    Public Sub New()
+        InitializeComponent()
+    End Sub
 
-	Private Sub buttonConnect_Click(sender As Object, e As EventArgs)
-		Dim builder As New DB2ConnectionStringBuilder()
+    Private Sub buttonConnect_Click(sender As Object, e As EventArgs) Handles buttonConnect.Click
+        Dim builder As New DB2ConnectionStringBuilder()
 
-		builder.Server = textboxServer.Text
-		builder.Database = textboxDatabase.Text
-		builder.UserID = textboxUser.Text
+        builder.Server = textboxServer.Text
+        builder.Database = textboxDatabase.Text
+        builder.UserID = textboxUser.Text
 
-		If textboxPassword.Text.Length > 0 Then
-			builder.Password = textboxPassword.Text
-		End If
+        If textboxPassword.Text.Length > 0 Then
+            builder.Password = textboxPassword.Text
+        End If
 
-		Me.ConnectionString = builder.ConnectionString
-	End Sub
+        Me.ConnectionString = builder.ConnectionString
+    End Sub
 End Class

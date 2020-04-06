@@ -8,7 +8,7 @@
 '       RESTRICTIONS.                                               '
 '*******************************************************************'
 
-Namespace FullFeaturedDemo.Properties
+Namespace FullFeaturedDemo
 	' This class allows you to handle specific events on the settings class:
 	'  The SettingChanging event is raised before a setting's value is changed.
 	'  The PropertyChanged event is raised after a setting's value is changed.
@@ -18,17 +18,17 @@ Namespace FullFeaturedDemo.Properties
 		Public Sub New()
 			' // To add event handlers for saving and changing settings, uncomment the lines below:
 			'
-			AddHandler Me.SettingChanging, AddressOf Me.SettingChangingEventHandler
+			AddHandler Me.SettingChanging, AddressOf SettingChangingEventHandler
 			'
-				'
-			AddHandler Me.SettingsSaving, AddressOf Me.SettingsSavingEventHandler
+			AddHandler Me.SettingsSaving, AddressOf SettingsSavingEventHandler
+			'
 		End Sub
 
-		Private Sub SettingChangingEventHandler(sender As Object, e As System.Configuration.SettingChangingEventArgs)
+		Private Sub SettingChangingEventHandler(ByVal sender As Object, ByVal e As System.Configuration.SettingChangingEventArgs)
 			' Add code to handle the SettingChangingEvent event here.
 		End Sub
 
-		Private Sub SettingsSavingEventHandler(sender As Object, e As System.ComponentModel.CancelEventArgs)
+		Private Sub SettingsSavingEventHandler(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs)
 			' Add code to handle the SettingsSaving event here.
 		End Sub
 	End Class
