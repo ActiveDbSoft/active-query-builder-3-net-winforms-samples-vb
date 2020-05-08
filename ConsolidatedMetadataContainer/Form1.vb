@@ -12,6 +12,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Data.SqlClient
+Imports System.Text
 Imports System.Windows.Forms
 Imports ActiveQueryBuilder.Core
 
@@ -71,6 +72,52 @@ Namespace ConsolidatedMetadataContainer
 
         Private Sub QueryBuilderOnSqlUpdated(ByVal sender As Object, ByVal e As EventArgs)
             textSql.Text = queryBuilder.FormattedSQL
+        End Sub
+
+        Private Sub ButtonStats_Click(sender As Object, e As EventArgs) Handles ButtonStats.Click
+            Dim result As new StringBuilder()
+
+            ' collect all subQueries
+            Dim subQueries = queryBuilder.SQLQuery.QueryRoot.GetChildrenRecursive(Of SubQuery)(true)
+            ' process main query also
+            subQueries.Insert(0, queryBuilder.SQLQuery.QueryRoot)
+
+            ' OR collect unionSubQueries (single SELECT expressions)
+            'Dim subQueries = queryBuilder.SQLQuery.QueryRoot.GetChildrenRecursive(Of UnionSubQuery)(true);
+
+            For Each subQuery As SubQuery In subQueries
+                result.AppendLine()
+                result.AppendLine("subQuery: " + subQuery.SQL)
+                ' collect all dataSources in this subQuery
+                Dim dataSources = subQuery.GetChildrenRecursive(Of DataSourceObject)(false)
+
+                For Each dataSource As DataSourceObject In dataSources
+                    result.AppendLine(dataSource.NameInQuery)
+
+                    Dim metadataObject = dataSource.MetadataObject
+
+                    ' metadataObject will be null in 2 cases:
+                    ' 1. dataSource is CTE reference
+                    If Not (dataSource.SubQueryCTE Is Nothing)
+                        result.AppendLine("    CTE reference")
+                        Continue For
+                    End If
+                    ' 2. no object with such name in MetadataContainer
+                    if metadataObject is Nothing
+                        Using fullName = new SQLQualifiedName(queryBuilder.SQLContext)
+                            fullName.Assign(dataSource.DatabaseObject)
+                            result.AppendLine("    no such object in DB: " + fullName.GetSQL(queryBuilder.SQLGenerationOptions))
+                        End Using
+
+                        Continue For 
+                    End If
+
+                    result.AppendLine("    object name: " + metadataObject.GetQualifiedNameSQL(Nothing, queryBuilder.SQLGenerationOptions))
+                    result.AppendLine("    connection: " + metadataObject.Connection.Name)
+                Next
+            Next
+
+            MessageBox.Show(result.ToString())
         End Sub
     End Class
 End Namespace

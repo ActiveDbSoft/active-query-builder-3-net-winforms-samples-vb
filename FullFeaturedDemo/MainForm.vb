@@ -17,6 +17,7 @@ Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.Core.QueryTransformer
 Imports ActiveQueryBuilder.View.WinForms
 Imports Dailogs
+Imports Forms
 Imports Forms.QueryInformationForms
 Imports QueryBuilderProperties
 Imports Helpers = ActiveQueryBuilder.Core.Helpers
@@ -821,9 +822,9 @@ Partial Public Class MainForm
         teSql.Focus()
     End Sub
 
-    Private Sub editUserExpressionToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        Using form = New EditUserExpressionForm()
-            form.LoadUserExpressions(queryBuilder1.QueryView.UserPredefinedConditions)
+    Private Sub editUserExpressionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPredefinedConditionsToolStripMenuItem.Click
+        Using form As EditUserPredefinedConditionForm = New EditUserPredefinedConditionForm()
+            form.LoadUserConditions(queryBuilder1.QueryView)
             form.StartPosition = FormStartPosition.CenterParent
             form.ShowDialog(Me)
         End Using

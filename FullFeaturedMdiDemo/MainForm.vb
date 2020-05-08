@@ -19,6 +19,7 @@ Imports ActiveQueryBuilder.View
 Imports ActiveQueryBuilder.View.EventHandlers.MetadataStructureItems
 Imports ActiveQueryBuilder.View.WinForms
 Imports Dailogs
+Imports Forms
 
 Partial Public Class MainForm
     Inherits Form
@@ -214,6 +215,7 @@ Partial Public Class MainForm
         tsmiLoadMetadataFromXML.Enabled = (_sqlContext IsNot Nothing)
         tsmiSaveMetadataToXML.Enabled = (_sqlContext IsNot Nothing)
         propertiesToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing)
+        EditPredefinedConditionsToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing)
         propertiesToolStripMenuItem.Text = If(propertiesToolStripMenuItem.Enabled, "Properties", "Properties (open a query to edit)")
 
         queryPropertiesToolStripMenuItem.Enabled = (ActiveMdiChild IsNot Nothing)
@@ -815,5 +817,17 @@ Partial Public Class MainForm
 
     Private Sub MainForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Connect()
+    End Sub
+
+    Private Sub EditPredefinedConditionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPredefinedConditionsToolStripMenuItem.Click
+       Dim childForm = TryCast(ActiveMdiChild, ChildForm)
+
+        If childForm is Nothing Then Return
+
+        Using form  = New EditUserPredefinedConditionsForm()
+            form.LoadUserConditions(childForm.QueryView)
+            form.StartPosition = FormStartPosition.CenterParent
+            form.ShowDialog(Me)
+        End Using
     End Sub
 End Class

@@ -141,7 +141,6 @@ Partial Public Class Form1
         Me.queryBuilder1.Dock = DockStyle.Fill
         Me.queryBuilder1.ExpressionEditor = Me.expressionEditor1
         Me.queryBuilder1.Location = New Point(0, 0)
-        Me.queryBuilder1.MetadataStructureOptions.AllowFavourites = True
         Me.queryBuilder1.Name = "queryBuilder1"
         Me.queryBuilder1.PanesConfigurationOptions.DatabaseSchemaViewDock = ActiveQueryBuilder.View.SidePanelDockStyle.Left
         Me.queryBuilder1.PanesConfigurationOptions.DatabaseSchemaViewWidth = 201
