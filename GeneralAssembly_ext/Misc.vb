@@ -66,7 +66,14 @@ Public Class Misc
         GetType(ODBCConnectionDescriptor),
         GetType(OLEDBConnectionDescriptor),
         GetType(SQLiteConnectionDescriptor),
-        GetType(FirebirdConnectionDescriptor)
+        GetType(FirebirdConnectionDescriptor),
+        GetType(FirebirdConnectionDescriptor),
+        GetType(VistaDB5ConnectionDescriptor),
+        GetType(DB2ConnectionDescriptor),
+        GetType(AdvantageConnectionDescriptor),
+        GetType(SybaseConnectionDescriptor),
+        GetType(InformixConnectionDescriptor),
+        GetType(MSSQLCEConnectionDescriptor)
     }
     Public Shared ReadOnly ConnectionDescriptorNames As List(Of String) = New List(Of String) From {
         "MS Access",
@@ -76,25 +83,37 @@ Public Class Misc
         "MySQL",
         "Oracle Native",
         "PostgreSQL",
-        "Generic ODBC Connection",
-        "Generic OLEDB Connection",
+        "ODBC",
+        "OLEDB",
         "SQLite",
-        "Firebird"
+        "Firebird",
+        "VistaDB5",
+        "DB2",
+        "Advantage",
+        "Sybase",
+        "Informix",
+        "MSSQLCE"
     }
 End Class
 
 Public Enum ConnectionTypes
+    MSAccess
+    Excel
     MSSQL
     MSSQLAzure
-    MSAccess
-    Oracle
     MySQL
+    OracleNative
     PostgreSQL
-    OLEDB
     ODBC
+    OLEDB
     SQLite
     Firebird
-    Excel
+    VistaDB5
+    DB2
+    Advantage
+    Sybase
+    Informix
+    MSSQLCE
 End Enum
 
 <Serializable>
@@ -230,7 +249,7 @@ Public Class ConnectionInfo
             Return _type
         End Get
         Set
-            _type = value
+            _type = Value
             CreateConnectionByType()
 
             If Not String.IsNullOrEmpty(SyntaxProviderName) AndAlso IsGenericConnection() Then
@@ -242,7 +261,7 @@ Public Class ConnectionInfo
     Public Sub New(descriptor As BaseConnectionDescriptor, name As String, typeConnection As ConnectionTypes, connectionString As String)
         Me.Name = name
         ConnectionDescriptor = descriptor
-        type = typeConnection
+        Type = typeConnection
         connectionString = connectionString
         IsXmlFile = False
         ConnectionDescriptor.ConnectionString = connectionString
@@ -253,7 +272,7 @@ Public Class ConnectionInfo
 
     Public Sub New(xmlPath As String, name As String, typeConnection As ConnectionTypes)
         Me.Name = name
-        Me.XmlPath = xmlPath
+        Me.XMLPath = xmlPath
         Type = typeConnection
         IsXmlFile = True
         StructureOptions = New MetadataStructureOptions With {
@@ -284,7 +303,7 @@ Public Class ConnectionInfo
                 Case ConnectionTypes.MySQL
                     ConnectionDescriptor = New MySQLConnectionDescriptor()
                     Return
-                Case ConnectionTypes.Oracle
+                Case ConnectionTypes.OracleNative
                     ConnectionDescriptor = New OracleNativeConnectionDescriptor()
                     Return
                 Case ConnectionTypes.PostgreSQL
@@ -304,6 +323,24 @@ Public Class ConnectionInfo
                     Return
                 Case ConnectionTypes.Excel
                     ConnectionDescriptor = New ExcelConnectionDescriptor()
+                    Return
+                Case ConnectionTypes.VistaDB5
+                    ConnectionDescriptor = New VistaDB5ConnectionDescriptor()
+                    Return
+                Case ConnectionTypes.DB2
+                    ConnectionDescriptor = New DB2ConnectionDescriptor()
+                    Return
+                Case ConnectionTypes.Advantage
+                    ConnectionDescriptor = New AdvantageConnectionDescriptor()
+                    Return
+                Case ConnectionTypes.Sybase
+                    ConnectionDescriptor = New SybaseConnectionDescriptor()
+                    Return
+                Case ConnectionTypes.Informix
+                    ConnectionDescriptor = New InformixConnectionDescriptor()
+                    Return
+                Case ConnectionTypes.MSSQLCE
+                    ConnectionDescriptor = New MSSQLCEConnectionDescriptor()
                     Return
             End Select
 
@@ -337,7 +374,7 @@ Public Class ConnectionInfo
         End If
 
         If descriptorType = GetType(OracleNativeConnectionDescriptor) Then
-            Return ConnectionTypes.Oracle
+            Return ConnectionTypes.OracleNative
         End If
 
         If descriptorType = GetType(ODBCConnectionDescriptor) Then
@@ -354,6 +391,25 @@ Public Class ConnectionInfo
 
         If descriptorType = GetType(SQLiteConnectionDescriptor) Then
             Return ConnectionTypes.SQLite
+        End If
+
+        If (descriptorType = GetType(VistaDB5ConnectionDescriptor)) Then
+            Return ConnectionTypes.VistaDB5
+        End If
+        If (descriptorType = GetType(DB2ConnectionDescriptor)) Then
+            Return ConnectionTypes.DB2
+        End If
+        If (descriptorType = GetType(AdvantageConnectionDescriptor)) Then
+            Return ConnectionTypes.Advantage
+        End If
+        If (descriptorType = GetType(SybaseConnectionDescriptor)) Then
+            Return ConnectionTypes.Sybase
+        End If
+        If (descriptorType = GetType(InformixConnectionDescriptor)) Then
+            Return ConnectionTypes.Informix
+        End If
+        If (descriptorType = GetType(MSSQLCEConnectionDescriptor)) Then
+            Return ConnectionTypes.MSSQLCE
         End If
 
         Return ConnectionTypes.MSSQL

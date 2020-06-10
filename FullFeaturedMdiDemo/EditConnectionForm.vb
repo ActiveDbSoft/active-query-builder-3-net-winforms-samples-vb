@@ -138,7 +138,7 @@ Partial Public Class EditConnectionForm
     End Sub
 
     Private Function GetSelectedDescriptorType() As Type
-        Return ActiveQueryBuilder.Core.Helpers.ConnectionDescriptorList(cbConnectionType.SelectedIndex)
+        Return  Misc.ConnectionDescriptorList(cbConnectionType.SelectedIndex)
     End Function
 
     Private Function CreateConnectionDescriptor(type As Type) As BaseConnectionDescriptor
