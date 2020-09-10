@@ -82,13 +82,13 @@ Public Class Options
             Using xmlBuilder = New XmlDescriptionBuilder(stream)
                 Dim service = New OptionsSerializationService(xmlBuilder) With {.SerializeDefaultValues = True}
                 XmlSerializerExtensions.Builder = xmlBuilder
-                Dim root = xmlBuilder.BeginObject("Options")
-                For Each [option] In _options
-                    Dim optionHandle = xmlBuilder.BeginObjectProperty(root, [option].GetType().Name)
-                    service.EncodeObject(optionHandle, [option])
-                    xmlBuilder.EndObjectProperty(optionHandle)
-                Next [option]
-                xmlBuilder.EndObject(root)
+                Using root = xmlBuilder.BeginObject("Options")
+                    For Each [option] In _options
+                        Using optionHandle = xmlBuilder.BeginObjectProperty(root, [option].GetType().Name)
+                            service.EncodeObject(optionHandle, [option])
+                        End Using
+                    Next [option]
+                End Using
             End Using
 
             stream.Position = 0
@@ -139,60 +139,60 @@ Public Class Options
                 Dim service = New OptionsSerializationService(xmlBuilder) With {.SerializeDefaultValues = True}
                 Dim metadataService = New MetadataSerializationService(xmlBuilder)
                 XmlSerializerExtensions.Builder = xmlBuilder
-                Dim root = xmlBuilder.BeginObject("Options")
-                ' Behavior options
-                Dim behaviorHandle = xmlBuilder.BeginObjectProperty(root, Constants.BehaviorOptionsTag)
-                service.EncodeObject(behaviorHandle, withOptions.BehaviorOptions)
-                xmlBuilder.EndObjectProperty(behaviorHandle)
-                ' Database view options
-                Dim dbViewOptionsHandle = xmlBuilder.BeginObjectProperty(root, Constants.DatabaseSchemaViewOptionsTag)
-                service.EncodeObject(dbViewOptionsHandle, dbView.Options)
-                xmlBuilder.EndObjectProperty(dbViewOptionsHandle)
-                ' DesignPaneOptions
-                Dim designPaneOptionsHandle = xmlBuilder.BeginObjectProperty(root, Constants.DesignPaneOptionsTag)
-                service.EncodeObject(designPaneOptionsHandle, withOptions.DesignPaneOptions)
-                xmlBuilder.EndObjectProperty(designPaneOptionsHandle)
-                ' VisualOptions
-                Dim visualOptionsHandle = xmlBuilder.BeginObjectProperty(root, Constants.VisualOptionsTag)
-                service.EncodeObject(visualOptionsHandle, withOptions.VisualOptions)
-                xmlBuilder.EndObjectProperty(visualOptionsHandle)
-                ' AddObjectDialogOptions
-                Dim addObjectDialogHandle = xmlBuilder.BeginObjectProperty(root, Constants.AddObjectDialogOptionsTag)
-                service.EncodeObject(addObjectDialogHandle, withOptions.AddObjectDialogOptions)
-                xmlBuilder.EndObjectProperty(addObjectDialogHandle)
-                ' DataSourceOptions
-                Dim dataSourceOptionsHandle = xmlBuilder.BeginObjectProperty(root, "DataSourceOptions")
-                service.EncodeObject(dataSourceOptionsHandle, withOptions.DataSourceOptions)
-                xmlBuilder.EndObjectProperty(dataSourceOptionsHandle)
-                ' MetadataLoadingOptions
-                Dim metadataLoadingOptionsHandle = xmlBuilder.BeginObjectProperty(root, "MetadataLoadingOptions")
-                metadataService.Encode(metadataLoadingOptionsHandle, withOptions.MetadataLoadingOptions)
-                xmlBuilder.EndObjectProperty(metadataLoadingOptionsHandle)
-                ' MetadataStructureOptions
-                Dim metadataStructureOptionsHandle = xmlBuilder.BeginObjectProperty(root, "MetadataStructureOptions")
-                service.EncodeObject(metadataStructureOptionsHandle, withOptions.MetadataStructureOptions)
-                xmlBuilder.EndObjectProperty(metadataStructureOptionsHandle)
-                ' QueryColumnListOptions
-                Dim queryColumnListOptionsHandle = xmlBuilder.BeginObjectProperty(root, "QueryColumnListOptions")
-                service.EncodeObject(queryColumnListOptionsHandle, withOptions.QueryColumnListOptions)
-                xmlBuilder.EndObjectProperty(queryColumnListOptionsHandle)
-                ' QueryNavBarOptions
-                Dim queryNavBarOptionsHandle = xmlBuilder.BeginObjectProperty(root, "QueryNavBarOptions")
-                service.EncodeObject(queryNavBarOptionsHandle, withOptions.QueryNavBarOptions)
-                xmlBuilder.EndObjectProperty(queryNavBarOptionsHandle)
-                ' UserInterfaceOptions
-                Dim userInterfaceOptionsHandle = xmlBuilder.BeginObjectProperty(root, "UserInterfaceOptions")
-                service.EncodeObject(userInterfaceOptionsHandle, withOptions.UserInterfaceOptions)
-                xmlBuilder.EndObjectProperty(userInterfaceOptionsHandle)
-                ' SqlFormattingOptions
-                Dim sqlFormattingOptionsHandle = xmlBuilder.BeginObjectProperty(root, "SqlFormattingOptions")
-                service.EncodeObject(sqlFormattingOptionsHandle, withOptions.SqlFormattingOptions)
-                xmlBuilder.EndObjectProperty(sqlFormattingOptionsHandle)
-                ' SqlGenerationOptions
-                Dim sqlGenerationOptionsHandle = xmlBuilder.BeginObjectProperty(root, "SqlGenerationOptions")
-                service.EncodeObject(sqlGenerationOptionsHandle, withOptions.SqlGenerationOptions)
-                xmlBuilder.EndObjectProperty(sqlGenerationOptionsHandle)
-                xmlBuilder.EndObject(root)
+                Using root = xmlBuilder.BeginObject("Options")
+                    ' Behavior options
+                    Using behaviorHandle = xmlBuilder.BeginObjectProperty(root, Constants.BehaviorOptionsTag)
+                        service.EncodeObject(behaviorHandle, withOptions.BehaviorOptions)
+                    End Using
+                    ' Database view options
+                    Using dbViewOptionsHandle = xmlBuilder.BeginObjectProperty(root, Constants.DatabaseSchemaViewOptionsTag)
+                        service.EncodeObject(dbViewOptionsHandle, dbView.Options)
+                    End Using
+                    ' DesignPaneOptions
+                    Using designPaneOptionsHandle = xmlBuilder.BeginObjectProperty(root, Constants.DesignPaneOptionsTag)
+                        service.EncodeObject(designPaneOptionsHandle, withOptions.DesignPaneOptions)
+                    End Using
+                    ' VisualOptions
+                    Using visualOptionsHandle = xmlBuilder.BeginObjectProperty(root, Constants.VisualOptionsTag)
+                        service.EncodeObject(visualOptionsHandle, withOptions.VisualOptions)
+                    End Using
+                    ' AddObjectDialogOptions
+                    Using addObjectDialogHandle = xmlBuilder.BeginObjectProperty(root, Constants.AddObjectDialogOptionsTag)
+                        service.EncodeObject(addObjectDialogHandle, withOptions.AddObjectDialogOptions)
+                    End Using
+                    ' DataSourceOptions
+                    Using dataSourceOptionsHandle = xmlBuilder.BeginObjectProperty(root, "DataSourceOptions")
+                        service.EncodeObject(dataSourceOptionsHandle, withOptions.DataSourceOptions)
+                    End Using
+                    ' MetadataLoadingOptions
+                    Using metadataLoadingOptionsHandle = xmlBuilder.BeginObjectProperty(root, "MetadataLoadingOptions")
+                        metadataService.Encode(metadataLoadingOptionsHandle, withOptions.MetadataLoadingOptions)
+                    End Using
+                    ' MetadataStructureOptions
+                    Using metadataStructureOptionsHandle = xmlBuilder.BeginObjectProperty(root, "MetadataStructureOptions")
+                        service.EncodeObject(metadataStructureOptionsHandle, withOptions.MetadataStructureOptions)
+                    End Using
+                    ' QueryColumnListOptions
+                    Using queryColumnListOptionsHandle = xmlBuilder.BeginObjectProperty(root, "QueryColumnListOptions")
+                        service.EncodeObject(queryColumnListOptionsHandle, withOptions.QueryColumnListOptions)
+                    End Using
+                    ' QueryNavBarOptions
+                    Using queryNavBarOptionsHandle = xmlBuilder.BeginObjectProperty(root, "QueryNavBarOptions")
+                        service.EncodeObject(queryNavBarOptionsHandle, withOptions.QueryNavBarOptions)
+                    End Using
+                    ' UserInterfaceOptions
+                    Using userInterfaceOptionsHandle = xmlBuilder.BeginObjectProperty(root, "UserInterfaceOptions")
+                        service.EncodeObject(userInterfaceOptionsHandle, withOptions.UserInterfaceOptions)
+                    End Using
+                    ' SqlFormattingOptions
+                    Using sqlFormattingOptionsHandle = xmlBuilder.BeginObjectProperty(root, "SqlFormattingOptions")
+                        service.EncodeObject(sqlFormattingOptionsHandle, withOptions.SqlFormattingOptions)
+                    End Using
+                    ' SqlGenerationOptions
+                    Using sqlGenerationOptionsHandle = xmlBuilder.BeginObjectProperty(root, "SqlGenerationOptions")
+                        service.EncodeObject(sqlGenerationOptionsHandle, withOptions.SqlGenerationOptions)
+                    End Using
+                End Using
             End Using
         End Using
     End Sub
