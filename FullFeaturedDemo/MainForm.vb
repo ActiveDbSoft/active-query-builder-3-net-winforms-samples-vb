@@ -166,7 +166,7 @@ Partial Public Class MainForm
 
             ' create new SqlConnection object using the connections string from the connection form
             If Not _selectedConnection.IsXmlFile Then
-                syntaxSyntaxProvider = _selectedConnection.SyntaxProvider
+                syntaxSyntaxProvider = _selectedConnection.ConnectionDescriptor.SyntaxProvider
                 metadataProvider = _selectedConnection.ConnectionDescriptor.MetadataProvider
             Else
                 Select Case _selectedConnection.Type

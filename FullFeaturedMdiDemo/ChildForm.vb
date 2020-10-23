@@ -20,8 +20,11 @@ Imports ActiveQueryBuilder.View.QueryView
 Imports ActiveQueryBuilder.View.WinForms
 Imports ActiveQueryBuilder.View.WinForms.ExpressionEditor
 Imports ActiveQueryBuilder.View.WinForms.QueryView
+Imports Common
 Imports Dailogs
 Imports Forms.QueryInformationForms
+Imports FullFeaturedMdiDemo.Common
+Imports Reports
 
 
 Partial Public Class ChildForm
@@ -756,6 +759,10 @@ Partial Public Class ChildForm
             _oldSql = rtbQueryText.Text
         End If
 
+        buttonGenerateReport.Enabled = Not String.IsNullOrEmpty(FormattedQueryText) AndAlso _sqlContext.MetadataProvider IsNot Nothing
+        buttonExportExcel.Enabled = buttonGenerateReport.Enabled
+        buttonExportCsv.Enabled = buttonExportExcel.Enabled
+
         If QueryView.ActiveUnionSubQuery Is Nothing OrElse SqlQuery.SleepMode Then
             Return
         End If
@@ -1127,4 +1134,86 @@ Partial Public Class ChildForm
         TextBoxCurrentSubQuerySql.Text = _lastValidSql
         TextBoxCurrentSubQuerySql.Focus()
     End Sub
+
+    Private Sub CreateFastReport(ByVal dataTable As DataTable)
+			If dataTable Is Nothing Then
+				Throw New ArgumentException("Argument cannot be null or empty.", "DataTable")
+			End If
+
+			Dim reportWindow = New FastReportForm(dataTable) With {.Owner = Me}
+
+			reportWindow.ShowDialog()
+		End Sub
+
+		Private Sub CreateStimulsoftReport(ByVal dataTable As DataTable)
+			If dataTable Is Nothing Then
+				Throw New ArgumentException("Argument cannot be null or empty.", "DataTable")
+			End If
+
+			Dim reportWindow = New StimulsoftForm(dataTable) With {.Owner = Me}
+
+			reportWindow.ShowDialog()
+		End Sub
+
+		Private Sub CreateActiveReport(ByVal dataTable As DataTable)
+			If dataTable Is Nothing Then
+				Throw New ArgumentException("Argument cannot be null or empty.", "DataTable")
+			End If
+
+			Dim reportWindow = New ActiveReportsForm(dataTable) With {.Owner = Me}
+
+			reportWindow.ShowDialog()
+		End Sub
+
+		Private Sub buttonGenerateReport_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonGenerateReport.Click
+			Dim window = New CreateReportForm With {.Owner = Me}
+
+			Dim result As DialogResult = window.ShowDialog()
+
+			If result <> System.Windows.Forms.DialogResult.OK OrElse window.SelectedReportType Is Nothing Then
+				Return
+			End If
+			Dim dataTable = SqlHelpers.GetDataTable(CBuilder.SQL, SqlQuery)
+
+			Select Case window.SelectedReportType
+				Case ReportType.ActiveReports14
+					CreateActiveReport(dataTable)
+				Case ReportType.Stimulsoft
+					CreateStimulsoftReport(dataTable)
+				Case ReportType.FastReport
+					CreateFastReport(dataTable)
+				Case Else
+					Throw New ArgumentOutOfRangeException()
+			End Select
+		End Sub
+
+		Private Sub buttonExportExcel_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonExportExcel.Click
+			Dim dt = SqlHelpers.GetDataTable(CBuilder.SQL, SqlQuery)
+
+			Dim saveDialog = New SaveFileDialog With {
+				.AddExtension = True,
+				.DefaultExt = "xlsx",
+				.FileName = "Export.xlsx"
+			}
+			If saveDialog.ShowDialog(Me) <> System.Windows.Forms.DialogResult.OK Then
+				Return
+			End If
+
+			ExportHelpers.ExportToExcel(dt, saveDialog.FileName)
+		End Sub
+
+		Private Sub buttonExportCsv_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonExportCsv.Click
+			Dim saveDialog = New SaveFileDialog With {
+				.AddExtension = True,
+				.DefaultExt = "csv",
+				.FileName = "Data.csv"
+			}
+			Dim result = saveDialog.ShowDialog(Me)
+			If result <> System.Windows.Forms.DialogResult.OK Then
+				Return
+			End If
+
+			Dim dt = SqlHelpers.GetDataTable(CBuilder.SQL, SqlQuery)
+			ExportHelpers.ExportToCSV(dt, saveDialog.FileName)
+		End Sub
 End Class

@@ -117,8 +117,15 @@ Public Class ConnectionList
     Public Sub SaveData()
         Dim xmlSerializer = New Serialization.XmlSerializer()
         For Each connection As ConnectionInfo In _connections
+            If connection.ConnectionDescriptor Is Nothing Then
+                connection.CreateConnectionDescriptor()
+            End If
+            If Not connection.IsXmlFile Then
+                connection.SyntaxProviderName = connection.ConnectionDescriptor.SyntaxProvider.[GetType]().ToString()
+            End If
             connection.ConnectionString = connection.ConnectionDescriptor.ConnectionString
             connection.LoadingOptions = xmlSerializer.Serialize(connection.ConnectionDescriptor.MetadataLoadingOptions)
+            connection.ConnectionDescriptor.SyntaxProvider = connection.SyntaxProvider
             connection.SyntaxProviderState = xmlSerializer.SerializeObject(connection.ConnectionDescriptor.SyntaxProvider)
         Next connection
     End Sub
@@ -138,14 +145,16 @@ Public Class ConnectionList
     End Sub
 
     Public Sub RestoreData()
-        Dim xmlSerializer = New ActiveQueryBuilder.Core.Serialization.XmlSerializer()
+        Dim xmlSerializer = New Serialization.XmlSerializer()
 
         For Each connection As ConnectionInfo In _connections
             If connection.ConnectionDescriptor Is Nothing Then
-                Continue For
+                connection.CreateConnectionDescriptor()
             End If
 
-            connection.ConnectionDescriptor.ConnectionString = connection.ConnectionString
+            If Not connection.IsXmlFile Then
+                connection.ConnectionDescriptor.ConnectionString = connection.ConnectionString
+            End If
 
             If Not String.IsNullOrEmpty(connection.LoadingOptions) Then
                 xmlSerializer.Deserialize(connection.LoadingOptions, connection.ConnectionDescriptor.MetadataLoadingOptions)
@@ -156,6 +165,9 @@ Public Class ConnectionList
             End If
 
             If Not String.IsNullOrEmpty(connection.SyntaxProviderState) Then
+                If Not String.IsNullOrEmpty(connection.SyntaxProviderName) Then
+                    connection.ConnectionDescriptor.SyntaxProvider = ConnectionInfo.GetSyntaxByName(connection.SyntaxProviderName)
+                End If
                 xmlSerializer.DeserializeObject(connection.SyntaxProviderState, connection.ConnectionDescriptor.SyntaxProvider)
                 connection.ConnectionDescriptor.RecreateSyntaxProperties()
             End If
@@ -199,19 +211,27 @@ End Class
 <Serializable>
 Public Class ConnectionInfo
 
-    Public Property Name() As String
+    Public Property Name As String
     <XmlIgnore>
-    Public Property ConnectionDescriptor() As BaseConnectionDescriptor
+    Public Property ConnectionDescriptor As BaseConnectionDescriptor
     <XmlIgnore>
     Public Property SyntaxProvider() As BaseSyntaxProvider
+        Get
+            If IsNothing(ConnectionDescriptor) Then CreateConnectionDescriptor()
+            Return ConnectionDescriptor.SyntaxProvider
+        End Get
+        Set
+            ConnectionDescriptor.SyntaxProvider = Value
+        End Set
+    End Property
 
-    Public Property ConnectionString() As String
-    Public Property IsXmlFile() As Boolean
-    Public Property XMLPath() As String
-    Public Property UserQueries() As String
-    Public Property LoadingOptions() As String
-    Public Property SyntaxProviderState() As String
-    Public Property SyntaxProviderName() As String
+    Public Property ConnectionString As String
+    Public Property IsXmlFile As Boolean
+    Public Property XMLPath As String
+    Public Property UserQueries As String
+    Public Property LoadingOptions As String
+    Public Property SyntaxProviderState As String
+    Public Property SyntaxProviderName As String
 
     Public Function IsGenericConnection() As Boolean
         Return TypeOf ConnectionDescriptor Is OLEDBConnectionDescriptor OrElse TypeOf ConnectionDescriptor Is ODBCConnectionDescriptor
@@ -231,17 +251,22 @@ Public Class ConnectionInfo
 
     Public Sub CreateConnectionDescriptor()
         CreateConnectionByType()
-        If Not String.IsNullOrEmpty(SyntaxProviderName) AndAlso IsGenericConnection() Then ConnectionDescriptor.SyntaxProvider = GetSyntaxByName(SyntaxProviderName)
+
+        If Not String.IsNullOrEmpty(SyntaxProviderName) Then ConnectionDescriptor.SyntaxProvider = GetSyntaxByName(SyntaxProviderName)
         If IsXmlFile Then Return
+
         ConnectionDescriptor.MetadataProvider.Connection.ConnectionString = ConnectionString
     End Sub
 
-    Public Property Type() As ConnectionTypes
+    Public Property Type As ConnectionTypes
         Get
             Return _type
         End Get
         Set
-            _type = value
+            _type = Value
+            CreateConnectionByType()
+
+            If Not String.IsNullOrEmpty(SyntaxProviderName) And IsGenericConnection() Then ConnectionDescriptor.SyntaxProvider = GetSyntaxByName(SyntaxProviderName)
         End Set
     End Property
 
@@ -313,6 +338,8 @@ Public Class ConnectionInfo
         Finally
             'ignore
         End Try
+
+        If Not IsNothing(SyntaxProvider) Then ConnectionDescriptor.SyntaxProvider = SyntaxProvider
     End Sub
 
     Public Function GetConnectionType(descriptorType As Type) As ConnectionTypes

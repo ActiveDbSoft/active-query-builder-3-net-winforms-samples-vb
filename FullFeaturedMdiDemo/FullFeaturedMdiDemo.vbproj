@@ -19,13 +19,14 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>Off</OptionStrict>
     <OptionInfer>On</OptionInfer>
     <OldToolsVersion>2.0</OldToolsVersion>
     <TargetFrameworkProfile />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -40,7 +41,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,12 +92,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="project.json" />
-    <Reference Include="ActiveQueryBuilder.Core, Version=3.7.2.1175, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
-    <Reference Include="ActiveQueryBuilder.View.WinForms, Version=3.7.2.1175, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
-    <Reference Include="ActiveQueryBuilder.MSSQLMetadataProvider, Version=3.7.2.1175, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
-    <Reference Include="ActiveQueryBuilder.OLEDBMetadataProvider, Version=3.7.2.1175, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
-    <Reference Include="ActiveQueryBuilder.SQLiteMetadataProvider, Version=3.7.2.1175, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
-    <Reference Include="ActiveQueryBuilder.View, Version=3.7.2.1175, Culture=neutral, PublicKeyToken=49d051b90653c7f4, processorArchitecture=MSIL" />
+    
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
@@ -119,6 +114,26 @@
     </Compile>
     <Compile Include="ChildForm.Designer.vb">
       <DependentUpon>ChildForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Common\CreateReportForm.Designer.vb">
+      <DependentUpon>CreateReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Common\CreateReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\ExportHelpers.vb" />
+    <Compile Include="Reports\FastReportForm.Designer.vb">
+      <DependentUpon>FastReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\FastReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\ReportType.vb" />
+    <Compile Include="Reports\StimulsoftForm.Designer.vb">
+      <DependentUpon>StimulsoftForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\StimulsoftForm.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="ConnectionForm.vb">
       <SubType>Form</SubType>
@@ -201,6 +216,16 @@
       <SubType>Designer</SubType>
       <DependentUpon>ChildForm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Common\CreateReportForm.resx">
+      <DependentUpon>CreateReportForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
+    <EmbeddedResource Include="Reports\FastReportForm.resx">
+      <DependentUpon>FastReportForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\StimulsoftForm.resx">
+      <DependentUpon>StimulsoftForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConnectionForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ConnectionForm.vb</DependentUpon>
@@ -251,6 +276,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Reports\ActiveReportsForm.resx">
+      <DependentUpon>ActiveReportsForm.vb</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -265,6 +293,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Reports\ActiveReportsForm.Designer.vb">
+      <DependentUpon>ActiveReportsForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ActiveReportsForm.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Settings.vb" />
   </ItemGroup>
@@ -382,6 +416,9 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>echo. 2&gt;"$(ProjectDir)\My Project\licenses.licx"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

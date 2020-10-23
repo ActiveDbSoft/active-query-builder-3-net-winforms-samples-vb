@@ -130,6 +130,12 @@ Partial Public Class ConnectionForm
         Return name
     End Function
 
+    Private Sub SaveData()
+        Program.Settings.Connections.SaveData()
+        Program.Settings.XmlFiles.SaveData()
+        Program.Settings.Save()
+    End Sub
+
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         Dim ci As New ConnectionInfo(ConnectionTypes.MSSQL, GetNewConnectionEntryName(), Nothing, False, "")
 
@@ -145,6 +151,8 @@ Partial Public Class ConnectionForm
         End Using
 
         lvConnections.Focus()
+
+        SaveData()
     End Sub
 
     Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
@@ -154,6 +162,8 @@ Partial Public Class ConnectionForm
         Program.Connections.Remove(ci)
 
         lvConnections.Focus()
+
+        SaveData()
     End Sub
 
     Private Sub btnConfigure_Click(sender As Object, e As EventArgs) Handles btnConfigure.Click
@@ -169,6 +179,8 @@ Partial Public Class ConnectionForm
         End If
 
         lvConnections.Focus()
+
+        SaveData()
     End Sub
 
     Private Sub lvConnections_SizeChanged(sender As Object, e As EventArgs) Handles lvConnections.SizeChanged
@@ -217,6 +229,8 @@ Partial Public Class ConnectionForm
         End Using
 
         lvXmlFiles.Focus()
+
+        SaveData()
     End Sub
 
     Private Sub btnRemoveXml_Click(sender As Object, e As EventArgs) Handles btnRemoveXml.Click
@@ -226,6 +240,8 @@ Partial Public Class ConnectionForm
         Program.XmlFiles.Remove(ci)
 
         lvXmlFiles.Focus()
+
+        SaveData()
     End Sub
 
     Private Sub btnConfigureXml_Click(sender As Object, e As EventArgs) Handles btnConfigureXml.Click
@@ -241,5 +257,7 @@ Partial Public Class ConnectionForm
         End If
 
         lvXmlFiles.Focus()
+
+        SaveData()
     End Sub
 End Class
