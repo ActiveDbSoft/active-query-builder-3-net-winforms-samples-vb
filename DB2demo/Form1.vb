@@ -30,7 +30,7 @@ Partial Public Class Form1
             If f.ShowDialog() = DialogResult.OK Then
                 ' create new SqlConnection object using the connections string from the connection form
                 DB2MetadataProvider1.Connection = New DB2Connection(f.ConnectionString)
-
+                
                 ' setup the query builder with metadata and syntax providers
                 queryBuilder1.MetadataProvider = DB2MetadataProvider1
                 queryBuilder1.SyntaxProvider = DB2SyntaxProvider1
