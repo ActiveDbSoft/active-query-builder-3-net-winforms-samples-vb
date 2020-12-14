@@ -560,6 +560,9 @@ Partial Public Class ChildForm
         tsbAddDerivedTable.ToolTipText = ActiveQueryBuilder.View.Helpers.Localizer.GetString("strAddSubQuery", "Add derived table")
         tsbAddUnionSubquery.ToolTipText = ActiveQueryBuilder.View.Helpers.Localizer.GetString("strNewUnionSubQuery", "New union sub-query")
         tsbCopyUnionSubquery.ToolTipText = ActiveQueryBuilder.View.Helpers.Localizer.GetString("strCopyToNewUnionSubQuery", "Copy union sub-query")
+
+        dockPanelProperties.Text = ActiveQueryBuilder.Core.Helpers.Localizer.GetString(nameof(LocalizableConstantsUI.strProperties), LocalizableConstantsUI.strProperties)
+        dockPanelSubquery.Text = ActiveQueryBuilder.Core.Helpers.Localizer.GetString("strSubQueryStructureBarCaption", LocalizableConstantsUI.strSubQueryStructureBarCaption)
     End Sub
 
     Public Sub ParseQuery()
@@ -721,7 +724,7 @@ Partial Public Class ChildForm
             tabControl2.TabPages.Add(_tempTabPreviewResult)
         End If
 
-        '  panelTextInfo.Height = SqlQuery.SleepMode ? 60 : 0;
+        '  panelTextInfo.Height = SqlQuery.SleepMode ? 60 : 0
         toolStripStatusLabel1.Text = "Query builder state: " & (If(SqlQuery.SleepMode, "Inactive", "Active"))
     End Sub
 

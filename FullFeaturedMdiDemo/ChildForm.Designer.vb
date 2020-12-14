@@ -15,7 +15,7 @@ Partial Public Class ChildForm
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ChildForm))
-        Dim LinkPainterAccess3 As ActiveQueryBuilder.View.WinForms.QueryView.LinkPainterAccess = New ActiveQueryBuilder.View.WinForms.QueryView.LinkPainterAccess()
+        Dim LinkPainterAccess1 As ActiveQueryBuilder.View.WinForms.QueryView.LinkPainterAccess = New ActiveQueryBuilder.View.WinForms.QueryView.LinkPainterAccess()
         Me.toolStripPanel1 = New System.Windows.Forms.ToolStripPanel()
         Me.contextMenuStripForRichTextBox = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.tsmiUndo = New System.Windows.Forms.ToolStripMenuItem()
@@ -37,9 +37,9 @@ Partial Public Class ChildForm
         Me.splitContainer2 = New System.Windows.Forms.SplitContainer()
         Me.dockManager1 = New ActiveQueryBuilder.View.WinForms.DockPanels.DockManager()
         Me.designPaneControl1 = New ActiveQueryBuilder.View.WinForms.QueryView.DesignPaneControl()
-        Me.dockPanel1 = New ActiveQueryBuilder.View.WinForms.DockPanels.DockPanel()
+        Me.dockPanelProperties = New ActiveQueryBuilder.View.WinForms.DockPanels.DockPanel()
         Me.propertiesBar1 = New ActiveQueryBuilder.View.WinForms.QueryView.PropertiesBar()
-        Me.dockPanel2 = New ActiveQueryBuilder.View.WinForms.DockPanels.DockPanel()
+        Me.dockPanelSubquery = New ActiveQueryBuilder.View.WinForms.DockPanels.DockPanel()
         Me.subQueryNavBar1 = New ActiveQueryBuilder.View.WinForms.NavigationBar.SubQueryNavBar()
         Me.queryColumnListControl1 = New ActiveQueryBuilder.View.WinForms.QueryView.QueryColumnListControl()
         Me.expressionEditor1 = New ActiveQueryBuilder.View.WinForms.ExpressionEditor.ExpressionEditor(Me.components)
@@ -73,6 +73,10 @@ Partial Public Class ChildForm
         Me.tsbSaveInFile = New System.Windows.Forms.ToolStripButton()
         Me.tsbSaveNewUserQuery = New System.Windows.Forms.ToolStripButton()
         Me.pageQueryResult = New System.Windows.Forms.TabPage()
+        Me.tableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
+        Me.buttonGenerateReport = New System.Windows.Forms.Button()
+        Me.buttonExportExcel = New System.Windows.Forms.Button()
+        Me.buttonExportCsv = New System.Windows.Forms.Button()
         Me.resultGrid1 = New DataViewerControl.DataViewer()
         Me.CBuilder = New ActiveQueryBuilder.View.WinForms.CriteriaBuilder.CriteriaBuilder()
         Me.richTextBox1 = New System.Windows.Forms.RichTextBox()
@@ -80,10 +84,6 @@ Partial Public Class ChildForm
         Me.statusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.toolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.miniToolStrip = New System.Windows.Forms.ToolStrip()
-        Me.tableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
-        Me.buttonGenerateReport = New System.Windows.Forms.Button()
-        Me.buttonExportExcel = New System.Windows.Forms.Button()
-        Me.buttonExportCsv = New System.Windows.Forms.Button()
         Me.contextMenuStripForRichTextBox.SuspendLayout
         Me.tabControl1.SuspendLayout
         Me.pageQueryBuilder.SuspendLayout
@@ -101,8 +101,8 @@ Partial Public Class ChildForm
         Me.splitContainer2.SuspendLayout
         CType(Me.dockManager1,System.ComponentModel.ISupportInitialize).BeginInit
         Me.dockManager1.SuspendLayout
-        Me.dockPanel1.SuspendLayout
-        Me.dockPanel2.SuspendLayout
+        Me.dockPanelProperties.SuspendLayout
+        Me.dockPanelSubquery.SuspendLayout
         CType(Me.queryColumnListControl1,System.ComponentModel.ISupportInitialize).BeginInit
         Me.tableLayoutPanel4.SuspendLayout
         Me.tabControl2.SuspendLayout
@@ -117,8 +117,8 @@ Partial Public Class ChildForm
         Me.panel2.SuspendLayout
         Me.toolStrip1.SuspendLayout
         Me.pageQueryResult.SuspendLayout
-        Me.statusStrip1.SuspendLayout
         Me.tableLayoutPanel5.SuspendLayout
+        Me.statusStrip1.SuspendLayout
         Me.SuspendLayout
         '
         'toolStripPanel1
@@ -338,7 +338,7 @@ Partial Public Class ChildForm
         Me.dockManager1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.dockManager1.Controls.Add(Me.designPaneControl1)
         Me.dockManager1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dockManager1.DockPanels.AddRange(New ActiveQueryBuilder.View.WinForms.DockPanels.DockPanel() {Me.dockPanel1, Me.dockPanel2})
+        Me.dockManager1.DockPanels.AddRange(New ActiveQueryBuilder.View.WinForms.DockPanels.DockPanel() {Me.dockPanelProperties, Me.dockPanelSubquery})
         Me.dockManager1.Location = New System.Drawing.Point(0, 0)
         Me.dockManager1.Name = "dockManager1"
         Me.dockManager1.Options.ActiveDockPanelCaptionColor = System.Drawing.Color.FromArgb(CType(CType(255,Byte),Integer), CType(CType(242,Byte),Integer), CType(CType(157,Byte),Integer))
@@ -367,28 +367,28 @@ Partial Public Class ChildForm
         Me.designPaneControl1.Location = New System.Drawing.Point(29, 0)
         Me.designPaneControl1.Name = "designPaneControl1"
         Me.designPaneControl1.Options.Background = System.Drawing.SystemColors.Window
-        LinkPainterAccess3.LinkColor = System.Drawing.Color.Black
-        LinkPainterAccess3.LinkColorFocused = System.Drawing.Color.Black
-        LinkPainterAccess3.MarkColor = System.Drawing.SystemColors.Control
-        LinkPainterAccess3.MarkColorFocused = System.Drawing.SystemColors.ControlDark
-        LinkPainterAccess3.MarkStyle = ActiveQueryBuilder.View.QueryView.LinkMarkStyle.Access
-        Me.designPaneControl1.Options.LinkPainterOptions = LinkPainterAccess3
+        LinkPainterAccess1.LinkColor = System.Drawing.Color.Black
+        LinkPainterAccess1.LinkColorFocused = System.Drawing.Color.Black
+        LinkPainterAccess1.MarkColor = System.Drawing.SystemColors.Control
+        LinkPainterAccess1.MarkColorFocused = System.Drawing.SystemColors.ControlDark
+        LinkPainterAccess1.MarkStyle = ActiveQueryBuilder.View.QueryView.LinkMarkStyle.Access
+        Me.designPaneControl1.Options.LinkPainterOptions = LinkPainterAccess1
         Me.designPaneControl1.Options.LinkStyle = ActiveQueryBuilder.View.QueryView.LinkStyle.MSAccess
         Me.designPaneControl1.Size = New System.Drawing.Size(632, 213)
         Me.designPaneControl1.TabIndex = 1
         '
-        'dockPanel1
+        'dockPanelProperties
         '
-        Me.dockPanel1.AutoHide = false
-        Me.dockPanel1.Controls.Add(Me.propertiesBar1)
-        Me.dockPanel1.Docking = ActiveQueryBuilder.View.Docking.Right
-        Me.dockPanel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.dockPanel1.Location = New System.Drawing.Point(0, 0)
-        Me.dockPanel1.Name = "dockPanel1"
-        Me.dockPanel1.Size = New System.Drawing.Size(200, 213)
-        Me.dockPanel1.TabIndex = 2
-        Me.dockPanel1.TabStop = false
-        Me.dockPanel1.Text = "Properties"
+        Me.dockPanelProperties.AutoHide = false
+        Me.dockPanelProperties.Controls.Add(Me.propertiesBar1)
+        Me.dockPanelProperties.Docking = ActiveQueryBuilder.View.Docking.Right
+        Me.dockPanelProperties.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.dockPanelProperties.Location = New System.Drawing.Point(0, 0)
+        Me.dockPanelProperties.Name = "dockPanelProperties"
+        Me.dockPanelProperties.Size = New System.Drawing.Size(200, 213)
+        Me.dockPanelProperties.TabIndex = 2
+        Me.dockPanelProperties.TabStop = false
+        Me.dockPanelProperties.Text = "Properties"
         '
         'propertiesBar1
         '
@@ -401,19 +401,19 @@ Partial Public Class ChildForm
         Me.propertiesBar1.Size = New System.Drawing.Size(199, 191)
         Me.propertiesBar1.TabIndex = 1
         '
-        'dockPanel2
+        'dockPanelSubquery
         '
-        Me.dockPanel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom)  _
+        Me.dockPanelSubquery.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom)  _
             Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
-        Me.dockPanel2.Controls.Add(Me.subQueryNavBar1)
-        Me.dockPanel2.Docking = ActiveQueryBuilder.View.Docking.Left
-        Me.dockPanel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.dockPanel2.Location = New System.Drawing.Point(630, 0)
-        Me.dockPanel2.Name = "dockPanel2"
-        Me.dockPanel2.Size = New System.Drawing.Size(200, 251)
-        Me.dockPanel2.TabIndex = 3
-        Me.dockPanel2.TabStop = false
-        Me.dockPanel2.Text = "Sub-query structure"
+        Me.dockPanelSubquery.Controls.Add(Me.subQueryNavBar1)
+        Me.dockPanelSubquery.Docking = ActiveQueryBuilder.View.Docking.Left
+        Me.dockPanelSubquery.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.dockPanelSubquery.Location = New System.Drawing.Point(630, 0)
+        Me.dockPanelSubquery.Name = "dockPanelSubquery"
+        Me.dockPanelSubquery.Size = New System.Drawing.Size(200, 251)
+        Me.dockPanelSubquery.TabIndex = 3
+        Me.dockPanelSubquery.TabStop = false
+        Me.dockPanelSubquery.Text = "Sub-query structure"
         '
         'subQueryNavBar1
         '
@@ -856,6 +856,61 @@ Partial Public Class ChildForm
         Me.pageQueryResult.Text = "Query Result"
         Me.pageQueryResult.UseVisualStyleBackColor = true
         '
+        'tableLayoutPanel5
+        '
+        Me.tableLayoutPanel5.AutoSize = true
+        Me.tableLayoutPanel5.BackColor = System.Drawing.Color.LightGray
+        Me.tableLayoutPanel5.ColumnCount = 3
+        Me.tableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.tableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.tableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.tableLayoutPanel5.Controls.Add(Me.buttonGenerateReport, 0, 0)
+        Me.tableLayoutPanel5.Controls.Add(Me.buttonExportExcel, 1, 0)
+        Me.tableLayoutPanel5.Controls.Add(Me.buttonExportCsv, 2, 0)
+        Me.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.tableLayoutPanel5.Location = New System.Drawing.Point(3, 472)
+        Me.tableLayoutPanel5.Name = "tableLayoutPanel5"
+        Me.tableLayoutPanel5.RowCount = 1
+        Me.tableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100!))
+        Me.tableLayoutPanel5.Size = New System.Drawing.Size(866, 37)
+        Me.tableLayoutPanel5.TabIndex = 6
+        '
+        'buttonGenerateReport
+        '
+        Me.buttonGenerateReport.AutoSize = true
+        Me.buttonGenerateReport.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.buttonGenerateReport.Enabled = false
+        Me.buttonGenerateReport.Location = New System.Drawing.Point(3, 3)
+        Me.buttonGenerateReport.Name = "buttonGenerateReport"
+        Me.buttonGenerateReport.Size = New System.Drawing.Size(282, 31)
+        Me.buttonGenerateReport.TabIndex = 0
+        Me.buttonGenerateReport.Text = "Generate report"
+        Me.buttonGenerateReport.UseVisualStyleBackColor = true
+        '
+        'buttonExportExcel
+        '
+        Me.buttonExportExcel.AutoSize = true
+        Me.buttonExportExcel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.buttonExportExcel.Enabled = false
+        Me.buttonExportExcel.Location = New System.Drawing.Point(291, 3)
+        Me.buttonExportExcel.Name = "buttonExportExcel"
+        Me.buttonExportExcel.Size = New System.Drawing.Size(282, 31)
+        Me.buttonExportExcel.TabIndex = 1
+        Me.buttonExportExcel.Text = "Export to Excel"
+        Me.buttonExportExcel.UseVisualStyleBackColor = true
+        '
+        'buttonExportCsv
+        '
+        Me.buttonExportCsv.AutoSize = true
+        Me.buttonExportCsv.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.buttonExportCsv.Enabled = false
+        Me.buttonExportCsv.Location = New System.Drawing.Point(579, 3)
+        Me.buttonExportCsv.Name = "buttonExportCsv"
+        Me.buttonExportCsv.Size = New System.Drawing.Size(284, 31)
+        Me.buttonExportCsv.TabIndex = 2
+        Me.buttonExportCsv.Text = "Export to CSV"
+        Me.buttonExportCsv.UseVisualStyleBackColor = true
+        '
         'resultGrid1
         '
         Me.resultGrid1.AutoSize = true
@@ -930,61 +985,6 @@ Partial Public Class ChildForm
         Me.miniToolStrip.Stretch = true
         Me.miniToolStrip.TabIndex = 0
         '
-        'tableLayoutPanel5
-        '
-        Me.tableLayoutPanel5.AutoSize = true
-        Me.tableLayoutPanel5.BackColor = System.Drawing.Color.LightGray
-        Me.tableLayoutPanel5.ColumnCount = 3
-        Me.tableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.tableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.tableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.tableLayoutPanel5.Controls.Add(Me.buttonGenerateReport, 0, 0)
-        Me.tableLayoutPanel5.Controls.Add(Me.buttonExportExcel, 1, 0)
-        Me.tableLayoutPanel5.Controls.Add(Me.buttonExportCsv, 2, 0)
-        Me.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.tableLayoutPanel5.Location = New System.Drawing.Point(3, 472)
-        Me.tableLayoutPanel5.Name = "tableLayoutPanel5"
-        Me.tableLayoutPanel5.RowCount = 1
-        Me.tableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100!))
-        Me.tableLayoutPanel5.Size = New System.Drawing.Size(866, 37)
-        Me.tableLayoutPanel5.TabIndex = 6
-        '
-        'buttonGenerateReport
-        '
-        Me.buttonGenerateReport.AutoSize = true
-        Me.buttonGenerateReport.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.buttonGenerateReport.Enabled = false
-        Me.buttonGenerateReport.Location = New System.Drawing.Point(3, 3)
-        Me.buttonGenerateReport.Name = "buttonGenerateReport"
-        Me.buttonGenerateReport.Size = New System.Drawing.Size(282, 31)
-        Me.buttonGenerateReport.TabIndex = 0
-        Me.buttonGenerateReport.Text = "Generate report"
-        Me.buttonGenerateReport.UseVisualStyleBackColor = true
-        '
-        'buttonExportExcel
-        '
-        Me.buttonExportExcel.AutoSize = true
-        Me.buttonExportExcel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.buttonExportExcel.Enabled = false
-        Me.buttonExportExcel.Location = New System.Drawing.Point(291, 3)
-        Me.buttonExportExcel.Name = "buttonExportExcel"
-        Me.buttonExportExcel.Size = New System.Drawing.Size(282, 31)
-        Me.buttonExportExcel.TabIndex = 1
-        Me.buttonExportExcel.Text = "Export to Excel"
-        Me.buttonExportExcel.UseVisualStyleBackColor = true
-        '
-        'buttonExportCsv
-        '
-        Me.buttonExportCsv.AutoSize = true
-        Me.buttonExportCsv.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.buttonExportCsv.Enabled = false
-        Me.buttonExportCsv.Location = New System.Drawing.Point(579, 3)
-        Me.buttonExportCsv.Name = "buttonExportCsv"
-        Me.buttonExportCsv.Size = New System.Drawing.Size(284, 31)
-        Me.buttonExportCsv.TabIndex = 2
-        Me.buttonExportCsv.Text = "Export to CSV"
-        Me.buttonExportCsv.UseVisualStyleBackColor = true
-        '
         'ChildForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
@@ -1016,8 +1016,8 @@ Partial Public Class ChildForm
         CType(Me.dockManager1,System.ComponentModel.ISupportInitialize).EndInit
         Me.dockManager1.ResumeLayout(false)
         Me.dockManager1.PerformLayout
-        Me.dockPanel1.ResumeLayout(false)
-        Me.dockPanel2.ResumeLayout(false)
+        Me.dockPanelProperties.ResumeLayout(false)
+        Me.dockPanelSubquery.ResumeLayout(false)
         CType(Me.queryColumnListControl1,System.ComponentModel.ISupportInitialize).EndInit
         Me.tableLayoutPanel4.ResumeLayout(false)
         Me.tableLayoutPanel4.PerformLayout
@@ -1038,10 +1038,10 @@ Partial Public Class ChildForm
         Me.toolStrip1.PerformLayout
         Me.pageQueryResult.ResumeLayout(false)
         Me.pageQueryResult.PerformLayout
-        Me.statusStrip1.ResumeLayout(false)
-        Me.statusStrip1.PerformLayout
         Me.tableLayoutPanel5.ResumeLayout(false)
         Me.tableLayoutPanel5.PerformLayout
+        Me.statusStrip1.ResumeLayout(false)
+        Me.statusStrip1.PerformLayout
         Me.ResumeLayout(false)
         Me.PerformLayout
 
@@ -1085,11 +1085,11 @@ End Sub
     Private splitContainer2 As SplitContainer
     Private dockManager1 As ActiveQueryBuilder.View.WinForms.DockPanels.DockManager
     Private designPaneControl1 As ActiveQueryBuilder.View.WinForms.QueryView.DesignPaneControl
-    Private dockPanel1 As ActiveQueryBuilder.View.WinForms.DockPanels.DockPanel
+    Private dockPanelProperties As ActiveQueryBuilder.View.WinForms.DockPanels.DockPanel
     Private propertiesBar1 As ActiveQueryBuilder.View.WinForms.QueryView.PropertiesBar
     Private queryColumnListControl1 As ActiveQueryBuilder.View.WinForms.QueryView.QueryColumnListControl
     Private addObjectDialog1 As ActiveQueryBuilder.View.WinForms.QueryView.AddObjectDialog
-    Private dockPanel2 As ActiveQueryBuilder.View.WinForms.DockPanels.DockPanel
+    Private dockPanelSubquery As ActiveQueryBuilder.View.WinForms.DockPanels.DockPanel
     Private subQueryNavBar1 As ActiveQueryBuilder.View.WinForms.NavigationBar.SubQueryNavBar
     Private toolStripSeparator1 As ToolStripSeparator
     Private WithEvents tsbSave As ToolStripButton
