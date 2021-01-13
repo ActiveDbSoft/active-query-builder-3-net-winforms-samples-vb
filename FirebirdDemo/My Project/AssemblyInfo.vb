@@ -20,7 +20,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyConfiguration("")>
 <Assembly: AssemblyCompany("Active Database Software")>
 <Assembly: AssemblyProduct("FirebirdDemo")>
-<Assembly: AssemblyCopyright("Copyright © 2006-2020 Active Database Software")>
+<Assembly: AssemblyCopyright("Copyright © 2006-2021 Active Database Software")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: AssemblyCulture("")>
 

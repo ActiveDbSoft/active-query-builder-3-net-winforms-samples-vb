@@ -1176,7 +1176,7 @@ Partial Public Class ChildForm
 			If result <> System.Windows.Forms.DialogResult.OK OrElse window.SelectedReportType Is Nothing Then
 				Return
 			End If
-			Dim dataTable = SqlHelpers.GetDataTable(CBuilder.SQL, SqlQuery)
+			Dim dataTable = SqlHelpers.GetDataTable(CBuilder.QueryTransformer.ResultAST.GetSQL(SqlGenerationOptions), SqlQuery)
 
 			Select Case window.SelectedReportType
 				Case ReportType.ActiveReports14
@@ -1191,7 +1191,7 @@ Partial Public Class ChildForm
 		End Sub
 
 		Private Sub buttonExportExcel_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonExportExcel.Click
-			Dim dt = SqlHelpers.GetDataTable(CBuilder.SQL, SqlQuery)
+			Dim dt = SqlHelpers.GetDataTable(CBuilder.QueryTransformer.ResultAST.GetSQL(SqlGenerationOptions), SqlQuery)
 
 			Dim saveDialog = New SaveFileDialog With {
 				.AddExtension = True,
@@ -1216,7 +1216,7 @@ Partial Public Class ChildForm
 				Return
 			End If
 
-			Dim dt = SqlHelpers.GetDataTable(CBuilder.SQL, SqlQuery)
+			Dim dt = SqlHelpers.GetDataTable(CBuilder.QueryTransformer.ResultAST.GetSQL(SqlGenerationOptions), SqlQuery)
 			ExportHelpers.ExportToCSV(dt, saveDialog.FileName)
 		End Sub
 End Class
