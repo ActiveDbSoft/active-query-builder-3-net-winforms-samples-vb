@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class SybaseConnectionForm
     ''' <summary> 
     ''' Required designer variable.

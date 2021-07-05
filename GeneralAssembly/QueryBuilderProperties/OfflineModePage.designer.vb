@@ -1,4 +1,4 @@
-﻿Namespace QueryBuilderProperties
+Namespace QueryBuilderProperties
 	Partial Friend Class OfflineModePage
 		''' <summary>
 		''' Required designer variable.

@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class MySQLConnectionForm
     ''' <summary> 
     ''' Required designer variable.

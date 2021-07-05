@@ -1,27 +1,22 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
-Imports System.ComponentModel
 Imports System.Globalization
 Imports System.IO
-Imports System.Linq
-Imports System.Text
-Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.Core.QueryTransformer
-Imports ActiveQueryBuilder.View.WinForms
-Imports Dailogs
-Imports Forms
-Imports Forms.QueryInformationForms
-Imports QueryBuilderProperties
 Imports Helpers = ActiveQueryBuilder.Core.Helpers
 Imports BuildInfo = ActiveQueryBuilder.Core.BuildInfo
+Imports GeneralAssembly.Forms.QueryInformationForms
+Imports GeneralAssembly.Dailogs
+Imports GeneralAssembly.QueryBuilderProperties
+Imports GeneralAssembly.Forms
 
 Partial Public Class MainForm
     Inherits Form

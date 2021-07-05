@@ -1,6 +1,3 @@
-﻿Imports ActiveQueryBuilder.Core
-
-
 Partial Public Class Form1
     ''' <summary>
     ''' Required designer variable.
@@ -78,7 +75,7 @@ Partial Public Class Form1
         Me.tabControl1.SelectedIndex = 0
         Me.tabControl1.Size = New Size(793, 506)
         Me.tabControl1.TabIndex = 0
-'			Me.tabControl1.Selected += New System.Windows.Forms.TabControlEventHandler(Me.tabControl1_Selected)
+        '			Me.tabControl1.Selected += New System.Windows.Forms.TabControlEventHandler(Me.tabControl1_Selected)
         ' 
         ' tabPageSQL
         ' 
@@ -137,26 +134,6 @@ Partial Public Class Form1
         Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.AutoHide = True
         Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Left
         Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarEnabled = True
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Index = 5
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Width = 90R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AliasColumn.Index = 2
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AliasColumn.Width = 100R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Index = 7
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Width = 140R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Index = 8
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Width = 200R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Index = 0
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Width = 60R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Index = 1
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Width = 250R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Index = 6
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Width = 100R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.OutputColumn.Index = 0
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.OutputColumn.Width = 55R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Index = 4
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Width = 100R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Index = 3
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Width = 60R
         Me.queryBuilder1.QueryColumnListOptions.Font = Nothing
         Me.queryBuilder1.QueryColumnListOptions.InitialOrColumnsCount = 2
         Me.queryBuilder1.QueryColumnListOptions.NullOrderingInOrderBy = False
@@ -206,7 +183,7 @@ Partial Public Class Form1
         Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.queryBuilder1.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.queryBuilder1.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
+        '			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
         ' 
         ' DB2MetadataProvider1
         ' 
@@ -226,7 +203,7 @@ Partial Public Class Form1
         Me.textBox1.ScrollBars = ScrollBars.Both
         Me.textBox1.Size = New Size(779, 106)
         Me.textBox1.TabIndex = 0
-'			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
+        '			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
         ' 
         ' tabPageData
         ' 
@@ -267,7 +244,7 @@ Partial Public Class Form1
         ' 
         ' menuStrip1
         ' 
-        Me.menuStrip1.Items.AddRange(New ToolStripItem() { Me.connectMetadataToolStripMenuItem, Me.metadataToolStripMenuItem, Me.queryStatisticsMenuItem, Me.propertiesToolStripMenuItem, Me.aboutToolStripMenuItem})
+        Me.menuStrip1.Items.AddRange(New ToolStripItem() {Me.connectMetadataToolStripMenuItem, Me.metadataToolStripMenuItem, Me.queryStatisticsMenuItem, Me.propertiesToolStripMenuItem, Me.aboutToolStripMenuItem})
         Me.menuStrip1.Location = New Point(0, 0)
         Me.menuStrip1.Name = "menuStrip1"
         Me.menuStrip1.RenderMode = ToolStripRenderMode.System
@@ -280,11 +257,11 @@ Partial Public Class Form1
         Me.connectMetadataToolStripMenuItem.Name = "connectMetadataToolStripMenuItem"
         Me.connectMetadataToolStripMenuItem.Size = New Size(73, 20)
         Me.connectMetadataToolStripMenuItem.Text = "Connect..."
-'			Me.connectMetadataToolStripMenuItem.Click += New System.EventHandler(Me.connectMetadataToolStripMenuItem_Click)
+        '			Me.connectMetadataToolStripMenuItem.Click += New System.EventHandler(Me.connectMetadataToolStripMenuItem_Click)
         ' 
         ' metadataToolStripMenuItem
         ' 
-        Me.metadataToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() { Me.refreshMetadataToolStripMenuItem, Me.editMetadataToolStripMenuItem, Me.clearMetadataToolStripMenuItem, Me.toolStripSeparator1, Me.loadFromXMLToolStripMenuItem, Me.saveToXMLToolStripMenuItem})
+        Me.metadataToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {Me.refreshMetadataToolStripMenuItem, Me.editMetadataToolStripMenuItem, Me.clearMetadataToolStripMenuItem, Me.toolStripSeparator1, Me.loadFromXMLToolStripMenuItem, Me.saveToXMLToolStripMenuItem})
         Me.metadataToolStripMenuItem.Name = "metadataToolStripMenuItem"
         Me.metadataToolStripMenuItem.Size = New Size(69, 20)
         Me.metadataToolStripMenuItem.Text = "Metadata"
@@ -294,21 +271,21 @@ Partial Public Class Form1
         Me.refreshMetadataToolStripMenuItem.Name = "refreshMetadataToolStripMenuItem"
         Me.refreshMetadataToolStripMenuItem.Size = New Size(166, 22)
         Me.refreshMetadataToolStripMenuItem.Text = "Refresh Metadata"
-'			Me.refreshMetadataToolStripMenuItem.Click += New System.EventHandler(Me.refreshMetadataToolStripMenuItem_Click)
+        '			Me.refreshMetadataToolStripMenuItem.Click += New System.EventHandler(Me.refreshMetadataToolStripMenuItem_Click)
         ' 
         ' editMetadataToolStripMenuItem
         ' 
         Me.editMetadataToolStripMenuItem.Name = "editMetadataToolStripMenuItem"
         Me.editMetadataToolStripMenuItem.Size = New Size(166, 22)
         Me.editMetadataToolStripMenuItem.Text = "Edit Metadata..."
-'			Me.editMetadataToolStripMenuItem.Click += New System.EventHandler(Me.editMetadataToolStripMenuItem_Click)
+        '			Me.editMetadataToolStripMenuItem.Click += New System.EventHandler(Me.editMetadataToolStripMenuItem_Click)
         ' 
         ' clearMetadataToolStripMenuItem
         ' 
         Me.clearMetadataToolStripMenuItem.Name = "clearMetadataToolStripMenuItem"
         Me.clearMetadataToolStripMenuItem.Size = New Size(166, 22)
         Me.clearMetadataToolStripMenuItem.Text = "Clear Metadata"
-'			Me.clearMetadataToolStripMenuItem.Click += New System.EventHandler(Me.clearMetadataToolStripMenuItem_Click)
+        '			Me.clearMetadataToolStripMenuItem.Click += New System.EventHandler(Me.clearMetadataToolStripMenuItem_Click)
         ' 
         ' toolStripSeparator1
         ' 
@@ -320,21 +297,21 @@ Partial Public Class Form1
         Me.loadFromXMLToolStripMenuItem.Name = "loadFromXMLToolStripMenuItem"
         Me.loadFromXMLToolStripMenuItem.Size = New Size(166, 22)
         Me.loadFromXMLToolStripMenuItem.Text = "Load from XML..."
-'			Me.loadFromXMLToolStripMenuItem.Click += New System.EventHandler(Me.loadFromXMLToolStripMenuItem_Click)
+        '			Me.loadFromXMLToolStripMenuItem.Click += New System.EventHandler(Me.loadFromXMLToolStripMenuItem_Click)
         ' 
         ' saveToXMLToolStripMenuItem
         ' 
         Me.saveToXMLToolStripMenuItem.Name = "saveToXMLToolStripMenuItem"
         Me.saveToXMLToolStripMenuItem.Size = New Size(166, 22)
         Me.saveToXMLToolStripMenuItem.Text = "Save to XML..."
-'			Me.saveToXMLToolStripMenuItem.Click += New System.EventHandler(Me.saveToXMLToolStripMenuItem_Click)
+        '			Me.saveToXMLToolStripMenuItem.Click += New System.EventHandler(Me.saveToXMLToolStripMenuItem_Click)
         ' 
         ' queryStatisticsMenuItem
         ' 
         Me.queryStatisticsMenuItem.Name = "queryStatisticsMenuItem"
         Me.queryStatisticsMenuItem.Size = New Size(109, 20)
         Me.queryStatisticsMenuItem.Text = "Query Statistics..."
-'			Me.queryStatisticsMenuItem.Click += New System.EventHandler(Me.queryStatisticsMenuItem_Click)
+        '			Me.queryStatisticsMenuItem.Click += New System.EventHandler(Me.queryStatisticsMenuItem_Click)
         ' 
         ' propertiesToolStripMenuItem
         ' 
@@ -346,7 +323,7 @@ Partial Public Class Form1
         Me.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem"
         Me.aboutToolStripMenuItem.Size = New Size(61, 20)
         Me.aboutToolStripMenuItem.Text = "About..."
-'			Me.aboutToolStripMenuItem.Click += New System.EventHandler(Me.aboutToolStripMenuItem_Click)
+        '			Me.aboutToolStripMenuItem.Click += New System.EventHandler(Me.aboutToolStripMenuItem_Click)
         ' 
         ' openMetadataFileDialog
         ' 
@@ -377,12 +354,12 @@ Partial Public Class Form1
         Me.errorBox1.Size = New Size(283, 61)
         Me.errorBox1.TabIndex = 1
         Me.errorBox1.Visible = False
-'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
-'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
+        '			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
+        '			Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
         ' 
         ' Form1
         ' 
-        Me.AutoScaleDimensions = New SizeF(6F, 13F)
+        Me.AutoScaleDimensions = New SizeF(6.0F, 13.0F)
         Me.AutoScaleMode = AutoScaleMode.Font
         Me.ClientSize = New Size(793, 530)
         Me.Controls.Add(Me.tabControl1)

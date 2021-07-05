@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class Form1
     ''' <summary>
     ''' Required designer variable.
@@ -85,26 +85,6 @@ Partial Public Class Form1
         Me.queryBuilder.PanesConfigurationOptions.SubQueryNavBarDockOptions.AutoHide = True
         Me.queryBuilder.PanesConfigurationOptions.SubQueryNavBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Left
         Me.queryBuilder.PanesConfigurationOptions.SubQueryNavBarEnabled = True
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Index = 5
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Width = 90R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.AliasColumn.Index = 2
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.AliasColumn.Width = 100R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Index = 7
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Width = 140R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Index = 8
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Width = 200R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Index = 0
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Width = 60R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Index = 1
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Width = 250R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Index = 6
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Width = 100R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.OutputColumn.Index = 0
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.OutputColumn.Width = 55R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Index = 4
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Width = 100R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Index = 3
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Width = 60R
         Me.queryBuilder.QueryColumnListOptions.Font = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.queryBuilder.QueryColumnListOptions.InitialOrColumnsCount = 2
         Me.queryBuilder.QueryColumnListOptions.NullOrderingInOrderBy = False
@@ -398,6 +378,6 @@ Partial Public Class Form1
     Private tabPageResultsPreview As TabPage
     Private label4 As Label
     Private dataGridView1 As DataGridView
-    Private WithEvents errorBox1 As Common.SqlErrorBox
+    Private WithEvents errorBox1 As GeneralAssembly.Common.SqlErrorBox
     Private WithEvents connectToToolStripMenuItem As ToolStripMenuItem
 End Class

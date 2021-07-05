@@ -1,17 +1,20 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
 Imports System.Threading
 
 
 Friend NotInheritable Class Program
+    Public Shared Connections As New ConnectionList()
+    Public Shared XmlFiles As New ConnectionList()
+
     ''' <summary>
     ''' The main entry point for the application.
     ''' </summary>
@@ -28,7 +31,7 @@ Friend NotInheritable Class Program
         Application.Run(New Form1())
     End Sub
 
-    Private Shared Sub CurrentDomain_UnhandledException( sender As Object,  e As UnhandledExceptionEventArgs)
+    Private Shared Sub CurrentDomain_UnhandledException(ByVal sender As Object, e As UnhandledExceptionEventArgs)
         Dim exception As Exception = TryCast(e.ExceptionObject, Exception)
         If exception IsNot Nothing Then
             Dim exceptionDialog As New ThreadExceptionDialog(exception)
@@ -38,7 +41,7 @@ Friend NotInheritable Class Program
         End If
     End Sub
 
-    Private Shared Sub Thread_UnhandledException( sender As Object,  e As ThreadExceptionEventArgs)
+    Private Shared Sub Thread_UnhandledException(ByVal sender As Object, e As ThreadExceptionEventArgs)
         If e.Exception IsNot Nothing Then
             Dim exceptionDialog As New ThreadExceptionDialog(e.Exception)
 

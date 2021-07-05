@@ -1,4 +1,4 @@
-﻿Namespace QueryBuilderProperties
+Namespace QueryBuilderProperties
 	Partial Friend Class MiscellaneousPage
 		''' <summary>
 		''' Required designer variable.

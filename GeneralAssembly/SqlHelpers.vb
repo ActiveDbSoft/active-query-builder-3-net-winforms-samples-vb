@@ -1,16 +1,12 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
-
-Imports System.Data.Common
-Imports ActiveQueryBuilder.Core
-Imports Forms.QueryInformationForms
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
 Public NotInheritable Class SqlHelpers
     Private Const AtNameParamFormat As String = "@s"
@@ -151,7 +147,7 @@ Public NotInheritable Class SqlHelpers
             parameter.DbType = p.DataType
             command.Parameters.Add(parameter)
         Next p
-        Dim qpf = New QueryParametersForm(command)
+        Dim qpf = New GeneralAssembly.Forms.QueryInformationForms.QueryParametersForm(command)
         qpf.ShowDialog()
         Return command
     End Function

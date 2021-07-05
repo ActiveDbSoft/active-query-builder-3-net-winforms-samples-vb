@@ -1,31 +1,25 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
-Imports System.ComponentModel
 Imports System.IO
-Imports System.Linq
 Imports System.Threading
-Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.Core.QueryTransformer
-Imports ActiveQueryBuilder.View
 Imports ActiveQueryBuilder.View.ExpressionEditor
 Imports ActiveQueryBuilder.View.QueryView
-Imports ActiveQueryBuilder.View.WinForms
 Imports ActiveQueryBuilder.View.WinForms.ExpressionEditor
 Imports ActiveQueryBuilder.View.WinForms.QueryView
 Imports Common
-Imports Dailogs
-Imports Forms.QueryInformationForms
 Imports FullFeaturedMdiDemo.Common
+Imports GeneralAssembly.Dailogs
+Imports GeneralAssembly.Forms.QueryInformationForms
 Imports Reports
-
 
 Partial Public Class ChildForm
     Inherits Form
@@ -261,9 +255,9 @@ Partial Public Class ChildForm
     End Property
 
     Public ReadOnly Property FormattedQueryText As String
-    get
-        Return FormattedSQLBuilder.GetSQL(SqlQuery.QueryRoot, _sqlFormattingOptions)
-    End Get
+        Get
+            Return FormattedSQLBuilder.GetSQL(SqlQuery.QueryRoot, _sqlFormattingOptions)
+        End Get
 
     End Property
 
@@ -326,9 +320,9 @@ Partial Public Class ChildForm
 
     Private Sub TimerForFastResult_Elapsed(state As Object)
         Invoke(Sub()
-            resultGrid2.QueryTransformer = _queryTransformerTop10
-            resultGrid2.FillDataGrid(_queryTransformerTop10.Take("10").SQL)
-        End Sub)
+                   resultGrid2.QueryTransformer = _queryTransformerTop10
+                   resultGrid2.FillDataGrid(_queryTransformerTop10.Take("10").SQL)
+               End Sub)
     End Sub
 
     Private Sub ChildForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
@@ -561,7 +555,7 @@ Partial Public Class ChildForm
         tsbAddUnionSubquery.ToolTipText = ActiveQueryBuilder.View.Helpers.Localizer.GetString("strNewUnionSubQuery", "New union sub-query")
         tsbCopyUnionSubquery.ToolTipText = ActiveQueryBuilder.View.Helpers.Localizer.GetString("strCopyToNewUnionSubQuery", "Copy union sub-query")
 
-        dockPanelProperties.Text = ActiveQueryBuilder.Core.Helpers.Localizer.GetString(nameof(LocalizableConstantsUI.strProperties), LocalizableConstantsUI.strProperties)
+        dockPanelProperties.Text = ActiveQueryBuilder.Core.Helpers.Localizer.GetString(NameOf(LocalizableConstantsUI.strProperties), LocalizableConstantsUI.strProperties)
         dockPanelSubquery.Text = ActiveQueryBuilder.Core.Helpers.Localizer.GetString("strSubQueryStructureBarCaption", LocalizableConstantsUI.strSubQueryStructureBarCaption)
     End Sub
 
@@ -817,7 +811,7 @@ Partial Public Class ChildForm
             query.QueryRoot.AllowSleepMode = True
             query.SQL = sql
 
-            Return (Not query.SleepMode) AndAlso UserMetadataStructureItem IsNot Nothing AndAlso query.QueryStatistics.UsedDatabaseObjects.Any(Function(x as StatisticsDatabaseObject) Equals(x.MetadataObject, UserMetadataStructureItem.MetadataItem))
+            Return (Not query.SleepMode) AndAlso UserMetadataStructureItem IsNot Nothing AndAlso query.QueryStatistics.UsedDatabaseObjects.Any(Function(x As StatisticsDatabaseObject) Equals(x.MetadataObject, UserMetadataStructureItem.MetadataItem))
         End Using
     End Function
 
@@ -1056,7 +1050,7 @@ Partial Public Class ChildForm
 
     Private Sub TextBoxCurrentSubQuerySql_TextChanged(sender As Object, e As EventArgs) Handles TextBoxCurrentSubQuerySql.TextChanged
         If (Not tabPageFastResult.Visible) OrElse
-           String.IsNullOrEmpty(TextBoxCurrentSubQuerySql.Text) OrElse 
+           String.IsNullOrEmpty(TextBoxCurrentSubQuerySql.Text) OrElse
            QView.ActiveUnionSubQuery Is Nothing Then
             errorBoxCurrent.Show(Nothing, _sqlContext?.SyntaxProvider)
             Return
@@ -1139,84 +1133,84 @@ Partial Public Class ChildForm
     End Sub
 
     Private Sub CreateFastReport(ByVal dataTable As DataTable)
-			If dataTable Is Nothing Then
-				Throw New ArgumentException("Argument cannot be null or empty.", "DataTable")
-			End If
+        If dataTable Is Nothing Then
+            Throw New ArgumentException("Argument cannot be null or empty.", "DataTable")
+        End If
 
-			Dim reportWindow = New FastReportForm(dataTable) With {.Owner = Me}
+        Dim reportWindow = New FastReportForm(dataTable) With {.Owner = Me}
 
-			reportWindow.ShowDialog()
-		End Sub
+        reportWindow.ShowDialog()
+    End Sub
 
-		Private Sub CreateStimulsoftReport(ByVal dataTable As DataTable)
-			If dataTable Is Nothing Then
-				Throw New ArgumentException("Argument cannot be null or empty.", "DataTable")
-			End If
+    Private Sub CreateStimulsoftReport(ByVal dataTable As DataTable)
+        If dataTable Is Nothing Then
+            Throw New ArgumentException("Argument cannot be null or empty.", "DataTable")
+        End If
 
-			Dim reportWindow = New StimulsoftForm(dataTable) With {.Owner = Me}
+        Dim reportWindow = New StimulsoftForm(dataTable) With {.Owner = Me}
 
-			reportWindow.ShowDialog()
-		End Sub
+        reportWindow.ShowDialog()
+    End Sub
 
-		Private Sub CreateActiveReport(ByVal dataTable As DataTable)
-			If dataTable Is Nothing Then
-				Throw New ArgumentException("Argument cannot be null or empty.", "DataTable")
-			End If
+    Private Sub CreateActiveReport(ByVal dataTable As DataTable)
+        If dataTable Is Nothing Then
+            Throw New ArgumentException("Argument cannot be null or empty.", "DataTable")
+        End If
 
-			Dim reportWindow = New ActiveReportsForm(dataTable) With {.Owner = Me}
+        Dim reportWindow = New ActiveReportsForm(dataTable) With {.Owner = Me}
 
-			reportWindow.ShowDialog()
-		End Sub
+        reportWindow.ShowDialog()
+    End Sub
 
-		Private Sub buttonGenerateReport_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonGenerateReport.Click
-			Dim window = New CreateReportForm With {.Owner = Me}
+    Private Sub buttonGenerateReport_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonGenerateReport.Click
+        Dim window = New CreateReportForm With {.Owner = Me}
 
-			Dim result As DialogResult = window.ShowDialog()
+        Dim result As DialogResult = window.ShowDialog()
 
-			If result <> System.Windows.Forms.DialogResult.OK OrElse window.SelectedReportType Is Nothing Then
-				Return
-			End If
-			Dim dataTable = SqlHelpers.GetDataTable(CBuilder.QueryTransformer.ResultAST.GetSQL(SqlGenerationOptions), SqlQuery)
+        If result <> System.Windows.Forms.DialogResult.OK OrElse window.SelectedReportType Is Nothing Then
+            Return
+        End If
+        Dim dataTable = SqlHelpers.GetDataTable(CBuilder.QueryTransformer.ResultAST.GetSQL(SqlGenerationOptions), SqlQuery)
 
-			Select Case window.SelectedReportType
-				Case ReportType.ActiveReports14
-					CreateActiveReport(dataTable)
-				Case ReportType.Stimulsoft
-					CreateStimulsoftReport(dataTable)
-				Case ReportType.FastReport
-					CreateFastReport(dataTable)
-				Case Else
-					Throw New ArgumentOutOfRangeException()
-			End Select
-		End Sub
+        Select Case window.SelectedReportType
+            Case ReportType.ActiveReports14
+                CreateActiveReport(dataTable)
+            Case ReportType.Stimulsoft
+                CreateStimulsoftReport(dataTable)
+            Case ReportType.FastReport
+                CreateFastReport(dataTable)
+            Case Else
+                Throw New ArgumentOutOfRangeException()
+        End Select
+    End Sub
 
-		Private Sub buttonExportExcel_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonExportExcel.Click
-			Dim dt = SqlHelpers.GetDataTable(CBuilder.QueryTransformer.ResultAST.GetSQL(SqlGenerationOptions), SqlQuery)
+    Private Sub buttonExportExcel_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonExportExcel.Click
+        Dim dt = SqlHelpers.GetDataTable(CBuilder.QueryTransformer.ResultAST.GetSQL(SqlGenerationOptions), SqlQuery)
 
-			Dim saveDialog = New SaveFileDialog With {
-				.AddExtension = True,
-				.DefaultExt = "xlsx",
-				.FileName = "Export.xlsx"
-			}
-			If saveDialog.ShowDialog(Me) <> System.Windows.Forms.DialogResult.OK Then
-				Return
-			End If
+        Dim saveDialog = New SaveFileDialog With {
+            .AddExtension = True,
+            .DefaultExt = "xlsx",
+            .FileName = "Export.xlsx"
+        }
+        If saveDialog.ShowDialog(Me) <> System.Windows.Forms.DialogResult.OK Then
+            Return
+        End If
 
-			ExportHelpers.ExportToExcel(dt, saveDialog.FileName)
-		End Sub
+        ExportHelpers.ExportToExcel(dt, saveDialog.FileName)
+    End Sub
 
-		Private Sub buttonExportCsv_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonExportCsv.Click
-			Dim saveDialog = New SaveFileDialog With {
-				.AddExtension = True,
-				.DefaultExt = "csv",
-				.FileName = "Data.csv"
-			}
-			Dim result = saveDialog.ShowDialog(Me)
-			If result <> System.Windows.Forms.DialogResult.OK Then
-				Return
-			End If
+    Private Sub buttonExportCsv_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonExportCsv.Click
+        Dim saveDialog = New SaveFileDialog With {
+            .AddExtension = True,
+            .DefaultExt = "csv",
+            .FileName = "Data.csv"
+        }
+        Dim result = saveDialog.ShowDialog(Me)
+        If result <> System.Windows.Forms.DialogResult.OK Then
+            Return
+        End If
 
-			Dim dt = SqlHelpers.GetDataTable(CBuilder.QueryTransformer.ResultAST.GetSQL(SqlGenerationOptions), SqlQuery)
-			ExportHelpers.ExportToCSV(dt, saveDialog.FileName)
-		End Sub
+        Dim dt = SqlHelpers.GetDataTable(CBuilder.QueryTransformer.ResultAST.GetSQL(SqlGenerationOptions), SqlQuery)
+        ExportHelpers.ExportToCSV(dt, saveDialog.FileName)
+    End Sub
 End Class

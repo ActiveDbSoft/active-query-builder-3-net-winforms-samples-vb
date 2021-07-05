@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class VistaDB5ConnectionForm
     ''' <summary> 
     ''' Required designer variable.

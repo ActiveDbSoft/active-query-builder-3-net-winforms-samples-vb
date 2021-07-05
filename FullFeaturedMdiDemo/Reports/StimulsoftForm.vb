@@ -1,12 +1,12 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
 Imports System.Data
 Imports System.Drawing
@@ -52,7 +52,7 @@ Namespace Reports
             }
             page.Components.Add(dataBand)
             'INSTANT VB NOTE: The variable width was renamed since Visual Basic does not handle local variables named the same as class members well:
-            Dim width_Renamed = page.Width \ DataTable.Columns.Count
+            Dim width_Renamed = CInt(page.Width) \ DataTable.Columns.Count
             For Each column As DataColumn In DataTable.Columns
                 'Create text on header
                 Dim headerText = New StiText(New RectangleD(0, 0, width_Renamed, 0.5)) With {

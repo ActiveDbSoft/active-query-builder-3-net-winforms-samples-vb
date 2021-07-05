@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class CustomCheckBoxColumnDemoFrame
     ''' <summary> 
     ''' Required designer variable.

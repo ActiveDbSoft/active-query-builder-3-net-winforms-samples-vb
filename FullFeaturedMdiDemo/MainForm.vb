@@ -1,25 +1,19 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
-Imports PropertiesForm
-Imports System.ComponentModel
 Imports System.Globalization
 Imports System.IO
-Imports System.Linq
-Imports System.Text
-Imports ActiveQueryBuilder.Core
-Imports ActiveQueryBuilder.View
 Imports ActiveQueryBuilder.View.EventHandlers.MetadataStructureItems
-Imports ActiveQueryBuilder.View.WinForms
-Imports Dailogs
-Imports Forms
+Imports GeneralAssembly.Dailogs
+Imports GeneralAssembly.Forms
+Imports PropertiesForm
 
 Partial Public Class MainForm
     Inherits Form
@@ -820,11 +814,11 @@ Partial Public Class MainForm
     End Sub
 
     Private Sub EditPredefinedConditionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPredefinedConditionsToolStripMenuItem.Click
-       Dim childForm = TryCast(ActiveMdiChild, ChildForm)
+        Dim childForm = TryCast(ActiveMdiChild, ChildForm)
 
-        If childForm is Nothing Then Return
+        If childForm Is Nothing Then Return
 
-        Using form  = New EditUserPredefinedConditionsForm()
+        Using form = New EditUserPredefinedConditionsForm()
             form.LoadUserConditions(childForm.QueryView)
             form.StartPosition = FormStartPosition.CenterParent
             form.ShowDialog(Me)

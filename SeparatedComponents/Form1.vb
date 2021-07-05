@@ -1,12 +1,12 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
 Imports System.Text
 Imports ActiveQueryBuilder.Core
@@ -15,8 +15,8 @@ Imports ActiveQueryBuilder.View.WinForms
 
 Partial Public Class Form1
     Inherits Form
-    Private _errorPosition As Integer = -1
     Private _lastValidSql As String
+    Private _errorPosition As Integer = -1
 
     Public Sub New()
         InitializeComponent()
@@ -89,12 +89,12 @@ Partial Public Class Form1
         ' Handle the event raised by SQL Builder object that the text of SQL query is changed
 
         ' Hide error banner if any
-        errorBox1.Show(Nothing, sqlContext1.SyntaxProvider)
+        errorBox1.Visible = False
 
         ' update the text box with formatted query text created with default formatting options
         If Equals(sqlQuery1.SQLContext, Nothing) Then Return
-        sqlTextEditor1.Text = FormattedSQLBuilder.GetSQL(sqlQuery1.QueryRoot, New SQLFormattingOptions())
-        _lastValidSql = sqlTextEditor1.Text
+        textBox1.Text = FormattedSQLBuilder.GetSQL(sqlQuery1.QueryRoot, New SQLFormattingOptions())
+        _lastValidSql = textBox1.Text
     End Sub
 
     Public Sub ResetQueryBuilder()
@@ -104,20 +104,20 @@ Partial Public Class Form1
         sqlContext1.LoadingOptions.OfflineMode = False
     End Sub
 
-    Private Sub sqlTextEditor1_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles sqlTextEditor1.Validating
+    Private Sub textBox1_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles textBox1.Validating
         Try
             ' Update the query builder with manually edited query text:
-            sqlQuery1.SQL = sqlTextEditor1.Text
+            sqlQuery1.SQL = textBox1.Text
 
             ' Hide error banner if any
-            errorBox1.Show(Nothing, sqlContext1.SyntaxProvider)
+            errorBox1.Visible = False
         Catch ex As SQLParsingException
             ' Set caret to error position
-            sqlTextEditor1.SelectionStart = ex.ErrorPos.pos
-            _errorPosition = sqlTextEditor1.SelectionStart
+            textBox1.SelectionStart = ex.ErrorPos.pos
 
             ' Show banner with error text
             errorBox1.Show(ex.Message, sqlContext1.SyntaxProvider)
+            _errorPosition = ex.ErrorPos.pos
         End Try
     End Sub
 
@@ -152,18 +152,23 @@ Partial Public Class Form1
         MessageBox.Show(builder.ToString())
     End Sub
 
-    Private Sub ErrorBox1_GoToErrorPositionEvent(sender As Object, e As EventArgs) Handles errorBox1.GoToErrorPosition
-        If _errorPosition <> -1 Then
-            sqlTextEditor1.SelectionStart = _errorPosition
-            sqlTextEditor1.SelectionLength = 0
-            sqlTextEditor1.ScrollToPosition(_errorPosition)
-        End If
-
-        sqlTextEditor1.Focus()
+    Private Sub ErrorBox1_RevertValidTextEvent(sender As Object, e As EventArgs) Handles errorBox1.RevertValidText
+        textBox1.Text = _lastValidSql
+        textBox1.Focus()
     End Sub
 
-    Private Sub ErrorBox1_RevertValidTextEvent(sender As Object, e As EventArgs) Handles errorBox1.RevertValidText
-        sqlTextEditor1.Text = _lastValidSql
-        sqlTextEditor1.Focus()
+    Private Sub ErrorBox1_GoToErrorPositionEvent(sender As Object, e As EventArgs) Handles errorBox1.GoToErrorPosition
+        If _errorPosition <> -1 Then
+            textBox1.SelectionStart = _errorPosition
+            textBox1.SelectionLength = 0
+            textBox1.ScrollToCaret()
+        End If
+
+        errorBox1.Visible = False
+        textBox1.Focus()
+    End Sub
+
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles textBox1.TextChanged
+        errorBox1.Visible = False
     End Sub
 End Class

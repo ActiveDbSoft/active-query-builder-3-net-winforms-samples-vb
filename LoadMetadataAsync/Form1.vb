@@ -1,15 +1,16 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
 Imports System.ComponentModel
 Imports System.Data.OleDb
+Imports System.Data.SQLite
 Imports ActiveQueryBuilder.Core
 
 
@@ -33,12 +34,12 @@ Partial Public Class Form1
         ' Create temporary QueryBuilder instance
         Using sqlContext As New SQLContext()
             ' Create temporary MetadataProvider
-            Using oledbMetadataProvider As New OLEDBMetadataProvider()
+            Using oledbMetadataProvider As New SQLiteMetadataProvider()
                 ' Create connection to database
-                oledbMetadataProvider.Connection = New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=demo.mdb")
+                oledbMetadataProvider.Connection = New SQLiteConnection("Data Source=northwind.sqlite;Version=3;")
                 ' Set up the QueryBuilder
                 sqlContext.MetadataProvider = oledbMetadataProvider
-                sqlContext.SyntaxProvider = New MSAccessSyntaxProvider()
+                sqlContext.SyntaxProvider = New SQLiteSyntaxProvider()
                 ' Load metadata, force fields loading for all metadata objects
                 sqlContext.MetadataContainer.LoadAll(True)
 

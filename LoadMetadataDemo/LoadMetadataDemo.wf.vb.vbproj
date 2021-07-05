@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>LoadMetadataDemo.wf.vb</AssemblyName>
+    <AssemblyTitle>$(AssemblyName)</AssemblyTitle>
+    <Description>Active Query Builder 3 LoadMetadata Demo</Description>
+    <RootNamespace></RootNamespace>
+
+    <!-- todo: <TargetFrameworks>net462;netcoreapp3.1</TargetFrameworks> -->
+    <TargetFrameworks>net462</TargetFrameworks>
+    <OutputType>WinExe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GeneralAssembly\GeneralAssembly.wf.vb.vbproj" />
+    <Import Include="GeneralAssembly" />
+  </ItemGroup>
+
+  <!-- database-specific metadata provider -->
+  <ItemGroup Condition="$(UseNugetAqbReferences)">
+    <PackageReference Include="ActiveQueryBuilder.EventMetadataProvider" Version="$(Version)" />
+  </ItemGroup>
+  <ItemGroup Condition="!$(UseNugetAqbReferences)">
+    <ProjectReference Include="$(SolutionDir)src\_metadata-providers\EventMetadataProvider\EventMetadataProvider.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="StoredDataSetSchema.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

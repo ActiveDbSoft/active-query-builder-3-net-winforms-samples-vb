@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class CustomExpressionEditor
     ''' <summary>
     ''' Required designer variable.

@@ -1,4 +1,4 @@
-﻿Namespace QueryBuilderProperties
+Namespace QueryBuilderProperties
 	Partial Public Class QueryBuilderPropertiesForm
 		''' <summary>
 		''' Required designer variable.

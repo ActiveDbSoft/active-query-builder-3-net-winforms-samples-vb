@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class InformixConnectionForm
     ''' <summary> 
     ''' Required designer variable.

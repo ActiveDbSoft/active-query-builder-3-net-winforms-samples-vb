@@ -1,19 +1,14 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
-Imports System.ComponentModel
-Imports System.Data.Common
-Imports System.Threading.Tasks
-Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.Core.QueryTransformer
-Imports Forms.QueryInformationForms
 
 Namespace DataViewerControl
     Partial Public Class DataViewer
@@ -64,7 +59,7 @@ Namespace DataViewerControl
         <DefaultValue(True)>
         Public Property EnabledSorting() As Boolean
 
-        Public ReadOnly Property RowCount
+        Public ReadOnly Property RowCount As Integer
             Get
                 Return dataGridView1.RowCount
             End Get
@@ -126,7 +121,7 @@ Namespace DataViewerControl
             If allApllied Then
                 Return command
             Else
-                Dim qpf = New QueryParametersForm(command)
+                Dim qpf = New Forms.QueryInformationForms.QueryParametersForm(command)
                 If qpf.ShowDialog() = DialogResult.OK Then
                     SaveParamsToCache(command)
                 Else
@@ -289,7 +284,7 @@ Namespace DataViewerControl
             _currentTask = Nothing
             _needCancelOperation = False
             Invoke(Sub()
-                dataGridView1.DataSource = obj.Result
+                       dataGridView1.DataSource = obj.Result
                        If Misc.ParamsCache.Count <> 0 AndAlso dataGridView1.DataSource IsNot Nothing Then
                            ShowUsedParams()
                        Else
@@ -298,7 +293,7 @@ Namespace DataViewerControl
                        pLoading.Visible = _currentTask IsNot Nothing
                        OnRowsLoaded()
                    End Sub)
-          
+
             TryRunTask()
         End Sub
 

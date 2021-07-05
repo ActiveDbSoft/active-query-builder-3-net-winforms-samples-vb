@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class CustomComboBoxColumnDemoFrame
     ''' <summary> 
     ''' Required designer variable.

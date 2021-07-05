@@ -1,15 +1,13 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
-Imports System.ComponentModel
-Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.View.QueryView
 
 Namespace Forms
@@ -19,10 +17,10 @@ Namespace Forms
 		Private _selectedPredefinedCondition As UserConditionVisualItem
 		Private _queryView As IQueryView
 
-        Public Sub New()
+		Public Sub New()
 			InitializeComponent()
 
-'INSTANT VB NOTE: The variable name was renamed since Visual Basic does not handle local variables named the same as class members well:
+			'INSTANT VB NOTE: The variable name was renamed since Visual Basic does not handle local variables named the same as class members well:
 			For Each name_Renamed As DbType In System.Enum.GetValues(GetType(DbType))
 				CheckComboBoxDbTypes.Items.Add(name_Renamed)
 			Next name_Renamed
@@ -66,13 +64,13 @@ Namespace Forms
 			CheckBoxIsNeedEdit.Checked = False
 			CheckComboBoxDbTypes.ClearCheckedItems()
 		End Sub
-        
-        Private Function SaveForm() As Boolean
+
+		Private Function SaveForm() As Boolean
 			Try
-                Dim token as Token = Nothing
+				Dim token As Token = Nothing
 				Dim result = _queryView.Query.SQLContext.ParseLogicalExpression(TextBoxExpression.Text, False, False, token)
 				If result Is Nothing AndAlso token IsNot Nothing Then
-					Throw New SQLParsingException(String.Format(Helpers.Localizer.GetString(NameOf(LocalizableConstantsUI.strInvalidCondition), LocalizableConstantsUI.strInvalidCondition), TextBoxExpression.Text), token)
+					Throw New SQLParsingException(String.Format(ActiveQueryBuilder.Core.Helpers.Localizer.GetString(NameOf(LocalizableConstantsUI.strInvalidCondition), LocalizableConstantsUI.strInvalidCondition), TextBoxExpression.Text), token)
 				End If
 			Catch exception As Exception
 				MessageBox.Show(exception.Message, "Invalid SQL", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -117,7 +115,7 @@ Namespace Forms
 			If index >= 0 Then
 				ListBoxConditions.SelectedIndex = index
 			End If
-            Return True
+			Return True
 		End Function
 
 		Private Sub buttonSave_Click(sender As Object, e As EventArgs) Handles buttonSave.Click
@@ -130,6 +128,14 @@ Namespace Forms
 			TextBoxCaption.Focus()
 		End Sub
 
+		Private Function createNewName(base As String, Optional cnt As Integer = 0) As String
+			If cnt = 0 Then
+				Return $"{base} Copy"
+			Else
+				Return $"{base} Copy ({cnt})"
+			End If
+		End Function
+
 		Private Sub buttonCopy_Click(sender As Object, e As EventArgs) Handles buttonCopy.Click
 			_selectedPredefinedCondition = TryCast(ListBoxConditions.SelectedItem, UserConditionVisualItem)
 
@@ -141,18 +147,14 @@ Namespace Forms
 
 			Dim newName = ""
 
-			If ListBoxConditions.Items.OfType(Of UserConditionVisualItem)().All(Function(x) String.Compare(x.Caption, $"{name_Renamed} Copy", StringComparison.InvariantCultureIgnoreCase) <> 0) Then
-				newName = $"{name_Renamed} Copy"
-			Else
-				For i = 1 To 999
-					If ListBoxConditions.Items.OfType(Of UserConditionVisualItem)().Any(Function(x) String.Compare(x.Caption, $"{name_Renamed} Copy ({i})", StringComparison.InvariantCultureIgnoreCase) = 0) Then
-						Continue For
-					End If
+			For i = 0 To 999
+				newName = createNewName(name_Renamed)
+				If ListBoxConditions.Items.OfType(Of UserConditionVisualItem)().Any(Function(x) String.Compare(x.Caption, newName, StringComparison.InvariantCultureIgnoreCase) = 0) Then
+					Continue For
+				End If
 
-					newName = $"{name_Renamed} Copy ({i})"
-					Exit For
-				Next i
-			End If
+				Exit For
+			Next i
 
 			Dim newCopy = _selectedPredefinedCondition.Copy(newName)
 			Dim index = ListBoxConditions.Items.IndexOf(_selectedPredefinedCondition)
@@ -180,7 +182,7 @@ Namespace Forms
 				Return
 			End If
 
-			Helpers.IListMove(_queryView.UserPredefinedConditions, index, index - 1)
+			ActiveQueryBuilder.Core.Helpers.IListMove(_queryView.UserPredefinedConditions, index, index - 1)
 
 			LoadUserConditions(Nothing)
 
@@ -200,7 +202,7 @@ Namespace Forms
 				Return
 			End If
 
-			Helpers.IListMove(_queryView.UserPredefinedConditions, index, index + 1)
+			ActiveQueryBuilder.Core.Helpers.IListMove(_queryView.UserPredefinedConditions, index, index + 1)
 
 			LoadUserConditions(Nothing)
 
@@ -246,61 +248,61 @@ Namespace Forms
 			Close()
 		End Sub
 
-        Protected Overrides Sub OnClosing(e As CancelEventArgs)
-            If buttonSave.Enabled Then
-                Dim result As DialogResult = MessageBox.Show("Save changes to the current condition?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+		Protected Overrides Sub OnClosing(e As CancelEventArgs)
+			If buttonSave.Enabled Then
+				Dim result As DialogResult = MessageBox.Show("Save changes to the current condition?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
 
-                If Equals(result, DialogResult.Yes) AndAlso Not SaveForm() Then
-                    e.Cancel = True
-                End If
-            End If
+				If Equals(result, DialogResult.Yes) AndAlso Not SaveForm() Then
+					e.Cancel = True
+				End If
+			End If
 
-            MyBase.OnClosing(e)
-        End Sub
+			MyBase.OnClosing(e)
+		End Sub
 
-        Private Sub buttonSave_EnabledChanged(sender As Object, e As EventArgs) Handles buttonSave.EnabledChanged
-            tableLayoutPanel1.BackColor = If(buttonSave.Enabled, SystemColors.Info, SystemColors.Control)
-            LabelInformationSave.Visible = buttonSave.Enabled
-            ButtonRevert.Enabled = buttonSave.Enabled
-        End Sub
+		Private Sub buttonSave_EnabledChanged(sender As Object, e As EventArgs) Handles buttonSave.EnabledChanged
+			tableLayoutPanel1.BackColor = If(buttonSave.Enabled, SystemColors.Info, SystemColors.Control)
+			LabelInformationSave.Visible = buttonSave.Enabled
+			ButtonRevert.Enabled = buttonSave.Enabled
+		End Sub
 
-        Private Sub ButtonRevert_Click(sender As Object, e As EventArgs) Handles ButtonRevert.Click
-            ResetForm()
-            UpdateForm()
-        End Sub
+		Private Sub ButtonRevert_Click(sender As Object, e As EventArgs) Handles ButtonRevert.Click
+			ResetForm()
+			UpdateForm()
+		End Sub
 
-        Private Sub UpdateForm()
-            Dim enable = TypeOf ListBoxConditions.SelectedItem Is UserConditionVisualItem
+		Private Sub UpdateForm()
+			Dim enable = TypeOf ListBoxConditions.SelectedItem Is UserConditionVisualItem
 
-            buttonCopy.Enabled = enable
-            buttonDelete.Enabled = enable
-            buttonMoveUp.Enabled = enable
-            buttonMoveDown.Enabled = enable
+			buttonCopy.Enabled = enable
+			buttonDelete.Enabled = enable
+			buttonMoveUp.Enabled = enable
+			buttonMoveDown.Enabled = enable
 
-            For i = 0 To CheckComboBoxDbTypes.Items.Count - 1
-                CheckComboBoxDbTypes.SetItemChecked(i, False)
-            Next i
+			For i = 0 To CheckComboBoxDbTypes.Items.Count - 1
+				CheckComboBoxDbTypes.SetItemChecked(i, False)
+			Next i
 
-            If Not enable Then
-                Return
-            End If
+			If Not enable Then
+				Return
+			End If
 
-            _selectedPredefinedCondition = DirectCast(ListBoxConditions.SelectedItem, UserConditionVisualItem)
+			_selectedPredefinedCondition = DirectCast(ListBoxConditions.SelectedItem, UserConditionVisualItem)
 
-            If _selectedPredefinedCondition Is Nothing Then
-                Return
-            End If
+			If _selectedPredefinedCondition Is Nothing Then
+				Return
+			End If
 
-            TextBoxCaption.Text = _selectedPredefinedCondition.Caption
-            TextBoxExpression.Text = _selectedPredefinedCondition.Condition
-            CheckBoxIsNeedEdit.Checked = _selectedPredefinedCondition.IsNeedEdit
+			TextBoxCaption.Text = _selectedPredefinedCondition.Caption
+			TextBoxExpression.Text = _selectedPredefinedCondition.Condition
+			CheckBoxIsNeedEdit.Checked = _selectedPredefinedCondition.IsNeedEdit
 
-            For Each item In _selectedPredefinedCondition.ShowOnlyForDbTypes.Select(Function(type) CheckComboBoxDbTypes.Items.OfType(Of DbType)().First(Function(x) x = type))
-                CheckComboBoxDbTypes.SetItemChecked(CheckComboBoxDbTypes.Items.OfType(Of DbType)().ToList().IndexOf(item), True)
-            Next item
+			For Each item In _selectedPredefinedCondition.ShowOnlyForDbTypes.Select(Function(type) CheckComboBoxDbTypes.Items.OfType(Of DbType)().First(Function(x) x = type))
+				CheckComboBoxDbTypes.SetItemChecked(CheckComboBoxDbTypes.Items.OfType(Of DbType)().ToList().IndexOf(item), True)
+			Next item
 
-            buttonSave.Enabled = False
-        End Sub
+			buttonSave.Enabled = False
+		End Sub
 	End Class
 
 	Friend Class UserConditionVisualItem

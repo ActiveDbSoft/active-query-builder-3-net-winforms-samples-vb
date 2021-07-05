@@ -1,12 +1,12 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
 Imports System.Data
 Imports System.Drawing
@@ -49,7 +49,7 @@ Namespace Reports
 			For Each dataSetColumn As DataColumn In DataTable.Columns
 				Dim labelHeader = New Label With {
 					.Text = dataSetColumn.ColumnName,
-					.Alignment = TextAlignment.Left,
+					.Alignment = Document.Section.TextAlignment.Left,
 					.Location = New PointF(locationX, 0.0F),
 					.ShrinkToFit = False,
 					.MinCondenseRate = 100,
@@ -64,7 +64,7 @@ Namespace Reports
 					.DataField = dataSetColumn.ColumnName,
 					.Location = New PointF(locationX, 0.05F),
 					.ShrinkToFit = False,
-					.WrapMode = WrapMode.NoWrap,
+					.WrapMode = Document.Section.WrapMode.NoWrap,
 					.CanShrink = False
 				}
 

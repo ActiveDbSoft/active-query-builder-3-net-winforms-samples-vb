@@ -1,4 +1,4 @@
-﻿Namespace PropertiesForm
+Namespace PropertiesForm
 	Partial Friend Class QueryPropertiesForm
 		''' <summary>
 		''' Required designer variable.

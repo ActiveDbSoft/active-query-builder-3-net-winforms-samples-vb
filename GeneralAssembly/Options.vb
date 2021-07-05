@@ -1,19 +1,16 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
 Imports System.IO
 Imports System.Text
-Imports ActiveQueryBuilder.Core
 Imports ActiveQueryBuilder.Core.Serialization
-Imports ActiveQueryBuilder.View
-Imports ActiveQueryBuilder.View.WinForms
 Imports ActiveQueryBuilder.View.DatabaseSchemaView
 Imports ActiveQueryBuilder.View.WinForms.ExpressionEditor
 Imports ActiveQueryBuilder.View.WinForms.QueryView
@@ -129,23 +126,23 @@ Public Class Options
                 XmlSerializerExtensions.Builder = xmlBuilder
                 Using root = xmlBuilder.BeginObject("Options")
                     ' Behavior options
-                    Using behaviorHandle = xmlBuilder.BeginObjectProperty(root, Constants.BehaviorOptionsTag)
+                    Using behaviorHandle = xmlBuilder.BeginObjectProperty(root, ActiveQueryBuilder.Core.Constants.BehaviorOptionsTag)
                         service.EncodeObject(behaviorHandle, withOptions.BehaviorOptions)
                     End Using
                     ' Database view options
-                    Using dbViewOptionsHandle = xmlBuilder.BeginObjectProperty(root, Constants.DatabaseSchemaViewOptionsTag)
+                    Using dbViewOptionsHandle = xmlBuilder.BeginObjectProperty(root, ActiveQueryBuilder.Core.Constants.DatabaseSchemaViewOptionsTag)
                         service.EncodeObject(dbViewOptionsHandle, dbView.Options)
                     End Using
                     ' DesignPaneOptions
-                    Using designPaneOptionsHandle = xmlBuilder.BeginObjectProperty(root, Constants.DesignPaneOptionsTag)
+                    Using designPaneOptionsHandle = xmlBuilder.BeginObjectProperty(root, ActiveQueryBuilder.Core.Constants.DesignPaneOptionsTag)
                         service.EncodeObject(designPaneOptionsHandle, withOptions.DesignPaneOptions)
                     End Using
                     ' VisualOptions
-                    Using visualOptionsHandle = xmlBuilder.BeginObjectProperty(root, Constants.VisualOptionsTag)
+                    Using visualOptionsHandle = xmlBuilder.BeginObjectProperty(root, ActiveQueryBuilder.Core.Constants.VisualOptionsTag)
                         service.EncodeObject(visualOptionsHandle, withOptions.VisualOptions)
                     End Using
                     ' AddObjectDialogOptions
-                    Using addObjectDialogHandle = xmlBuilder.BeginObjectProperty(root, Constants.AddObjectDialogOptionsTag)
+                    Using addObjectDialogHandle = xmlBuilder.BeginObjectProperty(root, ActiveQueryBuilder.Core.Constants.AddObjectDialogOptionsTag)
                         service.EncodeObject(addObjectDialogHandle, withOptions.AddObjectDialogOptions)
                     End Using
                     ' DataSourceOptions
@@ -194,7 +191,7 @@ Public Class Options
 
             Dim metadataService = New MetadataDeserializationService(adapter)
 
-            adapter.Reader.ReadToFollowing(Constants.BehaviorOptionsTag)
+            adapter.Reader.ReadToFollowing(ActiveQueryBuilder.Core.Constants.BehaviorOptionsTag)
             Dim behaviorOptionsTree = adapter.Reader.ReadSubtree()
             behaviorOptionsTree.Read()
             service.DecodeObject(behaviorOptionsTree, withOptions.BehaviorOptions)

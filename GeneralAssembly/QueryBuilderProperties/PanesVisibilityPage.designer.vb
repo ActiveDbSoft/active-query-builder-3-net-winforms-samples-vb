@@ -1,4 +1,4 @@
-﻿Namespace QueryBuilderProperties
+Namespace QueryBuilderProperties
 	Partial Friend Class PanesVisibilityPage
 		''' <summary>
 		''' Required designer variable.

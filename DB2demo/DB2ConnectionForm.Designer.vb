@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class DB2ConnectionForm
     ''' <summary> 
     ''' Required designer variable.

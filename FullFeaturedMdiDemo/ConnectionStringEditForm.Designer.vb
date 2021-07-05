@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class ConnectionStringEditForm
     ''' <summary>
     ''' Required designer variable.

@@ -1,4 +1,4 @@
-﻿Imports ActiveQueryBuilder.View
+
 
 
 Partial Public Class Form1
@@ -11,7 +11,7 @@ Partial Public Class Form1
     ''' Clean up any resources being used.
     ''' </summary>
     ''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    Protected Overrides Sub Dispose( disposing As Boolean)
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         If disposing AndAlso (components IsNot Nothing) Then
             components.Dispose()
         End If
@@ -30,10 +30,11 @@ Partial Public Class Form1
         Dim linkPainterAccess1 As New ActiveQueryBuilder.View.WinForms.QueryView.LinkPainterAccess()
         Me.tabControl1 = New TabControl()
         Me.tabPageSQL = New TabPage()
-        Me.sqlTextEditor1 = New ActiveQueryBuilder.View.WinForms.ExpressionEditor.SqlTextEditor()
-        Me.queryBuilder1 = New ActiveQueryBuilder.View.WinForms.QueryBuilder()
-        Me.expressionEditor1 = New ActiveQueryBuilder.View.WinForms.ExpressionEditor.ExpressionEditor(Me.components)
+        Me.errorBox1 = New Common.SqlErrorBox()
+        Me.textBox1 = New TextBox()
         Me.tabPageData = New TabPage()
+        Me.dataGridView1 = New DataViewerControl.DataViewer()
+        Me.labelSleepMode = New Label()
         Me.genericSyntaxProvider1 = New ActiveQueryBuilder.Core.GenericSyntaxProvider(Me.components)
         Me.openFileDialog = New OpenFileDialog()
         Me.saveFileDialog = New SaveFileDialog()
@@ -46,7 +47,6 @@ Partial Public Class Form1
         Me.msaccessSyntaxProvider1 = New ActiveQueryBuilder.Core.MSAccessSyntaxProvider(Me.components)
         Me.mainMenu1 = New MainMenu(Me.components)
         Me.menuItem1 = New MenuItem()
-        Me.menuItem5 = New MenuItem()
         Me.menuItem2 = New MenuItem()
         Me.fillProgrammaticallyMenuItem = New MenuItem()
         Me.menuItem3 = New MenuItem()
@@ -62,20 +62,19 @@ Partial Public Class Form1
         Me.panel1 = New Panel()
         Me.linkLabel1 = New LinkLabel()
         Me.splitContainer2 = New SplitContainer()
-        Me.labelSleepMode = New Label()
-        Me.errorBox1 = New Common.SqlErrorBox()
-        Me.dataViewer1 = New DataViewerControl.DataViewer()
+        Me.queryBuilder1 = New ActiveQueryBuilder.View.WinForms.QueryBuilder()
+        Me.menuItem5 = New MenuItem()
         Me.tabControl1.SuspendLayout()
         Me.tabPageSQL.SuspendLayout()
-        CType(Me.queryBuilder1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.queryBuilder1.SQLFormattingOptions, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.queryBuilder1.SQLGenerationOptions, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabPageData.SuspendLayout()
         Me.panel1.SuspendLayout()
         CType(Me.splitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.splitContainer2.Panel1.SuspendLayout()
         Me.splitContainer2.Panel2.SuspendLayout()
         Me.splitContainer2.SuspendLayout()
+        CType(Me.queryBuilder1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.queryBuilder1.SQLFormattingOptions, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.queryBuilder1.SQLGenerationOptions, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         ' 
         ' tabControl1
@@ -86,182 +85,89 @@ Partial Public Class Form1
         Me.tabControl1.Location = New Point(0, 0)
         Me.tabControl1.Name = "tabControl1"
         Me.tabControl1.SelectedIndex = 0
-        Me.tabControl1.Size = New Size(901, 151)
+        Me.tabControl1.Size = New Size(884, 144)
         Me.tabControl1.TabIndex = 0
 '			Me.tabControl1.Selected += New System.Windows.Forms.TabControlEventHandler(Me.tabControl1_Selected)
         ' 
         ' tabPageSQL
         ' 
         Me.tabPageSQL.Controls.Add(Me.errorBox1)
-        Me.tabPageSQL.Controls.Add(Me.sqlTextEditor1)
+        Me.tabPageSQL.Controls.Add(Me.textBox1)
         Me.tabPageSQL.Location = New Point(4, 22)
         Me.tabPageSQL.Name = "tabPageSQL"
         Me.tabPageSQL.Padding = New Padding(3)
-        Me.tabPageSQL.Size = New Size(893, 125)
+        Me.tabPageSQL.Size = New Size(876, 118)
         Me.tabPageSQL.TabIndex = 0
         Me.tabPageSQL.Text = "SQL"
         Me.tabPageSQL.UseVisualStyleBackColor = True
         ' 
-        ' sqlTextEditor1
+        ' errorBox1
         ' 
-        Me.sqlTextEditor1.AllowShowSuggestionByMouse = False
-        Me.sqlTextEditor1.BackColor = Color.White
-        Me.sqlTextEditor1.BorderStyle = BorderStyle.FixedSingle
-        Me.sqlTextEditor1.Dock = DockStyle.Fill
-        Me.sqlTextEditor1.Location = New Point(3, 3)
-        Me.sqlTextEditor1.Name = "sqlTextEditor1"
-        Me.sqlTextEditor1.Options.Font = New Font("Courier New", 9F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
-        Me.sqlTextEditor1.Options.Padding = New Padding(5, 5, 0, 0)
-        Me.sqlTextEditor1.QueryProvider = Me.queryBuilder1
-        Me.sqlTextEditor1.Size = New Size(887, 119)
-        Me.sqlTextEditor1.SqlOptions.SuggestionWindowSize = New Size(200, 200)
-        Me.sqlTextEditor1.TabIndex = 1
-'			Me.sqlTextEditor1.Validating += New System.ComponentModel.CancelEventHandler(Me.sqlTextEditor1_Validating)
+        Me.errorBox1.Anchor = (CType((AnchorStyles.Bottom Or AnchorStyles.Right), AnchorStyles))
+        Me.errorBox1.AutoSize = True
+        Me.errorBox1.BackColor = Color.LightPink
+        Me.errorBox1.BorderStyle = BorderStyle.FixedSingle
+        Me.errorBox1.CurrentSyntaxProvider = Nothing
+        Me.errorBox1.IsVisibleCheckSyntaxPanel = True
+        Me.errorBox1.Location = New Point(527, 23)
+        Me.errorBox1.Name = "errorBox1"
+        Me.errorBox1.Padding = New Padding(5)
+        Me.errorBox1.Size = New Size(323, 87)
+        Me.errorBox1.TabIndex = 1
+        Me.errorBox1.Visible = False
+'			Me.errorBox1.SyntaxProviderChanged += New System.EventHandler(Me.errorBox1_SyntaxProviderChanged)
+'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.errorBox1_GoToErrorPositionEvent)
+'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.errorBox1_RevertValidTextEvent)
         ' 
-        ' queryBuilder1
+        ' textBox1
         ' 
-        Me.queryBuilder1.AddObjectDialogOptions.Location = New Point(0, 0)
-        Me.queryBuilder1.AddObjectDialogOptions.Size = New Size(400, 400)
-        Me.queryBuilder1.AddObjectDialogOptions.StartPosition = FormStartPosition.CenterParent
-        Me.queryBuilder1.BehaviorOptions.ResolveColumnNamingConflictsAutomatically = False
-        Me.queryBuilder1.BorderStyle = BorderStyle.None
-        Me.queryBuilder1.DatabaseSchemaViewOptions.DrawTreeLines = False
-        Me.queryBuilder1.DatabaseSchemaViewOptions.ImageList = Nothing
-        Me.queryBuilder1.DataSourceOptions.ColumnsOptions.InformationButtonsColumnOptions.Color = Color.Black
-        Me.queryBuilder1.DataSourceOptions.ColumnsOptions.MarkColumnOptions.PrimaryKeyIcon = (CType(resources.GetObject("resource.PrimaryKeyIcon"), Image))
-        Me.queryBuilder1.DataSourceOptions.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.World)
-        Me.queryBuilder1.DesignPaneOptions.Background = SystemColors.Window
-        linkPainterAccess1.LinkColor = Color.Black
-        linkPainterAccess1.LinkColorFocused = Color.Black
-        linkPainterAccess1.MarkColor = SystemColors.Control
-        linkPainterAccess1.MarkColorFocused = SystemColors.ControlDark
-        linkPainterAccess1.MarkStyle = ActiveQueryBuilder.View.QueryView.LinkMarkStyle.Access
-        Me.queryBuilder1.DesignPaneOptions.LinkPainterOptions = linkPainterAccess1
-        Me.queryBuilder1.DesignPaneOptions.LinkStyle = ActiveQueryBuilder.View.QueryView.LinkStyle.MSAccess
-        Me.queryBuilder1.Dock = DockStyle.Fill
-        Me.queryBuilder1.ExpressionEditor = Me.expressionEditor1
-        Me.queryBuilder1.Location = New Point(0, 0)
-        Me.queryBuilder1.Name = "queryBuilder1"
-        Me.queryBuilder1.PanesConfigurationOptions.DatabaseSchemaViewDock = ActiveQueryBuilder.View.SidePanelDockStyle.Left
-        Me.queryBuilder1.PanesConfigurationOptions.DatabaseSchemaViewWidth = 201
-        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarDockOptions.AutoHide = True
-        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Right
-        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarEnabled = True
-        Me.queryBuilder1.PanesConfigurationOptions.QueryColumnsPaneHeight = 150
-        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.AutoHide = True
-        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Left
-        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarEnabled = True
-        Me.queryBuilder1.QueryColumnListOptions.AlternateRowColor = SystemColors.Highlight
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Index = 5
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Width = 90R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AliasColumn.Index = 2
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AliasColumn.Width = 100R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Index = 7
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Width = 140R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Index = 8
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Width = 200R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Index = 0
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Width = 60R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Index = 1
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Width = 250R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Index = 6
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Width = 100R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.OutputColumn.Index = 0
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.OutputColumn.Width = 55R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Index = 4
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Width = 100R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Index = 3
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Width = 60R
-        Me.queryBuilder1.QueryColumnListOptions.Font = New Font("Segoe UI", 8.25F)
-        Me.queryBuilder1.QueryColumnListOptions.InitialOrColumnsCount = 2
-        Me.queryBuilder1.QueryColumnListOptions.NullOrderingInOrderBy = False
-        Me.queryBuilder1.QueryColumnListOptions.TextColor = SystemColors.ControlText
-        Me.queryBuilder1.QueryColumnListOptions.UseCustomExpressionBuilder = ActiveQueryBuilder.View.QueryView.AffectedColumns.None
-        Me.queryBuilder1.QueryNavBarOptions.ActionButtonBackColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.ActionButtonBorderColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.ActiveSubQueryItemBackColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.ActiveSubQueryItemBorderColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.AddCteCircleColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.AddUnionSubQueryCircleColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.BreadcrumbsBackgroundColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.CTEButtonBaseColor = Color.Green
-        Me.queryBuilder1.QueryNavBarOptions.DisableQueryNavigationBarPopup = False
-        Me.queryBuilder1.QueryNavBarOptions.DragIndicatorColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.DragIndicatorHoverColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.Font = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(0)))
-        Me.queryBuilder1.QueryNavBarOptions.ForeColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.GraphLineColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.GroupBackColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.GroupTextColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.OverflowButtonBaseColor = Color.DarkRed
-        Me.queryBuilder1.QueryNavBarOptions.RootQueryButtonBaseColor = Color.Black
-        Me.queryBuilder1.QueryNavBarOptions.SubQueryButtonBaseColor = Color.Blue
-        Me.queryBuilder1.QueryNavBarOptions.SubQueryItemBackColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.SubQueryItemBorderColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.SubQueryMarkerColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.SubQueryPopupBackColor = Color.Empty
-        Me.queryBuilder1.QueryNavBarOptions.TextHoverColor = Color.Empty
-        Me.queryBuilder1.Size = New Size(901, 337)
-        ' 
-        ' 
-        ' 
-        Me.queryBuilder1.SQLFormattingOptions.CTESubQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        Me.queryBuilder1.SQLFormattingOptions.CTESubQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        Me.queryBuilder1.SQLFormattingOptions.CTESubQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        Me.queryBuilder1.SQLFormattingOptions.DerivedQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        Me.queryBuilder1.SQLFormattingOptions.DerivedQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        Me.queryBuilder1.SQLFormattingOptions.DerivedQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        Me.queryBuilder1.SQLFormattingOptions.DynamicIndents = False
-        Me.queryBuilder1.SQLFormattingOptions.DynamicRightMargin = False
-        Me.queryBuilder1.SQLFormattingOptions.ExpandVirtualFields = False
-        Me.queryBuilder1.SQLFormattingOptions.ExpandVirtualObjects = False
-        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.FromClauseFormat.NewLineAfterDatasource = False
-        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.MainPartsFromNewLine = False
-        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        Me.queryBuilder1.SQLFormattingOptions.MainQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        Me.queryBuilder1.SQLFormattingOptions.MainQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        Me.queryBuilder1.SQLFormattingOptions.MainQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
-        ' 
-        ' 
-        ' 
-        Me.queryBuilder1.SQLGenerationOptions.ExpandVirtualFields = True
-        Me.queryBuilder1.SQLGenerationOptions.ExpandVirtualObjects = True
-        Me.queryBuilder1.SQLGenerationOptions.UseAltNames = False
-        Me.queryBuilder1.TabIndex = 6
-        Me.queryBuilder1.VisualOptions.ActiveDockPanelCaptionColor = Color.FromArgb((CInt(Fix((CByte(255))))), (CInt(Fix((CByte(242))))), (CInt(Fix((CByte(157))))))
-        Me.queryBuilder1.VisualOptions.ActiveDockPanelCaptionFontColor = Color.Black
-        Me.queryBuilder1.VisualOptions.DockPanelBackColor = Color.Empty
-        Me.queryBuilder1.VisualOptions.DockTabColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-        Me.queryBuilder1.VisualOptions.DockTabFontColor = Color.White
-        Me.queryBuilder1.VisualOptions.DockTabFontHoverColor = Color.White
-        Me.queryBuilder1.VisualOptions.DockTabHoverColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-        Me.queryBuilder1.VisualOptions.DockTabIndicatorColor = Color.FromArgb((CInt(Fix((CByte(70))))), (CInt(Fix((CByte(90))))), (CInt(Fix((CByte(125))))))
-        Me.queryBuilder1.VisualOptions.DockTabIndicatorHoverColor = Color.FromArgb((CInt(Fix((CByte(155))))), (CInt(Fix((CByte(167))))), (CInt(Fix((CByte(183))))))
-        Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionColor = Color.FromArgb((CInt(Fix((CByte(77))))), (CInt(Fix((CByte(96))))), (CInt(Fix((CByte(130))))))
-        Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
-        Me.queryBuilder1.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(0)))
-        Me.queryBuilder1.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.queryBuilder1.SleepModeChanged += New System.EventHandler(Me.queryBuilder1_SleepModeChanged)
-'			Me.queryBuilder1.QueryAwake += New ActiveQueryBuilder.Core.QueryAwakeEventHandler(Me.queryBuilder1_QueryAwake)
-'			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
-        ' 
-        ' expressionEditor1
-        ' 
-        Me.expressionEditor1.BackColor = Color.White
-        Me.expressionEditor1.TextColor = SystemColors.ControlText
+        Me.textBox1.BorderStyle = BorderStyle.FixedSingle
+        Me.textBox1.Dock = DockStyle.Fill
+        Me.textBox1.Font = New Font("Courier New", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
+        Me.textBox1.HideSelection = False
+        Me.textBox1.Location = New Point(3, 3)
+        Me.textBox1.Multiline = True
+        Me.textBox1.Name = "textBox1"
+        Me.textBox1.ScrollBars = ScrollBars.Both
+        Me.textBox1.Size = New Size(870, 112)
+        Me.textBox1.TabIndex = 0
+'			Me.textBox1.TextChanged += New System.EventHandler(Me.textBox1_TextChanged)
+'			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
         ' 
         ' tabPageData
         ' 
-        Me.tabPageData.Controls.Add(Me.dataViewer1)
+        Me.tabPageData.Controls.Add(Me.dataGridView1)
         Me.tabPageData.Location = New Point(4, 22)
         Me.tabPageData.Name = "tabPageData"
         Me.tabPageData.Padding = New Padding(3)
-        Me.tabPageData.Size = New Size(893, 131)
+        Me.tabPageData.Size = New Size(876, 118)
         Me.tabPageData.TabIndex = 1
         Me.tabPageData.Text = "Data"
         Me.tabPageData.UseVisualStyleBackColor = True
+        ' 
+        ' dataGridView1
+        ' 
+        Me.dataGridView1.Dock = DockStyle.Fill
+        Me.dataGridView1.Location = New Point(3, 3)
+        Me.dataGridView1.Name = "dataGridView1"
+        Me.dataGridView1.Size = New Size(870, 112)
+        Me.dataGridView1.TabIndex = 0
+        ' 
+        ' labelSleepMode
+        ' 
+        Me.labelSleepMode.AutoEllipsis = True
+        Me.labelSleepMode.BackColor = Color.Bisque
+        Me.labelSleepMode.BorderStyle = BorderStyle.FixedSingle
+        Me.labelSleepMode.Dock = DockStyle.Bottom
+        Me.labelSleepMode.Location = New Point(0, 273)
+        Me.labelSleepMode.Margin = New Padding(5, 0, 5, 0)
+        Me.labelSleepMode.Name = "labelSleepMode"
+        Me.labelSleepMode.Padding = New Padding(10)
+        Me.labelSleepMode.Size = New Size(884, 34)
+        Me.labelSleepMode.TabIndex = 1
+        Me.labelSleepMode.Text = "Unsupported SQL statement. Visual Query Builder has been disabled. Either type a " & "SELECT statement or start building a query visually to turn this mode off."
+        Me.labelSleepMode.TextAlign = ContentAlignment.MiddleLeft
+        Me.labelSleepMode.Visible = False
         ' 
         ' genericSyntaxProvider1
         ' 
@@ -319,12 +225,6 @@ Partial Public Class Form1
         Me.menuItem1.Index = 0
         Me.menuItem1.MenuItems.AddRange(New MenuItem() { Me.menuItem5, Me.menuItem2, Me.fillProgrammaticallyMenuItem})
         Me.menuItem1.Text = "Connect"
-        ' 
-        ' menuItem5
-        ' 
-        Me.menuItem5.Index = 0
-        Me.menuItem5.Text = "Connect..."
-'			Me.menuItem5.Click += New System.EventHandler(Me.menuItem5_Click)
         ' 
         ' menuItem2
         ' 
@@ -407,7 +307,7 @@ Partial Public Class Form1
         Me.panel1.Location = New Point(0, 0)
         Me.panel1.Name = "panel1"
         Me.panel1.Padding = New Padding(6, 5, 3, 0)
-        Me.panel1.Size = New Size(901, 37)
+        Me.panel1.Size = New Size(884, 37)
         Me.panel1.TabIndex = 3
         Me.panel1.Visible = False
         ' 
@@ -439,63 +339,127 @@ Partial Public Class Form1
         ' splitContainer2.Panel2
         ' 
         Me.splitContainer2.Panel2.Controls.Add(Me.tabControl1)
-        Me.splitContainer2.Size = New Size(901, 530)
-        Me.splitContainer2.SplitterDistance = 375
+        Me.splitContainer2.Size = New Size(884, 455)
+        Me.splitContainer2.SplitterDistance = 307
         Me.splitContainer2.TabIndex = 4
         ' 
-        ' labelSleepMode
+        ' queryBuilder1
         ' 
-        Me.labelSleepMode.AutoEllipsis = True
-        Me.labelSleepMode.BackColor = Color.Bisque
-        Me.labelSleepMode.BorderStyle = BorderStyle.FixedSingle
-        Me.labelSleepMode.Dock = DockStyle.Bottom
-        Me.labelSleepMode.Location = New Point(0, 337)
-        Me.labelSleepMode.Margin = New Padding(5, 0, 5, 0)
-        Me.labelSleepMode.Name = "labelSleepMode"
-        Me.labelSleepMode.Padding = New Padding(10)
-        Me.labelSleepMode.Size = New Size(901, 38)
-        Me.labelSleepMode.TabIndex = 5
-        Me.labelSleepMode.Text = "Unsupported SQL statement. Visual Query Builder has been disabled. Either type a " & "SELECT statement or start building a query visually to turn this mode off."
-        Me.labelSleepMode.TextAlign = ContentAlignment.MiddleLeft
-        Me.labelSleepMode.Visible = False
+        Me.queryBuilder1.AddObjectDialogOptions.Location = New Point(0, 0)
+        Me.queryBuilder1.AddObjectDialogOptions.Size = New Size(400, 400)
+        Me.queryBuilder1.AddObjectDialogOptions.StartPosition = FormStartPosition.CenterParent
+        Me.queryBuilder1.BehaviorOptions.ResolveColumnNamingConflictsAutomatically = False
+        Me.queryBuilder1.BorderStyle = BorderStyle.None
+        Me.queryBuilder1.DatabaseSchemaViewOptions.DrawTreeLines = False
+        Me.queryBuilder1.DatabaseSchemaViewOptions.ImageList = Nothing
+        Me.queryBuilder1.DataSourceOptions.ColumnsOptions.InformationButtonsColumnOptions.Color = Color.Black
+        Me.queryBuilder1.DesignPaneOptions.Background = SystemColors.Window
+        linkPainterAccess1.LinkColor = Color.Black
+        linkPainterAccess1.LinkColorFocused = Color.Black
+        linkPainterAccess1.MarkColor = SystemColors.Control
+        linkPainterAccess1.MarkColorFocused = SystemColors.ControlDark
+        linkPainterAccess1.MarkStyle = ActiveQueryBuilder.View.QueryView.LinkMarkStyle.Access
+        Me.queryBuilder1.DesignPaneOptions.LinkPainterOptions = linkPainterAccess1
+        Me.queryBuilder1.DesignPaneOptions.LinkStyle = ActiveQueryBuilder.View.QueryView.LinkStyle.MSAccess
+        Me.queryBuilder1.Dock = DockStyle.Fill
+        Me.queryBuilder1.Font = New Font("Segoe UI", 8.25F)
+        Me.queryBuilder1.Location = New Point(0, 0)
+        Me.queryBuilder1.Name = "queryBuilder1"
+        Me.queryBuilder1.PanesConfigurationOptions.DatabaseSchemaViewDock = ActiveQueryBuilder.View.SidePanelDockStyle.Left
+        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarDockOptions.AutoHide = True
+        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Right
+        Me.queryBuilder1.PanesConfigurationOptions.PropertiesBarEnabled = True
+        Me.queryBuilder1.PanesConfigurationOptions.QueryColumnsPaneHeight = 120
+        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.AutoHide = True
+        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Left
+        Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarEnabled = True
+        Me.queryBuilder1.QueryColumnListOptions.Font = Nothing
+        Me.queryBuilder1.QueryColumnListOptions.InitialOrColumnsCount = 2
+        Me.queryBuilder1.QueryColumnListOptions.NullOrderingInOrderBy = False
+        Me.queryBuilder1.QueryColumnListOptions.UseCustomExpressionBuilder = ActiveQueryBuilder.View.QueryView.AffectedColumns.None
+        Me.queryBuilder1.QueryNavBarOptions.ActionButtonBackColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.ActionButtonBorderColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.ActiveSubQueryItemBackColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.ActiveSubQueryItemBorderColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.AddCteCircleColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.AddUnionSubQueryCircleColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.BreadcrumbsBackgroundColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.CTEButtonBaseColor = Color.Green
+        Me.queryBuilder1.QueryNavBarOptions.DisableQueryNavigationBarPopup = False
+        Me.queryBuilder1.QueryNavBarOptions.DragIndicatorColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.DragIndicatorHoverColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.Font = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(0)))
+        Me.queryBuilder1.QueryNavBarOptions.ForeColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.GraphLineColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.GroupBackColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.GroupTextColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.OverflowButtonBaseColor = Color.DarkRed
+        Me.queryBuilder1.QueryNavBarOptions.RootQueryButtonBaseColor = Color.Black
+        Me.queryBuilder1.QueryNavBarOptions.SubQueryButtonBaseColor = Color.Blue
+        Me.queryBuilder1.QueryNavBarOptions.SubQueryItemBackColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.SubQueryItemBorderColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.SubQueryMarkerColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.SubQueryPopupBackColor = Color.Empty
+        Me.queryBuilder1.QueryNavBarOptions.TextHoverColor = Color.Empty
+        Me.queryBuilder1.Size = New Size(884, 273)
         ' 
-        ' errorBox1
         ' 
-        Me.errorBox1.Anchor = (CType((AnchorStyles.Bottom Or AnchorStyles.Right), AnchorStyles))
-        Me.errorBox1.AutoSize = True
-        Me.errorBox1.BackColor = Color.LightPink
-        Me.errorBox1.BorderStyle = BorderStyle.FixedSingle
-        Me.errorBox1.CurrentSyntaxProvider = Nothing
-        Me.errorBox1.IsVisibleCheckSyntaxPanel = True
-        Me.errorBox1.Location = New Point(531, 19)
-        Me.errorBox1.Name = "errorBox1"
-        Me.errorBox1.Padding = New Padding(5)
-        Me.errorBox1.Size = New Size(354, 100)
-        Me.errorBox1.TabIndex = 2
-        Me.errorBox1.Visible = False
-'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.errorBox1_GoToErrorPositionEvent)
-'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.errorBox1_RevertValidTextEvent)
-'			Me.errorBox1.StyleChanged += New System.EventHandler(Me.errorBox1_SyntaxProviderChanged)
         ' 
-        ' dataViewer1
+        Me.queryBuilder1.SQLFormattingOptions.CTESubQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.CTESubQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.CTESubQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.DerivedQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.DerivedQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.DerivedQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.DynamicIndents = False
+        Me.queryBuilder1.SQLFormattingOptions.DynamicRightMargin = False
+        Me.queryBuilder1.SQLFormattingOptions.ExpandVirtualFields = False
+        Me.queryBuilder1.SQLFormattingOptions.ExpandVirtualObjects = False
+        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.FromClauseFormat.NewLineAfterDatasource = False
+        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.MainPartsFromNewLine = False
+        Me.queryBuilder1.SQLFormattingOptions.ExpressionSubQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.MainQueryFormat.FromClauseFormat.JoinConditionFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.MainQueryFormat.HavingFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
+        Me.queryBuilder1.SQLFormattingOptions.MainQueryFormat.WhereFormat.NewLineBefore = ActiveQueryBuilder.Core.SQLBuilderConditionFormatNewLine.None
         ' 
-        Me.dataViewer1.AutoSize = True
-        Me.dataViewer1.Dock = DockStyle.Fill
-        Me.dataViewer1.Location = New Point(3, 3)
-        Me.dataViewer1.Name = "dataViewer1"
-        Me.dataViewer1.QueryTransformer = Nothing
-        Me.dataViewer1.Size = New Size(887, 125)
-        Me.dataViewer1.SqlQuery = Nothing
-        Me.dataViewer1.TabIndex = 0
+        ' 
+        ' 
+        Me.queryBuilder1.SQLGenerationOptions.ExpandVirtualFields = True
+        Me.queryBuilder1.SQLGenerationOptions.ExpandVirtualObjects = True
+        Me.queryBuilder1.SQLGenerationOptions.UseAltNames = False
+        Me.queryBuilder1.TabIndex = 4
+        Me.queryBuilder1.VisualOptions.ActiveDockPanelCaptionColor = Color.FromArgb((CInt(Fix((CByte(255))))), (CInt(Fix((CByte(242))))), (CInt(Fix((CByte(157))))))
+        Me.queryBuilder1.VisualOptions.ActiveDockPanelCaptionFontColor = Color.Black
+        Me.queryBuilder1.VisualOptions.DockPanelBackColor = Color.Empty
+        Me.queryBuilder1.VisualOptions.DockTabColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
+        Me.queryBuilder1.VisualOptions.DockTabFontColor = Color.White
+        Me.queryBuilder1.VisualOptions.DockTabFontHoverColor = Color.White
+        Me.queryBuilder1.VisualOptions.DockTabHoverColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
+        Me.queryBuilder1.VisualOptions.DockTabIndicatorColor = Color.FromArgb((CInt(Fix((CByte(70))))), (CInt(Fix((CByte(90))))), (CInt(Fix((CByte(125))))))
+        Me.queryBuilder1.VisualOptions.DockTabIndicatorHoverColor = Color.FromArgb((CInt(Fix((CByte(155))))), (CInt(Fix((CByte(167))))), (CInt(Fix((CByte(183))))))
+        Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionColor = Color.FromArgb((CInt(Fix((CByte(77))))), (CInt(Fix((CByte(96))))), (CInt(Fix((CByte(130))))))
+        Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
+        Me.queryBuilder1.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(0)))
+        Me.queryBuilder1.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
+'			Me.queryBuilder1.SleepModeChanged += New System.EventHandler(Me.queryBuilder1_SleepModeChanged)
+'			Me.queryBuilder1.QueryAwake += New ActiveQueryBuilder.Core.QueryAwakeEventHandler(Me.queryBuilder1_QueryAwake)
+'			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
+        ' 
+        ' menuItem5
+        ' 
+        Me.menuItem5.Index = 0
+        Me.menuItem5.Text = "Connect to..."
+'			Me.menuItem5.Click += New System.EventHandler(Me.ConnectTo_Click)
         ' 
         ' Form1
         ' 
         Me.AutoScaleDimensions = New SizeF(6F, 13F)
         Me.AutoScaleMode = AutoScaleMode.Font
-        Me.ClientSize = New Size(901, 567)
+        Me.ClientSize = New Size(884, 492)
         Me.Controls.Add(Me.splitContainer2)
         Me.Controls.Add(Me.panel1)
-        Me.Font = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(0)))
         Me.Icon = (CType(resources.GetObject("$this.Icon"), Icon))
         Me.Menu = Me.mainMenu1
         Me.Name = "Form1"
@@ -504,17 +468,16 @@ Partial Public Class Form1
         Me.tabControl1.ResumeLayout(False)
         Me.tabPageSQL.ResumeLayout(False)
         Me.tabPageSQL.PerformLayout()
-        CType(Me.queryBuilder1.SQLFormattingOptions, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.queryBuilder1.SQLGenerationOptions, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.queryBuilder1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabPageData.ResumeLayout(False)
-        Me.tabPageData.PerformLayout()
         Me.panel1.ResumeLayout(False)
         Me.panel1.PerformLayout()
         Me.splitContainer2.Panel1.ResumeLayout(False)
         Me.splitContainer2.Panel2.ResumeLayout(False)
         CType(Me.splitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.splitContainer2.ResumeLayout(False)
+        CType(Me.queryBuilder1.SQLFormattingOptions, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.queryBuilder1.SQLGenerationOptions, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.queryBuilder1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -525,6 +488,8 @@ Partial Public Class Form1
     Private WithEvents tabControl1 As TabControl
     Private tabPageSQL As TabPage
     Private tabPageData As TabPage
+    Private WithEvents textBox1 As TextBox
+    Private dataGridView1 As DataViewerControl.DataViewer
     Private openFileDialog As OpenFileDialog
     Private saveFileDialog As SaveFileDialog
     Private genericSyntaxProvider1 As ActiveQueryBuilder.Core.GenericSyntaxProvider
@@ -551,12 +516,9 @@ Partial Public Class Form1
     Private WithEvents queryStatisticsMenuItem As MenuItem
     Private linkLabel1 As LinkLabel
     Private panel1 As Panel
-    Private expressionEditor1 As ActiveQueryBuilder.View.WinForms.ExpressionEditor.ExpressionEditor
-    Private WithEvents menuItem5 As MenuItem
+    Private labelSleepMode As Label
     Private WithEvents errorBox1 As Common.SqlErrorBox
-    Private WithEvents sqlTextEditor1 As ActiveQueryBuilder.View.WinForms.ExpressionEditor.SqlTextEditor
     Private splitContainer2 As SplitContainer
     Private WithEvents queryBuilder1 As ActiveQueryBuilder.View.WinForms.QueryBuilder
-    Private labelSleepMode As Label
-    Private dataViewer1 As DataViewerControl.DataViewer
+    Private WithEvents menuItem5 As MenuItem
 End Class

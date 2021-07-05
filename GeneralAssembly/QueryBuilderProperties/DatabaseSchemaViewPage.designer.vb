@@ -1,11 +1,11 @@
-﻿Namespace QueryBuilderProperties
+Namespace QueryBuilderProperties
 	Partial Friend Class DatabaseSchemaViewPage
 		''' <summary>
 		''' Required designer variable.
 		''' </summary>
 		Private components As System.ComponentModel.IContainer = Nothing
 
-		#Region "Component Designer generated code"
+#Region "Component Designer generated code"
 
 		''' <summary>
 		''' Required method for Designer support - do not modify
@@ -127,7 +127,7 @@
 			' 
 			' DatabaseSchemaViewPage
 			' 
-			Me.AutoScaleDimensions = New SizeF(6F, 13F)
+			Me.AutoScaleDimensions = New SizeF(6.0F, 13.0F)
 			Me.AutoScaleMode = AutoScaleMode.Font
 			Me.Controls.Add(Me.cbDefaultExpandType)
 			Me.Controls.Add(Me.lblDefaultExpandLevel)
@@ -145,7 +145,7 @@
 
 		End Sub
 
-		#End Region
+#End Region
 
 		Private lblGroupObjectsBy As Label
 		Private cbGroupByServers As CheckBox

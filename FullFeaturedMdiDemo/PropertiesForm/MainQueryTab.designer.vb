@@ -1,14 +1,8 @@
 ﻿Namespace PropertiesForm
 	Partial Public Class MainQueryTab
-		''' <summary> 
-		''' Обязательная переменная конструктора.
-		''' </summary>
+		
 		Private components As System.ComponentModel.IContainer = Nothing
 
-		''' <summary> 
-		''' Освободить все используемые ресурсы.
-		''' </summary>
-		''' <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
 		Protected Overrides Sub Dispose(disposing As Boolean)
 			If disposing AndAlso (components IsNot Nothing) Then
 				components.Dispose()
@@ -16,12 +10,6 @@
 			MyBase.Dispose(disposing)
 		End Sub
 
-		#Region "Код, автоматически созданный конструктором компонентов"
-
-		''' <summary> 
-		''' Требуемый метод для поддержки конструктора — не изменяйте 
-		''' содержимое этого метода с помощью редактора кода.
-		''' </summary>
 		Private Sub InitializeComponent()
 			Me.groupBox1 = New GroupBox()
 			Me.label5 = New Label()
@@ -203,8 +191,6 @@
 			Me.ResumeLayout(False)
 
 		End Sub
-
-		#End Region
 
 		Private groupBox1 As GroupBox
 		Private label5 As Label

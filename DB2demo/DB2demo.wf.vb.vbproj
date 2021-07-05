@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>DB2demo.wf.vb</AssemblyName>
+    <AssemblyTitle>$(AssemblyName)</AssemblyTitle>
+    <Description>Active Query Builder 3 DB2 Demo</Description>
+    <RootNamespace>DB2demo</RootNamespace>
+
+    <TargetFrameworks>net462;netcoreapp3.1</TargetFrameworks>
+    <Platforms>x64</Platforms>
+    <OutputType>WinExe</OutputType>
+  </PropertyGroup>
+
+  <!-- DB2 client references for net framework -->
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <PackageReference Include="IBM.Data.DB.Provider" Version="11.5.4000.4861" GeneratePathProperty="true" />
+    <Reference Include="IBM.Data.DB2">
+      <HintPath>$(PkgIBM_Data_DB_Provider)\lib\net451\x64\IBM.Data.DB2.dll</HintPath>
+    </Reference>
+    <Import Include="IBM.Data.DB2" />
+  </ItemGroup>
+  <!-- DB2 client references for net core -->
+  <ItemGroup Condition="$(TargetFramework.StartsWith('netcoreapp')) Or $(TargetFramework.StartsWith('netstandard'))">
+    <PackageReference Include="IBM.Data.DB2.Core" Version="2.2.0.100" />
+    <Import Include="IBM.Data.DB2.Core" />
+  </ItemGroup>
+
+  <!-- database-specific metadata provider -->
+  <ItemGroup Condition="$(UseNugetAqbReferences)">
+    <PackageReference Include="ActiveQueryBuilder.DB2MetadataProvider" Version="$(Version)" />
+  </ItemGroup>
+  <ItemGroup Condition="!$(UseNugetAqbReferences)">
+    <ProjectReference Include="$(SolutionDir)src\_metadata-providers\DB2MetadataProvider\DB2MetadataProvider.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GeneralAssembly\GeneralAssembly.wf.vb.vbproj" />
+    <Import Include="GeneralAssembly" />
+  </ItemGroup>
+
+</Project>

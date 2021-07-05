@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class FirebirdConnectionForm
     ''' <summary> 
     ''' Required designer variable.

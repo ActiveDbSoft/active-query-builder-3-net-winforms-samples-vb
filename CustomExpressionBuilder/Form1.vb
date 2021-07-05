@@ -1,12 +1,12 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
 '''******************************************************************
 ''' * This sample forms demonstrates using of custom expression builder.
@@ -70,18 +70,13 @@ Partial Public Class Form1
         QueryBuilder.ShowAboutDialog()
     End Sub
 
-    Private Sub queryBuilder_CustomExpressionBuilder(ByVal queryColumnListItem As QueryColumnListItem, ByVal conditionIndex As Integer, ByVal expression As String) Handles queryBuilder.CustomExpressionBuilder
+    Private Sub queryBuilder_CustomExpressionBuilder(ByVal sender As Object, ByVal e As ActiveQueryBuilder.View.QueryView.ExpressionEditorParameters) Handles queryBuilder.CustomExpressionBuilder
         Using f As New CustomExpressionEditor()
-            f.textBox.Text = expression
+            f.textBox.Text = e.OldExpression
 
             If f.ShowDialog() = DialogResult.OK Then
                 ' Update the criteria list with new expression text.
-
-                If conditionIndex > -1 Then ' it's one of condition columns
-                    queryColumnListItem.ConditionStrings(conditionIndex) = f.textBox.Text
-                Else ' it's the Expression column
-                    queryColumnListItem.ExpressionString = f.textBox.Text
-                End If
+                e.NewExpression = f.textBox.Text
             End If
         End Using
     End Sub

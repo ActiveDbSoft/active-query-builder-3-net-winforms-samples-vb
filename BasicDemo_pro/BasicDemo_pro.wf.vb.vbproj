@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>BasicDemo_pro.wf.vb</AssemblyName>
+    <AssemblyTitle>$(AssemblyName)</AssemblyTitle>
+    <Description>Active Query Builder 3 Basic Demo</Description>
+    <RootNamespace>BasicDemo</RootNamespace>
+
+    <!-- todo: <TargetFrameworks>net462;netcoreapp3.1</TargetFrameworks> -->
+    <TargetFrameworks>net462</TargetFrameworks>
+    <OutputType>WinExe</OutputType>
+
+    <ApplicationIcon>App.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GeneralAssembly_pro\GeneralAssembly_pro.wf.vb.vbproj" />
+    <Import Include="GeneralAssembly" />
+  </ItemGroup>
+
+</Project>

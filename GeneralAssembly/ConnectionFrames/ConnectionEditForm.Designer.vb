@@ -1,4 +1,4 @@
-﻿Namespace ConnectionFrames
+Namespace ConnectionFrames
 	Partial Public Class ConnectionEditForm
 		''' <summary>
 		''' Required designer variable.

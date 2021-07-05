@@ -1,16 +1,12 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
-
-Imports System.Text
-Imports ActiveQueryBuilder.Core
-Imports ActiveQueryBuilder.View
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
 Namespace Common
 	Partial Public Class InformationPanel
@@ -45,7 +41,7 @@ Namespace Common
 			End Get
 			Set(value As String)
 			    _tooltipText = value
-				Dim text1 as String = If((Not String.IsNullOrEmpty(_tooltipText)), WrapText(_tooltipText), _tooltip)
+				Dim text1 As String = If((Not String.IsNullOrEmpty(_tooltipText)), WrapText(_tooltipText), _toolTip.ToString)
 				_toolTip.SetToolTip(pnlMain, text1)
 				_toolTip.SetToolTip(lbText, text1)
 			End Set

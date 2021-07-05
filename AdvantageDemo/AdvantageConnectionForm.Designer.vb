@@ -1,4 +1,4 @@
-﻿Namespace AdvantageDemo
+Namespace AdvantageDemo
 	Partial Public Class AdvantageConnectionForm
 		''' <summary> 
 		''' Required designer variable.

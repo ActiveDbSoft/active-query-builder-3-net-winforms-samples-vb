@@ -1,4 +1,4 @@
-﻿
+
 
 Partial Public Class ChildForm
     ''' <summary>
@@ -49,12 +49,12 @@ Partial Public Class ChildForm
         Me.tabPageSQL = New System.Windows.Forms.TabPage()
         Me.tableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.panel4 = New System.Windows.Forms.Panel()
-        Me.errorBox1 = New Common.SqlErrorBox()
+        Me.errorBox1 = New GeneralAssembly.Common.SqlErrorBox()
         Me.rtbQueryText = New ActiveQueryBuilder.View.WinForms.ExpressionEditor.SqlTextEditor()
         Me.tabPageCurrentSubQuery = New System.Windows.Forms.TabPage()
         Me.tableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.panel3 = New System.Windows.Forms.Panel()
-        Me.errorBoxCurrent = New Common.SqlErrorBox()
+        Me.errorBoxCurrent = New GeneralAssembly.Common.SqlErrorBox()
         Me.TextBoxCurrentSubQuerySql = New ActiveQueryBuilder.View.WinForms.ExpressionEditor.SqlTextEditor()
         Me.tabPageFastResult = New System.Windows.Forms.TabPage()
         Me.tableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
@@ -453,26 +453,6 @@ Partial Public Class ChildForm
         Me.queryColumnListControl1.ForeColor = System.Drawing.SystemColors.WindowText
         Me.queryColumnListControl1.Location = New System.Drawing.Point(0, 0)
         Me.queryColumnListControl1.Name = "queryColumnListControl1"
-        Me.queryColumnListControl1.Options.ColumnsOptions.AggregateColumn.Index = 5
-        Me.queryColumnListControl1.Options.ColumnsOptions.AggregateColumn.Width = 90R
-        Me.queryColumnListControl1.Options.ColumnsOptions.AliasColumn.Index = 2
-        Me.queryColumnListControl1.Options.ColumnsOptions.AliasColumn.Width = 100R
-        Me.queryColumnListControl1.Options.ColumnsOptions.ConditionTypeColumn.Index = 7
-        Me.queryColumnListControl1.Options.ColumnsOptions.ConditionTypeColumn.Width = 140R
-        Me.queryColumnListControl1.Options.ColumnsOptions.CriteriaColumn.Index = 8
-        Me.queryColumnListControl1.Options.ColumnsOptions.CriteriaColumn.Width = 200R
-        Me.queryColumnListControl1.Options.ColumnsOptions.CriteriaOrColumns.Index = 0
-        Me.queryColumnListControl1.Options.ColumnsOptions.CriteriaOrColumns.Width = 60R
-        Me.queryColumnListControl1.Options.ColumnsOptions.ExpressionColumn.Index = 1
-        Me.queryColumnListControl1.Options.ColumnsOptions.ExpressionColumn.Width = 250R
-        Me.queryColumnListControl1.Options.ColumnsOptions.GroupingColumn.Index = 6
-        Me.queryColumnListControl1.Options.ColumnsOptions.GroupingColumn.Width = 100R
-        Me.queryColumnListControl1.Options.ColumnsOptions.OutputColumn.Index = 0
-        Me.queryColumnListControl1.Options.ColumnsOptions.OutputColumn.Width = 55R
-        Me.queryColumnListControl1.Options.ColumnsOptions.SortOrderColumn.Index = 4
-        Me.queryColumnListControl1.Options.ColumnsOptions.SortOrderColumn.Width = 100R
-        Me.queryColumnListControl1.Options.ColumnsOptions.SortTypeColumn.Index = 3
-        Me.queryColumnListControl1.Options.ColumnsOptions.SortTypeColumn.Width = 60R
         Me.queryColumnListControl1.Options.Font = Nothing
         Me.queryColumnListControl1.Options.InitialOrColumnsCount = 2
         Me.queryColumnListControl1.Options.NullOrderingInOrderBy = false
@@ -1111,8 +1091,8 @@ End Sub
     Private resultGrid1 As DataViewerControl.DataViewer
     Private panel4 As Panel
     Private WithEvents rtbQueryText As ActiveQueryBuilder.View.WinForms.ExpressionEditor.SqlTextEditor
-    Private WithEvents errorBox1 As Common.SqlErrorBox
-    Private WithEvents errorBoxCurrent As Common.SqlErrorBox
+    Private WithEvents errorBox1 As GeneralAssembly.Common.SqlErrorBox
+    Private WithEvents errorBoxCurrent As GeneralAssembly.Common.SqlErrorBox
     Private WithEvents tableLayoutPanel5 As TableLayoutPanel
     Private WithEvents buttonGenerateReport As Button
     Private WithEvents buttonExportExcel As Button

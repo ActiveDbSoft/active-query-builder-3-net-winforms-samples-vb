@@ -1,4 +1,4 @@
-﻿
+
 	Partial Public Class MainForm
 		''' <summary>
 		''' Required designer variable.

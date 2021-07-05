@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class CustomTextWithButtonColumnDemoFrame
     ''' <summary> 
     ''' Required designer variable.

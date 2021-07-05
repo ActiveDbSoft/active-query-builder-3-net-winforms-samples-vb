@@ -1,0 +1,21 @@
+<Project>
+
+  <Import Project="../Directory.Build.props" />
+
+  <PropertyGroup>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <!-- ActiveQueryBuilder WinForms -->
+  <ItemGroup Condition="$(UseNugetAqbReferences)">
+    <PackageReference Include="ActiveQueryBuilder.Core" Version="$(Version)" />
+    <PackageReference Include="ActiveQueryBuilder.View" Version="$(Version)" />
+    <PackageReference Include="ActiveQueryBuilder.View.WinForms" Version="$(Version)" />
+  </ItemGroup>
+  <ItemGroup Condition="!$(UseNugetAqbReferences)">
+    <ProjectReference Include="$(SolutionDir)src\ActiveQueryBuilder.Core\ActiveQueryBuilder.Core.csproj" />
+    <ProjectReference Include="$(SolutionDir)src\ActiveQueryBuilder.View\ActiveQueryBuilder.View.csproj" />
+    <ProjectReference Include="$(SolutionDir)src\ActiveQueryBuilder.View.WinForms\ActiveQueryBuilder.View.WinForms.csproj" />
+  </ItemGroup>
+
+</Project>

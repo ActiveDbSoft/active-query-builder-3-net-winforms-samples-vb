@@ -1,4 +1,4 @@
-﻿Imports ActiveQueryBuilder.View.WinForms
+Imports ActiveQueryBuilder.View.WinForms
 
 
 Partial Public Class Form1
@@ -34,7 +34,7 @@ Partial Public Class Form1
         Me.queryBuilder = New ActiveQueryBuilder.View.WinForms.QueryBuilder()
         Me.advantageMetadataProvider1 = New ActiveQueryBuilder.Core.AdvantageMetadataProvider(Me.components)
         Me.advantageSyntaxProvider1 = New ActiveQueryBuilder.Core.AdvantageSyntaxProvider(Me.components)
-        Me.errorBox1 = New Common.SqlErrorBox()
+        Me.errorBox1 = New GeneralAssembly.Common.SqlErrorBox()
         Me.textBox1 = New TextBox()
         Me.tabPageData = New TabPage()
         Me.dataGridView1 = New DataGridView()
@@ -134,26 +134,6 @@ Partial Public Class Form1
         Me.queryBuilder.PanesConfigurationOptions.SubQueryNavBarDockOptions.AutoHide = True
         Me.queryBuilder.PanesConfigurationOptions.SubQueryNavBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Left
         Me.queryBuilder.PanesConfigurationOptions.SubQueryNavBarEnabled = True
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Index = 5
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Width = 90R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.AliasColumn.Index = 2
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.AliasColumn.Width = 100R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Index = 7
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Width = 140R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Index = 8
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Width = 200R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Index = 0
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Width = 60R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Index = 1
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Width = 250R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Index = 6
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Width = 100R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.OutputColumn.Index = 0
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.OutputColumn.Width = 55R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Index = 4
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Width = 100R
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Index = 3
-        Me.queryBuilder.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Width = 60R
         Me.queryBuilder.QueryColumnListOptions.Font = Nothing
         Me.queryBuilder.QueryColumnListOptions.InitialOrColumnsCount = 2
         Me.queryBuilder.QueryColumnListOptions.NullOrderingInOrderBy = False
@@ -406,5 +386,5 @@ Partial Public Class Form1
     Private advantageSyntaxProvider1 As ActiveQueryBuilder.Core.AdvantageSyntaxProvider
     Private advantageMetadataProvider1 As ActiveQueryBuilder.Core.AdvantageMetadataProvider
     Private WithEvents queryStatisticsMenuItem As ToolStripMenuItem
-    Private WithEvents errorBox1 As Common.SqlErrorBox
+    Private WithEvents errorBox1 As GeneralAssembly.Common.SqlErrorBox
 End Class

@@ -1,4 +1,4 @@
-﻿Namespace Forms.QueryInformationForms
+Namespace Forms.QueryInformationForms
 	Partial Public Class QueryStatisticsForm
 		''' <summary>
 		''' Required designer variable.

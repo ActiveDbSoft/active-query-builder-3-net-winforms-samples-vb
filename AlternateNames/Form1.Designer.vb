@@ -1,6 +1,3 @@
-﻿Imports ActiveQueryBuilder.View.WinForms
-
-
 Partial Public Class Form1
     ''' <summary>
     ''' Required designer variable.
@@ -71,7 +68,7 @@ Partial Public Class Form1
         ' 
         ' menuStrip1
         ' 
-        Me.menuStrip1.Items.AddRange(New ToolStripItem() { Me.editMetadataToolStripMenuItem, Me.aboutToolStripMenuItem})
+        Me.menuStrip1.Items.AddRange(New ToolStripItem() {Me.editMetadataToolStripMenuItem, Me.aboutToolStripMenuItem})
         Me.menuStrip1.Location = New Point(0, 0)
         Me.menuStrip1.Name = "menuStrip1"
         Me.menuStrip1.RenderMode = ToolStripRenderMode.System
@@ -84,14 +81,14 @@ Partial Public Class Form1
         Me.editMetadataToolStripMenuItem.Name = "editMetadataToolStripMenuItem"
         Me.editMetadataToolStripMenuItem.Size = New Size(101, 20)
         Me.editMetadataToolStripMenuItem.Text = "Edit Metadata..."
-'			Me.editMetadataToolStripMenuItem.Click += New System.EventHandler(Me.editMetadataToolStripMenuItem_Click)
+        '			Me.editMetadataToolStripMenuItem.Click += New System.EventHandler(Me.editMetadataToolStripMenuItem_Click)
         ' 
         ' aboutToolStripMenuItem
         ' 
         Me.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem"
         Me.aboutToolStripMenuItem.Size = New Size(61, 20)
         Me.aboutToolStripMenuItem.Text = "About..."
-'			Me.aboutToolStripMenuItem.Click += New System.EventHandler(Me.aboutToolStripMenuItem_Click)
+        '			Me.aboutToolStripMenuItem.Click += New System.EventHandler(Me.aboutToolStripMenuItem_Click)
         ' 
         ' imageList32
         ' 
@@ -129,26 +126,6 @@ Partial Public Class Form1
         Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.AutoHide = True
         Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarDockOptions.Position = ActiveQueryBuilder.View.SidePanelDockStyle.Left
         Me.queryBuilder1.PanesConfigurationOptions.SubQueryNavBarEnabled = True
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Index = 5
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AggregateColumn.Width = 90R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AliasColumn.Index = 2
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.AliasColumn.Width = 100R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Index = 7
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ConditionTypeColumn.Width = 140R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Index = 8
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaColumn.Width = 200R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Index = 0
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.CriteriaOrColumns.Width = 60R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Index = 1
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.ExpressionColumn.Width = 250R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Index = 6
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.GroupingColumn.Width = 100R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.OutputColumn.Index = 0
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.OutputColumn.Width = 55R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Index = 4
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortOrderColumn.Width = 100R
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Index = 3
-        Me.queryBuilder1.QueryColumnListOptions.ColumnsOptions.SortTypeColumn.Width = 60R
         Me.queryBuilder1.QueryColumnListOptions.Font = Nothing
         Me.queryBuilder1.QueryColumnListOptions.InitialOrColumnsCount = 2
         Me.queryBuilder1.QueryColumnListOptions.NullOrderingInOrderBy = False
@@ -197,7 +174,7 @@ Partial Public Class Form1
         Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.queryBuilder1.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.queryBuilder1.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
+        '			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
         ' 
         ' splitContainer1
         ' 
@@ -244,7 +221,7 @@ Partial Public Class Form1
         ' textBox1
         ' 
         Me.textBox1.Dock = DockStyle.Fill
-        Me.textBox1.Font = New Font("Courier New", 9F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
+        Me.textBox1.Font = New Font("Courier New", 9.0F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.textBox1.HideSelection = False
         Me.textBox1.Location = New Point(3, 3)
         Me.textBox1.Multiline = True
@@ -252,7 +229,7 @@ Partial Public Class Form1
         Me.textBox1.ScrollBars = ScrollBars.Both
         Me.textBox1.Size = New Size(779, 112)
         Me.textBox1.TabIndex = 1
-'			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
+        '			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
         ' 
         ' tabPage2
         ' 
@@ -269,7 +246,7 @@ Partial Public Class Form1
         ' textBox2
         ' 
         Me.textBox2.Dock = DockStyle.Fill
-        Me.textBox2.Font = New Font("Courier New", 9F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
+        Me.textBox2.Font = New Font("Courier New", 9.0F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.textBox2.HideSelection = False
         Me.textBox2.Location = New Point(3, 3)
         Me.textBox2.Multiline = True
@@ -277,7 +254,7 @@ Partial Public Class Form1
         Me.textBox2.ScrollBars = ScrollBars.Both
         Me.textBox2.Size = New Size(779, 112)
         Me.textBox2.TabIndex = 2
-'			Me.textBox2.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox2_Validating)
+        '			Me.textBox2.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox2_Validating)
         ' 
         ' errorBox1
         ' 
@@ -293,8 +270,8 @@ Partial Public Class Form1
         Me.errorBox1.Size = New Size(307, 63)
         Me.errorBox1.TabIndex = 2
         Me.errorBox1.Visible = False
-'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
-'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
+        '			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
+        '			Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
         ' 
         ' errorBox2
         ' 
@@ -310,12 +287,12 @@ Partial Public Class Form1
         Me.errorBox2.Size = New Size(358, 63)
         Me.errorBox2.TabIndex = 3
         Me.errorBox2.Visible = False
-'			Me.errorBox2.GoToErrorPosition += New System.EventHandler(Me.ErrorBox2_GoToErrorPosition)
-'			Me.errorBox2.RevertValidText += New System.EventHandler(Me.ErrorBox2_RevertValidText)
+        '			Me.errorBox2.GoToErrorPosition += New System.EventHandler(Me.ErrorBox2_GoToErrorPosition)
+        '			Me.errorBox2.RevertValidText += New System.EventHandler(Me.ErrorBox2_RevertValidText)
         ' 
         ' Form1
         ' 
-        Me.AutoScaleDimensions = New SizeF(6F, 13F)
+        Me.AutoScaleDimensions = New SizeF(6.0F, 13.0F)
         Me.AutoScaleMode = AutoScaleMode.Font
         Me.ClientSize = New Size(793, 530)
         Me.Controls.Add(Me.splitContainer1)
@@ -358,6 +335,6 @@ Partial Public Class Form1
     Private tabPage2 As TabPage
     Private WithEvents textBox2 As TextBox
     Private WithEvents editMetadataToolStripMenuItem As ToolStripMenuItem
-    Private WithEvents errorBox1 As Common.SqlErrorBox
+    Private WithEvents errorBox1 As Global.GeneralAssembly.Common.SqlErrorBox
     Private WithEvents errorBox2 As Common.SqlErrorBox
 End Class

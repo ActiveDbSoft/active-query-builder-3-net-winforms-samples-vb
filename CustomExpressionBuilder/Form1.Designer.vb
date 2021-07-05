@@ -1,4 +1,4 @@
-﻿Imports ActiveQueryBuilder.View.QueryView
+Imports ActiveQueryBuilder.View.QueryView
 
 
 Partial Public Class Form1
@@ -117,7 +117,7 @@ Partial Public Class Form1
         Me.splitContainer1.Dock = DockStyle.Fill
         Me.splitContainer1.Location = New Point(0, 24)
         Me.splitContainer1.Name = "splitContainer1"
-        Me.splitContainer1.Orientation = Orientation.Horizontal
+        Me.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
         ' 
         ' splitContainer1.Panel1
         ' 

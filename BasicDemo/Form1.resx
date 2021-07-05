@@ -117,22 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="resource.PrimaryKeyIcon" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAFySURBVDhPY/j//z9FGKsgKRirICkYqyAM35qmy3Rr
-        pmHnw9Vup29N007GpgZDABnfmKhZ8OZk/v/fn0/+f74r/O3ZVlUPdDUoHGR8c5pe2quDsX9/f1j8/8OV
-        hv9vjtf9v7s44Ou2PMVIZHUompDx3YXW63++W/n/x7O6/z9ezPr/4WLd/2+PGv7fnGH/AVkdiiZkfGum
-        SduXu53/vz3I+v/9UfH/b/fj/3+7Ffr/bL3FZ2R1KJpA+OZUXZOHq9xOPd0RcO/Tzbj/3277/f9+N/r/
-        1xtAzQ163xdFKOD2wq0ZBjF351md+/Zo5v+vd4L/f7vp9v/MBPMv55tNX1xqMXuxPE4hGFk9CKNwHq72
-        OP/j2cL/ny5Z/P92zf3/2SnWX2dGKyftCJbiPRAny4usFoZROI/XeZz8+bLt/9ebvv/PTLL6PDdRJRZZ
-        HhtG4ZzsNWm9Ot/15eleqwdL01XDkOVwYayCpGCsgqRgrILE4/8MAPVm5lOuMRSDAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <metadata name="expressionEditor1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>22, 18</value>
-  </metadata>
   <metadata name="genericSyntaxProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>165, 17</value>
   </metadata>
@@ -146,16 +130,16 @@
     <value>796, 17</value>
   </metadata>
   <metadata name="mssqlMetadataProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
+    <value>1139, 17</value>
   </metadata>
   <metadata name="oledbMetadataProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>204, 56</value>
+    <value>1326, 17</value>
   </metadata>
   <metadata name="oracleMetadataProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>391, 56</value>
+    <value>17, 56</value>
   </metadata>
   <metadata name="odbcMetadataProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>580, 56</value>
+    <value>206, 56</value>
   </metadata>
   <metadata name="oracleSyntaxProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>967, 17</value>
@@ -164,7 +148,7 @@
     <value>344, 17</value>
   </metadata>
   <metadata name="mainMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>763, 56</value>
+    <value>389, 56</value>
   </metadata>
   <data name="linkLabel1.Text" xml:space="preserve">
     <value>NOTE: You may encounter various problems while using the Generic syntax provider with specific database servers due to a number of incompatibilities 
@@ -173,6 +157,7 @@ between different SQL dialects. Use the Properties dialog to select the right sy
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>89</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAMDAAAAAACACoDgAAZgAAACAgAAAAAAgAqAgAAA4PAAAQEAAAAAAIAGgFAAC2FwAAMDAAAAAA

@@ -1,4 +1,4 @@
-﻿Namespace ConnectionFrames
+Namespace ConnectionFrames
 	Public NotInheritable Partial Class MSSQLConnectionFrame
 		''' <summary> 
 		''' Required designer variable.

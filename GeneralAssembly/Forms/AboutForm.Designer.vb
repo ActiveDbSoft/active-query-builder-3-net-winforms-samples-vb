@@ -1,4 +1,4 @@
-ï»¿Namespace Forms
+Namespace Forms
 	Partial Public Class AboutForm
 		''' <summary>
 		''' Required designer variable.
@@ -55,7 +55,7 @@
 			Me.label3.Name = "label3"
 			Me.label3.Size = New Size(336, 13)
 			Me.label3.TabIndex = 7
-			Me.label3.Text = "Copyright ï¿½ 2008-2021 Active Database Software. All rights reserved."
+			Me.label3.Text = "Copyright © 2008-2021 Active Database Software. All rights reserved."
 			' 
 			' bClose
 			' 

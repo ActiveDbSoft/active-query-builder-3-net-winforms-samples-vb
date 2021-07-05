@@ -1,4 +1,4 @@
-﻿	Partial Public Class ConnectionForm
+	Partial Public Class ConnectionForm
 		''' <summary>
 		''' Required designer variable.
 		''' </summary>

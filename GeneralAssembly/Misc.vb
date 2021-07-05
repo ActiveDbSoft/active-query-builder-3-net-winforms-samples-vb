@@ -1,19 +1,12 @@
-﻿'*******************************************************************'
-'       Active Query Builder Component Suite                        '
-'                                                                   '
-'       Copyright © 2006-2019 Active Database Software              '
-'       ALL RIGHTS RESERVED                                         '
-'                                                                   '
-'       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            '
-'       RESTRICTIONS.                                               '
-'*******************************************************************'
-
-Imports System.Collections
-Imports System.Data.Common
-Imports System.Xml.Serialization
-Imports ActiveQueryBuilder.Core
-Imports ActiveQueryBuilder.View
-Imports DataViewerControl
+//*******************************************************************//
+//       Active Query Builder Component Suite                        //
+//                                                                   //
+//       Copyright © 2006-2021 Active Database Software              //
+//       ALL RIGHTS RESERVED                                         //
+//                                                                   //
+//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
+//       RESTRICTIONS.                                               //
+//*******************************************************************//
 
 Public Module Converters
     <System.Runtime.CompilerServices.Extension>
@@ -55,7 +48,7 @@ Public Module Converters
     End Function
 End Module
 Public Class Misc
-    Public Shared ReadOnly ParamsCache As New List(Of DataViewer.ParameterInfo)()
+    Public Shared ReadOnly ParamsCache As New List(Of GeneralAssembly.DataViewerControl.DataViewer.ParameterInfo)()
 
     Public Shared Sub ClearParamsCache()
         ParamsCache.Clear()
@@ -65,7 +58,7 @@ Public Class Misc
         ClearParamsCache()
         For Each parameter As DbParameter In command.Parameters
             If parameter.Value IsNot Nothing Then
-                ParamsCache.Add(New DataViewer.ParameterInfo With {.Name = parameter.ParameterName, .DataType = parameter.DbType, .Value = parameter.Value})
+                ParamsCache.Add(New GeneralAssembly.DataViewerControl.DataViewer.ParameterInfo With {.Name = parameter.ParameterName, .DataType = parameter.DbType, .Value = parameter.Value})
             End If
         Next parameter
     End Sub
