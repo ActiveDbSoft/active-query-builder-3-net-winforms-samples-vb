@@ -3,6 +3,14 @@
   <PropertyGroup>
     <SolutionDir>$(MSBuildThisFileDirectory)</SolutionDir>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants.Replace(';', ','))</DefineConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
 
   <!-- common props -->
   <PropertyGroup>
@@ -24,17 +32,38 @@
     <NoWarn>$(NoWarn);1591;1574</NoWarn>
   </PropertyGroup>
 
-  <!-- resources -->
-  <PropertyGroup>
-    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
-  </ItemGroup>
-
   <!-- use nuget ActiveQueryBuilder references instead of ProjectReference -->
   <PropertyGroup>
     <UseNugetAqbReferences>true</UseNugetAqbReferences>
   </PropertyGroup>
-
+  <!-- resources -->
+  <PropertyGroup>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
+	
+	<PackageReference Include="ActiveQueryBuilder.Core" Version="$(Version)" />
+    <PackageReference Include="ActiveQueryBuilder.View" Version="$(Version)" />
+    <PackageReference Include="ActiveQueryBuilder.View.WinForms" Version="$(Version)" />
+  </ItemGroup>
+  
+   <ItemGroup>
+    <Import Include="System" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.ComponentModel" />
+    <Import Include="System.Data" />
+    <Import Include="System.Data.Common" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Text" />
+    <Import Include="System.Text.RegularExpressions" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Xml.Serialization" />
+	
+	<Import Include="ActiveQueryBuilder.Core" />
+	<Import Include="ActiveQueryBuilder.View" />
+	<Import Include="ActiveQueryBuilder.View.WinForms" />
+  </ItemGroup>
 </Project>

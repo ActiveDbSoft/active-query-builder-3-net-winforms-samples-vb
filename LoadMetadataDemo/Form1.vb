@@ -1,12 +1,12 @@
-//*******************************************************************//
-//       Active Query Builder Component Suite                        //
-//                                                                   //
-//       Copyright © 2006-2021 Active Database Software              //
-//       ALL RIGHTS RESERVED                                         //
-//                                                                   //
-//       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            //
-//       RESTRICTIONS.                                               //
-//*******************************************************************//
+''*******************************************************************''
+''       Active Query Builder Component Suite                        ''
+''                                                                   ''
+''       Copyright © 2006-2021 Active Database Software              ''
+''       ALL RIGHTS RESERVED                                         ''
+''                                                                   ''
+''       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            ''
+''       RESTRICTIONS.                                               ''
+''*******************************************************************''
 
 '''******************************************************************************
 '''This sample demonstrates loading of metadata if the standard way (see GeneralDemo)
