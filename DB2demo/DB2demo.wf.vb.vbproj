@@ -7,7 +7,6 @@
     <RootNamespace>DB2demo</RootNamespace>
 
     <TargetFrameworks>net462;netcoreapp3.1</TargetFrameworks>
-    <Platforms>x64</Platforms>
     <OutputType>WinExe</OutputType>
   </PropertyGroup>
 

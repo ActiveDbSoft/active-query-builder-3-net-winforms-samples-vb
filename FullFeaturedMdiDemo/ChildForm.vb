@@ -1157,9 +1157,14 @@ Partial Public Class ChildForm
             Throw New ArgumentException("Argument cannot be null or empty.", "DataTable")
         End If
 
-        Dim reportWindow = New ActiveReportsForm(dataTable) With {.Owner = Me}
-
+#If ENABLE_ACTIVEREPORTS_SUPPORT Then
+        Dim reportWindow = New GrapeCityExtension.ActiveReportsForm(dataTable) With {.Owner = Me}
         reportWindow.ShowDialog()
+#Else
+        MessageBox.Show("To test the integration with GrapeCity ActiveReports, please open the ""Directory.Build.props"" file in the demo projects installation directory (usually ""%USERPROFILE%\Documents\Active Query Builder x.x .NET Examples"") with a text editor and set the ""EnableActiveReportsSupport"" flag to true. Then, open the Active Query Builder Demos solution with your IDE, compile and run the Full-featured MDI demo." & vbCrLf & vbCrLf & "
+You may also need to activate the trial version of ActiveReports on the GrapeCity website.", "ActiveReports support", MessageBoxButtons.OK, MessageBoxIcon.Information)
+#End If
+
     End Sub
 
     Private Sub buttonGenerateReport_Click(ByVal sender As Object, ByVal e As EventArgs) Handles buttonGenerateReport.Click
