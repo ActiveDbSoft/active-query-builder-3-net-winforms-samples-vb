@@ -102,7 +102,7 @@ Partial Public Class Form1
         ' 
         Me.aboutMenuItem.Index = 1
         Me.aboutMenuItem.Text = "About..."
-'			Me.aboutMenuItem.Click += New System.EventHandler(Me.aboutMenuItem_Click)
+'            Me.aboutMenuItem.Click += New System.EventHandler(Me.aboutMenuItem_Click)
         ' 
         ' splitContainer1
         ' 
@@ -217,7 +217,7 @@ Partial Public Class Form1
         Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.queryBuilder1.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.queryBuilder1.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
+'            Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
         ' 
         ' genericSyntaxProvider1
         ' 
@@ -235,7 +235,7 @@ Partial Public Class Form1
         Me.textBox1.ScrollBars = ScrollBars.Both
         Me.textBox1.Size = New Size(764, 105)
         Me.textBox1.TabIndex = 0
-'			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
+'            Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
         ' 
         ' tabControl1
         ' 
@@ -272,7 +272,7 @@ Partial Public Class Form1
         Me.btnFourthWay.TabIndex = 6
         Me.btnFourthWay.Text = "Load Metadata"
         Me.btnFourthWay.UseVisualStyleBackColor = True
-'			Me.btnFourthWay.Click += New System.EventHandler(Me.btn1Way_Click)
+'            Me.btnFourthWay.Click += New System.EventHandler(Me.btn1Way_Click)
         ' 
         ' textBox5
         ' 
@@ -308,7 +308,7 @@ Partial Public Class Form1
         Me.btnThirdWay.TabIndex = 3
         Me.btnThirdWay.Text = "Load Metadata"
         Me.btnThirdWay.UseVisualStyleBackColor = True
-'			Me.btnThirdWay.Click += New System.EventHandler(Me.btn2Way_Click)
+'            Me.btnThirdWay.Click += New System.EventHandler(Me.btn2Way_Click)
         ' 
         ' textBox3
         ' 
@@ -345,7 +345,7 @@ Partial Public Class Form1
         Me.btnFirstWay.TabIndex = 1
         Me.btnFirstWay.Text = "Load Metadata"
         Me.btnFirstWay.UseVisualStyleBackColor = True
-'			Me.btnFirstWay.Click += New System.EventHandler(Me.btn3Way_Click)
+'            Me.btnFirstWay.Click += New System.EventHandler(Me.btn3Way_Click)
         ' 
         ' label1
         ' 
@@ -391,7 +391,7 @@ Partial Public Class Form1
         Me.btnFifthWay.TabIndex = 8
         Me.btnFifthWay.Text = "Load Metadata"
         Me.btnFifthWay.UseVisualStyleBackColor = True
-'			Me.btnFifthWay.Click += New System.EventHandler(Me.btn4Way_Click)
+'            Me.btnFifthWay.Click += New System.EventHandler(Me.btn4Way_Click)
         ' 
         ' textBox6
         ' 
@@ -409,7 +409,7 @@ Partial Public Class Form1
         ' 
         Me.menuItemConnect.Index = 0
         Me.menuItemConnect.Text = "Connect to..."
-'			Me.menuItemConnect.Click += New System.EventHandler(Me.menuItemConnect_Click)
+'            Me.menuItemConnect.Click += New System.EventHandler(Me.menuItemConnect_Click)
         ' 
         ' Form1
         ' 

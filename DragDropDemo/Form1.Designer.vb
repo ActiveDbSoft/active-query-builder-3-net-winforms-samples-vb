@@ -111,7 +111,7 @@ Partial Public Class Form1
         Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.queryBuilder1.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.queryBuilder1.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
+'            Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
         ' 
         ' genericSyntaxProvider1
         ' 
@@ -126,7 +126,7 @@ Partial Public Class Form1
         Me.textBox1.Name = "textBox1"
         Me.textBox1.Size = New Size(876, 130)
         Me.textBox1.TabIndex = 1
-'			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
+'            Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
         ' 
         ' label1
         ' 
@@ -149,10 +149,10 @@ Partial Public Class Form1
         Me.listBox1.Name = "listBox1"
         Me.listBox1.Size = New Size(149, 409)
         Me.listBox1.TabIndex = 4
-'			Me.listBox1.DoubleClick += New System.EventHandler(Me.listBox1_DoubleClick)
-'			Me.listBox1.MouseDown += New System.Windows.Forms.MouseEventHandler(Me.listBox1_MouseDown)
-'			Me.listBox1.MouseMove += New System.Windows.Forms.MouseEventHandler(Me.listBox1_MouseMove)
-'			Me.listBox1.MouseUp += New System.Windows.Forms.MouseEventHandler(Me.listBox1_MouseUp)
+'            Me.listBox1.DoubleClick += New System.EventHandler(Me.listBox1_DoubleClick)
+'            Me.listBox1.MouseDown += New System.Windows.Forms.MouseEventHandler(Me.listBox1_MouseDown)
+'            Me.listBox1.MouseMove += New System.Windows.Forms.MouseEventHandler(Me.listBox1_MouseMove)
+'            Me.listBox1.MouseUp += New System.Windows.Forms.MouseEventHandler(Me.listBox1_MouseUp)
         ' 
         ' errorBox1
         ' 
@@ -168,8 +168,8 @@ Partial Public Class Form1
         Me.errorBox1.Size = New Size(322, 74)
         Me.errorBox1.TabIndex = 5
         Me.errorBox1.Visible = False
-'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
-'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
+'            Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
+'            Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
         ' 
         ' Form1
         ' 

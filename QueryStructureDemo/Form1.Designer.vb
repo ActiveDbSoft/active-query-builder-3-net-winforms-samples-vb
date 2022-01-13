@@ -121,8 +121,8 @@ Partial Public Class Form1
         Me.queryBuilder.SQLGenerationOptions.ExpandVirtualFields = True
         Me.queryBuilder.SQLGenerationOptions.ExpandVirtualObjects = True
         Me.queryBuilder.TabIndex = 0
-'			Me.queryBuilder.ActiveUnionSubQueryChanged += New System.EventHandler(Me.queryBuilder_ActiveUnionSubQueryChanged)
-'			Me.queryBuilder.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
+'            Me.queryBuilder.ActiveUnionSubQueryChanged += New System.EventHandler(Me.queryBuilder_ActiveUnionSubQueryChanged)
+'            Me.queryBuilder.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
         ' 
         ' splitContainer1
         ' 
@@ -165,7 +165,7 @@ Partial Public Class Form1
         Me.btnSampleUnions.TabIndex = 5
         Me.btnSampleUnions.Text = "Multiple UNIONs"
         Me.btnSampleUnions.UseVisualStyleBackColor = True
-'			Me.btnSampleUnions.Click += New System.EventHandler(Me.btnSampleUnions_Click)
+'            Me.btnSampleUnions.Click += New System.EventHandler(Me.btnSampleUnions_Click)
         ' 
         ' btnSampleSelectFromJoinSubqueries
         ' 
@@ -175,7 +175,7 @@ Partial Public Class Form1
         Me.btnSampleSelectFromJoinSubqueries.TabIndex = 4
         Me.btnSampleSelectFromJoinSubqueries.Text = "SELECT FROM with subqueries"
         Me.btnSampleSelectFromJoinSubqueries.UseVisualStyleBackColor = True
-'			Me.btnSampleSelectFromJoinSubqueries.Click += New System.EventHandler(Me.btnSampleSelectFromJoinSubqueries_Click)
+'            Me.btnSampleSelectFromJoinSubqueries.Click += New System.EventHandler(Me.btnSampleSelectFromJoinSubqueries_Click)
         ' 
         ' btnSampleSelectFromJoin
         ' 
@@ -185,7 +185,7 @@ Partial Public Class Form1
         Me.btnSampleSelectFromJoin.TabIndex = 3
         Me.btnSampleSelectFromJoin.Text = "SELECT FROM JOIN"
         Me.btnSampleSelectFromJoin.UseVisualStyleBackColor = True
-'			Me.btnSampleSelectFromJoin.Click += New System.EventHandler(Me.btnSampleSelectFromJoin_Click)
+'            Me.btnSampleSelectFromJoin.Click += New System.EventHandler(Me.btnSampleSelectFromJoin_Click)
         ' 
         ' btnSampleSelectFromWhere
         ' 
@@ -195,7 +195,7 @@ Partial Public Class Form1
         Me.btnSampleSelectFromWhere.TabIndex = 2
         Me.btnSampleSelectFromWhere.Text = "SELECT FROM WHERE"
         Me.btnSampleSelectFromWhere.UseVisualStyleBackColor = True
-'			Me.btnSampleSelectFromWhere.Click += New System.EventHandler(Me.btnSampleSelectFromWhere_Click)
+'            Me.btnSampleSelectFromWhere.Click += New System.EventHandler(Me.btnSampleSelectFromWhere_Click)
         ' 
         ' lblSampleQueries
         ' 
@@ -214,7 +214,7 @@ Partial Public Class Form1
         Me.btnSampleSelect.TabIndex = 0
         Me.btnSampleSelect.Text = "SELECT"
         Me.btnSampleSelect.UseVisualStyleBackColor = True
-'			Me.btnSampleSelect.Click += New System.EventHandler(Me.btnSampleSelect_Click)
+'            Me.btnSampleSelect.Click += New System.EventHandler(Me.btnSampleSelect_Click)
         ' 
         ' pageMisc
         ' 
@@ -252,7 +252,7 @@ Partial Public Class Form1
         Me.tbSQL.ScrollBars = ScrollBars.Both
         Me.tbSQL.Size = New Size(910, 141)
         Me.tbSQL.TabIndex = 1
-'			Me.tbSQL.Validating += New System.ComponentModel.CancelEventHandler(Me.tbSQL_Validating)
+'            Me.tbSQL.Validating += New System.ComponentModel.CancelEventHandler(Me.tbSQL_Validating)
         ' 
         ' pageStatistics
         ' 
@@ -461,7 +461,7 @@ Partial Public Class Form1
         Me.btnShowUnlinkedDatasourcesButton.TabIndex = 0
         Me.btnShowUnlinkedDatasourcesButton.Text = "List unlinked DataSources"
         Me.btnShowUnlinkedDatasourcesButton.UseVisualStyleBackColor = True
-'			Me.btnShowUnlinkedDatasourcesButton.Click += New System.EventHandler(Me.btnShowUnlinkedDatasourcesButton_Click)
+'            Me.btnShowUnlinkedDatasourcesButton.Click += New System.EventHandler(Me.btnShowUnlinkedDatasourcesButton_Click)
         ' 
         ' Form1
         ' 

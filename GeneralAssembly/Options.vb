@@ -1,7 +1,7 @@
 ''*******************************************************************''
 ''       Active Query Builder Component Suite                        ''
 ''                                                                   ''
-''       Copyright © 2006-2021 Active Database Software              ''
+''       Copyright © 2006-2022 Active Database Software              ''
 ''       ALL RIGHTS RESERVED                                         ''
 ''                                                                   ''
 ''       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            ''
@@ -12,7 +12,6 @@ Imports System.IO
 Imports System.Text
 Imports ActiveQueryBuilder.Core.Serialization
 Imports ActiveQueryBuilder.View.DatabaseSchemaView
-Imports ActiveQueryBuilder.View.WinForms.ExpressionEditor
 Imports ActiveQueryBuilder.View.WinForms.QueryView
 Imports ActiveQueryBuilder.View.WinForms.Serialization
 

@@ -1,28 +1,28 @@
-﻿Namespace Forms
-	Partial Public Class EditUserPredefinedConditionsForm
-		''' <summary>
-		''' Required designer variable.
-		''' </summary>
-		Private components As System.ComponentModel.IContainer = Nothing
+Namespace Forms
+    Partial Public Class EditUserPredefinedConditionsForm
+        ''' <summary>
+        ''' Required designer variable.
+        ''' </summary>
+        Private components As System.ComponentModel.IContainer = Nothing
 
-		''' <summary>
-		''' Clean up any resources being used.
-		''' </summary>
-		''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		Protected Overrides Sub Dispose(disposing As Boolean)
-			If disposing AndAlso (components IsNot Nothing) Then
-				components.Dispose()
-			End If
-			MyBase.Dispose(disposing)
-		End Sub
+        ''' <summary>
+        ''' Clean up any resources being used.
+        ''' </summary>
+        ''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        Protected Overrides Sub Dispose(disposing As Boolean)
+            If disposing AndAlso (components IsNot Nothing) Then
+                components.Dispose()
+            End If
+            MyBase.Dispose(disposing)
+        End Sub
 
-		#Region "Windows Form Designer generated code"
+        #Region "Windows Form Designer generated code"
 
-		''' <summary>
-		''' Required method for Designer support - do not modify
-		''' the contents of this method with the code editor.
-		''' </summary>
-		Private Sub InitializeComponent()
+        ''' <summary>
+        ''' Required method for Designer support - do not modify
+        ''' the contents of this method with the code editor.
+        ''' </summary>
+        Private Sub InitializeComponent()
         Me.ListBoxConditions = New System.Windows.Forms.ListBox()
         Me.tableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -328,24 +328,24 @@
 
 End Sub
 
-		#End Region
-		Private WithEvents ListBoxConditions As System.Windows.Forms.ListBox
-		Private tableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
-		Private WithEvents TextBoxCondition As ActiveQueryBuilder.View.WinForms.ExpressionEditor.SqlTextEditor
-		Private label1 As System.Windows.Forms.Label
-		Private WithEvents TextBoxCaption As System.Windows.Forms.TextBox
-		Private label2 As System.Windows.Forms.Label
-		Private WithEvents CheckBoxIsNeedEdit As System.Windows.Forms.CheckBox
-		Private label4 As System.Windows.Forms.Label
-		Private WithEvents CheckComboBoxDbTypes As Common.CheckComboBox
-		Private flowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
-		Private WithEvents buttonAdd As System.Windows.Forms.Button
-		Private WithEvents buttonCopy As System.Windows.Forms.Button
-		Private WithEvents buttonDelete As System.Windows.Forms.Button
-		Private WithEvents buttonMoveUp As System.Windows.Forms.Button
-		Private WithEvents buttonMoveDown As System.Windows.Forms.Button
-		Private WithEvents buttonSave As System.Windows.Forms.Button
-		Private WithEvents button1 As System.Windows.Forms.Button
+        #End Region
+        Private WithEvents ListBoxConditions As System.Windows.Forms.ListBox
+        Private tableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+        Private WithEvents TextBoxCondition As ActiveQueryBuilder.View.WinForms.ExpressionEditor.SqlTextEditor
+        Private label1 As System.Windows.Forms.Label
+        Private WithEvents TextBoxCaption As System.Windows.Forms.TextBox
+        Private label2 As System.Windows.Forms.Label
+        Private WithEvents CheckBoxIsNeedEdit As System.Windows.Forms.CheckBox
+        Private label4 As System.Windows.Forms.Label
+        Private WithEvents CheckComboBoxDbTypes As Common.CheckComboBox
+        Private flowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
+        Private WithEvents buttonAdd As System.Windows.Forms.Button
+        Private WithEvents buttonCopy As System.Windows.Forms.Button
+        Private WithEvents buttonDelete As System.Windows.Forms.Button
+        Private WithEvents buttonMoveUp As System.Windows.Forms.Button
+        Private WithEvents buttonMoveDown As System.Windows.Forms.Button
+        Private WithEvents buttonSave As System.Windows.Forms.Button
+        Private WithEvents button1 As System.Windows.Forms.Button
         Friend WithEvents LabelInformationSave As Label
         Private WithEvents ButtonRevert As Button
         Friend WithEvents Panel1 As Panel

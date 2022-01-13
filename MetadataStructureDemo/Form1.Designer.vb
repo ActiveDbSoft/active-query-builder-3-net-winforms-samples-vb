@@ -82,7 +82,7 @@ Partial Public Class Form1
         Me.queryBuilder.SQLGenerationOptions.ExpandVirtualFields = True
         Me.queryBuilder.SQLGenerationOptions.ExpandVirtualObjects = True
         Me.queryBuilder.TabIndex = 0
-'			Me.queryBuilder.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
+'            Me.queryBuilder.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
         ' 
         ' splitContainer1
         ' 
@@ -119,7 +119,7 @@ Partial Public Class Form1
         Me.tsbMetadataEditor.Name = "tsbMetadataEditor"
         Me.tsbMetadataEditor.Size = New Size(100, 22)
         Me.tsbMetadataEditor.Text = "Edit Metadata"
-'			Me.tsbMetadataEditor.Click += New System.EventHandler(Me.tsbMetadataEditor_Click)
+'            Me.tsbMetadataEditor.Click += New System.EventHandler(Me.tsbMetadataEditor_Click)
         ' 
         ' textBox1
         ' 
@@ -131,7 +131,7 @@ Partial Public Class Form1
         Me.textBox1.ScrollBars = ScrollBars.Both
         Me.textBox1.Size = New Size(977, 138)
         Me.textBox1.TabIndex = 2
-'			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
+'            Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
         ' 
         ' Form1
         ' 

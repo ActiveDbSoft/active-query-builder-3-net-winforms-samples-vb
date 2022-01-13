@@ -65,7 +65,7 @@ Partial Public Class SybaseConnectionForm
         Me.buttonConnect.TabIndex = 5
         Me.buttonConnect.Text = "Connect"
         Me.buttonConnect.UseVisualStyleBackColor = True
-'			Me.buttonConnect.Click += New System.EventHandler(Me.buttonConnect_Click)
+'            Me.buttonConnect.Click += New System.EventHandler(Me.buttonConnect_Click)
         ' 
         ' label5
         ' 
@@ -92,7 +92,7 @@ Partial Public Class SybaseConnectionForm
         Me.buttonBrowse.TabIndex = 24
         Me.buttonBrowse.Text = "..."
         Me.buttonBrowse.UseVisualStyleBackColor = True
-'			Me.buttonBrowse.Click += New System.EventHandler(Me.buttonBrowse_Click)
+'            Me.buttonBrowse.Click += New System.EventHandler(Me.buttonBrowse_Click)
         ' 
         ' label4
         ' 

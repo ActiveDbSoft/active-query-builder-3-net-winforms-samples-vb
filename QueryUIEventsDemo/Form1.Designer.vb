@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class Form1
     ''' <summary>
     ''' Required designer variable.
@@ -458,23 +458,23 @@ Partial Public Class Form1
         Me.QBuilder.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.QBuilder.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(0)))
         Me.QBuilder.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.QBuilder.DataSourceAdding += New ActiveQueryBuilder.View.QueryView.DataSourceAddingEventHandler(Me.QBuilder_DataSourceAdding)
-'			Me.QBuilder.DataSourceAdded += New ActiveQueryBuilder.Core.DataSourceAddedEventHandler(Me.QBuilder_DataSourceAdded)
-'			Me.QBuilder.DataSourceDeleting += New ActiveQueryBuilder.View.QueryView.DataSourceDeletingEventHandler(Me.QBuilder_DataSourceDeleting)
-'			Me.QBuilder.LinkDeleting += New ActiveQueryBuilder.View.QueryView.LinkDeletingEventHandler(Me.QBuilder_LinkDeleting)
-'			Me.QBuilder.LinkCreated += New ActiveQueryBuilder.Core.LinkCreatedEventhandler(Me.QBuilder_LinkCreated)
-'			Me.QBuilder.LinkChanging += New ActiveQueryBuilder.View.QueryView.LinkChangingEventHandler(Me.QBuilder_LinkChanging)
-'			Me.QBuilder.LinkChanged += New ActiveQueryBuilder.View.QueryView.LinkChangedEventHandler(Me.QBuilder_LinkChanged)
-'			Me.QBuilder.LinkCreating += New ActiveQueryBuilder.View.QueryView.LinkCreatingEventHandler(Me.QBuilder_LinkCreating)
-'			Me.QBuilder.QueryColumnListItemChanging += New ActiveQueryBuilder.View.QueryView.QueryColumnListItemChangingEventHandler(Me.QBuilder_QueryColumnListItemChanging)
-'			Me.QBuilder.QueryColumnListItemChanged += New ActiveQueryBuilder.View.QueryView.QueryColumnListItemChangedEventHandler(Me.QBuilder_QueryColumnListItemChanged)
-'			Me.QBuilder.QueryColumnListItemAdded += New ActiveQueryBuilder.View.QueryView.ItemCollectionChanged(Me.QBuilder_QueryColumnListItemAdded)
-'			Me.QBuilder.QueryColumnListItemRemoving += New ActiveQueryBuilder.View.QueryView.ItemCollectionChanging(Me.QBuilder_QueryColumnListItemRemoving)
-'			Me.QBuilder.DataSourceFieldAdding += New ActiveQueryBuilder.View.QueryView.DataSourceFieldAddingEventHandler(Me.QBuilder_DataSourceFieldAdding)
-'			Me.QBuilder.DataSourceFieldAdded += New ActiveQueryBuilder.View.QueryView.DataSourceFieldAddedEventHandler(Me.QBuilder_DataSourceFieldAdded)
-'			Me.QBuilder.DataSourceFieldRemoving += New ActiveQueryBuilder.View.QueryView.DataSourceFieldRemovingEventHandler(Me.QBuilder_DataSourceFieldRemoving)
-'			Me.QBuilder.DatasourceFieldRemoved += New ActiveQueryBuilder.View.QueryView.DatasourceFieldRemovedEventHandler(Me.QBuilder_DatasourceFieldRemoved)
-'			Me.QBuilder.SQLUpdated += New System.EventHandler(Me.QBuilder_SQLUpdated)
+'            Me.QBuilder.DataSourceAdding += New ActiveQueryBuilder.View.QueryView.DataSourceAddingEventHandler(Me.QBuilder_DataSourceAdding)
+'            Me.QBuilder.DataSourceAdded += New ActiveQueryBuilder.Core.DataSourceAddedEventHandler(Me.QBuilder_DataSourceAdded)
+'            Me.QBuilder.DataSourceDeleting += New ActiveQueryBuilder.View.QueryView.DataSourceDeletingEventHandler(Me.QBuilder_DataSourceDeleting)
+'            Me.QBuilder.LinkDeleting += New ActiveQueryBuilder.View.QueryView.LinkDeletingEventHandler(Me.QBuilder_LinkDeleting)
+'            Me.QBuilder.LinkCreated += New ActiveQueryBuilder.Core.LinkCreatedEventhandler(Me.QBuilder_LinkCreated)
+'            Me.QBuilder.LinkChanging += New ActiveQueryBuilder.View.QueryView.LinkChangingEventHandler(Me.QBuilder_LinkChanging)
+'            Me.QBuilder.LinkChanged += New ActiveQueryBuilder.View.QueryView.LinkChangedEventHandler(Me.QBuilder_LinkChanged)
+'            Me.QBuilder.LinkCreating += New ActiveQueryBuilder.View.QueryView.LinkCreatingEventHandler(Me.QBuilder_LinkCreating)
+'            Me.QBuilder.QueryColumnListItemChanging += New ActiveQueryBuilder.View.QueryView.QueryColumnListItemChangingEventHandler(Me.QBuilder_QueryColumnListItemChanging)
+'            Me.QBuilder.QueryColumnListItemChanged += New ActiveQueryBuilder.View.QueryView.QueryColumnListItemChangedEventHandler(Me.QBuilder_QueryColumnListItemChanged)
+'            Me.QBuilder.QueryColumnListItemAdded += New ActiveQueryBuilder.View.QueryView.ItemCollectionChanged(Me.QBuilder_QueryColumnListItemAdded)
+'            Me.QBuilder.QueryColumnListItemRemoving += New ActiveQueryBuilder.View.QueryView.ItemCollectionChanging(Me.QBuilder_QueryColumnListItemRemoving)
+'            Me.QBuilder.DataSourceFieldAdding += New ActiveQueryBuilder.View.QueryView.DataSourceFieldAddingEventHandler(Me.QBuilder_DataSourceFieldAdding)
+'            Me.QBuilder.DataSourceFieldAdded += New ActiveQueryBuilder.View.QueryView.DataSourceFieldAddedEventHandler(Me.QBuilder_DataSourceFieldAdded)
+'            Me.QBuilder.DataSourceFieldRemoving += New ActiveQueryBuilder.View.QueryView.DataSourceFieldRemovingEventHandler(Me.QBuilder_DataSourceFieldRemoving)
+'            Me.QBuilder.DatasourceFieldRemoved += New ActiveQueryBuilder.View.QueryView.DatasourceFieldRemovedEventHandler(Me.QBuilder_DatasourceFieldRemoved)
+'            Me.QBuilder.SQLUpdated += New System.EventHandler(Me.QBuilder_SQLUpdated)
         ' 
         ' errorBox1
         ' 
@@ -490,8 +490,8 @@ Partial Public Class Form1
         Me.errorBox1.Size = New Size(316, 61)
         Me.errorBox1.TabIndex = 1
         Me.errorBox1.Visible = False
-'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
-'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
+'            Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
+'            Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
         ' 
         ' TextBoxSQL
         ' 
@@ -501,7 +501,7 @@ Partial Public Class Form1
         Me.TextBoxSQL.Size = New Size(1002, 110)
         Me.TextBoxSQL.TabIndex = 0
         Me.TextBoxSQL.Text = ""
-'			Me.TextBoxSQL.Validating += New System.ComponentModel.CancelEventHandler(Me.TextBoxSQL_Validating)
+'            Me.TextBoxSQL.Validating += New System.ComponentModel.CancelEventHandler(Me.TextBoxSQL_Validating)
         ' 
         ' TextBoxReport
         ' 

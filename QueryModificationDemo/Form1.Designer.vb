@@ -86,7 +86,7 @@ Partial Public Class Form1
         Me.btnApply.TabIndex = 4
         Me.btnApply.Text = "Apply Changes"
         Me.btnApply.UseVisualStyleBackColor = True
-'			Me.btnApply.Click += New System.EventHandler(Me.btnApply_Click)
+'            Me.btnApply.Click += New System.EventHandler(Me.btnApply_Click)
         ' 
         ' groupBox1
         ' 
@@ -135,7 +135,7 @@ Partial Public Class Form1
         Me.cbOrderDate.TabIndex = 4
         Me.cbOrderDate.Text = "OrderDate"
         Me.cbOrderDate.UseVisualStyleBackColor = True
-'			Me.cbOrderDate.CheckedChanged += New System.EventHandler(Me.cbOrderDate_CheckedChanged)
+'            Me.cbOrderDate.CheckedChanged += New System.EventHandler(Me.cbOrderDate_CheckedChanged)
         ' 
         ' cbOrders
         ' 
@@ -146,7 +146,7 @@ Partial Public Class Form1
         Me.cbOrders.TabIndex = 3
         Me.cbOrders.Text = "Orders"
         Me.cbOrders.UseVisualStyleBackColor = True
-'			Me.cbOrders.CheckedChanged += New System.EventHandler(Me.cbOrders_CheckedChanged)
+'            Me.cbOrders.CheckedChanged += New System.EventHandler(Me.cbOrders_CheckedChanged)
         ' 
         ' tbCompanyName
         ' 
@@ -167,7 +167,7 @@ Partial Public Class Form1
         Me.cbCompanyName.TabIndex = 1
         Me.cbCompanyName.Text = "CompanyName"
         Me.cbCompanyName.UseVisualStyleBackColor = True
-'			Me.cbCompanyName.CheckedChanged += New System.EventHandler(Me.cbCompanyName_CheckedChanged)
+'            Me.cbCompanyName.CheckedChanged += New System.EventHandler(Me.cbCompanyName_CheckedChanged)
         ' 
         ' cbCustomers
         ' 
@@ -178,7 +178,7 @@ Partial Public Class Form1
         Me.cbCustomers.TabIndex = 0
         Me.cbCustomers.Text = "Customers"
         Me.cbCustomers.UseVisualStyleBackColor = True
-'			Me.cbCustomers.CheckedChanged += New System.EventHandler(Me.cbCustomers_CheckedChanged)
+'            Me.cbCustomers.CheckedChanged += New System.EventHandler(Me.cbCustomers_CheckedChanged)
         ' 
         ' btnQueryCustomersOrders
         ' 
@@ -189,7 +189,7 @@ Partial Public Class Form1
         Me.btnQueryCustomersOrders.TabIndex = 2
         Me.btnQueryCustomersOrders.Text = "Load Sample Query 3"
         Me.btnQueryCustomersOrders.UseVisualStyleBackColor = True
-'			Me.btnQueryCustomersOrders.Click += New System.EventHandler(Me.btnQueryCustomersOrders_Click)
+'            Me.btnQueryCustomersOrders.Click += New System.EventHandler(Me.btnQueryCustomersOrders_Click)
         ' 
         ' btnQueryOrders
         ' 
@@ -200,7 +200,7 @@ Partial Public Class Form1
         Me.btnQueryOrders.TabIndex = 1
         Me.btnQueryOrders.Text = "Load Sample Query 2"
         Me.btnQueryOrders.UseVisualStyleBackColor = True
-'			Me.btnQueryOrders.Click += New System.EventHandler(Me.btnQueryOrders_Click)
+'            Me.btnQueryOrders.Click += New System.EventHandler(Me.btnQueryOrders_Click)
         ' 
         ' btnQueryCustomers
         ' 
@@ -211,7 +211,7 @@ Partial Public Class Form1
         Me.btnQueryCustomers.TabIndex = 0
         Me.btnQueryCustomers.Text = "Load Sample Query 1"
         Me.btnQueryCustomers.UseVisualStyleBackColor = True
-'			Me.btnQueryCustomers.Click += New System.EventHandler(Me.btnQueryCustomers_Click)
+'            Me.btnQueryCustomers.Click += New System.EventHandler(Me.btnQueryCustomers_Click)
         ' 
         ' tabControl1
         ' 
@@ -246,7 +246,7 @@ Partial Public Class Form1
         Me.tbSQL.ScrollBars = ScrollBars.Both
         Me.tbSQL.Size = New Size(909, 388)
         Me.tbSQL.TabIndex = 0
-'			Me.tbSQL.Validating += New System.ComponentModel.CancelEventHandler(Me.tbSQL_Validating)
+'            Me.tbSQL.Validating += New System.ComponentModel.CancelEventHandler(Me.tbSQL_Validating)
         ' 
         ' tabPage2
         ' 

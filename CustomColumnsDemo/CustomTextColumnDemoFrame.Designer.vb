@@ -104,8 +104,8 @@ Partial Public Class CustomTextColumnDemoFrame
         Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.queryBuilder1.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.queryBuilder1.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.queryBuilder1.QueryElementControlCreated += New ActiveQueryBuilder.View.QueryView.QueryElementControlCreatedEventHandler(Me.queryBuilder1_QueryElementControlCreated)
-'			Me.queryBuilder1.QueryElementControlDestroying += New ActiveQueryBuilder.View.QueryView.QueryElementControlDestroyingEventHandler(Me.queryBuilder1_QueryElementControlDestroying)
+'            Me.queryBuilder1.QueryElementControlCreated += New ActiveQueryBuilder.View.QueryView.QueryElementControlCreatedEventHandler(Me.queryBuilder1_QueryElementControlCreated)
+'            Me.queryBuilder1.QueryElementControlDestroying += New ActiveQueryBuilder.View.QueryView.QueryElementControlDestroyingEventHandler(Me.queryBuilder1_QueryElementControlDestroying)
         ' 
         ' CustomTextColumnDemoFrame
         ' 

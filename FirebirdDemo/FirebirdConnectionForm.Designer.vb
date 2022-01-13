@@ -64,7 +64,7 @@ Partial Public Class FirebirdConnectionForm
         Me.buttonBrowse.TabIndex = 2
         Me.buttonBrowse.Text = "..."
         Me.buttonBrowse.UseVisualStyleBackColor = True
-'			Me.buttonBrowse.Click += New System.EventHandler(Me.buttonBrowse_Click)
+'            Me.buttonBrowse.Click += New System.EventHandler(Me.buttonBrowse_Click)
         ' 
         ' textboxPassword
         ' 
@@ -110,7 +110,7 @@ Partial Public Class FirebirdConnectionForm
         Me.buttonConnect.TabIndex = 5
         Me.buttonConnect.Text = "Connect"
         Me.buttonConnect.UseVisualStyleBackColor = True
-'			Me.buttonConnect.Click += New System.EventHandler(Me.buttonConnect_Click)
+'            Me.buttonConnect.Click += New System.EventHandler(Me.buttonConnect_Click)
         ' 
         ' label3
         ' 

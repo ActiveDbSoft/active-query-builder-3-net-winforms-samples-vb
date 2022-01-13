@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class Form1
     ''' <summary>
     ''' Required designer variable.
@@ -174,12 +174,12 @@ Partial Public Class Form1
         Me.QBuilder.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.QBuilder.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.QBuilder.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.QBuilder.ValidateContextMenu += New ActiveQueryBuilder.View.QueryView.ContextMenuEventHandler(Me.QBuilder_ValidateContextMenu)
-'			Me.QBuilder.CustomizeDataSourceFieldList += New ActiveQueryBuilder.View.QueryView.CustomizeDataSourceFieldListEventHandler(Me.QBuilder_CustomizeDataSourceFieldList)
-'			Me.QBuilder.CustomizeDataSourceCaption += New ActiveQueryBuilder.View.QueryView.CustomizeDataSourceCaptionEventHandler(Me.QBuilder_CustomizeDataSourceCaption)
-'			Me.QBuilder.SQLUpdated += New System.EventHandler(Me.QBuilder_SQLUpdated)
-'			Me.QBuilder.QueryElementControlCreated += New ActiveQueryBuilder.View.QueryView.QueryElementControlCreatedEventHandler(Me.QBuilder_QueryElementControlCreated)
-'			Me.QBuilder.QueryElementControlDestroying += New ActiveQueryBuilder.View.QueryView.QueryElementControlDestroyingEventHandler(Me.QBuilder_QueryElementControlDestroying)
+'            Me.QBuilder.ValidateContextMenu += New ActiveQueryBuilder.View.QueryView.ContextMenuEventHandler(Me.QBuilder_ValidateContextMenu)
+'            Me.QBuilder.CustomizeDataSourceFieldList += New ActiveQueryBuilder.View.QueryView.CustomizeDataSourceFieldListEventHandler(Me.QBuilder_CustomizeDataSourceFieldList)
+'            Me.QBuilder.CustomizeDataSourceCaption += New ActiveQueryBuilder.View.QueryView.CustomizeDataSourceCaptionEventHandler(Me.QBuilder_CustomizeDataSourceCaption)
+'            Me.QBuilder.SQLUpdated += New System.EventHandler(Me.QBuilder_SQLUpdated)
+'            Me.QBuilder.QueryElementControlCreated += New ActiveQueryBuilder.View.QueryView.QueryElementControlCreatedEventHandler(Me.QBuilder_QueryElementControlCreated)
+'            Me.QBuilder.QueryElementControlDestroying += New ActiveQueryBuilder.View.QueryView.QueryElementControlDestroyingEventHandler(Me.QBuilder_QueryElementControlDestroying)
         ' 
         ' TextBoxSQL
         ' 
@@ -189,7 +189,7 @@ Partial Public Class Form1
         Me.TextBoxSQL.Size = New Size(1102, 118)
         Me.TextBoxSQL.TabIndex = 0
         Me.TextBoxSQL.Text = ""
-'			Me.TextBoxSQL.Validating += New System.ComponentModel.CancelEventHandler(Me.TextBoxSQL_Validating)
+'            Me.TextBoxSQL.Validating += New System.ComponentModel.CancelEventHandler(Me.TextBoxSQL_Validating)
         ' 
         ' panel1
         ' 
@@ -302,8 +302,8 @@ Partial Public Class Form1
         Me.errorBox1.Size = New Size(324, 61)
         Me.errorBox1.TabIndex = 1
         Me.errorBox1.Visible = False
-'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
-'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
+'            Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
+'            Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
         ' 
         ' Form1
         ' 

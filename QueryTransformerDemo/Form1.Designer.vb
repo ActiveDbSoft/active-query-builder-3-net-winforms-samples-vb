@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class Form1
     Private components As System.ComponentModel.IContainer = Nothing
 
@@ -135,7 +135,7 @@ Partial Public Class Form1
         Me.ButtonLoad.TabIndex = 1
         Me.ButtonLoad.Text = "Load"
         Me.ButtonLoad.UseVisualStyleBackColor = True
-'			Me.ButtonLoad.Click += New System.EventHandler(Me.ButtonLoad_Click)
+'            Me.ButtonLoad.Click += New System.EventHandler(Me.ButtonLoad_Click)
         ' 
         ' label2
         ' 
@@ -335,7 +335,7 @@ Partial Public Class Form1
         Me.ButtonClearWhere.TabIndex = 0
         Me.ButtonClearWhere.Text = "Clear"
         Me.ButtonClearWhere.UseVisualStyleBackColor = True
-'			Me.ButtonClearWhere.Click += New System.EventHandler(Me.ButtonClearWhere_Click)
+'            Me.ButtonClearWhere.Click += New System.EventHandler(Me.ButtonClearWhere_Click)
         ' 
         ' ButtonAddWhere
         ' 
@@ -345,7 +345,7 @@ Partial Public Class Form1
         Me.ButtonAddWhere.TabIndex = 0
         Me.ButtonAddWhere.Text = "Add"
         Me.ButtonAddWhere.UseVisualStyleBackColor = True
-'			Me.ButtonAddWhere.Click += New System.EventHandler(Me.ButtonAddWhere_Click)
+'            Me.ButtonAddWhere.Click += New System.EventHandler(Me.ButtonAddWhere_Click)
         ' 
         ' label18
         ' 
@@ -495,7 +495,7 @@ Partial Public Class Form1
         Me.ButtonClearAggregates.TabIndex = 0
         Me.ButtonClearAggregates.Text = "Clear"
         Me.ButtonClearAggregates.UseVisualStyleBackColor = True
-'			Me.ButtonClearAggregates.Click += New System.EventHandler(Me.ButtonClearAggregates_Click)
+'            Me.ButtonClearAggregates.Click += New System.EventHandler(Me.ButtonClearAggregates_Click)
         ' 
         ' ButtonAddAggregate
         ' 
@@ -505,7 +505,7 @@ Partial Public Class Form1
         Me.ButtonAddAggregate.TabIndex = 0
         Me.ButtonAddAggregate.Text = "Add"
         Me.ButtonAddAggregate.UseVisualStyleBackColor = True
-'			Me.ButtonAddAggregate.Click += New System.EventHandler(Me.ButtonAddAggregate_Click)
+'            Me.ButtonAddAggregate.Click += New System.EventHandler(Me.ButtonAddAggregate_Click)
         ' 
         ' groupBox1
         ' 
@@ -637,7 +637,7 @@ Partial Public Class Form1
         Me.ButtonClearSortings.TabIndex = 0
         Me.ButtonClearSortings.Text = "Clear"
         Me.ButtonClearSortings.UseVisualStyleBackColor = True
-'			Me.ButtonClearSortings.Click += New System.EventHandler(Me.ButtonClearSortings_Click)
+'            Me.ButtonClearSortings.Click += New System.EventHandler(Me.ButtonClearSortings_Click)
         ' 
         ' ButtonAddSorting
         ' 
@@ -647,7 +647,7 @@ Partial Public Class Form1
         Me.ButtonAddSorting.TabIndex = 0
         Me.ButtonAddSorting.Text = "Add"
         Me.ButtonAddSorting.UseVisualStyleBackColor = True
-'			Me.ButtonAddSorting.Click += New System.EventHandler(Me.ButtonAddSorting_Click)
+'            Me.ButtonAddSorting.Click += New System.EventHandler(Me.ButtonAddSorting_Click)
         ' 
         ' panel1
         ' 
@@ -671,7 +671,7 @@ Partial Public Class Form1
         Me.ListBoxVisibleFields.Name = "ListBoxVisibleFields"
         Me.ListBoxVisibleFields.Size = New Size(194, 214)
         Me.ListBoxVisibleFields.TabIndex = 1
-'			Me.ListBoxVisibleFields.ItemCheck += New System.Windows.Forms.ItemCheckEventHandler(Me.ListBoxVisibleFields_ItemCheck)
+'            Me.ListBoxVisibleFields.ItemCheck += New System.Windows.Forms.ItemCheckEventHandler(Me.ListBoxVisibleFields_ItemCheck)
         ' 
         ' label5
         ' 
@@ -717,7 +717,7 @@ Partial Public Class Form1
         Me.ButtonCodeBehindShow.TabIndex = 1
         Me.ButtonCodeBehindShow.Text = "CodeBehind"
         Me.ButtonCodeBehindShow.UseVisualStyleBackColor = True
-'			Me.ButtonCodeBehindShow.Click += New System.EventHandler(Me.ButtonCodeBehindShow_Click)
+'            Me.ButtonCodeBehindShow.Click += New System.EventHandler(Me.ButtonCodeBehindShow_Click)
         ' 
         ' Form1
         ' 

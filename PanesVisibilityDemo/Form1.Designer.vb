@@ -84,7 +84,7 @@ Partial Public Class Form1
         Me.cbRightPane.Text = "Right Pane"
         Me.cbRightPane.TextAlign = ContentAlignment.MiddleCenter
         Me.cbRightPane.UseVisualStyleBackColor = True
-'			Me.cbRightPane.CheckedChanged += New System.EventHandler(Me.cbRightPane_CheckedChanged)
+'            Me.cbRightPane.CheckedChanged += New System.EventHandler(Me.cbRightPane_CheckedChanged)
         ' 
         ' cbQueryColumnsPane
         ' 
@@ -99,7 +99,7 @@ Partial Public Class Form1
         Me.cbQueryColumnsPane.Text = "Query Columns Pane"
         Me.cbQueryColumnsPane.TextAlign = ContentAlignment.MiddleCenter
         Me.cbQueryColumnsPane.UseVisualStyleBackColor = True
-'			Me.cbQueryColumnsPane.CheckedChanged += New System.EventHandler(Me.cbQueryColumnsPane_CheckedChanged)
+'            Me.cbQueryColumnsPane.CheckedChanged += New System.EventHandler(Me.cbQueryColumnsPane_CheckedChanged)
         ' 
         ' cbDesignPane
         ' 
@@ -114,7 +114,7 @@ Partial Public Class Form1
         Me.cbDesignPane.Text = "Design Pane"
         Me.cbDesignPane.TextAlign = ContentAlignment.MiddleCenter
         Me.cbDesignPane.UseVisualStyleBackColor = True
-'			Me.cbDesignPane.CheckedChanged += New System.EventHandler(Me.cbDesignPane_CheckedChanged)
+'            Me.cbDesignPane.CheckedChanged += New System.EventHandler(Me.cbDesignPane_CheckedChanged)
         ' 
         ' queryBuilder
         ' 

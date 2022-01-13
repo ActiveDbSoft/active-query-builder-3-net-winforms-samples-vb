@@ -65,7 +65,7 @@ Partial Public Class InformixConnectionForm
         Me.buttonConnect.TabIndex = 8
         Me.buttonConnect.Text = "Connect"
         Me.buttonConnect.UseVisualStyleBackColor = True
-'			Me.buttonConnect.Click += New System.EventHandler(Me.buttonConnect_Click)
+'            Me.buttonConnect.Click += New System.EventHandler(Me.buttonConnect_Click)
         ' 
         ' label8
         ' 

@@ -1,17 +1,17 @@
 Namespace QueryBuilderProperties
-	Partial Friend Class OfflineModePage
-		''' <summary>
-		''' Required designer variable.
-		''' </summary>
-		Private components As System.ComponentModel.IContainer = Nothing
+    Partial Friend Class OfflineModePage
+        ''' <summary>
+        ''' Required designer variable.
+        ''' </summary>
+        Private components As System.ComponentModel.IContainer = Nothing
 
-		#Region "Component Designer generated code"
+        #Region "Component Designer generated code"
 
-		''' <summary>
-		''' Required method for Designer support - do not modify
-		''' the contents of this method with the code editor.
-		''' </summary>
-		Private Sub InitializeComponent()
+        ''' <summary>
+        ''' Required method for Designer support - do not modify
+        ''' the contents of this method with the code editor.
+        ''' </summary>
+        Private Sub InitializeComponent()
         Me.bEditMetadata = New System.Windows.Forms.Button()
         Me.bSaveToXML = New System.Windows.Forms.Button()
         Me.bLoadFromXML = New System.Windows.Forms.Button()
@@ -92,14 +92,14 @@ Namespace QueryBuilderProperties
 
 End Sub
 
-		#End Region
+        #End Region
 
-		Private bEditMetadata As Button
-		Private bSaveToXML As Button
-		Private bLoadFromXML As Button
-		Private lMetadataObjectCount As Label
-		Private cbOfflineMode As CheckBox
-		Private OpenDialog As OpenFileDialog
-		Private SaveDialog As SaveFileDialog
-	End Class
+        Private bEditMetadata As Button
+        Private bSaveToXML As Button
+        Private bLoadFromXML As Button
+        Private lMetadataObjectCount As Label
+        Private cbOfflineMode As CheckBox
+        Private OpenDialog As OpenFileDialog
+        Private SaveDialog As SaveFileDialog
+    End Class
 End Namespace

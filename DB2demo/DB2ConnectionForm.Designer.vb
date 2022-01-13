@@ -92,7 +92,7 @@ Partial Public Class DB2ConnectionForm
         Me.buttonConnect.TabIndex = 4
         Me.buttonConnect.Text = "Connect"
         Me.buttonConnect.UseVisualStyleBackColor = True
-'			Me.buttonConnect.Click += New System.EventHandler(Me.buttonConnect_Click)
+'            Me.buttonConnect.Click += New System.EventHandler(Me.buttonConnect_Click)
         ' 
         ' textboxServer
         ' 

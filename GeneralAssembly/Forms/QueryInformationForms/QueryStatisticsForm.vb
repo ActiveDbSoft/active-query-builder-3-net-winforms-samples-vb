@@ -1,7 +1,7 @@
 ''*******************************************************************''
 ''       Active Query Builder Component Suite                        ''
 ''                                                                   ''
-''       Copyright © 2006-2021 Active Database Software              ''
+''       Copyright © 2006-2022 Active Database Software              ''
 ''       ALL RIGHTS RESERVED                                         ''
 ''                                                                   ''
 ''       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            ''
@@ -9,14 +9,14 @@
 ''*******************************************************************''
 
 Namespace Forms.QueryInformationForms
-	Partial Public Class QueryStatisticsForm
-		Inherits Form
+    Partial Public Class QueryStatisticsForm
+        Inherits Form
         Public Sub New(message As String)
             InitializeComponent()
             textBox.Text = message
         End Sub
-		Public Sub New()
-			InitializeComponent()
-		End Sub
-	End Class
+        Public Sub New()
+            InitializeComponent()
+        End Sub
+    End Class
 End Namespace

@@ -1,7 +1,7 @@
 ''*******************************************************************''
 ''       Active Query Builder Component Suite                        ''
 ''                                                                   ''
-''       Copyright © 2006-2021 Active Database Software              ''
+''       Copyright © 2006-2022 Active Database Software              ''
 ''       ALL RIGHTS RESERVED                                         ''
 ''                                                                   ''
 ''       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            ''
@@ -32,7 +32,7 @@ Partial Public Class Form1
             queryBuilder.MetadataContainer.ImportFromXML("Northwind.xml")
             queryBuilder.InitializeDatabaseSchemaTree()
             AddHandler queryBuilder.SQLUpdated, AddressOf queryBuilder_SQLUpdated
-            queryBuilder.SQL = "SELECT Orders.OrderID, Orders.CustomerID, Orders.OrderDate, [Order Details].ProductID," & ControlChars.CrLf & "										[Order Details].UnitPrice, [Order Details].Quantity, [Order Details].Discount" & ControlChars.CrLf & "									  FROM Orders INNER JOIN [Order Details] ON Orders.OrderID = [Order Details].OrderID" & ControlChars.CrLf & "									  WHERE Orders.OrderID > 0 AND [Order Details].Discount > 0"
+            queryBuilder.SQL = "SELECT Orders.OrderID, Orders.CustomerID, Orders.OrderDate, [Order Details].ProductID," & ControlChars.CrLf & "                                        [Order Details].UnitPrice, [Order Details].Quantity, [Order Details].Discount" & ControlChars.CrLf & "                                      FROM Orders INNER JOIN [Order Details] ON Orders.OrderID = [Order Details].OrderID" & ControlChars.CrLf & "                                      WHERE Orders.OrderID > 0 AND [Order Details].Discount > 0"
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

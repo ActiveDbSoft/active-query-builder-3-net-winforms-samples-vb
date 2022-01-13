@@ -81,14 +81,14 @@ Partial Public Class Form1
         Me.editMetadataToolStripMenuItem.Name = "editMetadataToolStripMenuItem"
         Me.editMetadataToolStripMenuItem.Size = New Size(101, 20)
         Me.editMetadataToolStripMenuItem.Text = "Edit Metadata..."
-        '			Me.editMetadataToolStripMenuItem.Click += New System.EventHandler(Me.editMetadataToolStripMenuItem_Click)
+        '            Me.editMetadataToolStripMenuItem.Click += New System.EventHandler(Me.editMetadataToolStripMenuItem_Click)
         ' 
         ' aboutToolStripMenuItem
         ' 
         Me.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem"
         Me.aboutToolStripMenuItem.Size = New Size(61, 20)
         Me.aboutToolStripMenuItem.Text = "About..."
-        '			Me.aboutToolStripMenuItem.Click += New System.EventHandler(Me.aboutToolStripMenuItem_Click)
+        '            Me.aboutToolStripMenuItem.Click += New System.EventHandler(Me.aboutToolStripMenuItem_Click)
         ' 
         ' imageList32
         ' 
@@ -174,7 +174,7 @@ Partial Public Class Form1
         Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.queryBuilder1.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.queryBuilder1.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-        '			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
+        '            Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
         ' 
         ' splitContainer1
         ' 
@@ -229,7 +229,7 @@ Partial Public Class Form1
         Me.textBox1.ScrollBars = ScrollBars.Both
         Me.textBox1.Size = New Size(779, 112)
         Me.textBox1.TabIndex = 1
-        '			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
+        '            Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
         ' 
         ' tabPage2
         ' 
@@ -254,7 +254,7 @@ Partial Public Class Form1
         Me.textBox2.ScrollBars = ScrollBars.Both
         Me.textBox2.Size = New Size(779, 112)
         Me.textBox2.TabIndex = 2
-        '			Me.textBox2.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox2_Validating)
+        '            Me.textBox2.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox2_Validating)
         ' 
         ' errorBox1
         ' 
@@ -270,8 +270,8 @@ Partial Public Class Form1
         Me.errorBox1.Size = New Size(307, 63)
         Me.errorBox1.TabIndex = 2
         Me.errorBox1.Visible = False
-        '			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
-        '			Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
+        '            Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
+        '            Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
         ' 
         ' errorBox2
         ' 
@@ -287,8 +287,8 @@ Partial Public Class Form1
         Me.errorBox2.Size = New Size(358, 63)
         Me.errorBox2.TabIndex = 3
         Me.errorBox2.Visible = False
-        '			Me.errorBox2.GoToErrorPosition += New System.EventHandler(Me.ErrorBox2_GoToErrorPosition)
-        '			Me.errorBox2.RevertValidText += New System.EventHandler(Me.ErrorBox2_RevertValidText)
+        '            Me.errorBox2.GoToErrorPosition += New System.EventHandler(Me.ErrorBox2_GoToErrorPosition)
+        '            Me.errorBox2.RevertValidText += New System.EventHandler(Me.ErrorBox2_RevertValidText)
         ' 
         ' Form1
         ' 

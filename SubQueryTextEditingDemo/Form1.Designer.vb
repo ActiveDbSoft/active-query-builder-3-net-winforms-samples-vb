@@ -95,7 +95,7 @@ Partial Public Class Form1
         Me.tabControl1.SelectedIndex = 0
         Me.tabControl1.Size = New Size(884, 414)
         Me.tabControl1.TabIndex = 0
-'			Me.tabControl1.Selected += New System.Windows.Forms.TabControlEventHandler(Me.tabControl1_Selected)
+'            Me.tabControl1.Selected += New System.Windows.Forms.TabControlEventHandler(Me.tabControl1_Selected)
         ' 
         ' tabPageSQL
         ' 
@@ -227,7 +227,7 @@ Partial Public Class Form1
         Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.queryBuilder1.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(0)))
         Me.queryBuilder1.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
+'            Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
         ' 
         ' errorBox1
         ' 
@@ -243,8 +243,8 @@ Partial Public Class Form1
         Me.errorBox1.Size = New Size(302, 61)
         Me.errorBox1.TabIndex = 2
         Me.errorBox1.Visible = False
-'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.errorBox1_GoToErrorPosition)
-'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.errorBox1_RevertValidText)
+'            Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.errorBox1_GoToErrorPosition)
+'            Me.errorBox1.RevertValidText += New System.EventHandler(Me.errorBox1_RevertValidText)
         ' 
         ' textBox1
         ' 
@@ -321,7 +321,7 @@ Partial Public Class Form1
         Me.button1.Size = New Size(22, 20)
         Me.button1.TabIndex = 0
         Me.button1.UseVisualStyleBackColor = True
-'			Me.button1.Click += New System.EventHandler(Me.button1_Click)
+'            Me.button1.Click += New System.EventHandler(Me.button1_Click)
         ' 
         ' tabPageData
         ' 
@@ -381,7 +381,7 @@ Partial Public Class Form1
         ' 
         Me.fillProgrammaticallyMenuItem.Index = 2
         Me.fillProgrammaticallyMenuItem.Text = "Fill the query builder programmatically"
-'			Me.fillProgrammaticallyMenuItem.Click += New System.EventHandler(Me.fillProgrammaticallyMenuItem_Click)
+'            Me.fillProgrammaticallyMenuItem.Click += New System.EventHandler(Me.fillProgrammaticallyMenuItem_Click)
         ' 
         ' menuItem3
         ' 
@@ -393,19 +393,19 @@ Partial Public Class Form1
         ' 
         Me.refreshMetadataMenuItem.Index = 0
         Me.refreshMetadataMenuItem.Text = "Refresh Metadata"
-'			Me.refreshMetadataMenuItem.Click += New System.EventHandler(Me.refreshMetadataMenuItem_Click)
+'            Me.refreshMetadataMenuItem.Click += New System.EventHandler(Me.refreshMetadataMenuItem_Click)
         ' 
         ' editMetadataMenuItem
         ' 
         Me.editMetadataMenuItem.Index = 1
         Me.editMetadataMenuItem.Text = "Edit Metadata..."
-'			Me.editMetadataMenuItem.Click += New System.EventHandler(Me.editMetadataMenuItem_Click)
+'            Me.editMetadataMenuItem.Click += New System.EventHandler(Me.editMetadataMenuItem_Click)
         ' 
         ' clearMetadataMenuItem
         ' 
         Me.clearMetadataMenuItem.Index = 2
         Me.clearMetadataMenuItem.Text = "Clear Metadata"
-'			Me.clearMetadataMenuItem.Click += New System.EventHandler(Me.clearMetadataMenuItem_Click)
+'            Me.clearMetadataMenuItem.Click += New System.EventHandler(Me.clearMetadataMenuItem_Click)
         ' 
         ' menuItem4
         ' 
@@ -416,31 +416,31 @@ Partial Public Class Form1
         ' 
         Me.loadMetadataFromXMLMenuItem.Index = 4
         Me.loadMetadataFromXMLMenuItem.Text = "Load Metadata from XML..."
-'			Me.loadMetadataFromXMLMenuItem.Click += New System.EventHandler(Me.loadMetadataFromXMLMenuItem_Click)
+'            Me.loadMetadataFromXMLMenuItem.Click += New System.EventHandler(Me.loadMetadataFromXMLMenuItem_Click)
         ' 
         ' saveMetadataToXMLMenuItem
         ' 
         Me.saveMetadataToXMLMenuItem.Index = 5
         Me.saveMetadataToXMLMenuItem.Text = "Save Metadata to XML..."
-'			Me.saveMetadataToXMLMenuItem.Click += New System.EventHandler(Me.saveMetadataToXMLMenuItem_Click)
+'            Me.saveMetadataToXMLMenuItem.Click += New System.EventHandler(Me.saveMetadataToXMLMenuItem_Click)
         ' 
         ' queryStatisticsMenuItem
         ' 
         Me.queryStatisticsMenuItem.Index = 2
         Me.queryStatisticsMenuItem.Text = "Query Statistics..."
-'			Me.queryStatisticsMenuItem.Click += New System.EventHandler(Me.queryStatisticsMenuItem_Click)
+'            Me.queryStatisticsMenuItem.Click += New System.EventHandler(Me.queryStatisticsMenuItem_Click)
         ' 
         ' propertiesMenuItem
         ' 
         Me.propertiesMenuItem.Index = 3
         Me.propertiesMenuItem.Text = "Properties..."
-'			Me.propertiesMenuItem.Click += New System.EventHandler(Me.propertiesMenuItem_Click)
+'            Me.propertiesMenuItem.Click += New System.EventHandler(Me.propertiesMenuItem_Click)
         ' 
         ' aboutMenuItem
         ' 
         Me.aboutMenuItem.Index = 4
         Me.aboutMenuItem.Text = "About..."
-'			Me.aboutMenuItem.Click += New System.EventHandler(Me.aboutMenuItem_Click)
+'            Me.aboutMenuItem.Click += New System.EventHandler(Me.aboutMenuItem_Click)
         ' 
         ' panel1
         ' 
@@ -505,7 +505,7 @@ Partial Public Class Form1
         Me.tsmiEntire.Name = "tsmiEntire"
         Me.tsmiEntire.Size = New Size(318, 22)
         Me.tsmiEntire.Text = "Edit the entire SQL query text"
-'			Me.tsmiEntire.CheckedChanged += New System.EventHandler(Me.tsmiEntire_CheckedChanged)
+'            Me.tsmiEntire.CheckedChanged += New System.EventHandler(Me.tsmiEntire_CheckedChanged)
         ' 
         ' tsmiSubQuery
         ' 
@@ -513,7 +513,7 @@ Partial Public Class Form1
         Me.tsmiSubQuery.Name = "tsmiSubQuery"
         Me.tsmiSubQuery.Size = New Size(318, 22)
         Me.tsmiSubQuery.Text = "Edit text of the current sub-Query"
-'			Me.tsmiSubQuery.CheckedChanged += New System.EventHandler(Me.tsmiSubQuery_CheckedChanged)
+'            Me.tsmiSubQuery.CheckedChanged += New System.EventHandler(Me.tsmiSubQuery_CheckedChanged)
         ' 
         ' tsmiExpression
         ' 
@@ -521,13 +521,13 @@ Partial Public Class Form1
         Me.tsmiExpression.Name = "tsmiExpression"
         Me.tsmiExpression.Size = New Size(318, 22)
         Me.tsmiExpression.Text = "Edit text of the current SELECT Expression only"
-'			Me.tsmiExpression.CheckedChanged += New System.EventHandler(Me.tsmiExpression_CheckedChanged)
+'            Me.tsmiExpression.CheckedChanged += New System.EventHandler(Me.tsmiExpression_CheckedChanged)
         ' 
         ' menuItemConnectTo
         ' 
         Me.menuItemConnectTo.Index = 0
         Me.menuItemConnectTo.Text = "Connect to..."
-'			Me.menuItemConnectTo.Click += New System.EventHandler(Me.menuItemConnectTo_Click)
+'            Me.menuItemConnectTo.Click += New System.EventHandler(Me.menuItemConnectTo_Click)
         ' 
         ' Form1
         ' 

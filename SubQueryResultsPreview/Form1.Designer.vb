@@ -152,8 +152,8 @@ Partial Public Class Form1
         Me.queryBuilder.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.queryBuilder.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.queryBuilder.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.queryBuilder.ActiveUnionSubQueryChanged += New System.EventHandler(Me.queryBuilder_ActiveUnionSubQueryChanged)
-'			Me.queryBuilder.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
+'            Me.queryBuilder.ActiveUnionSubQueryChanged += New System.EventHandler(Me.queryBuilder_ActiveUnionSubQueryChanged)
+'            Me.queryBuilder.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
         ' 
         ' textBox1
         ' 
@@ -165,7 +165,7 @@ Partial Public Class Form1
         Me.textBox1.ScrollBars = ScrollBars.Both
         Me.textBox1.Size = New Size(912, 127)
         Me.textBox1.TabIndex = 4
-'			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
+'            Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
         ' 
         ' rbQuery
         ' 
@@ -178,7 +178,7 @@ Partial Public Class Form1
         Me.rbQuery.TabStop = True
         Me.rbQuery.Text = "Full Query"
         Me.rbQuery.UseVisualStyleBackColor = True
-'			Me.rbQuery.CheckedChanged += New System.EventHandler(Me.QueryPartChanged)
+'            Me.rbQuery.CheckedChanged += New System.EventHandler(Me.QueryPartChanged)
         ' 
         ' rbSubQuery
         ' 
@@ -191,7 +191,7 @@ Partial Public Class Form1
         Me.rbSubQuery.TabStop = True
         Me.rbSubQuery.Text = "Sub-query"
         Me.rbSubQuery.UseVisualStyleBackColor = True
-'			Me.rbSubQuery.CheckedChanged += New System.EventHandler(Me.QueryPartChanged)
+'            Me.rbSubQuery.CheckedChanged += New System.EventHandler(Me.QueryPartChanged)
         ' 
         ' rbUnionSubQuery
         ' 
@@ -205,7 +205,7 @@ Partial Public Class Form1
         Me.rbUnionSubQuery.TabStop = True
         Me.rbUnionSubQuery.Text = "Union sub-query"
         Me.rbUnionSubQuery.UseVisualStyleBackColor = True
-'			Me.rbUnionSubQuery.CheckedChanged += New System.EventHandler(Me.QueryPartChanged)
+'            Me.rbUnionSubQuery.CheckedChanged += New System.EventHandler(Me.QueryPartChanged)
         ' 
         ' label1
         ' 
@@ -261,7 +261,7 @@ Partial Public Class Form1
         Me.tabControl1.SelectedIndex = 0
         Me.tabControl1.Size = New Size(926, 159)
         Me.tabControl1.TabIndex = 9
-'			Me.tabControl1.Selected += New System.Windows.Forms.TabControlEventHandler(Me.tabControl1_Selected)
+'            Me.tabControl1.Selected += New System.Windows.Forms.TabControlEventHandler(Me.tabControl1_Selected)
         ' 
         ' tabPageQueryText
         ' 
@@ -289,8 +289,8 @@ Partial Public Class Form1
         Me.errorBox1.Size = New Size(314, 61)
         Me.errorBox1.TabIndex = 5
         Me.errorBox1.Visible = False
-'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.errorBox1_GoToErrorPosition)
-'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.errorBox1_RevertValidText)
+'            Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.errorBox1_GoToErrorPosition)
+'            Me.errorBox1.RevertValidText += New System.EventHandler(Me.errorBox1_RevertValidText)
         ' 
         ' tabPageResultsPreview
         ' 
@@ -326,7 +326,7 @@ Partial Public Class Form1
         Me.connectToToolStripMenuItem.Name = "connectToToolStripMenuItem"
         Me.connectToToolStripMenuItem.Size = New Size(180, 22)
         Me.connectToToolStripMenuItem.Text = "Connect to..."
-'			Me.connectToToolStripMenuItem.Click += New System.EventHandler(Me.connectToToolStripMenuItem_Click)
+'            Me.connectToToolStripMenuItem.Click += New System.EventHandler(Me.connectToToolStripMenuItem_Click)
         ' 
         ' Form1
         ' 

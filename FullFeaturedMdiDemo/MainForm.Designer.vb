@@ -1,17 +1,17 @@
 
-	Partial Public Class MainForm
-		''' <summary>
-		''' Required designer variable.
-		''' </summary>
-		Private components As System.ComponentModel.IContainer = Nothing
+    Partial Public Class MainForm
+        ''' <summary>
+        ''' Required designer variable.
+        ''' </summary>
+        Private components As System.ComponentModel.IContainer = Nothing
 
-		#Region "Windows Form Designer generated code"
+        #Region "Windows Form Designer generated code"
 
-		''' <summary>
-		''' Required method for Designer support - do not modify
-		''' the contents of this method with the code editor.
-		''' </summary>
-		Private Sub InitializeComponent()
+        ''' <summary>
+        ''' Required method for Designer support - do not modify
+        ''' the contents of this method with the code editor.
+        ''' </summary>
+        Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.toolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
@@ -790,91 +790,91 @@
         Me.PerformLayout
 
 End Sub
-		Private toolStripSeparator12 As ToolStripSeparator
-		Private WithEvents tsmiLanguageDefault As ToolStripMenuItem
-		Private WithEvents tsmiLanguageAuto As ToolStripMenuItem
-		Private languageToolStripMenuItem As ToolStripMenuItem
+        Private toolStripSeparator12 As ToolStripSeparator
+        Private WithEvents tsmiLanguageDefault As ToolStripMenuItem
+        Private WithEvents tsmiLanguageAuto As ToolStripMenuItem
+        Private languageToolStripMenuItem As ToolStripMenuItem
 
-		#End Region
+        #End Region
 
-		Private toolStripStatusLabel1 As ToolStripStatusLabel
-		Private fileToolStripMenuItem As ToolStripMenuItem
-		Private toolStripButton2 As ToolStripButton
-		Private toolStripButton3 As ToolStripButton
-		Private toolStripButton4 As ToolStripButton
-		Private BottomToolStripPanel As ToolStripPanel
-		Private TopToolStripPanel As ToolStripPanel
-		Private RightToolStripPanel As ToolStripPanel
-		Private LeftToolStripPanel As ToolStripPanel
-		Private ContentPanel As ToolStripContentPanel
-		Private toolStripPanel1 As ToolStripPanel
-		Private menuStrip1 As MenuStrip
-		Private fileToolStripMenuItem1 As ToolStripMenuItem
-		Private WithEvents tsmiNew As ToolStripMenuItem
-		Private WithEvents tsmiOpen As ToolStripMenuItem
-		Private toolStripSeparator As ToolStripSeparator
-		Private WithEvents tsmiSave As ToolStripMenuItem
-		Private toolStripSeparator1 As ToolStripSeparator
-		Private WithEvents tsmiExit As ToolStripMenuItem
-		Private editToolStripMenuItem As ToolStripMenuItem
-		Private WithEvents tsmiUndo As ToolStripMenuItem
-		Private WithEvents tsmiRedo As ToolStripMenuItem
-		Private toolStripSeparator3 As ToolStripSeparator
-		Private WithEvents tsmiCut As ToolStripMenuItem
-		Private WithEvents tsmiCopy As ToolStripMenuItem
-		Private WithEvents tsmiPaste As ToolStripMenuItem
-		Private toolStripSeparator4 As ToolStripSeparator
-		Private WithEvents tsmiSelectAll As ToolStripMenuItem
-		Private toolsToolStripMenuItem As ToolStripMenuItem
-		Private WithEvents tsmiAbout As ToolStripMenuItem
-		Private toolStrip1 As ToolStrip
-		Private WithEvents tsbNew As ToolStripButton
-		Private toolStripPanel2 As ToolStripPanel
-		Private WithEvents tsbOpen As ToolStripButton
-		Private WithEvents tsbSave As ToolStripButton
-		Private toolStripSeparator2 As ToolStripSeparator
-		Private WithEvents tsbCut As ToolStripButton
-		Private WithEvents tsbCopy As ToolStripButton
-		Private WithEvents tsbPaste As ToolStripButton
-		Private toolStripSeparator6 As ToolStripSeparator
-		Private WithEvents tsbCascade As ToolStripButton
-		Private WithEvents tsbTileHorizontally As ToolStripButton
-		Private WithEvents tsbTileVertically As ToolStripButton
-		Private toolStripSeparator7 As ToolStripSeparator
-		Private WithEvents tsbAbout As ToolStripButton
-		Private tsmiQuery As ToolStripMenuItem
-		Private WithEvents tsmiParseQuery As ToolStripMenuItem
-		Private toolStripSeparator8 As ToolStripSeparator
-		Private WithEvents tsmiBuildQuery As ToolStripMenuItem
-		Private WithEvents tsmiRunQuery As ToolStripMenuItem
-		Private toolStripSeparator9 As ToolStripSeparator
-		Private WithEvents tsmiQueryStatistics As ToolStripMenuItem
-		Private openFileDialog1 As OpenFileDialog
-		Private saveFileDialog1 As SaveFileDialog
-		Private metadataToolStripMenuItem As ToolStripMenuItem
-		Private WithEvents tsmiRefreshMetadata As ToolStripMenuItem
-		Private WithEvents tsmiEditMetadata As ToolStripMenuItem
-		Private WithEvents tsmiClearMetadata As ToolStripMenuItem
-		Private toolStripSeparator10 As ToolStripSeparator
-		Private WithEvents tsmiOfflineMode As ToolStripMenuItem
-		Private toolStripSeparator11 As ToolStripSeparator
-		Private WithEvents tsmiLoadMetadataFromXML As ToolStripMenuItem
-		Private WithEvents tsmiSaveMetadataToXML As ToolStripMenuItem
-		Private WithEvents addDerivedTableToolStripMenuItem As ToolStripMenuItem
-		Private WithEvents addUnionSubqueryToolStripMenuItem As ToolStripMenuItem
-		Private WithEvents copyUnionSubwueryToolStripMenuItem As ToolStripMenuItem
-		Private WithEvents addObjectToolStripMenuItem As ToolStripMenuItem
-		Private toolStripSeparator5 As ToolStripSeparator
-		Private WithEvents queryPropertiesToolStripMenuItem As ToolStripMenuItem
-		Private WithEvents propertiesToolStripMenuItem As ToolStripMenuItem
-		Private WithEvents newQueryToolStripMenuItem1 As ToolStripMenuItem
-		Private WithEvents toolStripButtonNewQuery As ToolStripButton
-		Private WithEvents tsbEditMetadata As ToolStripButton
-		Private toolStripSeparator13 As ToolStripSeparator
-		Private WithEvents toolStripExecuteUserQuery As ToolStripButton
-		Private CaptionConnection As Label
-		Private WithEvents userQueriesView1 As ActiveQueryBuilder.View.WinForms.UserQueries.UserQueriesView
-		Private tableLayoutPanel1 As TableLayoutPanel
-		Public DBView As ActiveQueryBuilder.View.WinForms.DatabaseSchemaView.DatabaseSchemaView
+        Private toolStripStatusLabel1 As ToolStripStatusLabel
+        Private fileToolStripMenuItem As ToolStripMenuItem
+        Private toolStripButton2 As ToolStripButton
+        Private toolStripButton3 As ToolStripButton
+        Private toolStripButton4 As ToolStripButton
+        Private BottomToolStripPanel As ToolStripPanel
+        Private TopToolStripPanel As ToolStripPanel
+        Private RightToolStripPanel As ToolStripPanel
+        Private LeftToolStripPanel As ToolStripPanel
+        Private ContentPanel As ToolStripContentPanel
+        Private toolStripPanel1 As ToolStripPanel
+        Private menuStrip1 As MenuStrip
+        Private fileToolStripMenuItem1 As ToolStripMenuItem
+        Private WithEvents tsmiNew As ToolStripMenuItem
+        Private WithEvents tsmiOpen As ToolStripMenuItem
+        Private toolStripSeparator As ToolStripSeparator
+        Private WithEvents tsmiSave As ToolStripMenuItem
+        Private toolStripSeparator1 As ToolStripSeparator
+        Private WithEvents tsmiExit As ToolStripMenuItem
+        Private editToolStripMenuItem As ToolStripMenuItem
+        Private WithEvents tsmiUndo As ToolStripMenuItem
+        Private WithEvents tsmiRedo As ToolStripMenuItem
+        Private toolStripSeparator3 As ToolStripSeparator
+        Private WithEvents tsmiCut As ToolStripMenuItem
+        Private WithEvents tsmiCopy As ToolStripMenuItem
+        Private WithEvents tsmiPaste As ToolStripMenuItem
+        Private toolStripSeparator4 As ToolStripSeparator
+        Private WithEvents tsmiSelectAll As ToolStripMenuItem
+        Private toolsToolStripMenuItem As ToolStripMenuItem
+        Private WithEvents tsmiAbout As ToolStripMenuItem
+        Private toolStrip1 As ToolStrip
+        Private WithEvents tsbNew As ToolStripButton
+        Private toolStripPanel2 As ToolStripPanel
+        Private WithEvents tsbOpen As ToolStripButton
+        Private WithEvents tsbSave As ToolStripButton
+        Private toolStripSeparator2 As ToolStripSeparator
+        Private WithEvents tsbCut As ToolStripButton
+        Private WithEvents tsbCopy As ToolStripButton
+        Private WithEvents tsbPaste As ToolStripButton
+        Private toolStripSeparator6 As ToolStripSeparator
+        Private WithEvents tsbCascade As ToolStripButton
+        Private WithEvents tsbTileHorizontally As ToolStripButton
+        Private WithEvents tsbTileVertically As ToolStripButton
+        Private toolStripSeparator7 As ToolStripSeparator
+        Private WithEvents tsbAbout As ToolStripButton
+        Private tsmiQuery As ToolStripMenuItem
+        Private WithEvents tsmiParseQuery As ToolStripMenuItem
+        Private toolStripSeparator8 As ToolStripSeparator
+        Private WithEvents tsmiBuildQuery As ToolStripMenuItem
+        Private WithEvents tsmiRunQuery As ToolStripMenuItem
+        Private toolStripSeparator9 As ToolStripSeparator
+        Private WithEvents tsmiQueryStatistics As ToolStripMenuItem
+        Private openFileDialog1 As OpenFileDialog
+        Private saveFileDialog1 As SaveFileDialog
+        Private metadataToolStripMenuItem As ToolStripMenuItem
+        Private WithEvents tsmiRefreshMetadata As ToolStripMenuItem
+        Private WithEvents tsmiEditMetadata As ToolStripMenuItem
+        Private WithEvents tsmiClearMetadata As ToolStripMenuItem
+        Private toolStripSeparator10 As ToolStripSeparator
+        Private WithEvents tsmiOfflineMode As ToolStripMenuItem
+        Private toolStripSeparator11 As ToolStripSeparator
+        Private WithEvents tsmiLoadMetadataFromXML As ToolStripMenuItem
+        Private WithEvents tsmiSaveMetadataToXML As ToolStripMenuItem
+        Private WithEvents addDerivedTableToolStripMenuItem As ToolStripMenuItem
+        Private WithEvents addUnionSubqueryToolStripMenuItem As ToolStripMenuItem
+        Private WithEvents copyUnionSubwueryToolStripMenuItem As ToolStripMenuItem
+        Private WithEvents addObjectToolStripMenuItem As ToolStripMenuItem
+        Private toolStripSeparator5 As ToolStripSeparator
+        Private WithEvents queryPropertiesToolStripMenuItem As ToolStripMenuItem
+        Private WithEvents propertiesToolStripMenuItem As ToolStripMenuItem
+        Private WithEvents newQueryToolStripMenuItem1 As ToolStripMenuItem
+        Private WithEvents toolStripButtonNewQuery As ToolStripButton
+        Private WithEvents tsbEditMetadata As ToolStripButton
+        Private toolStripSeparator13 As ToolStripSeparator
+        Private WithEvents toolStripExecuteUserQuery As ToolStripButton
+        Private CaptionConnection As Label
+        Private WithEvents userQueriesView1 As ActiveQueryBuilder.View.WinForms.UserQueries.UserQueriesView
+        Private tableLayoutPanel1 As TableLayoutPanel
+        Public DBView As ActiveQueryBuilder.View.WinForms.DatabaseSchemaView.DatabaseSchemaView
     Friend WithEvents EditPredefinedConditionsToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -1,28 +1,28 @@
-﻿Namespace Common
-	Partial Public Class CreateReportForm
-		''' <summary>
-		''' Required designer variable.
-		''' </summary>
-		Private components As System.ComponentModel.IContainer = Nothing
+Namespace Common
+    Partial Public Class CreateReportForm
+        ''' <summary>
+        ''' Required designer variable.
+        ''' </summary>
+        Private components As System.ComponentModel.IContainer = Nothing
 
-		''' <summary>
-		''' Clean up any resources being used.
-		''' </summary>
-		''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		Protected Overrides Sub Dispose(disposing As Boolean)
-			If disposing AndAlso (components IsNot Nothing) Then
-				components.Dispose()
-			End If
-			MyBase.Dispose(disposing)
-		End Sub
+        ''' <summary>
+        ''' Clean up any resources being used.
+        ''' </summary>
+        ''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        Protected Overrides Sub Dispose(disposing As Boolean)
+            If disposing AndAlso (components IsNot Nothing) Then
+                components.Dispose()
+            End If
+            MyBase.Dispose(disposing)
+        End Sub
 
-		#Region "Windows Form Designer generated code"
+        #Region "Windows Form Designer generated code"
 
-		''' <summary>
-		''' Required method for Designer support - do not modify
-		''' the contents of this method with the code editor.
-		''' </summary>
-		Private Sub InitializeComponent()
+        ''' <summary>
+        ''' Required method for Designer support - do not modify
+        ''' the contents of this method with the code editor.
+        ''' </summary>
+        Private Sub InitializeComponent()
         Me.label1 = New System.Windows.Forms.Label()
         Me.rbActiveReport = New System.Windows.Forms.RadioButton()
         Me.rbStimulsoft = New System.Windows.Forms.RadioButton()
@@ -145,14 +145,14 @@
 
 End Sub
 
-		#End Region
+        #End Region
 
-		Private label1 As System.Windows.Forms.Label
-		Private WithEvents rbActiveReport As System.Windows.Forms.RadioButton
-		Private WithEvents rbStimulsoft As System.Windows.Forms.RadioButton
-		Private WithEvents rbFastReport As System.Windows.Forms.RadioButton
-		Private tableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
-		Private button1 As System.Windows.Forms.Button
-		Private button2 As System.Windows.Forms.Button
-	End Class
+        Private label1 As System.Windows.Forms.Label
+        Private WithEvents rbActiveReport As System.Windows.Forms.RadioButton
+        Private WithEvents rbStimulsoft As System.Windows.Forms.RadioButton
+        Private WithEvents rbFastReport As System.Windows.Forms.RadioButton
+        Private tableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+        Private button1 As System.Windows.Forms.Button
+        Private button2 As System.Windows.Forms.Button
+    End Class
 End Namespace

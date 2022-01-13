@@ -1,7 +1,7 @@
 ''*******************************************************************''
 ''       Active Query Builder Component Suite                        ''
 ''                                                                   ''
-''       Copyright © 2006-2021 Active Database Software              ''
+''       Copyright © 2006-2022 Active Database Software              ''
 ''       ALL RIGHTS RESERVED                                         ''
 ''                                                                   ''
 ''       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            ''
@@ -63,7 +63,11 @@ Public Class Misc
         GetType(OLEDBConnectionDescriptor),
         GetType(SQLiteConnectionDescriptor),
         GetType(FirebirdConnectionDescriptor),
-        GetType(SybaseConnectionDescriptor)
+        GetType(VistaDB5ConnectionDescriptor),
+        GetType(DB2ConnectionDescriptor),
+        GetType(AdvantageConnectionDescriptor),
+        GetType(SybaseConnectionDescriptor),
+        GetType(InformixConnectionDescriptor)
     }
 
     Public Shared ReadOnly ConnectionDescriptorNames As List(Of String) = New List(Of String) From {
@@ -82,8 +86,7 @@ Public Class Misc
         "DB2",
         "Advantage",
         "Sybase",
-        "Informix",
-        "MSSQLCE"
+        "Informix"
     }
 End Class
 
@@ -104,7 +107,6 @@ Public Enum ConnectionTypes
     Advantage
     Sybase
     Informix
-    MSSQLCE
 End Enum
 
 <Serializable>
@@ -317,10 +319,16 @@ Public Class ConnectionInfo
                     Return
                 Case ConnectionTypes.Advantage
                     ConnectionDescriptor = New AdvantageConnectionDescriptor()
-                    Return
                 Case ConnectionTypes.Sybase
                     ConnectionDescriptor = New SybaseConnectionDescriptor()
-                    Return
+                Case ConnectionTypes.VistaDB5
+                    ConnectionDescriptor = New VistaDB5ConnectionDescriptor()
+                Case ConnectionTypes.DB2
+                    ConnectionDescriptor = New DB2ConnectionDescriptor()
+                Case ConnectionTypes.Informix
+                    ConnectionDescriptor = New InformixConnectionDescriptor()
+                Case Else
+                    Throw New ArgumentOutOfRangeException()
             End Select
 
         Catch
@@ -372,11 +380,24 @@ Public Class ConnectionInfo
             Return ConnectionTypes.SQLite
         End If
 
-        If (descriptorType = GetType(AdvantageConnectionDescriptor)) Then
+        If descriptorType = GetType(AdvantageConnectionDescriptor) Then
             Return ConnectionTypes.Advantage
         End If
-        If (descriptorType = GetType(SybaseConnectionDescriptor)) Then
+
+        If descriptorType = GetType(SybaseConnectionDescriptor) Then
             Return ConnectionTypes.Sybase
+        End If
+
+        If descriptorType = GetType(VistaDB5ConnectionDescriptor) Then
+            Return ConnectionTypes.VistaDB5
+        End If
+
+        If descriptorType = GetType(DB2ConnectionDescriptor) Then
+            Return ConnectionTypes.DB2
+        End If
+
+        If descriptorType = GetType(InformixConnectionDescriptor) Then
+            Return ConnectionTypes.Informix
         End If
 
         Return ConnectionTypes.MSSQL

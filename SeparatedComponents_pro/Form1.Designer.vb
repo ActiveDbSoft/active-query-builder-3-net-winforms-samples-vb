@@ -88,19 +88,19 @@ Partial Public Class Form1
         ' 
         Me.refreshMetadataMenuItem.Index = 0
         Me.refreshMetadataMenuItem.Text = "Refresh Metadata"
-'			Me.refreshMetadataMenuItem.Click += New System.EventHandler(Me.refreshMetadataMenuItem_Click)
+'            Me.refreshMetadataMenuItem.Click += New System.EventHandler(Me.refreshMetadataMenuItem_Click)
         ' 
         ' editMetadataMenuItem
         ' 
         Me.editMetadataMenuItem.Index = 1
         Me.editMetadataMenuItem.Text = "Edit Metadata..."
-'			Me.editMetadataMenuItem.Click += New System.EventHandler(Me.editMetadataMenuItem_Click)
+'            Me.editMetadataMenuItem.Click += New System.EventHandler(Me.editMetadataMenuItem_Click)
         ' 
         ' clearMetadataMenuItem
         ' 
         Me.clearMetadataMenuItem.Index = 2
         Me.clearMetadataMenuItem.Text = "Clear Metadata"
-'			Me.clearMetadataMenuItem.Click += New System.EventHandler(Me.clearMetadataMenuItem_Click)
+'            Me.clearMetadataMenuItem.Click += New System.EventHandler(Me.clearMetadataMenuItem_Click)
         ' 
         ' menuItem4
         ' 
@@ -111,31 +111,31 @@ Partial Public Class Form1
         ' 
         Me.loadMetadataFromXMLMenuItem.Index = 4
         Me.loadMetadataFromXMLMenuItem.Text = "Load Metadata from XML..."
-'			Me.loadMetadataFromXMLMenuItem.Click += New System.EventHandler(Me.loadMetadataFromXMLMenuItem_Click)
+'            Me.loadMetadataFromXMLMenuItem.Click += New System.EventHandler(Me.loadMetadataFromXMLMenuItem_Click)
         ' 
         ' saveMetadataToXMLMenuItem
         ' 
         Me.saveMetadataToXMLMenuItem.Index = 5
         Me.saveMetadataToXMLMenuItem.Text = "Save Metadata to XML..."
-'			Me.saveMetadataToXMLMenuItem.Click += New System.EventHandler(Me.saveMetadataToXMLMenuItem_Click)
+'            Me.saveMetadataToXMLMenuItem.Click += New System.EventHandler(Me.saveMetadataToXMLMenuItem_Click)
         ' 
         ' queryStatisticsMenuItem
         ' 
         Me.queryStatisticsMenuItem.Index = 1
         Me.queryStatisticsMenuItem.Text = "Query Statistics..."
-'			Me.queryStatisticsMenuItem.Click += New System.EventHandler(Me.queryStatisticsMenuItem_Click)
+'            Me.queryStatisticsMenuItem.Click += New System.EventHandler(Me.queryStatisticsMenuItem_Click)
         ' 
         ' aboutMenuItem
         ' 
         Me.aboutMenuItem.Index = 2
         Me.aboutMenuItem.Text = "About..."
-'			Me.aboutMenuItem.Click += New System.EventHandler(Me.aboutMenuItem_Click)
+'            Me.aboutMenuItem.Click += New System.EventHandler(Me.aboutMenuItem_Click)
         ' 
         ' sqlQuery1
         ' 
         Me.sqlQuery1.BehaviorOptions = behaviorOptions1
         Me.sqlQuery1.SQLContext = Me.sqlContext1
-'			Me.sqlQuery1.SQLUpdated += New System.EventHandler(Me.sqlQuery_SQLUpdated)
+'            Me.sqlQuery1.SQLUpdated += New System.EventHandler(Me.sqlQuery_SQLUpdated)
         ' 
         ' sqlContext1
         ' 
@@ -269,7 +269,7 @@ Partial Public Class Form1
         Me.sqlTextEditor1.SqlOptions.KeywordColor = Color.LightSkyBlue
         Me.sqlTextEditor1.SqlOptions.SuggestionWindowSize = New Size(200, 200)
         Me.sqlTextEditor1.TabIndex = 2
-        '			Me.sqlTextEditor1.Validating += New System.ComponentModel.CancelEventHandler(Me.sqlTextEditor1_Validating)
+        '            Me.sqlTextEditor1.Validating += New System.ComponentModel.CancelEventHandler(Me.sqlTextEditor1_Validating)
         ' 
         ' databaseSchemaView1
         ' 
@@ -301,8 +301,8 @@ Partial Public Class Form1
         Me.errorBox1.Padding = New Padding(5)
         Me.errorBox1.Size = New Size(315, 61)
         Me.errorBox1.TabIndex = 4
-'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPositionEvent)
-'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidTextEvent)
+'            Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPositionEvent)
+'            Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidTextEvent)
         ' 
         ' Form1
         ' 

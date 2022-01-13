@@ -75,7 +75,7 @@ Partial Public Class Form1
         Me.tabControl1.SelectedIndex = 0
         Me.tabControl1.Size = New Size(793, 506)
         Me.tabControl1.TabIndex = 0
-'			Me.tabControl1.Selected += New System.Windows.Forms.TabControlEventHandler(Me.tabControl1_Selected)
+'            Me.tabControl1.Selected += New System.Windows.Forms.TabControlEventHandler(Me.tabControl1_Selected)
         ' 
         ' tabPageSQL
         ' 
@@ -183,7 +183,7 @@ Partial Public Class Form1
         Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.queryBuilder1.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.queryBuilder1.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
+'            Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
         ' 
         ' sybaseMetadataProvider1
         ' 
@@ -204,7 +204,7 @@ Partial Public Class Form1
         Me.textBox1.ScrollBars = ScrollBars.Both
         Me.textBox1.Size = New Size(779, 106)
         Me.textBox1.TabIndex = 0
-'			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
+'            Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
         ' 
         ' tabPageData
         ' 
@@ -258,7 +258,7 @@ Partial Public Class Form1
         Me.connectMetadataToolStripMenuItem.Name = "connectMetadataToolStripMenuItem"
         Me.connectMetadataToolStripMenuItem.Size = New Size(73, 20)
         Me.connectMetadataToolStripMenuItem.Text = "Connect..."
-'			Me.connectMetadataToolStripMenuItem.Click += New System.EventHandler(Me.connectMetadataToolStripMenuItem_Click)
+'            Me.connectMetadataToolStripMenuItem.Click += New System.EventHandler(Me.connectMetadataToolStripMenuItem_Click)
         ' 
         ' metadataToolStripMenuItem
         ' 
@@ -272,21 +272,21 @@ Partial Public Class Form1
         Me.refreshMetadataToolStripMenuItem.Name = "refreshMetadataToolStripMenuItem"
         Me.refreshMetadataToolStripMenuItem.Size = New Size(166, 22)
         Me.refreshMetadataToolStripMenuItem.Text = "Refresh Metadata"
-'			Me.refreshMetadataToolStripMenuItem.Click += New System.EventHandler(Me.refreshMetadataToolStripMenuItem_Click)
+'            Me.refreshMetadataToolStripMenuItem.Click += New System.EventHandler(Me.refreshMetadataToolStripMenuItem_Click)
         ' 
         ' editMetadataToolStripMenuItem
         ' 
         Me.editMetadataToolStripMenuItem.Name = "editMetadataToolStripMenuItem"
         Me.editMetadataToolStripMenuItem.Size = New Size(166, 22)
         Me.editMetadataToolStripMenuItem.Text = "Edit Metadata..."
-'			Me.editMetadataToolStripMenuItem.Click += New System.EventHandler(Me.editMetadataToolStripMenuItem_Click)
+'            Me.editMetadataToolStripMenuItem.Click += New System.EventHandler(Me.editMetadataToolStripMenuItem_Click)
         ' 
         ' clearMetadataToolStripMenuItem
         ' 
         Me.clearMetadataToolStripMenuItem.Name = "clearMetadataToolStripMenuItem"
         Me.clearMetadataToolStripMenuItem.Size = New Size(166, 22)
         Me.clearMetadataToolStripMenuItem.Text = "Clear Metadata"
-'			Me.clearMetadataToolStripMenuItem.Click += New System.EventHandler(Me.clearMetadataToolStripMenuItem_Click)
+'            Me.clearMetadataToolStripMenuItem.Click += New System.EventHandler(Me.clearMetadataToolStripMenuItem_Click)
         ' 
         ' toolStripSeparator1
         ' 
@@ -298,28 +298,28 @@ Partial Public Class Form1
         Me.loadFromXMLToolStripMenuItem.Name = "loadFromXMLToolStripMenuItem"
         Me.loadFromXMLToolStripMenuItem.Size = New Size(166, 22)
         Me.loadFromXMLToolStripMenuItem.Text = "Load from XML..."
-'			Me.loadFromXMLToolStripMenuItem.Click += New System.EventHandler(Me.loadFromXMLToolStripMenuItem_Click)
+'            Me.loadFromXMLToolStripMenuItem.Click += New System.EventHandler(Me.loadFromXMLToolStripMenuItem_Click)
         ' 
         ' saveToXMLToolStripMenuItem
         ' 
         Me.saveToXMLToolStripMenuItem.Name = "saveToXMLToolStripMenuItem"
         Me.saveToXMLToolStripMenuItem.Size = New Size(166, 22)
         Me.saveToXMLToolStripMenuItem.Text = "Save to XML..."
-'			Me.saveToXMLToolStripMenuItem.Click += New System.EventHandler(Me.saveToXMLToolStripMenuItem_Click)
+'            Me.saveToXMLToolStripMenuItem.Click += New System.EventHandler(Me.saveToXMLToolStripMenuItem_Click)
         ' 
         ' queryStatisticsMenuItem
         ' 
         Me.queryStatisticsMenuItem.Name = "queryStatisticsMenuItem"
         Me.queryStatisticsMenuItem.Size = New Size(109, 20)
         Me.queryStatisticsMenuItem.Text = "Query Statistics..."
-'			Me.queryStatisticsMenuItem.Click += New System.EventHandler(Me.queryStatisticsMenuItem_Click)
+'            Me.queryStatisticsMenuItem.Click += New System.EventHandler(Me.queryStatisticsMenuItem_Click)
         ' 
         ' aboutToolStripMenuItem
         ' 
         Me.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem"
         Me.aboutToolStripMenuItem.Size = New Size(61, 20)
         Me.aboutToolStripMenuItem.Text = "About..."
-'			Me.aboutToolStripMenuItem.Click += New System.EventHandler(Me.aboutToolStripMenuItem_Click)
+'            Me.aboutToolStripMenuItem.Click += New System.EventHandler(Me.aboutToolStripMenuItem_Click)
         ' 
         ' openMetadataFileDialog
         ' 
@@ -351,8 +351,8 @@ Partial Public Class Form1
         Me.errorBox1.Size = New Size(293, 61)
         Me.errorBox1.TabIndex = 1
         Me.errorBox1.Visible = False
-'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
-'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
+'            Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
+'            Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
         ' 
         ' Form1
         ' 

@@ -63,7 +63,7 @@ Partial Public Class Form1
         Me.comboBoxSyntax.Name = "comboBoxSyntax"
         Me.comboBoxSyntax.Size = New Size(306, 21)
         Me.comboBoxSyntax.TabIndex = 3
-'			Me.comboBoxSyntax.SelectedIndexChanged += New System.EventHandler(Me.comboBoxSyntax_SelectedIndexChanged)
+'            Me.comboBoxSyntax.SelectedIndexChanged += New System.EventHandler(Me.comboBoxSyntax_SelectedIndexChanged)
         ' 
         ' label2
         ' 
@@ -97,7 +97,7 @@ Partial Public Class Form1
         Me.buttonQueryStatistics.TabIndex = 1
         Me.buttonQueryStatistics.Text = "Query statistics"
         Me.buttonQueryStatistics.UseVisualStyleBackColor = True
-'			Me.buttonQueryStatistics.Click += New System.EventHandler(Me.buttonQueryStatistics_Click)
+'            Me.buttonQueryStatistics.Click += New System.EventHandler(Me.buttonQueryStatistics_Click)
         ' 
         ' label4
         ' 
@@ -119,7 +119,7 @@ Partial Public Class Form1
         Me.comboBoxExamples.Name = "comboBoxExamples"
         Me.comboBoxExamples.Size = New Size(306, 21)
         Me.comboBoxExamples.TabIndex = 3
-'			Me.comboBoxExamples.SelectedIndexChanged += New System.EventHandler(Me.comboBoxExamples_SelectedIndexChanged)
+'            Me.comboBoxExamples.SelectedIndexChanged += New System.EventHandler(Me.comboBoxExamples_SelectedIndexChanged)
         ' 
         ' Form1
         ' 
@@ -136,7 +136,7 @@ Partial Public Class Form1
         Me.Controls.Add(Me.SqlBox)
         Me.Name = "Form1"
         Me.Text = "Query Creation Demo"
-'			Me.Load += New System.EventHandler(Me.Form1_Load)
+'            Me.Load += New System.EventHandler(Me.Form1_Load)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

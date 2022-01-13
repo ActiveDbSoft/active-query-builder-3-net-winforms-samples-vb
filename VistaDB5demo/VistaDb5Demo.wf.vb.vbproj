@@ -6,7 +6,7 @@
     <Description>Active Query Builder 3 VistaDb5 Demo</Description>
     <RootNamespace></RootNamespace>
 
-    <TargetFrameworks>net462</TargetFrameworks>
+    <TargetFrameworks>$(DefaultDemosNetFramework)</TargetFrameworks>
     <OutputType>WinExe</OutputType>
   </PropertyGroup>
 

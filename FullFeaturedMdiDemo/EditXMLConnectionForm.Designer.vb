@@ -1,4 +1,4 @@
-﻿
+
 
 
 Partial Public Class EditXMLConnectionForm
@@ -76,7 +76,7 @@ Partial Public Class EditXMLConnectionForm
         Me.cbSyntax.Name = "cbSyntax"
         Me.cbSyntax.Size = New Size(378, 21)
         Me.cbSyntax.TabIndex = 4
-'			Me.cbSyntax.SelectedIndexChanged += New System.EventHandler(Me.cbSyntax_SelectedIndexChanged)
+'            Me.cbSyntax.SelectedIndexChanged += New System.EventHandler(Me.cbSyntax_SelectedIndexChanged)
         ' 
         ' label2
         ' 
@@ -151,7 +151,7 @@ Partial Public Class EditXMLConnectionForm
         Me.btnOpenDialog.TabIndex = 17
         Me.btnOpenDialog.Text = "..."
         Me.btnOpenDialog.UseVisualStyleBackColor = True
-'			Me.btnOpenDialog.Click += New System.EventHandler(Me.btnOpenDialog_Click)
+'            Me.btnOpenDialog.Click += New System.EventHandler(Me.btnOpenDialog_Click)
         ' 
         ' tbXmlPath
         ' 
@@ -159,7 +159,7 @@ Partial Public Class EditXMLConnectionForm
         Me.tbXmlPath.Name = "tbXmlPath"
         Me.tbXmlPath.Size = New Size(350, 20)
         Me.tbXmlPath.TabIndex = 16
-'			Me.tbXmlPath.TextChanged += New System.EventHandler(Me.tbXmlPath_TextChanged)
+'            Me.tbXmlPath.TextChanged += New System.EventHandler(Me.tbXmlPath_TextChanged)
         ' 
         ' label4
         ' 

@@ -36,8 +36,8 @@ Partial Public Class CustomCheckBoxColumnDemoFrame
         Me.queryBuilder1.Size = New Size(640, 340)
         Me.queryBuilder1.SyntaxProvider = Nothing
         Me.queryBuilder1.TabIndex = 2
-'			Me.queryBuilder1.QueryElementControlCreated += New ActiveQueryBuilder.View.QueryView.QueryElementControlCreatedEventHandler(Me.queryBuilder1_QueryElementControlCreated)
-'			Me.queryBuilder1.QueryElementControlDestroying += New ActiveQueryBuilder.View.QueryView.QueryElementControlDestroyingEventHandler(Me.queryBuilder1_QueryElementControlDestroying)
+'            Me.queryBuilder1.QueryElementControlCreated += New ActiveQueryBuilder.View.QueryView.QueryElementControlCreatedEventHandler(Me.queryBuilder1_QueryElementControlCreated)
+'            Me.queryBuilder1.QueryElementControlDestroying += New ActiveQueryBuilder.View.QueryView.QueryElementControlDestroyingEventHandler(Me.queryBuilder1_QueryElementControlDestroying)
         ' 
         ' CustomCheckBoxColumnDemoFrame
         ' 

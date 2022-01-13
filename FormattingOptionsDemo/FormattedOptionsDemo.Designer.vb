@@ -1,4 +1,4 @@
-﻿
+
 Imports OptionsControls
 
 Partial Public Class FormattedOptionsDemo
@@ -63,7 +63,7 @@ Partial Public Class FormattedOptionsDemo
         Me.buttonSave.TabIndex = 1
         Me.buttonSave.Text = "Save options"
         Me.buttonSave.UseVisualStyleBackColor = True
-'			Me.buttonSave.Click += New System.EventHandler(Me.buttonSave_Click)
+'            Me.buttonSave.Click += New System.EventHandler(Me.buttonSave_Click)
         ' 
         ' cmBxCurrentScheme
         ' 
@@ -74,7 +74,7 @@ Partial Public Class FormattedOptionsDemo
         Me.cmBxCurrentScheme.Size = New Size(180, 21)
         Me.cmBxCurrentScheme.TabIndex = 3
         Me.cmBxCurrentScheme.Text = "Default"
-'			Me.cmBxCurrentScheme.SelectedIndexChanged += New System.EventHandler(Me.cmBxCurrentScheme_SelectedIndexChanged)
+'            Me.cmBxCurrentScheme.SelectedIndexChanged += New System.EventHandler(Me.cmBxCurrentScheme_SelectedIndexChanged)
         ' 
         ' buttonDelete
         ' 
@@ -84,7 +84,7 @@ Partial Public Class FormattedOptionsDemo
         Me.buttonDelete.TabIndex = 5
         Me.buttonDelete.Text = "Delete"
         Me.buttonDelete.UseVisualStyleBackColor = True
-'			Me.buttonDelete.Click += New System.EventHandler(Me.buttonDelete_Click)
+'            Me.buttonDelete.Click += New System.EventHandler(Me.buttonDelete_Click)
         ' 
         ' label1
         ' 
@@ -116,7 +116,7 @@ Partial Public Class FormattedOptionsDemo
         Me.Controls.Add(Me.buttonSave)
         Me.Name = "FormattedOptionsDemo"
         Me.Text = "FormattedOptions"
-'			Me.Load += New System.EventHandler(Me.Form1_Load)
+'            Me.Load += New System.EventHandler(Me.Form1_Load)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

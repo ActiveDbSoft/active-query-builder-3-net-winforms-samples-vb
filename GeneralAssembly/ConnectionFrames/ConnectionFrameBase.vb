@@ -1,7 +1,7 @@
 ''*******************************************************************''
 ''       Active Query Builder Component Suite                        ''
 ''                                                                   ''
-''       Copyright © 2006-2021 Active Database Software              ''
+''       Copyright © 2006-2022 Active Database Software              ''
 ''       ALL RIGHTS RESERVED                                         ''
 ''                                                                   ''
 ''       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            ''
@@ -9,18 +9,18 @@
 ''*******************************************************************''
 
 Namespace ConnectionFrames
-	Public Class ConnectionFrameBase
-		Inherits UserControl
-		Public Overridable Property ConnectionString() As String
-			Get
-				Return Nothing
-			End Get
-			Set(value As String)
-			End Set
-		End Property
+    Public Class ConnectionFrameBase
+        Inherits UserControl
+        Public Overridable Property ConnectionString() As String
+            Get
+                Return Nothing
+            End Get
+            Set(value As String)
+            End Set
+        End Property
 
-		Public Overridable Function TestConnection() As Boolean
-			Return False
-		End Function
-	End Class
+        Public Overridable Function TestConnection() As Boolean
+            Return False
+        End Function
+    End Class
 End Namespace

@@ -1,7 +1,7 @@
 ''*******************************************************************''
 ''       Active Query Builder Component Suite                        ''
 ''                                                                   ''
-''       Copyright © 2006-2021 Active Database Software              ''
+''       Copyright © 2006-2022 Active Database Software              ''
 ''       ALL RIGHTS RESERVED                                         ''
 ''                                                                   ''
 ''       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            ''
@@ -9,86 +9,86 @@
 ''*******************************************************************''
 
 Namespace ConnectionFrames
-	Partial Public Class ConnectionEditForm
-		Inherits Form
-		Private ReadOnly _connectionInfo As ConnectionInfo
-		Private _currentConnectionFrame As ConnectionFrameBase
+    Partial Public Class ConnectionEditForm
+        Inherits Form
+        Private ReadOnly _connectionInfo As ConnectionInfo
+        Private _currentConnectionFrame As ConnectionFrameBase
         Private _isLockUpdate As Boolean
 
         Public Sub New(connectionInfo As ConnectionInfo)
-			InitializeComponent()
+            InitializeComponent()
 
-			Debug.Assert(connectionInfo IsNot Nothing)
+            Debug.Assert(connectionInfo IsNot Nothing)
 
-			_connectionInfo = connectionInfo
-			tbConnectionName.Text = connectionInfo.Name
+            _connectionInfo = connectionInfo
+            tbConnectionName.Text = connectionInfo.Name
 
-			If Not String.IsNullOrEmpty(connectionInfo.ConnectionString) Then
-				Text = "Edit Connection"
+            If Not String.IsNullOrEmpty(connectionInfo.ConnectionString) Then
+                Text = "Edit Connection"
 
-				If Not connectionInfo.IsXmlFile Then
-					rbMSSQL.Enabled = (connectionInfo.Type = ConnectionTypes.MSSQL)
-					rbMSAccess.Enabled = (connectionInfo.Type = ConnectionTypes.MSAccess)
-					rbOracle.Enabled = (connectionInfo.Type = ConnectionTypes.Oracle)
-					rbMySQL.Enabled = (connectionInfo.Type = ConnectionTypes.MySQL)
-					rbPostrgeSQL.Enabled = (connectionInfo.Type = ConnectionTypes.PostgreSQL)
-					rbOLEDB.Enabled = (connectionInfo.Type = ConnectionTypes.OLEDB)
-					rbODBC.Enabled = (connectionInfo.Type = ConnectionTypes.ODBC)
-				End If
-			End If
+                If Not connectionInfo.IsXmlFile Then
+                    rbMSSQL.Enabled = (connectionInfo.Type = ConnectionTypes.MSSQL)
+                    rbMSAccess.Enabled = (connectionInfo.Type = ConnectionTypes.MSAccess)
+                    rbOracle.Enabled = (connectionInfo.Type = ConnectionTypes.Oracle)
+                    rbMySQL.Enabled = (connectionInfo.Type = ConnectionTypes.MySQL)
+                    rbPostrgeSQL.Enabled = (connectionInfo.Type = ConnectionTypes.PostgreSQL)
+                    rbOLEDB.Enabled = (connectionInfo.Type = ConnectionTypes.OLEDB)
+                    rbODBC.Enabled = (connectionInfo.Type = ConnectionTypes.ODBC)
+                End If
+            End If
 
-			If connectionInfo.IsXmlFile Then
-				rbOLEDB.Enabled = False
-				rbODBC.Enabled = False
-			End If
+            If connectionInfo.IsXmlFile Then
+                rbOLEDB.Enabled = False
+                rbODBC.Enabled = False
+            End If
 
-			rbMSSQL.Checked = (connectionInfo.Type = ConnectionTypes.MSSQL)
-			rbMSAccess.Checked = (connectionInfo.Type = ConnectionTypes.MSAccess)
-			rbOracle.Checked = (connectionInfo.Type = ConnectionTypes.Oracle)
-			rbMySQL.Checked = (connectionInfo.Type = ConnectionTypes.MySQL)
-			rbPostrgeSQL.Checked = (connectionInfo.Type = ConnectionTypes.PostgreSQL)
-			rbOLEDB.Checked = (connectionInfo.Type = ConnectionTypes.OLEDB)
-			rbODBC.Checked = (connectionInfo.Type = ConnectionTypes.ODBC)
+            rbMSSQL.Checked = (connectionInfo.Type = ConnectionTypes.MSSQL)
+            rbMSAccess.Checked = (connectionInfo.Type = ConnectionTypes.MSAccess)
+            rbOracle.Checked = (connectionInfo.Type = ConnectionTypes.Oracle)
+            rbMySQL.Checked = (connectionInfo.Type = ConnectionTypes.MySQL)
+            rbPostrgeSQL.Checked = (connectionInfo.Type = ConnectionTypes.PostgreSQL)
+            rbOLEDB.Checked = (connectionInfo.Type = ConnectionTypes.OLEDB)
+            rbODBC.Checked = (connectionInfo.Type = ConnectionTypes.ODBC)
 
-			SetActiveConnectionTypeFrame()
+            SetActiveConnectionTypeFrame()
 
-			AddHandler rbMSSQL.CheckedChanged, AddressOf ConnectionTypeChanged
-			AddHandler rbMSAccess.CheckedChanged, AddressOf ConnectionTypeChanged
-			AddHandler rbOracle.CheckedChanged, AddressOf ConnectionTypeChanged
-			AddHandler rbMySQL.CheckedChanged, AddressOf ConnectionTypeChanged
-			AddHandler rbPostrgeSQL.CheckedChanged, AddressOf ConnectionTypeChanged
-			AddHandler rbOLEDB.CheckedChanged, AddressOf ConnectionTypeChanged
-			AddHandler rbODBC.CheckedChanged, AddressOf ConnectionTypeChanged
-			FillSyntax()
-			AddHandler Application.Idle, AddressOf Application_Idle
-		End Sub
+            AddHandler rbMSSQL.CheckedChanged, AddressOf ConnectionTypeChanged
+            AddHandler rbMSAccess.CheckedChanged, AddressOf ConnectionTypeChanged
+            AddHandler rbOracle.CheckedChanged, AddressOf ConnectionTypeChanged
+            AddHandler rbMySQL.CheckedChanged, AddressOf ConnectionTypeChanged
+            AddHandler rbPostrgeSQL.CheckedChanged, AddressOf ConnectionTypeChanged
+            AddHandler rbOLEDB.CheckedChanged, AddressOf ConnectionTypeChanged
+            AddHandler rbODBC.CheckedChanged, AddressOf ConnectionTypeChanged
+            FillSyntax()
+            AddHandler Application.Idle, AddressOf Application_Idle
+        End Sub
 
-		Private Sub SetActiveConnectionTypeFrame()
-			If _currentConnectionFrame IsNot Nothing Then
-				_currentConnectionFrame.Dispose()
-				_currentConnectionFrame = Nothing
-			End If
+        Private Sub SetActiveConnectionTypeFrame()
+            If _currentConnectionFrame IsNot Nothing Then
+                _currentConnectionFrame.Dispose()
+                _currentConnectionFrame = Nothing
+            End If
 
-			If Not _connectionInfo.IsXmlFile Then
-				Select Case _connectionInfo.Type
-					Case ConnectionTypes.MSSQL
-						_currentConnectionFrame = New MSSQLConnectionFrame(_connectionInfo.ConnectionString)
-					Case ConnectionTypes.MSAccess
-						_currentConnectionFrame = New MSAccessConnectionFrame(_connectionInfo.ConnectionString)
-					Case ConnectionTypes.Oracle
-						_currentConnectionFrame = New OracleConnectionFrame(_connectionInfo.ConnectionString)
-					Case ConnectionTypes.MySQL
-						_currentConnectionFrame = New MySQLConnectionFrame(_connectionInfo.ConnectionString)
-					Case ConnectionTypes.PostgreSQL
-						_currentConnectionFrame = New PostgreSQLConnectionFrame(_connectionInfo.ConnectionString)
-					Case ConnectionTypes.OLEDB
-						_currentConnectionFrame = New OLEDBConnectionFrame(_connectionInfo.ConnectionString)
-					Case ConnectionTypes.ODBC
-						_currentConnectionFrame = New ODBCConnectionFrame(_connectionInfo.ConnectionString)
-				End Select
-			Else
-				_currentConnectionFrame = New XmlFileFrame(_connectionInfo.ConnectionString)
-			End If
+            If Not _connectionInfo.IsXmlFile Then
+                Select Case _connectionInfo.Type
+                    Case ConnectionTypes.MSSQL
+                        _currentConnectionFrame = New MSSQLConnectionFrame(_connectionInfo.ConnectionString)
+                    Case ConnectionTypes.MSAccess
+                        _currentConnectionFrame = New MSAccessConnectionFrame(_connectionInfo.ConnectionString)
+                    Case ConnectionTypes.Oracle
+                        _currentConnectionFrame = New OracleConnectionFrame(_connectionInfo.ConnectionString)
+                    Case ConnectionTypes.MySQL
+                        _currentConnectionFrame = New MySQLConnectionFrame(_connectionInfo.ConnectionString)
+                    Case ConnectionTypes.PostgreSQL
+                        _currentConnectionFrame = New PostgreSQLConnectionFrame(_connectionInfo.ConnectionString)
+                    Case ConnectionTypes.OLEDB
+                        _currentConnectionFrame = New OLEDBConnectionFrame(_connectionInfo.ConnectionString)
+                    Case ConnectionTypes.ODBC
+                        _currentConnectionFrame = New ODBCConnectionFrame(_connectionInfo.ConnectionString)
+                End Select
+            Else
+                _currentConnectionFrame = New XmlFileFrame(_connectionInfo.ConnectionString)
+            End If
 
             If _currentConnectionFrame IsNot Nothing Then
                 _currentConnectionFrame.Dock = DockStyle.Fill
@@ -98,7 +98,7 @@ Namespace ConnectionFrames
             BoxSyntaxProvider.Enabled = _connectionInfo.Type = ConnectionTypes.ODBC Or _connectionInfo.Type = ConnectionTypes.OLEDB
         End Sub
 
-		Private Sub ConnectionTypeChanged(sender As Object, e As EventArgs)
+        Private Sub ConnectionTypeChanged(sender As Object, e As EventArgs)
             If (DirectCast(sender, RadioButton)).Checked <> True Then
                 Return
             End If
@@ -151,12 +151,12 @@ Namespace ConnectionFrames
             FillSyntax()
         End Sub
 
-		Private Sub Application_Idle(sender As Object, e As EventArgs)
-			btnOk.Enabled = (tbConnectionName.Text.Length > 0)
-		End Sub
+        Private Sub Application_Idle(sender As Object, e As EventArgs)
+            btnOk.Enabled = (tbConnectionName.Text.Length > 0)
+        End Sub
 
-		Private Sub ConnectionEditForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-			If DialogResult = DialogResult.OK Then
+        Private Sub ConnectionEditForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+            If DialogResult = DialogResult.OK Then
                 If _currentConnectionFrame IsNot Nothing AndAlso _currentConnectionFrame.TestConnection() Then
                     _connectionInfo.Name = tbConnectionName.Text
                     _connectionInfo.ConnectionString = _currentConnectionFrame.ConnectionString
@@ -173,9 +173,9 @@ Namespace ConnectionFrames
                     e.Cancel = False
                 Else
                     e.Cancel = True
-				End If
-			End If
-		End Sub
+                End If
+            End If
+        End Sub
 
         Private Sub FillSyntax()
             _isLockUpdate = True

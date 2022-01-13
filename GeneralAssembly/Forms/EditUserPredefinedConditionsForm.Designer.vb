@@ -1,4 +1,4 @@
-﻿Namespace Forms
+Namespace Forms
     Partial Public Class EditUserPredefinedConditionForm
         ''' <summary>
         ''' Required designer variable.

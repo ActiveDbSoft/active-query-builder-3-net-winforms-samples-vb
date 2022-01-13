@@ -1,4 +1,4 @@
-﻿Imports ActiveQueryBuilder.View.WinForms.DatabaseSchemaView
+Imports ActiveQueryBuilder.View.WinForms.DatabaseSchemaView
 Imports ActiveQueryBuilder.View.WinForms.QueryView
 
 Partial Public Class ConnectionForm
@@ -93,7 +93,7 @@ Partial Public Class ConnectionForm
         Me.lbMenu.Name = "lbMenu"
         Me.lbMenu.Size = New Size(120, 356)
         Me.lbMenu.TabIndex = 7
-'			Me.lbMenu.SelectedIndexChanged += New System.EventHandler(Me.lbMenu_SelectedIndexChanged)
+'            Me.lbMenu.SelectedIndexChanged += New System.EventHandler(Me.lbMenu_SelectedIndexChanged)
         ' 
         ' tcProperties
         ' 
@@ -146,7 +146,7 @@ Partial Public Class ConnectionForm
         Me.cbLoadFromDefaultDatabase.TabIndex = 0
         Me.cbLoadFromDefaultDatabase.Text = "Load from default database"
         Me.cbLoadFromDefaultDatabase.UseVisualStyleBackColor = True
-'			Me.cbLoadFromDefaultDatabase.CheckedChanged += New System.EventHandler(Me.cbLoadFromDefaultDatabase_CheckedChanged)
+'            Me.cbLoadFromDefaultDatabase.CheckedChanged += New System.EventHandler(Me.cbLoadFromDefaultDatabase_CheckedChanged)
         ' 
         ' pbSyntax
         ' 
@@ -193,7 +193,7 @@ Partial Public Class ConnectionForm
         Me.cbSyntax.Name = "cbSyntax"
         Me.cbSyntax.Size = New Size(271, 21)
         Me.cbSyntax.TabIndex = 4
-'			Me.cbSyntax.SelectedIndexChanged += New System.EventHandler(Me.cbSyntax_SelectedIndexChanged)
+'            Me.cbSyntax.SelectedIndexChanged += New System.EventHandler(Me.cbSyntax_SelectedIndexChanged)
         ' 
         ' label1
         ' 
@@ -214,7 +214,7 @@ Partial Public Class ConnectionForm
         Me.cbConnectionType.Name = "cbConnectionType"
         Me.cbConnectionType.Size = New Size(271, 21)
         Me.cbConnectionType.TabIndex = 2
-'			Me.cbConnectionType.SelectedIndexChanged += New System.EventHandler(Me.cbConnectionType_SelectedIndexChanged)
+'            Me.cbConnectionType.SelectedIndexChanged += New System.EventHandler(Me.cbConnectionType_SelectedIndexChanged)
         ' 
         ' tpFilter
         ' 
@@ -262,8 +262,8 @@ Partial Public Class ConnectionForm
         Me.lvInclude.TabIndex = 6
         Me.lvInclude.UseCompatibleStateImageBehavior = False
         Me.lvInclude.View = View.List
-'			Me.lvInclude.DragDrop += New System.Windows.Forms.DragEventHandler(Me.lbInclude_DragDrop)
-'			Me.lvInclude.DragOver += New System.Windows.Forms.DragEventHandler(Me.lbInclude_DragOver)
+'            Me.lvInclude.DragDrop += New System.Windows.Forms.DragEventHandler(Me.lbInclude_DragDrop)
+'            Me.lvInclude.DragOver += New System.Windows.Forms.DragEventHandler(Me.lbInclude_DragOver)
         ' 
         ' imageList
         ' 
@@ -293,8 +293,8 @@ Partial Public Class ConnectionForm
         Me.lvExclude.TabIndex = 7
         Me.lvExclude.UseCompatibleStateImageBehavior = False
         Me.lvExclude.View = View.List
-'			Me.lvExclude.DragDrop += New System.Windows.Forms.DragEventHandler(Me.lbExclude_DragDrop)
-'			Me.lvExclude.DragOver += New System.Windows.Forms.DragEventHandler(Me.lbExclude_DragOver)
+'            Me.lvExclude.DragDrop += New System.Windows.Forms.DragEventHandler(Me.lbExclude_DragDrop)
+'            Me.lvExclude.DragOver += New System.Windows.Forms.DragEventHandler(Me.lbExclude_DragOver)
         ' 
         ' databaseSchemaView1
         ' 
@@ -309,7 +309,7 @@ Partial Public Class ConnectionForm
         Me.databaseSchemaView1.Size = New Size(177, 331)
         Me.databaseSchemaView1.SQLContext = Nothing
         Me.databaseSchemaView1.TabIndex = 4
-'			Me.databaseSchemaView1.ItemDoubleClick += New ActiveQueryBuilder.View.MetadataStructureView.MetadataStructureItemEventHandler(Me.databaseSchemaView1_ItemDoubleClick)
+'            Me.databaseSchemaView1.ItemDoubleClick += New ActiveQueryBuilder.View.MetadataStructureView.MetadataStructureItemEventHandler(Me.databaseSchemaView1_ItemDoubleClick)
         ' 
         ' panel1
         ' 
@@ -330,7 +330,7 @@ Partial Public Class ConnectionForm
         Me.btnDeleteFilter.TabIndex = 1
         Me.btnDeleteFilter.Text = "Remove"
         Me.btnDeleteFilter.UseVisualStyleBackColor = True
-'			Me.btnDeleteFilter.Click += New System.EventHandler(Me.btnDeleteFilter_Click)
+'            Me.btnDeleteFilter.Click += New System.EventHandler(Me.btnDeleteFilter_Click)
         ' 
         ' btnAddFilter
         ' 
@@ -341,7 +341,7 @@ Partial Public Class ConnectionForm
         Me.btnAddFilter.TabIndex = 0
         Me.btnAddFilter.Text = "Add"
         Me.btnAddFilter.UseVisualStyleBackColor = True
-'			Me.btnAddFilter.Click += New System.EventHandler(Me.btnAddFilter_Click)
+'            Me.btnAddFilter.Click += New System.EventHandler(Me.btnAddFilter_Click)
         ' 
         ' ConnectionForm
         ' 

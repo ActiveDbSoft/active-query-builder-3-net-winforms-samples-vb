@@ -4,9 +4,8 @@
     <AssemblyName>FullFeaturedDemo.wf.vb</AssemblyName>
     <AssemblyTitle>$(AssemblyName)</AssemblyTitle>
     <Description>Active Query Builder 3 FullFeatured Demo</Description>
-    <RootNamespace></RootNamespace>
+    <RootNamespace />
 
-    <TargetFrameworks>net462;netcoreapp3.1</TargetFrameworks>
     <OutputType>WinExe</OutputType>
 
     <ApplicationManifest>app.manifest</ApplicationManifest>

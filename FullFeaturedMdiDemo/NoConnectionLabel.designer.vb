@@ -1,4 +1,4 @@
-﻿Partial Public Class NoConnectionLabel
+Partial Public Class NoConnectionLabel
     ''' <summary> 
     ''' Required designer variable.
     ''' </summary>

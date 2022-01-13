@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class CodeBehindForm
     ''' <summary>
     ''' Required designer variable.
@@ -65,7 +65,7 @@ Partial Public Class CodeBehindForm
         Me.ButtonClose.TabIndex = 1
         Me.ButtonClose.Text = "Close"
         Me.ButtonClose.UseVisualStyleBackColor = True
-'			Me.ButtonClose.Click += New System.EventHandler(Me.ButtonClose_Click)
+'            Me.ButtonClose.Click += New System.EventHandler(Me.ButtonClose_Click)
         ' 
         ' CodeBehindForm
         ' 

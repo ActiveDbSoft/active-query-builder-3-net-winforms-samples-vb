@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class SaveOptionsDialog
     ''' <summary>
     ''' Required designer variable.
@@ -37,7 +37,7 @@ Partial Public Class SaveOptionsDialog
         Me.bSave.TabIndex = 0
         Me.bSave.Text = "Save"
         Me.bSave.UseVisualStyleBackColor = True
-'			Me.bSave.Click += New System.EventHandler(Me.bSave_Click)
+'            Me.bSave.Click += New System.EventHandler(Me.bSave_Click)
         ' 
         ' bCancel
         ' 
@@ -47,7 +47,7 @@ Partial Public Class SaveOptionsDialog
         Me.bCancel.TabIndex = 1
         Me.bCancel.Text = "Cancel"
         Me.bCancel.UseVisualStyleBackColor = True
-'			Me.bCancel.Click += New System.EventHandler(Me.bCancel_Click)
+'            Me.bCancel.Click += New System.EventHandler(Me.bCancel_Click)
         ' 
         ' textBox
         ' 

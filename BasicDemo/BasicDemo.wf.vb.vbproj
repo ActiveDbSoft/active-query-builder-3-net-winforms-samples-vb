@@ -6,8 +6,8 @@
     <Description>Active Query Builder 3 Basic Demo</Description>
     <RootNamespace></RootNamespace>
 
-    <!-- todo: <TargetFrameworks>net462;netcoreapp3.1</TargetFrameworks> -->
-    <TargetFrameworks>net462</TargetFrameworks>
+    <!-- todo: remove -->
+    <TargetFrameworks>$(DefaultDemosNetFramework)</TargetFrameworks>
     <OutputType>WinExe</OutputType>
 
     <ApplicationIcon>App.ico</ApplicationIcon>

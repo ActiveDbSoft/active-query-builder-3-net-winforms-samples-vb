@@ -6,8 +6,11 @@
     <Description>Active Query Builder 3 DB2 Demo</Description>
     <RootNamespace>DB2demo</RootNamespace>
 
-    <TargetFrameworks>net462;netcoreapp3.1</TargetFrameworks>
     <OutputType>WinExe</OutputType>
+
+    <!-- disable warning about DB2 client architecture mismatch -->
+    <!-- MSB3270: There was a mismatch between the processor architecture -->
+    <NoWarn>$(NoWarn);MSB3270</NoWarn>
   </PropertyGroup>
 
   <!-- DB2 client references for net framework -->

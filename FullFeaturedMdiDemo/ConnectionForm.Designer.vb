@@ -74,8 +74,8 @@ Partial Public Class ConnectionForm
         Me.lvConnections.TabIndex = 0
         Me.lvConnections.UseCompatibleStateImageBehavior = False
         Me.lvConnections.View = View.Details
-'			Me.lvConnections.SizeChanged += New System.EventHandler(Me.lvConnections_SizeChanged)
-'			Me.lvConnections.MouseDoubleClick += New System.Windows.Forms.MouseEventHandler(Me.lvConnections_MouseDoubleClick)
+'            Me.lvConnections.SizeChanged += New System.EventHandler(Me.lvConnections_SizeChanged)
+'            Me.lvConnections.MouseDoubleClick += New System.Windows.Forms.MouseEventHandler(Me.lvConnections_MouseDoubleClick)
         ' 
         ' columnHeader1
         ' 
@@ -96,7 +96,7 @@ Partial Public Class ConnectionForm
         Me.btnConfigure.TabIndex = 3
         Me.btnConfigure.Text = "Configure..."
         Me.btnConfigure.UseVisualStyleBackColor = True
-'			Me.btnConfigure.Click += New System.EventHandler(Me.btnConfigure_Click)
+'            Me.btnConfigure.Click += New System.EventHandler(Me.btnConfigure_Click)
         ' 
         ' btnRemove
         ' 
@@ -107,7 +107,7 @@ Partial Public Class ConnectionForm
         Me.btnRemove.TabIndex = 2
         Me.btnRemove.Text = "Remove"
         Me.btnRemove.UseVisualStyleBackColor = True
-'			Me.btnRemove.Click += New System.EventHandler(Me.btnRemove_Click)
+'            Me.btnRemove.Click += New System.EventHandler(Me.btnRemove_Click)
         ' 
         ' btnAdd
         ' 
@@ -118,7 +118,7 @@ Partial Public Class ConnectionForm
         Me.btnAdd.TabIndex = 1
         Me.btnAdd.Text = "Add..."
         Me.btnAdd.UseVisualStyleBackColor = True
-'			Me.btnAdd.Click += New System.EventHandler(Me.btnAdd_Click)
+'            Me.btnAdd.Click += New System.EventHandler(Me.btnAdd_Click)
         ' 
         ' tabPage3
         ' 
@@ -146,8 +146,8 @@ Partial Public Class ConnectionForm
         Me.lvXmlFiles.TabIndex = 0
         Me.lvXmlFiles.UseCompatibleStateImageBehavior = False
         Me.lvXmlFiles.View = View.Details
-'			Me.lvXmlFiles.SizeChanged += New System.EventHandler(Me.lvXmlFiles_SizeChanged)
-'			Me.lvXmlFiles.MouseDoubleClick += New System.Windows.Forms.MouseEventHandler(Me.lvXmlFiles_MouseDoubleClick)
+'            Me.lvXmlFiles.SizeChanged += New System.EventHandler(Me.lvXmlFiles_SizeChanged)
+'            Me.lvXmlFiles.MouseDoubleClick += New System.Windows.Forms.MouseEventHandler(Me.lvXmlFiles_MouseDoubleClick)
         ' 
         ' columnHeader5
         ' 
@@ -168,7 +168,7 @@ Partial Public Class ConnectionForm
         Me.btnConfigureXml.TabIndex = 3
         Me.btnConfigureXml.Text = "Configure..."
         Me.btnConfigureXml.UseVisualStyleBackColor = True
-'			Me.btnConfigureXml.Click += New System.EventHandler(Me.btnConfigureXml_Click)
+'            Me.btnConfigureXml.Click += New System.EventHandler(Me.btnConfigureXml_Click)
         ' 
         ' btnRemoveXml
         ' 
@@ -179,7 +179,7 @@ Partial Public Class ConnectionForm
         Me.btnRemoveXml.TabIndex = 2
         Me.btnRemoveXml.Text = "Remove"
         Me.btnRemoveXml.UseVisualStyleBackColor = True
-'			Me.btnRemoveXml.Click += New System.EventHandler(Me.btnRemoveXml_Click)
+'            Me.btnRemoveXml.Click += New System.EventHandler(Me.btnRemoveXml_Click)
         ' 
         ' btnAddXml
         ' 
@@ -190,7 +190,7 @@ Partial Public Class ConnectionForm
         Me.btnAddXml.TabIndex = 1
         Me.btnAddXml.Text = "Add..."
         Me.btnAddXml.UseVisualStyleBackColor = True
-'			Me.btnAddXml.Click += New System.EventHandler(Me.btnAddXml_Click)
+'            Me.btnAddXml.Click += New System.EventHandler(Me.btnAddXml_Click)
         ' 
         ' btnCancel
         ' 

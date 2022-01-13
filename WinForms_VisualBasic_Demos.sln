@@ -36,8 +36,6 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "GeneralAssembly.wf.vb", "Ge
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "GeneralAssembly_pro.wf.vb", "GeneralAssembly_pro\GeneralAssembly_pro.wf.vb.vbproj", "{640FF3A4-94AC-40B5-8B0F-C808C1FA5A91}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "GrapeCityExtension.wf.vb", "GrapeCityExtension\GrapeCityExtension.wf.vb.vbproj", "{25DF80B1-DC80-4513-8A3B-57A4CB050CB7}"
-EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "InformixDemo.wf.vb", "InformixDemo\InformixDemo.wf.vb.vbproj", "{B5C7884D-37BC-42BB-B143-7FD0F4A42CBC}"
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "InterfaceCustomizationDemo.wf.vb", "InterfaceCustomizationDemo\InterfaceCustomizationDemo.wf.vb.vbproj", "{3B0C145D-2244-421E-B5C1-349396A0B35C}"
@@ -53,6 +51,8 @@ EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "PanesVisibilityDemo.wf.vb", "PanesVisibilityDemo\PanesVisibilityDemo.wf.vb.vbproj", "{F736BB93-C3C9-439E-8D1A-539E8FEB2AE7}"
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "PostgreSqlDemo.wf.vb", "PostgreSQLDemo\PostgreSqlDemo.wf.vb.vbproj", "{404E51F5-357D-4849-9520-E94722ACD66C}"
+EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "PreserveInitialQueryFormattingDemo.wf.vb", "PreserveInitialQueryFormattingDemo\PreserveInitialQueryFormattingDemo.wf.vb.vbproj", "{2555264F-1BAA-44DF-BF5C-D819127D0246}"
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "QueryCreationDemo.wf.vb", "QueryCreationDemo\QueryCreationDemo.wf.vb.vbproj", "{BCD5EEE0-6E29-40D4-A411-576F3AFBE060}"
 EndProject
@@ -152,10 +152,6 @@ Global
 		{640FF3A4-94AC-40B5-8B0F-C808C1FA5A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{640FF3A4-94AC-40B5-8B0F-C808C1FA5A91}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{640FF3A4-94AC-40B5-8B0F-C808C1FA5A91}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{25DF80B1-DC80-4513-8A3B-57A4CB050CB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25DF80B1-DC80-4513-8A3B-57A4CB050CB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25DF80B1-DC80-4513-8A3B-57A4CB050CB7}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{25DF80B1-DC80-4513-8A3B-57A4CB050CB7}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{B5C7884D-37BC-42BB-B143-7FD0F4A42CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B5C7884D-37BC-42BB-B143-7FD0F4A42CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5C7884D-37BC-42BB-B143-7FD0F4A42CBC}.Release|Any CPU.ActiveCfg = Debug|Any CPU
@@ -188,6 +184,10 @@ Global
 		{404E51F5-357D-4849-9520-E94722ACD66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{404E51F5-357D-4849-9520-E94722ACD66C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{404E51F5-357D-4849-9520-E94722ACD66C}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{2555264F-1BAA-44DF-BF5C-D819127D0246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2555264F-1BAA-44DF-BF5C-D819127D0246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2555264F-1BAA-44DF-BF5C-D819127D0246}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{2555264F-1BAA-44DF-BF5C-D819127D0246}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{BCD5EEE0-6E29-40D4-A411-576F3AFBE060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BCD5EEE0-6E29-40D4-A411-576F3AFBE060}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCD5EEE0-6E29-40D4-A411-576F3AFBE060}.Release|Any CPU.ActiveCfg = Debug|Any CPU
@@ -241,6 +241,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {683DA653-9FBF-45CC-87FA-C8BA7F3D939A}
+		SolutionGuid = {8E0F8D06-249E-4D99-82E8-9364762D2C3B}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,4 @@
-ï»¿
+
 Partial Public Class Form1
     ''' <summary>
     ''' Required designer variable.
@@ -221,9 +221,9 @@ Partial Public Class Form1
         Me.QBuilder.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.QBuilder.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(204)))
         Me.QBuilder.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-'			Me.QBuilder.LinkDragOver += New ActiveQueryBuilder.View.QueryView.LinkDragOverEventhandler(Me.QBuilder_LinkDragOver)
-'			Me.QBuilder.BeforeDatasourceFieldDrag += New ActiveQueryBuilder.View.QueryView.BeforeDataSourceFieldDragEventHandler(Me.QBuilder_BeforeDatasourceFieldDrag)
-'			Me.QBuilder.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
+'            Me.QBuilder.LinkDragOver += New ActiveQueryBuilder.View.QueryView.LinkDragOverEventhandler(Me.QBuilder_LinkDragOver)
+'            Me.QBuilder.BeforeDatasourceFieldDrag += New ActiveQueryBuilder.View.QueryView.BeforeDataSourceFieldDragEventHandler(Me.QBuilder_BeforeDatasourceFieldDrag)
+'            Me.QBuilder.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
         ' 
         ' errorBox1
         ' 
@@ -239,8 +239,8 @@ Partial Public Class Form1
         Me.errorBox1.Size = New Size(306, 61)
         Me.errorBox1.TabIndex = 1
         Me.errorBox1.Visible = False
-'			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
-'			Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
+'            Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.ErrorBox1_GoToErrorPosition)
+'            Me.errorBox1.RevertValidText += New System.EventHandler(Me.ErrorBox1_RevertValidText)
         ' 
         ' TextBoxSQL
         ' 
@@ -250,7 +250,7 @@ Partial Public Class Form1
         Me.TextBoxSQL.Size = New Size(993, 110)
         Me.TextBoxSQL.TabIndex = 0
         Me.TextBoxSQL.Text = ""
-'			Me.TextBoxSQL.Validating += New System.ComponentModel.CancelEventHandler(Me.TextBoxSQL_Validating)
+'            Me.TextBoxSQL.Validating += New System.ComponentModel.CancelEventHandler(Me.TextBoxSQL_Validating)
         ' 
         ' TextBoxReport
         ' 
@@ -269,7 +269,7 @@ Partial Public Class Form1
         Me.ClientSize = New Size(999, 659)
         Me.Controls.Add(Me.tableLayoutPanel1)
         Me.Name = "Form1"
-        Me.Text = "Datasource Fields Linking Dragâ€™nâ€™Drop demo"
+        Me.Text = "Datasource Fields Linking Drag’n’Drop demo"
         Me.tableLayoutPanel1.ResumeLayout(False)
         Me.panel1.ResumeLayout(False)
         Me.panel1.PerformLayout()

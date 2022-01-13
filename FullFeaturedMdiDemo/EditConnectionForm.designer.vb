@@ -1,4 +1,4 @@
-﻿Partial Public Class EditConnectionForm
+Partial Public Class EditConnectionForm
     ''' <summary>
     ''' Required designer variable.
     ''' </summary>
@@ -97,7 +97,7 @@
         Me.lbMenu.Name = "lbMenu"
         Me.lbMenu.Size = New Size(139, 356)
         Me.lbMenu.TabIndex = 7
-        '			Me.lbMenu.SelectedIndexChanged += New System.EventHandler(Me.lbMenu_SelectedIndexChanged)
+        '            Me.lbMenu.SelectedIndexChanged += New System.EventHandler(Me.lbMenu_SelectedIndexChanged)
         ' 
         ' tcProperties
         ' 
@@ -187,7 +187,7 @@
         Me.cbSyntax.Name = "cbSyntax"
         Me.cbSyntax.Size = New Size(306, 21)
         Me.cbSyntax.TabIndex = 4
-        '			Me.cbSyntax.SelectedIndexChanged += New System.EventHandler(Me.cbSyntax_SelectedIndexChanged)
+        '            Me.cbSyntax.SelectedIndexChanged += New System.EventHandler(Me.cbSyntax_SelectedIndexChanged)
         ' 
         ' label1
         ' 
@@ -208,7 +208,7 @@
         Me.cbConnectionType.Name = "cbConnectionType"
         Me.cbConnectionType.Size = New Size(306, 21)
         Me.cbConnectionType.TabIndex = 2
-        '			Me.cbConnectionType.SelectedIndexChanged += New System.EventHandler(Me.cbConnectionType_SelectedIndexChanged)
+        '            Me.cbConnectionType.SelectedIndexChanged += New System.EventHandler(Me.cbConnectionType_SelectedIndexChanged)
         ' 
         ' label2
         ' 
@@ -227,7 +227,7 @@
         Me.tbConnectionName.Name = "tbConnectionName"
         Me.tbConnectionName.Size = New Size(306, 20)
         Me.tbConnectionName.TabIndex = 0
-        '			Me.tbConnectionName.TextChanged += New System.EventHandler(Me.tbConnectionName_TextChanged)
+        '            Me.tbConnectionName.TextChanged += New System.EventHandler(Me.tbConnectionName_TextChanged)
         ' 
         ' tpFilter
         ' 
@@ -276,9 +276,9 @@
         Me.lvInclude.TabIndex = 6
         Me.lvInclude.UseCompatibleStateImageBehavior = False
         Me.lvInclude.View = View.List
-        '			Me.lvInclude.DragDrop += New System.Windows.Forms.DragEventHandler(Me.lbInclude_DragDrop)
-        '			Me.lvInclude.DragOver += New System.Windows.Forms.DragEventHandler(Me.lbInclude_DragOver)
-        '			Me.lvInclude.KeyDown += New System.Windows.Forms.KeyEventHandler(Me.lvInclude_KeyDown)
+        '            Me.lvInclude.DragDrop += New System.Windows.Forms.DragEventHandler(Me.lbInclude_DragDrop)
+        '            Me.lvInclude.DragOver += New System.Windows.Forms.DragEventHandler(Me.lbInclude_DragOver)
+        '            Me.lvInclude.KeyDown += New System.Windows.Forms.KeyEventHandler(Me.lvInclude_KeyDown)
         ' 
         ' imageList
         ' 
@@ -308,9 +308,9 @@
         Me.lvExclude.TabIndex = 7
         Me.lvExclude.UseCompatibleStateImageBehavior = False
         Me.lvExclude.View = View.List
-        '			Me.lvExclude.DragDrop += New System.Windows.Forms.DragEventHandler(Me.lbExclude_DragDrop)
-        '			Me.lvExclude.DragOver += New System.Windows.Forms.DragEventHandler(Me.lbExclude_DragOver)
-        '			Me.lvExclude.KeyDown += New System.Windows.Forms.KeyEventHandler(Me.lvExclude_KeyDown)
+        '            Me.lvExclude.DragDrop += New System.Windows.Forms.DragEventHandler(Me.lbExclude_DragDrop)
+        '            Me.lvExclude.DragOver += New System.Windows.Forms.DragEventHandler(Me.lbExclude_DragOver)
+        '            Me.lvExclude.KeyDown += New System.Windows.Forms.KeyEventHandler(Me.lvExclude_KeyDown)
         ' 
         ' databaseSchemaView1
         ' 
@@ -325,7 +325,7 @@
         Me.databaseSchemaView1.Size = New Size(177, 324)
         Me.databaseSchemaView1.SQLContext = Nothing
         Me.databaseSchemaView1.TabIndex = 4
-        '			Me.databaseSchemaView1.ItemDoubleClick += New ActiveQueryBuilder.View.MetadataStructureView.MetadataStructureItemEventHandler(Me.databaseSchemaView1_ItemDoubleClick)
+        '            Me.databaseSchemaView1.ItemDoubleClick += New ActiveQueryBuilder.View.MetadataStructureView.MetadataStructureItemEventHandler(Me.databaseSchemaView1_ItemDoubleClick)
         ' 
         ' panel1
         ' 
@@ -346,7 +346,7 @@
         Me.btnDeleteFilter.TabIndex = 1
         Me.btnDeleteFilter.Text = "Remove"
         Me.btnDeleteFilter.UseVisualStyleBackColor = True
-        '			Me.btnDeleteFilter.Click += New System.EventHandler(Me.btnDeleteFilter_Click)
+        '            Me.btnDeleteFilter.Click += New System.EventHandler(Me.btnDeleteFilter_Click)
         ' 
         ' btnAddFilter
         ' 
@@ -357,7 +357,7 @@
         Me.btnAddFilter.TabIndex = 0
         Me.btnAddFilter.Text = "Add"
         Me.btnAddFilter.UseVisualStyleBackColor = True
-        '			Me.btnAddFilter.Click += New System.EventHandler(Me.btnAddFilter_Click)
+        '            Me.btnAddFilter.Click += New System.EventHandler(Me.btnAddFilter_Click)
         ' 
         ' pnlFilterInfo
         ' 

@@ -1,7 +1,7 @@
 ''*******************************************************************''
 ''       Active Query Builder Component Suite                        ''
 ''                                                                   ''
-''       Copyright © 2006-2021 Active Database Software              ''
+''       Copyright © 2006-2022 Active Database Software              ''
 ''       ALL RIGHTS RESERVED                                         ''
 ''                                                                   ''
 ''       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            ''
@@ -27,6 +27,12 @@ Partial Public Class Form1
         queryBuilder1.SyntaxProvider = New DB2SyntaxProvider()
 
         Try
+            ' tune QueryBuilder to normalize tables/fields names mentioned in SQL queries
+            ' when this setting is true QueryBuilder replaces all names to "canonical" names returned by the server's database schema
+            ' when this setting is false QueryBuilder tries to preserve names as they are written in a query text
+            ' to demonstrate AltNames feature turn this setting to true
+            queryBuilder1.SQLFormattingOptions.ObjectNamesNormalization = True
+
             ' Load demo metadata from XML file
             queryBuilder1.MetadataLoadingOptions.OfflineMode = True
             queryBuilder1.MetadataContainer.ImportFromXML("db2_sample_with_alt_names.xml")
@@ -54,10 +60,10 @@ Partial Public Class Form1
 
         ' The query text containing in SQL property is unformatted. If you need the formatted text, but with real object names, 
         ' do the following:
-        '			SQLFormattingOptions formattingOptions = new SQLFormattingOptions();
-        '			formattingOptions.Assign(queryBuilder1.SQLFormattingOptions); // copy actual formatting options from the QueryBuilder
-        '			formattingOptions.UseAltNames = false; // disable alt names
-        '			textBox2.Text = FormattedSQLBuilder.GetSQL(queryBuilder1.SQLQuery.QueryRoot, formattingOptions);
+        '            SQLFormattingOptions formattingOptions = new SQLFormattingOptions();
+        '            formattingOptions.Assign(queryBuilder1.SQLFormattingOptions); // copy actual formatting options from the QueryBuilder
+        '            formattingOptions.UseAltNames = false; // disable alt names
+        '            textBox2.Text = FormattedSQLBuilder.GetSQL(queryBuilder1.SQLQuery.QueryRoot, formattingOptions);
     End Sub
 
     Private Sub textBox1_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles textBox1.Validating

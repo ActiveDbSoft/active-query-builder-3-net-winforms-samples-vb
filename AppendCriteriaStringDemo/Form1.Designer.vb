@@ -65,7 +65,7 @@ Partial Public Class Form1
         Me.queryBuilder1.SQLGenerationOptions.ExpandVirtualObjects = True
         Me.queryBuilder1.SyntaxProvider = Me.sql92SyntaxProvider1
         Me.queryBuilder1.TabIndex = 0
-'			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
+'            Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder1_SQLUpdated)
         ' 
         ' msAccessSyntaxProvider1
         ' 
@@ -132,7 +132,7 @@ Partial Public Class Form1
         Me.buttonReplaceWhereAccess.TabIndex = 4
         Me.buttonReplaceWhereAccess.Text = "Replace first WHERE clause"
         Me.buttonReplaceWhereAccess.UseVisualStyleBackColor = True
-'			Me.buttonReplaceWhereAccess.Click += New System.EventHandler(Me.buttonReplaceWhereAccess_Click)
+'            Me.buttonReplaceWhereAccess.Click += New System.EventHandler(Me.buttonReplaceWhereAccess_Click)
         ' 
         ' buttonClearWhere
         ' 
@@ -143,7 +143,7 @@ Partial Public Class Form1
         Me.buttonClearWhere.TabIndex = 0
         Me.buttonClearWhere.Text = "Clear first WHERE clause"
         Me.buttonClearWhere.UseVisualStyleBackColor = True
-'			Me.buttonClearWhere.Click += New System.EventHandler(Me.buttonClearWhere_Click)
+'            Me.buttonClearWhere.Click += New System.EventHandler(Me.buttonClearWhere_Click)
         ' 
         ' buttonReplaceWhereAll
         ' 
@@ -154,7 +154,7 @@ Partial Public Class Form1
         Me.buttonReplaceWhereAll.TabIndex = 3
         Me.buttonReplaceWhereAll.Text = "Replace all WHERE clauses"
         Me.buttonReplaceWhereAll.UseVisualStyleBackColor = True
-'			Me.buttonReplaceWhereAll.Click += New System.EventHandler(Me.buttonReplaceWhereAll_Click)
+'            Me.buttonReplaceWhereAll.Click += New System.EventHandler(Me.buttonReplaceWhereAll_Click)
         ' 
         ' buttonReplaceWhere
         ' 
@@ -165,7 +165,7 @@ Partial Public Class Form1
         Me.buttonReplaceWhere.TabIndex = 1
         Me.buttonReplaceWhere.Text = "Replace first WHERE clause"
         Me.buttonReplaceWhere.UseVisualStyleBackColor = True
-'			Me.buttonReplaceWhere.Click += New System.EventHandler(Me.buttonReplaceWhere_Click)
+'            Me.buttonReplaceWhere.Click += New System.EventHandler(Me.buttonReplaceWhere_Click)
         ' 
         ' buttonAppend
         ' 
@@ -177,7 +177,7 @@ Partial Public Class Form1
         Me.buttonAppend.TabIndex = 2
         Me.buttonAppend.Text = "Append to first WHERE clause"
         Me.buttonAppend.UseVisualStyleBackColor = True
-'			Me.buttonAppend.Click += New System.EventHandler(Me.buttonAppend_Click)
+'            Me.buttonAppend.Click += New System.EventHandler(Me.buttonAppend_Click)
         ' 
         ' label2
         ' 

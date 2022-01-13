@@ -73,7 +73,7 @@ Partial Public Class Form1
         Me.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem"
         Me.aboutToolStripMenuItem.Size = New Size(61, 20)
         Me.aboutToolStripMenuItem.Text = "About..."
-'			Me.aboutToolStripMenuItem.Click += New System.EventHandler(Me.aboutToolStripMenuItem_Click)
+'            Me.aboutToolStripMenuItem.Click += New System.EventHandler(Me.aboutToolStripMenuItem_Click)
         ' 
         ' imageList32
         ' 
@@ -110,7 +110,7 @@ Partial Public Class Form1
         Me.queryBuilder.SQLGenerationOptions.ExpandVirtualFields = True
         Me.queryBuilder.SQLGenerationOptions.ExpandVirtualObjects = True
         Me.queryBuilder.TabIndex = 0
-'			Me.queryBuilder.CustomExpressionBuilder += New ActiveQueryBuilder.View.QueryView.CustomExpressionBuilderEventHandler(Me.queryBuilder_CustomExpressionBuilder)
+'            Me.queryBuilder.CustomExpressionBuilder += New ActiveQueryBuilder.View.QueryView.CustomExpressionBuilderEventHandler(Me.queryBuilder_CustomExpressionBuilder)
         ' 
         ' splitContainer1
         ' 
@@ -162,7 +162,7 @@ Partial Public Class Form1
         Me.textBox1.ScrollBars = ScrollBars.Both
         Me.textBox1.Size = New Size(793, 144)
         Me.textBox1.TabIndex = 2
-'			Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
+'            Me.textBox1.Validating += New System.ComponentModel.CancelEventHandler(Me.textBox1_Validating)
         ' 
         ' Form1
         ' 

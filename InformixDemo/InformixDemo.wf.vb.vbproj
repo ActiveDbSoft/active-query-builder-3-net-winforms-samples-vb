@@ -6,8 +6,11 @@
     <Description>Active Query Builder 3 Informix Demo</Description>
     <RootNamespace></RootNamespace>
 
-    <TargetFrameworks>net462;netcoreapp3.1</TargetFrameworks>
     <OutputType>WinExe</OutputType>
+
+    <!-- disable warning about Informix client architecture mismatch -->
+    <!-- MSB3270: There was a mismatch between the processor architecture -->
+    <NoWarn>$(NoWarn);MSB3270</NoWarn>
   </PropertyGroup>
 
   <!-- Informix -->

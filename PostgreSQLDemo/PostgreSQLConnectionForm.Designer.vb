@@ -58,7 +58,7 @@ Partial Public Class PostgreSQLConnectionForm
         Me.buttonConnect.TabIndex = 5
         Me.buttonConnect.Text = "Connect"
         Me.buttonConnect.UseVisualStyleBackColor = True
-'			Me.buttonConnect.Click += New System.EventHandler(Me.buttonConnect_Click)
+'            Me.buttonConnect.Click += New System.EventHandler(Me.buttonConnect_Click)
         ' 
         ' label2
         ' 

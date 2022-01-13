@@ -1,7 +1,7 @@
 ''*******************************************************************''
 ''       Active Query Builder Component Suite                        ''
 ''                                                                   ''
-''       Copyright © 2006-2021 Active Database Software              ''
+''       Copyright © 2006-2022 Active Database Software              ''
 ''       ALL RIGHTS RESERVED                                         ''
 ''                                                                   ''
 ''       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            ''
@@ -96,7 +96,7 @@ Partial Public Class CustomTextWithButtonColumnDemoFrame
             e.Value = _customValuesProvider(e.RowIndex)
 
             ' If you need to access to the low level data item, use the following:
-            '				QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
+            '                QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
         End If
     End Sub
 
@@ -112,7 +112,7 @@ Partial Public Class CustomTextWithButtonColumnDemoFrame
         _customValuesProvider(e.RowIndex) = CStr(e.Value)
 
         ' If you need to access to the low level data item, use the following:
-        '				QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
+        '                QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[e.RowIndex];
     End Sub
 
     Private Sub DataGridView_EditingControlShowing(ByVal sender As Object, ByVal e As DataGridViewEditingControlShowingEventArgs)
@@ -134,6 +134,6 @@ Partial Public Class CustomTextWithButtonColumnDemoFrame
         MessageBox.Show(String.Format("Button at row {0} clicked.", dataGridView.CurrentCell.RowIndex))
 
         ' If you need to access to the low level data item, use the following:
-        '			QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[dataGridView.CurrentCell.RowIndex];
+        '            QueryColumnListItem item = queryBuilder1.ActiveUnionSubQuery.QueryColumnList[dataGridView.CurrentCell.RowIndex];
     End Sub
 End Class

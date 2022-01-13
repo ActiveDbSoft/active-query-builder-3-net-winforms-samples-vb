@@ -85,7 +85,7 @@ Partial Public Class Form1
         Me.tabControl1.SelectedIndex = 0
         Me.tabControl1.Size = New Size(901, 151)
         Me.tabControl1.TabIndex = 0
-        '			Me.tabControl1.Selected += New System.Windows.Forms.TabControlEventHandler(Me.tabControl1_Selected)
+        '            Me.tabControl1.Selected += New System.Windows.Forms.TabControlEventHandler(Me.tabControl1_Selected)
         ' 
         ' tabPageSQL
         ' 
@@ -113,7 +113,7 @@ Partial Public Class Form1
         Me.sqlTextEditor1.Size = New Size(887, 119)
         Me.sqlTextEditor1.SqlOptions.SuggestionWindowSize = New Size(200, 200)
         Me.sqlTextEditor1.TabIndex = 1
-        '			Me.sqlTextEditor1.Validating += New System.ComponentModel.CancelEventHandler(Me.sqlTextEditor1_Validating)
+        '            Me.sqlTextEditor1.Validating += New System.ComponentModel.CancelEventHandler(Me.sqlTextEditor1_Validating)
         ' 
         ' queryBuilder1
         ' 
@@ -220,9 +220,9 @@ Partial Public Class Form1
         Me.queryBuilder1.VisualOptions.InactiveDockPanelCaptionFontColor = Color.White
         Me.queryBuilder1.VisualOptions.TabFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, (CByte(0)))
         Me.queryBuilder1.VisualOptions.TabsStripBackColor = Color.FromArgb((CInt(Fix((CByte(41))))), (CInt(Fix((CByte(57))))), (CInt(Fix((CByte(85))))))
-        '			Me.queryBuilder1.SleepModeChanged += New System.EventHandler(Me.queryBuilder1_SleepModeChanged)
-        '			Me.queryBuilder1.QueryAwake += New ActiveQueryBuilder.Core.QueryAwakeEventHandler(Me.queryBuilder1_QueryAwake)
-        '			Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
+        '            Me.queryBuilder1.SleepModeChanged += New System.EventHandler(Me.queryBuilder1_SleepModeChanged)
+        '            Me.queryBuilder1.QueryAwake += New ActiveQueryBuilder.Core.QueryAwakeEventHandler(Me.queryBuilder1_QueryAwake)
+        '            Me.queryBuilder1.SQLUpdated += New System.EventHandler(Me.queryBuilder_SQLUpdated)
         ' 
         ' expressionEditor1
         ' 
@@ -301,7 +301,7 @@ Partial Public Class Form1
         ' 
         Me.menuItem5.Index = 0
         Me.menuItem5.Text = "Connect..."
-        '			Me.menuItem5.Click += New System.EventHandler(Me.menuItem5_Click)
+        '            Me.menuItem5.Click += New System.EventHandler(Me.menuItem5_Click)
         ' 
         ' menuItem2
         ' 
@@ -312,7 +312,7 @@ Partial Public Class Form1
         ' 
         Me.fillProgrammaticallyMenuItem.Index = 2
         Me.fillProgrammaticallyMenuItem.Text = "Fill the query builder programmatically"
-        '			Me.fillProgrammaticallyMenuItem.Click += New System.EventHandler(Me.fillProgrammaticallyMenuItem_Click)
+        '            Me.fillProgrammaticallyMenuItem.Click += New System.EventHandler(Me.fillProgrammaticallyMenuItem_Click)
         ' 
         ' menuItem3
         ' 
@@ -324,19 +324,19 @@ Partial Public Class Form1
         ' 
         Me.refreshMetadataMenuItem.Index = 0
         Me.refreshMetadataMenuItem.Text = "Refresh Metadata"
-        '			Me.refreshMetadataMenuItem.Click += New System.EventHandler(Me.refreshMetadataMenuItem_Click)
+        '            Me.refreshMetadataMenuItem.Click += New System.EventHandler(Me.refreshMetadataMenuItem_Click)
         ' 
         ' editMetadataMenuItem
         ' 
         Me.editMetadataMenuItem.Index = 1
         Me.editMetadataMenuItem.Text = "Edit Metadata..."
-        '			Me.editMetadataMenuItem.Click += New System.EventHandler(Me.editMetadataMenuItem_Click)
+        '            Me.editMetadataMenuItem.Click += New System.EventHandler(Me.editMetadataMenuItem_Click)
         ' 
         ' clearMetadataMenuItem
         ' 
         Me.clearMetadataMenuItem.Index = 2
         Me.clearMetadataMenuItem.Text = "Clear Metadata"
-        '			Me.clearMetadataMenuItem.Click += New System.EventHandler(Me.clearMetadataMenuItem_Click)
+        '            Me.clearMetadataMenuItem.Click += New System.EventHandler(Me.clearMetadataMenuItem_Click)
         ' 
         ' menuItem4
         ' 
@@ -347,31 +347,31 @@ Partial Public Class Form1
         ' 
         Me.loadMetadataFromXMLMenuItem.Index = 4
         Me.loadMetadataFromXMLMenuItem.Text = "Load Metadata from XML..."
-        '			Me.loadMetadataFromXMLMenuItem.Click += New System.EventHandler(Me.loadMetadataFromXMLMenuItem_Click)
+        '            Me.loadMetadataFromXMLMenuItem.Click += New System.EventHandler(Me.loadMetadataFromXMLMenuItem_Click)
         ' 
         ' saveMetadataToXMLMenuItem
         ' 
         Me.saveMetadataToXMLMenuItem.Index = 5
         Me.saveMetadataToXMLMenuItem.Text = "Save Metadata to XML..."
-        '			Me.saveMetadataToXMLMenuItem.Click += New System.EventHandler(Me.saveMetadataToXMLMenuItem_Click)
+        '            Me.saveMetadataToXMLMenuItem.Click += New System.EventHandler(Me.saveMetadataToXMLMenuItem_Click)
         ' 
         ' queryStatisticsMenuItem
         ' 
         Me.queryStatisticsMenuItem.Index = 2
         Me.queryStatisticsMenuItem.Text = "Query Statistics..."
-        '			Me.queryStatisticsMenuItem.Click += New System.EventHandler(Me.queryStatisticsMenuItem_Click)
+        '            Me.queryStatisticsMenuItem.Click += New System.EventHandler(Me.queryStatisticsMenuItem_Click)
         ' 
         ' propertiesMenuItem
         ' 
         Me.propertiesMenuItem.Index = 3
         Me.propertiesMenuItem.Text = "Properties..."
-        '			Me.propertiesMenuItem.Click += New System.EventHandler(Me.propertiesMenuItem_Click)
+        '            Me.propertiesMenuItem.Click += New System.EventHandler(Me.propertiesMenuItem_Click)
         ' 
         ' aboutMenuItem
         ' 
         Me.aboutMenuItem.Index = 4
         Me.aboutMenuItem.Text = "About..."
-        '			Me.aboutMenuItem.Click += New System.EventHandler(Me.aboutMenuItem_Click)
+        '            Me.aboutMenuItem.Click += New System.EventHandler(Me.aboutMenuItem_Click)
         ' 
         ' panel1
         ' 
@@ -450,9 +450,9 @@ Partial Public Class Form1
         Me.errorBox1.Size = New Size(354, 100)
         Me.errorBox1.TabIndex = 2
         Me.errorBox1.Visible = False
-        '			Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.errorBox1_GoToErrorPositionEvent)
-        '			Me.errorBox1.RevertValidText += New System.EventHandler(Me.errorBox1_RevertValidTextEvent)
-        '			Me.errorBox1.StyleChanged += New System.EventHandler(Me.errorBox1_SyntaxProviderChanged)
+        '            Me.errorBox1.GoToErrorPosition += New System.EventHandler(Me.errorBox1_GoToErrorPositionEvent)
+        '            Me.errorBox1.RevertValidText += New System.EventHandler(Me.errorBox1_RevertValidTextEvent)
+        '            Me.errorBox1.StyleChanged += New System.EventHandler(Me.errorBox1_SyntaxProviderChanged)
         ' 
         ' dataViewer1
         ' 

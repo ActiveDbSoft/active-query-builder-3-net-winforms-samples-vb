@@ -1,7 +1,7 @@
 ''*******************************************************************''
 ''       Active Query Builder Component Suite                        ''
 ''                                                                   ''
-''       Copyright © 2006-2021 Active Database Software              ''
+''       Copyright © 2006-2022 Active Database Software              ''
 ''       ALL RIGHTS RESERVED                                         ''
 ''                                                                   ''
 ''       CONSULT THE LICENSE AGREEMENT FOR INFORMATION ON            ''
@@ -121,8 +121,8 @@ Partial Public Class Form1
 
             Dim usq = queryBuilder1.ActiveUnionSubQuery
 
-'				#Region "actualize stored references (if query is modified in GUI)"
-'				#Region "actualize datasource references"
+'                #Region "actualize stored references (if query is modified in GUI)"
+'                #Region "actualize datasource references"
             ' if user removed previously added datasources then clear their references
             If _customers IsNot Nothing AndAlso (Not IsTablePresentInQuery(usq, _customers)) Then
                 ' user removed this table in GUI
@@ -133,7 +133,7 @@ Partial Public Class Form1
                 ' user removed this table in GUI
                 _orders = Nothing
             End If
-'				#End Region
+'                #End Region
 
             ' clear CompanyName conditions
             If _companyName IsNot Nothing Then
@@ -160,9 +160,9 @@ Partial Public Class Form1
             If _orderDate IsNot Nothing Then
                 ClearConditionCells(usq, _orderDate)
             End If
-'				#End Region
+'                #End Region
 
-'				#Region "process Customers table"
+'                #Region "process Customers table"
             If cbCustomers.Checked Then
                 ' if we have no previously added Customers table, try to find one already added by the user
                 If _customers Is Nothing Then
@@ -174,7 +174,7 @@ Partial Public Class Form1
                     _customers = AddTable(usq, CustomersName, CustomersAlias)
                 End If
 
-'					#Region "process CompanyName condition"
+'                    #Region "process CompanyName condition"
                 If cbCompanyName.Enabled AndAlso cbCompanyName.Checked AndAlso (Not String.IsNullOrEmpty(tbCompanyName.Text)) Then
                     ' if we have no previously added grid row for this condition, add it
                     If _companyName Is Nothing OrElse _companyName.IsDisposing Then
@@ -193,7 +193,7 @@ Partial Public Class Form1
 
                     _companyName = Nothing
                 End If
-'					#End Region
+'                    #End Region
             Else
                 ' remove previously added datasource
                 If _customers IsNot Nothing Then
@@ -202,9 +202,9 @@ Partial Public Class Form1
 
                 _customers = Nothing
             End If
-'				#End Region
+'                #End Region
 
-'				#Region "process Orders table"
+'                #Region "process Orders table"
             If cbOrders.Checked Then
                 ' if we have no previosly added Orders table, try to find one already added by the user
                 If _orders Is Nothing Then
@@ -216,7 +216,7 @@ Partial Public Class Form1
                     _orders = AddTable(usq, OrdersName, OrdersAlias)
                 End If
 
-'					#Region "link between Orders and Customers"
+'                    #Region "link between Orders and Customers"
                 ' we added Orders table,
                 ' check if we have Customers table too,
                 ' and if there are no joins between them, create such join
@@ -224,9 +224,9 @@ Partial Public Class Form1
                 If _customers IsNot Nothing AndAlso usq.FromClause.FindLink(_orders, joinFieldNameStr, _customers, joinFieldNameStr) Is Nothing AndAlso usq.FromClause.FindLink(_customers, joinFieldNameStr, _orders, joinFieldNameStr) Is Nothing Then
                     queryBuilder1.QueryView.Query.AddLink(_customers, _joinFieldName, _orders, _joinFieldName)
                 End If
-'					#End Region
+'                    #End Region
 
-'					#Region "process OrderDate condition"
+'                    #Region "process OrderDate condition"
                 If cbOrderDate.Enabled AndAlso cbOrderDate.Checked AndAlso (Not String.IsNullOrEmpty(tbOrderDate.Text)) Then
                     ' if we have no previously added grid row for this condition, add it
                     If _orderDate Is Nothing Then
@@ -245,14 +245,14 @@ Partial Public Class Form1
 
                     _orderDate = Nothing
                 End If
-'					#End Region
+'                    #End Region
             Else
                 If _orders IsNot Nothing Then
                     _orders.Dispose()
                     _orders = Nothing
                 End If
             End If
-'				#End Region
+'                #End Region
         Finally
             queryBuilder1.EndUpdate()
         End Try
