@@ -115,6 +115,7 @@ Partial Public Class Form1
     End Sub
 
     Public Sub ResetQueryBuilder()
+        queryBuilder1.QueryView.HideInformationMessage()
         queryBuilder1.ClearMetadata()
         queryBuilder1.MetadataProvider = Nothing
         queryBuilder1.SyntaxProvider = Nothing
@@ -305,6 +306,8 @@ Partial Public Class Form1
     End Sub
 
     Private Sub ConnectTo_Click(ByVal sender As Object, e As EventArgs) Handles menuItem5.Click
+        queryBuilder1.QueryView.HideInformationMessage()
+
         Dim cf = New ConnectionForm() With {.Owner = Me}
 
         If cf.ShowDialog() <> DialogResult.OK Then

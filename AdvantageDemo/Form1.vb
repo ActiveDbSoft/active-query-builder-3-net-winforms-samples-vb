@@ -33,6 +33,8 @@ Partial Public Class Form1
     End Sub
 
     Private Sub connectMetadataToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles connectMetadataToolStripMenuItem.Click
+        queryBuilder.QueryView.HideInformationMessage()
+
         ' Connect to Advantage database
 
         ' show the connection form

@@ -347,6 +347,8 @@ Partial Public Class MainForm
     End Sub
 
     Private Function Connect() As Boolean
+        queryBuilder1.QueryView.HideInformationMessage()
+
         Using cf As New ConnectionForm()
             If cf.ShowDialog() = DialogResult.OK Then
                 Try

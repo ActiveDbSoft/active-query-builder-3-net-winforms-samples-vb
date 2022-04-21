@@ -251,6 +251,8 @@ Partial Public Class Form1
     End Sub
 
     Private Sub connectToToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles connectToToolStripMenuItem.Click
+        queryBuilder.QueryView.HideInformationMessage()
+
         Dim cf = New ConnectionForm() With {.Owner = Me}
 
         If cf.ShowDialog() <> DialogResult.OK Then

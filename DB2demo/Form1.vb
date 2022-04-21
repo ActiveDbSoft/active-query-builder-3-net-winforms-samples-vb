@@ -19,6 +19,8 @@ Partial Public Class Form1
     End Sub
 
     Private Sub connectMetadataToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles connectMetadataToolStripMenuItem.Click
+        queryBuilder1.QueryView.HideInformationMessage()
+
         ' Connect to DB2 database
 
         ' show the connection form

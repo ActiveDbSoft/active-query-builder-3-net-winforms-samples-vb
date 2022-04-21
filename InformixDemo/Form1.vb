@@ -21,6 +21,8 @@ Partial Public Class Form1
     End Sub
 
     Private Sub connectMetadataToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles connectMetadataToolStripMenuItem.Click
+        queryBuilder1.QueryView.HideInformationMessage()
+
         ' Connect to Informix database
 
         ' show the connection form

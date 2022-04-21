@@ -395,6 +395,8 @@ Partial Public Class Form1
     End Sub
 
     Private Sub menuItemConnectTo_Click(ByVal sender As Object, ByVal e As EventArgs) Handles menuItemConnectTo.Click
+        queryBuilder1.QueryView.HideInformationMessage()
+
         Using connectionForm = New ConnectionForm()
             If connectionForm.ShowDialog() = DialogResult.OK Then
                 Try
