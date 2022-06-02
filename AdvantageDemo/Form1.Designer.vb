@@ -189,10 +189,6 @@ Partial Public Class Form1
         ' 
         Me.advantageMetadataProvider1.Connection = Nothing
         ' 
-        ' advantageSyntaxProvider1
-        ' 
-        Me.advantageSyntaxProvider1.OnCalcExpressionType = Nothing
-        ' 
         ' errorBox1
         ' 
         Me.errorBox1.Anchor = (CType((AnchorStyles.Bottom Or AnchorStyles.Right), AnchorStyles))

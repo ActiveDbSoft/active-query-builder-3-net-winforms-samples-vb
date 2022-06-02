@@ -64,7 +64,6 @@ Partial Public Class Form1
         'mssqlSyntaxProvider1
         '
         Me.mssqlSyntaxProvider1.DetectServerVersion = true
-        Me.mssqlSyntaxProvider1.OnCalcExpressionType = Nothing
         '
         'openFileDialog
         '

@@ -62,10 +62,6 @@ Partial Public Class Form1
         CType(Me.databaseSchemaView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         ' 
-        ' mssqlSyntaxProvider1
-        ' 
-        Me.mssqlSyntaxProvider1.OnCalcExpressionType = Nothing
-        ' 
         ' openFileDialog
         ' 
         Me.openFileDialog.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*"

@@ -189,10 +189,6 @@ Partial Public Class Form1
         ' 
         Me.firebirdMetadataProvider1.Connection = Nothing
         ' 
-        ' firebirdSyntaxProvider1
-        ' 
-        Me.firebirdSyntaxProvider1.OnCalcExpressionType = Nothing
-        ' 
         ' textBox1
         ' 
         Me.textBox1.Dock = DockStyle.Fill

@@ -223,7 +223,6 @@ Partial Public Class Form1
         ' 
         Me.genericSyntaxProvider1.DetectServerVersion = False
         Me.genericSyntaxProvider1.IdentCaseSens = ActiveQueryBuilder.Core.IdentCaseSensitivity.Insensitive
-        Me.genericSyntaxProvider1.OnCalcExpressionType = Nothing
         ' 
         ' textBox1
         ' 

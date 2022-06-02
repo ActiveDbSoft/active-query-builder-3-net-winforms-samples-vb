@@ -188,7 +188,6 @@ Partial Public Class Form1
         ' informixSyntaxProvider1
         ' 
         Me.informixSyntaxProvider1.IdentCaseSens = ActiveQueryBuilder.Core.IdentCaseSensitivity.Insensitive
-        Me.informixSyntaxProvider1.OnCalcExpressionType = Nothing
         Me.informixSyntaxProvider1.ServerVersion = ActiveQueryBuilder.Core.InformixVersion.DS10
         ' 
         ' textBox1

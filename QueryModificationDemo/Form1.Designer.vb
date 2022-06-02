@@ -263,7 +263,6 @@ Partial Public Class Form1
         ' genericSyntaxProvider1
         ' 
         Me.genericSyntaxProvider1.IdentCaseSens = ActiveQueryBuilder.Core.IdentCaseSensitivity.Insensitive
-        Me.genericSyntaxProvider1.OnCalcExpressionType = Nothing
         ' 
         ' queryBuilder1
         ' 

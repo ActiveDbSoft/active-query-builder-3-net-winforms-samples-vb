@@ -171,7 +171,6 @@ Namespace ConsolidatedMetadataContainer
         'syntaxProviderSql2003
         '
         Me.syntaxProviderSql2003.DetectServerVersion = false
-        Me.syntaxProviderSql2003.OnCalcExpressionType = Nothing
         '
         'textSql
         '

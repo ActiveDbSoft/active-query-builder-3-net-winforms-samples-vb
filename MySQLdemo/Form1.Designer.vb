@@ -193,7 +193,6 @@ Partial Public Class Form1
         ' 
         ' mySQLSyntaxProvider1
         ' 
-        Me.mySQLSyntaxProvider1.OnCalcExpressionType = Nothing
         Me.mySQLSyntaxProvider1.ServerVersion = "5.02"
         Me.mySQLSyntaxProvider1.ServerVersionInt = 50200
         ' 

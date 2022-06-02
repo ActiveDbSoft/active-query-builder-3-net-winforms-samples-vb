@@ -189,10 +189,6 @@ Partial Public Class Form1
         ' 
         Me.DB2MetadataProvider1.Connection = Nothing
         ' 
-        ' DB2SyntaxProvider1
-        ' 
-        Me.DB2SyntaxProvider1.OnCalcExpressionType = Nothing
-        ' 
         ' textBox1
         ' 
         Me.textBox1.Dock = DockStyle.Fill

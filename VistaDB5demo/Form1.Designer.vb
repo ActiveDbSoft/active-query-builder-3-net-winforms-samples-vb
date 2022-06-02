@@ -192,7 +192,6 @@ Partial Public Class Form1
         ' vistaDbSyntaxProvider1
         ' 
         Me.vistaDbSyntaxProvider1.IdentCaseSens = ActiveQueryBuilder.Core.IdentCaseSensitivity.Insensitive
-        Me.vistaDbSyntaxProvider1.OnCalcExpressionType = Nothing
         ' 
         ' textBox1
         ' 

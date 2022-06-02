@@ -51,10 +51,6 @@ Partial Public Class FormattedOptionsDemo
         metadataStructure2.XML = resources.GetString("metadataStructure2.XML")
         Me.sqlContext1.UserQueriesStructure = metadataStructure2
         ' 
-        ' mssqlSyntaxProvider1
-        ' 
-        Me.mssqlSyntaxProvider1.OnCalcExpressionType = Nothing
-        ' 
         ' buttonSave
         ' 
         Me.buttonSave.Location = New Point(912, 6)

@@ -244,7 +244,6 @@ Partial Public Class Form1
         ' 
         Me.genericSyntaxProvider1.DetectServerVersion = False
         Me.genericSyntaxProvider1.IdentCaseSens = ActiveQueryBuilder.Core.IdentCaseSensitivity.Insensitive
-        Me.genericSyntaxProvider1.OnCalcExpressionType = Nothing
         ' 
         ' openFileDialog
         ' 
@@ -257,7 +256,6 @@ Partial Public Class Form1
         ' mssqlSyntaxProvider1
         ' 
         Me.mssqlSyntaxProvider1.DetectServerVersion = True
-        Me.mssqlSyntaxProvider1.OnCalcExpressionType = Nothing
         ' 
         ' mssqlMetadataProvider1
         ' 
@@ -278,14 +276,12 @@ Partial Public Class Form1
         ' oracleSyntaxProvider1
         ' 
         Me.oracleSyntaxProvider1.DetectServerVersion = True
-        Me.oracleSyntaxProvider1.OnCalcExpressionType = Nothing
         Me.oracleSyntaxProvider1.ServerVersion = ActiveQueryBuilder.Core.OracleServerVersion.Oracle18
         ' 
         ' msaccessSyntaxProvider1
         ' 
         Me.msaccessSyntaxProvider1.DetectServerVersion = False
         Me.msaccessSyntaxProvider1.IdentCaseSens = ActiveQueryBuilder.Core.IdentCaseSensitivity.Insensitive
-        Me.msaccessSyntaxProvider1.OnCalcExpressionType = Nothing
         ' 
         ' mainMenu1
         ' 

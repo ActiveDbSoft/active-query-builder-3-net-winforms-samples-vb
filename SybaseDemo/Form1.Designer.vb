@@ -192,7 +192,6 @@ Partial Public Class Form1
         ' sybaseSyntaxProvider1
         ' 
         Me.sybaseSyntaxProvider1.IdentCaseSens = ActiveQueryBuilder.Core.IdentCaseSensitivity.Insensitive
-        Me.sybaseSyntaxProvider1.OnCalcExpressionType = Nothing
         ' 
         ' textBox1
         ' 

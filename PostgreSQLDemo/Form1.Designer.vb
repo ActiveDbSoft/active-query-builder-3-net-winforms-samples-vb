@@ -193,7 +193,6 @@ Partial Public Class Form1
         ' 
         Me.postgreSQLSyntaxProvider1.ComparisonOperators = (CType(resources.GetObject("postgreSQLSyntaxProvider1.ComparisonOperators"), List(Of String)))
         Me.postgreSQLSyntaxProvider1.IdentCaseSens = ActiveQueryBuilder.Core.IdentCaseSensitivity.SensitiveLowerCase
-        Me.postgreSQLSyntaxProvider1.OnCalcExpressionType = Nothing
         ' 
         ' textBox1
         ' 
