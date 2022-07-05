@@ -19,7 +19,6 @@ Imports Common
 Imports FullFeaturedMdiDemo.Common
 Imports GeneralAssembly.Dailogs
 Imports GeneralAssembly.Forms.QueryInformationForms
-Imports Reports
 
 Partial Public Class ChildForm
     Inherits Form
@@ -1137,9 +1136,13 @@ Partial Public Class ChildForm
             Throw New ArgumentException("Argument cannot be null or empty.", "DataTable")
         End If
 
-        Dim reportWindow = New FastReportForm(dataTable) With {.Owner = Me}
-
+#If ENABLE_FASTREPORT_SUPPORT Then
+        Dim reportWindow = New Reports.FastReportForm(dataTable) With {.Owner = Me}
         reportWindow.ShowDialog()
+#Else
+        MessageBox.Show("To test the integration with FastReports.NET, please open the ""Directory.Build.props"" file in the demo projects installation directory (usually ""%USERPROFILE%\Documents\Active Query Builder x.x .NET Examples"") with a text editor and set the ""EnableFastReportSupport"" flag to true. Then, open the Active Query Builder Demos solution with your IDE, compile and run the Full-featured MDI demo." & vbCrLf & vbCrLf & "
+You may also need to activate the trial version of FastReport.NET on the Fast Reports website.", "FastReport support", MessageBoxButtons.OK, MessageBoxIcon.Information)
+#End If
     End Sub
 
     Private Sub CreateStimulsoftReport(ByVal dataTable As DataTable)
@@ -1148,11 +1151,11 @@ Partial Public Class ChildForm
         End If
 
 #If ENABLE_REPORTSNET_SUPPORT Then
-        Dim reportWindow = New StimulsoftForm(dataTable) With {.Owner = Me}
+        Dim reportWindow = New Reports.StimulsoftForm(dataTable) With {.Owner = Me}
         reportWindow.ShowDialog()
 #Else
-        MessageBox.Show("To test the integration with Stimulsoft Reports.NET, please open the ""Directory.Build.props"" file in the demo projects installation directory (usually ""%USERPROFILE%\Documents\Active Query Builder x.x .NET Examples"") with a text editor and set the ""EnableSupportReportsNet"" flag to true. Then, open the Active Query Builder Demos solution with your IDE, compile and run the Full-featured MDI demo." & vbCrLf & vbCrLf & "
-You may also need to activate the trial version of Reports.NET on the Stimulsoft website.", "Reports.NET reports support", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        MessageBox.Show("To test the integration with Stimulsoft Reports.NET, please open the ""Directory.Build.props"" file in the demo projects installation directory (usually ""%USERPROFILE%\Documents\Active Query Builder x.x .NET Examples"") with a text editor and set the ""EnableReportsNetSupport"" flag to true. Then, open the Active Query Builder Demos solution with your IDE, compile and run the Full-featured MDI demo." & vbCrLf & vbCrLf & "
+You may also need to activate the trial version of Reports.NET on the Stimulsoft website.", "Reports.NET support", MessageBoxButtons.OK, MessageBoxIcon.Information)
 #End If
     End Sub
 
@@ -1162,10 +1165,10 @@ You may also need to activate the trial version of Reports.NET on the Stimulsoft
         End If
 
 #If ENABLE_ACTIVEREPORTS_SUPPORT Then
-        Dim reportWindow = New ActiveReportsForm(dataTable) With {.Owner = Me}
+        Dim reportWindow = New Reports.ActiveReportsForm(dataTable) With {.Owner = Me}
         reportWindow.ShowDialog()
 #Else
-        MessageBox.Show("To test the integration with GrapeCity ActiveReports, please open the ""Directory.Build.props"" file in the demo projects installation directory (usually ""%USERPROFILE%\Documents\Active Query Builder x.x .NET Examples"") with a text editor and set the ""EnableSupportActiveReports"" flag to true. Then, open the Active Query Builder Demos solution with your IDE, compile and run the Full-featured MDI demo." & vbCrLf & vbCrLf & "
+        MessageBox.Show("To test the integration with GrapeCity ActiveReports, please open the ""Directory.Build.props"" file in the demo projects installation directory (usually ""%USERPROFILE%\Documents\Active Query Builder x.x .NET Examples"") with a text editor and set the ""EnableActiveReportsSupport"" flag to true. Then, open the Active Query Builder Demos solution with your IDE, compile and run the Full-featured MDI demo." & vbCrLf & vbCrLf & "
 You may also need to activate the trial version of ActiveReports on the GrapeCity website.", "ActiveReports support", MessageBoxButtons.OK, MessageBoxIcon.Information)
 #End If
     End Sub
