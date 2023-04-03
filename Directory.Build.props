@@ -5,11 +5,14 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants.Replace(';', ','))</DefineConstants>
-  </PropertyGroup>
-  
-  <PropertyGroup>
     <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <!-- default TargetFrameworks -->
+  <PropertyGroup>
+    <DefaultDemosNetFramework>net48</DefaultDemosNetFramework>
+    <DefaultDemosNetCore>netcoreapp3.1</DefaultDemosNetCore>
+    <TargetFrameworks>$(DefaultDemosNetFramework);$(DefaultDemosNetCore)</TargetFrameworks>
   </PropertyGroup>
 
   <!-- common props -->
@@ -25,6 +28,8 @@
     <Product>Active Query Builder 3 .NET $(Edition) Edition</Product>
     <Company>Active Database Software</Company>
     <Copyright>Copyright © 2005-$([System.DateTime]::Now.Year) Active Database Software</Copyright>
+
+    <DefineConstants>$(DefineConstants.Replace(';', ','))</DefineConstants>
   </PropertyGroup>
 
   <!-- disable XML docs warnings -->
@@ -66,6 +71,11 @@
     <Import Include="ActiveQueryBuilder.View" />
     <Import Include="ActiveQueryBuilder.View.WinForms" />
   </ItemGroup>
+
+  <!-- enable FastReport support in Demos -->
+  <PropertyGroup>
+    <EnableFastReportSupport>false</EnableFastReportSupport>
+  </PropertyGroup>
 
   <!-- enable GrapeCity's ActiveReports support in Demos -->
   <PropertyGroup>
