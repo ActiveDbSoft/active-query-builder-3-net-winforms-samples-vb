@@ -80,6 +80,7 @@ Namespace QueryBuilderProperties
             comboSqlDialect.Items.Add("Oracle 18c")
             comboSqlDialect.Items.Add("Oracle 19c")
             comboSqlDialect.Items.Add("PostgreSQL")
+            comboSqlDialect.Items.Add("Snowlfake")
             comboSqlDialect.Items.Add("SQLite")
             comboSqlDialect.Items.Add("Sybase ASE")
             comboSqlDialect.Items.Add("Sybase SQL Anywhere")
@@ -184,6 +185,8 @@ Namespace QueryBuilderProperties
                 End Select
             ElseIf TypeOf queryBuilder.SyntaxProvider Is PostgreSQLSyntaxProvider Then
                 comboSqlDialect.SelectedItem = "PostgreSQL"
+            ElseIf TypeOf queryBuilder.SyntaxProvider Is SnowflakeSyntaxProvider Then
+                comboSqlDialect.SelectedItem = "Snowflake"
             ElseIf TypeOf queryBuilder.SyntaxProvider Is SQLiteSyntaxProvider Then
                 comboSqlDialect.SelectedItem = "SQLite"
             ElseIf TypeOf queryBuilder.SyntaxProvider Is SybaseSyntaxProvider Then
@@ -337,6 +340,8 @@ Namespace QueryBuilderProperties
                     TryCast(_syntaxProvider, OracleSyntaxProvider).ServerVersion = OracleServerVersion.Oracle19
                 Case "PostgreSQL"
                     _syntaxProvider = New PostgreSQLSyntaxProvider()
+                Case "Snowflake"
+                    _syntaxProvider = New SnowflakeSyntaxProvider()
                 Case "SQLite"
                     _syntaxProvider = New SQLiteSyntaxProvider()
                 Case "Sybase ASE"
