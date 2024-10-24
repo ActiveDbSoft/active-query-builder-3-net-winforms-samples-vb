@@ -22,7 +22,7 @@
     <Import Include="IBM.Data.DB2" />
   </ItemGroup>
   <!-- DB2 client references for net core -->
-  <ItemGroup Condition="$(TargetFramework.StartsWith('netcoreapp')) Or $(TargetFramework.StartsWith('netstandard'))">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('netcoreapp')) Or $(TargetFramework.StartsWith('netstandard')) Or $(TargetFramework.StartsWith('net6'))">
     <PackageReference Include="IBM.Data.DB2.Core" Version="2.2.0.100" />
     <Import Include="IBM.Data.DB2.Core" />
   </ItemGroup>

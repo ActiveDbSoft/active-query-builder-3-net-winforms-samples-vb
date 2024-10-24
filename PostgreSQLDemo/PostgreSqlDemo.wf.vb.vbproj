@@ -9,11 +9,6 @@
     <OutputType>WinExe</OutputType>
   </PropertyGroup>
 
-  <!-- PostgreSQL -->
-  <ItemGroup>
-    <PackageReference Include="Npgsql" Version="5.0.4" />
-  </ItemGroup>
-
   <!-- database-specific metadata provider -->
   <ItemGroup Condition="$(UseNugetAqbReferences)">
     <PackageReference Include="ActiveQueryBuilder.PostgreSQLMetadataProvider" Version="$(Version)" />
